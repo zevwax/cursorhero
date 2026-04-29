@@ -12,6 +12,8 @@ namespace ZevWaxGames.CursorHero
 
         void Awake()
         {
+            gameObject.layer = LayerMask.NameToLayer("Wall");
+            
             col = GetComponent<BoxCollider2D>();
             aspectHandler = Camera.main.GetComponent<AspectRatioHandler>();
         }

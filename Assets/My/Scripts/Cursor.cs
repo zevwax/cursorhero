@@ -5,12 +5,12 @@ namespace ZevWaxGames.CursorHero
 {
     public class Cursor : MonoBehaviour
     {
-        private Vector2 virtualMousePixels; 
-        private Rigidbody2D rb;
-        private Vector2 lastMousePos;
-        private Vector2 virtualPos;
+        protected Vector2 virtualMousePixels; 
+        protected Rigidbody2D rb;
+        protected Vector2 lastMousePos;
+        protected Vector2 virtualPos;
 
-        void Start()
+        protected virtual void Start()
         {
             virtualMousePixels = Mouse.current.position.ReadValue();
             rb = GetComponent<Rigidbody2D>();
@@ -22,7 +22,7 @@ namespace ZevWaxGames.CursorHero
             virtualPos = rb.position;
         }
 
-        void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             Vector2 currentMousePos = GetMousePos();
             Vector2 delta = currentMousePos - lastMousePos;
@@ -32,25 +32,17 @@ namespace ZevWaxGames.CursorHero
             rb.MovePosition(virtualPos);
         }
 
-        private void OnCollisionStay2D(Collision2D collision)
+        protected virtual void OnCollisionStay2D(Collision2D collision)
         {
             virtualPos = rb.position;
         }
 
         private Vector2 GetMousePos()
         {
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
-            virtualMousePixels += Mouse.current.delta.ReadValue();
+            for(int i = 0; i < 12; i++) 
+            {
+                virtualMousePixels += Mouse.current.delta.ReadValue();
+            }
             return Camera.main.ScreenToWorldPoint((Vector3)virtualMousePixels + Vector3.forward * 10f);
         }
     }
