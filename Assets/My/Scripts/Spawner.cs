@@ -27,9 +27,22 @@ namespace ZevWaxGames.CursorHero
             script.type = type;
             return obj;
         }
+
+        public static GameObject NewMainCharacter(Vector2 pos)
+        {
+            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/WinXp/Cursor/default_arrow", 9f, 18f, 11f - 16f, 12f - 16f);
+            obj.GetComponent<SpriteRenderer>().sortingOrder = 100;
+            return obj;
+        }
         
-        public static GameObject NewMainCharacter(Vector2 pos) 
-            => NewEntity<MainCharacter>(pos, "MainCharacter", "My/WinXp/Cursor/default_arrow", 9f, 18f, 11f - 16f, 12f - 16f);
+        public static void NewSoul(Vector2 pos)
+        {
+            GameObject obj = new GameObject("Soul");
+            obj.transform.position = new Vector3(pos.x, pos.y, 0);
+            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+            sr.sprite = Resources.Load<Sprite>("My/WinXP/Cursor/default_arrow");
+            obj.AddComponent<Soul>();
+        }
         
         public static GameObject NewWhite(Vector2 pos) 
             => NewEntity<White>(pos, "Enemy", "My/WinXp/Cursor/3dwarro", 9f, 17f, 0f - 16f, 1f - 16f);
@@ -65,6 +78,7 @@ namespace ZevWaxGames.CursorHero
             SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
             Sprite sprite = Resources.Load<Sprite>(spritePath);
             sr.sprite = sprite;
+            sr.sortingOrder = 0;
             
             Rigidbody2D rb = obj.AddComponent<Rigidbody2D>();
             rb.sharedMaterial = CreateIceMaterial();

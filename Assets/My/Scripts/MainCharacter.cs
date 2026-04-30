@@ -5,10 +5,13 @@ namespace ZevWaxGames.CursorHero
 {
     public class MainCharacter : Cursor
     {
+        public bool is_trackable = true;
+        private Collider2D col;
         public static MainCharacter Instance { get; private set; }
-
         private void Start()
         {
+            col = GetComponent<Collider2D>();
+            
             HP = 10f;
             
             gun = Guns.Library[GunName.Yellow];
@@ -30,7 +33,9 @@ namespace ZevWaxGames.CursorHero
         protected override void Update()
         {
             base.Update();
-            targetObj = GetClosestEnemy();
+            var closest = GetClosestEnemy();
+            if (closest != null)
+                targetObj = closest;
         }
         private void FixedUpdate()
         {
@@ -52,23 +57,55 @@ namespace ZevWaxGames.CursorHero
         public GameObject GetClosestEnemy()
         {
             Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-            Enemy closest = null;
-            float distance = Mathf.Infinity;
-            Vector3 position = transform.position;
-
-            foreach (Enemy enemy in enemies)
+            if (enemies.Length > 0)
             {
-                Vector3 diff = enemy.transform.position - position;
-                float curDistance = diff.sqrMagnitude;
+                Enemy closest = null;
+                float distance = Mathf.Infinity;
+                Vector3 position = transform.position;
 
-                if (curDistance < distance)
+                foreach (Enemy enemy in enemies)
                 {
-                    closest = enemy;
-                    distance = curDistance;
+                    Vector3 diff = enemy.transform.position - position;
+                    float curDistance = diff.sqrMagnitude;
+
+                    if (curDistance < distance)
+                    {
+                        closest = enemy;
+                        distance = curDistance;
+                    }
                 }
+                return closest.gameObject;
             }
-    
-            return closest.gameObject;
+            return null;
+        }
+        public void Born()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
+            is_trackable = true;
+            col.enabled = true;
+        }
+        private void StartChoosing()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_link");
+            is_trackable = false;
+            col.enabled = false;
+        }
+        private void StopChoosing()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
+            is_trackable = true;
+            col.enabled = true;
+        }
+        protected override void Die()
+        {
+            if (is_trackable)
+            {
+                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_wait");
+                is_trackable = false;
+                Spawner.NewSoul(transform.position);
+                col.enabled = false;
+                EventHolder.OnPlayerDie?.Invoke();
+            }
         }
     }
 }
