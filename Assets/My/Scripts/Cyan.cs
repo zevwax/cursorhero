@@ -7,7 +7,8 @@ namespace ZevWaxGames.CursorHero
         protected override void Start()
         {
             base.Start();
-            speed = 8f; // High speed
+            gun = Guns.Library[GunName.Ring];
+            speed = 1f;
         }
     }
 }

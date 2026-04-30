@@ -1,49 +1,40 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System;
+using System.Collections;
 
 namespace ZevWaxGames.CursorHero
 {
     public class Cursor : MonoBehaviour
     {
+        protected GameObject targetObj;
+        protected Gun gun;
         protected Vector2 virtualMousePixels; 
         protected Rigidbody2D rb;
         protected Vector2 lastMousePos;
         protected Vector2 virtualPos;
 
-        protected virtual void Start()
+        protected void Start()
         {
-            virtualMousePixels = Mouse.current.position.ReadValue();
-            rb = GetComponent<Rigidbody2D>();
-            rb.gravityScale = 0;
-            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            
-            lastMousePos = GetMousePos();
-            virtualPos = rb.position;
-        }
-
-        protected virtual void FixedUpdate()
-        {
-            Vector2 currentMousePos = GetMousePos();
-            Vector2 delta = currentMousePos - lastMousePos;
-            lastMousePos = currentMousePos;
-
-            virtualPos += delta;
-            rb.MovePosition(virtualPos);
+            StartCoroutine(ShootingRoutine());
         }
 
         protected virtual void OnCollisionStay2D(Collision2D collision)
         {
             virtualPos = rb.position;
         }
-
-        private Vector2 GetMousePos()
+        private IEnumerator ShootingRoutine()
         {
-            for(int i = 0; i < 12; i++) 
+            while (true)
             {
-                virtualMousePixels += Mouse.current.delta.ReadValue();
+                if (targetObj != null && gun != null)
+                {
+                    Vector2 direction = (targetObj.transform.position - transform.position).normalized;
+                    gun.ProjectileSpawner.Invoke(new Vector2(transform.position.x, transform.position.y), direction);
+                    yield return new WaitForSeconds(gun.Cooldown);
+                }
+                else
+                    yield return new WaitForSeconds(0.1f);
             }
-            return Camera.main.ScreenToWorldPoint((Vector3)virtualMousePixels + Vector3.forward * 10f);
         }
     }
 }

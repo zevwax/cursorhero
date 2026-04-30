@@ -7,7 +7,8 @@ namespace ZevWaxGames.CursorHero
         protected override void Start()
         {
             base.Start();
-            speed = 2f; // Low speed
+            gun = Guns.Library[GunName.Red];
+            speed = 2f;
         }
     }
 }

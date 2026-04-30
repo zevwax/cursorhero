@@ -15,15 +15,15 @@ namespace ZevWaxGames.CursorHero
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             
-            PrefabCreator.NewBackground();
-            PrefabCreator.NewWall(Wall.WallType.Left);
-            PrefabCreator.NewWall(Wall.WallType.Right);
-            PrefabCreator.NewWall(Wall.WallType.Top);
-            PrefabCreator.NewWall(Wall.WallType.Bottom);
-            PrefabCreator.NewMainCharacter(new Vector2(0, 0));
-            PrefabCreator.NewWhite(new Vector2(-20, -20));
-            PrefabCreator.NewYellow(new Vector2(-30, 30));
-            PrefabCreator.NewCyan(new Vector2(40, 40));
+            Spawner.NewBackground();
+            Spawner.NewWall(Wall.WallType.Left);
+            Spawner.NewWall(Wall.WallType.Right);
+            Spawner.NewWall(Wall.WallType.Top);
+            Spawner.NewWall(Wall.WallType.Bottom);
+            Spawner.NewMainCharacter(new Vector2(0, 0));
+            Spawner.NewWhite(new Vector2(-20, -20));
+            Spawner.NewYellow(new Vector2(-30, 30));
+            Spawner.NewCyan(new Vector2(40, 40));
         }
     }
 }

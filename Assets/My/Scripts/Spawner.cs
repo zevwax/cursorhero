@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ZevWaxGames.CursorHero
 {
-    public static class PrefabCreator
+    public static class Spawner
     {
         public static PhysicsMaterial2D CreateIceMaterial()
         {
@@ -47,26 +47,23 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewCyan(Vector2 pos) 
             => NewEntity<Cyan>(pos, "Enemy", "My/WinXp/Cursor/3dsarro", 9f, 17f, 0f - 16f, 1f - 16f);
 
-        public static GameObject NewYellowP(Vector2 pos, Vector2 direction)
+        public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<YellowP>(pos,"YellowP", "My/main_character_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
-            return projectile;
         }
-        public static GameObject NewRedP(Vector2 pos, Vector2 direction)
+        public static void NewRedP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<RedP>(pos,"RedP", "My/enemy_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
-            return projectile;
         }
-        public static GameObject NewRingP(Vector2 pos, Vector2 direction)
+        public static void NewRingP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<RingP>(pos,"RingP", "My/ring_projectile", 20f, 20f, 6f - 16f, 6f - 16f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
-            return projectile;
         }
         
         private static GameObject NewEntity<T>(Vector2 pos, string name, string spritePath, float w, float h, float left, float top) where T : MonoBehaviour
