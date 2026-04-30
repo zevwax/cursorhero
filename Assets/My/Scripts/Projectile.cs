@@ -4,15 +4,16 @@ namespace ZevWaxGames.CursorHero
 
     public abstract class Projectile : MonoBehaviour
     {
+        protected float damage;
         public float speed;
         public Vector3 direction;
 
         protected virtual void Start()
         {
-            SetupLayer();
+            Setup();
         }
 
-        protected abstract void SetupLayer();
+        protected abstract void Setup();
 
         public void Launch(Vector3 launchDirection)
         {
@@ -26,6 +27,8 @@ namespace ZevWaxGames.CursorHero
 
         protected void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.gameObject.GetComponent<Cursor>() != null)
+                other.gameObject.GetComponent<Cursor>().HP -= damage;
             Destroy(gameObject);
         }
     }

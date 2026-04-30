@@ -4,8 +4,9 @@ namespace ZevWaxGames.CursorHero
 
     public class RedP : Projectile
     {
-        protected override void SetupLayer()
+        protected override void Setup()
         {
+            damage = 1f;
             speed = 6f;
             gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
         }

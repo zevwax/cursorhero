@@ -9,6 +9,8 @@ namespace ZevWaxGames.CursorHero
 
         private void Start()
         {
+            HP = 10f;
+            
             gun = Guns.Library[GunName.Yellow];
             gameObject.layer = LayerMask.NameToLayer("MainCharacter");
             
@@ -25,9 +27,9 @@ namespace ZevWaxGames.CursorHero
             
             base.Start();
         }
-
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             targetObj = GetClosestEnemy();
         }
         private void FixedUpdate()

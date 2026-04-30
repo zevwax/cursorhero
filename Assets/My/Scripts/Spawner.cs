@@ -10,15 +10,6 @@ namespace ZevWaxGames.CursorHero
             ice.friction = 0f;
             return ice;
         }
-        public static GameObject NewBackground()
-        {
-            GameObject obj = new GameObject("Background");
-            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
-            sr.sprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Bliss");
-            sr.sortingOrder = -10;
-            obj.AddComponent<Background>();
-            return obj;
-        }
         public static GameObject NewWall(Wall.WallType type)
         {
             GameObject obj = new GameObject("Wall");
@@ -49,19 +40,19 @@ namespace ZevWaxGames.CursorHero
 
         public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/main_character_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
+            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/main_character_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRedP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<RedP>(pos,"RedP", "My/enemy_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
+            var projectile = NewEntity<RedP>(pos,"RedP", "My/My/Sprites/enemy_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRingP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<RingP>(pos,"RingP", "My/ring_projectile", 20f, 20f, 6f - 16f, 6f - 16f);
+            var projectile = NewEntity<RingP>(pos,"RingP", "My/My/Sprites/ring_projectile", 20f, 20f, 6f - 16f, 6f - 16f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }

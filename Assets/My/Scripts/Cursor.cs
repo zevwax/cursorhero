@@ -6,6 +6,7 @@ namespace ZevWaxGames.CursorHero
 {
     public class Cursor : MonoBehaviour
     {
+        public float HP;
         protected GameObject targetObj;
         protected Gun gun;
         protected Vector2 virtualMousePixels; 
@@ -17,7 +18,11 @@ namespace ZevWaxGames.CursorHero
         {
             StartCoroutine(ShootingRoutine());
         }
-
+        protected virtual void Update()
+        {
+            if (HP <= 0)
+                Destroy(gameObject);
+        }
         protected virtual void OnCollisionStay2D(Collision2D collision)
         {
             virtualPos = rb.position;

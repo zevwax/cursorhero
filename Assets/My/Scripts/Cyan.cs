@@ -6,6 +6,7 @@ namespace ZevWaxGames.CursorHero
     {
         protected override void Start()
         {
+            HP = 3f;
             base.Start();
             gun = Guns.Library[GunName.Ring];
             speed = 1f;
