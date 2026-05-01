@@ -29,7 +29,7 @@ namespace ZevWaxGames.CursorHero
         {
             virtualPos = rb.position;
         }
-        private IEnumerator ShootingRoutine()
+        protected IEnumerator ShootingRoutine()
         {
             while (mainCharacter.is_trackable)
             {

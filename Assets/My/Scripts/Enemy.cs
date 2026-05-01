@@ -5,16 +5,25 @@ namespace ZevWaxGames.CursorHero
     public abstract class Enemy : Cursor
     {
         [SerializeField] protected float speed = 3f;
+        [SerializeField] protected int disksToDrop = 3;
+        private Collider2D col;
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Die;
+            EventHolder.OnRunStarted += CleanUp;
+            EventHolder.OnChoosingStarted += Disable;
+            EventHolder.OnChoosingFinished += Enable;
+            EventHolder.OnPlayerDie += Disable;
         }
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Die;
+            EventHolder.OnRunStarted -= CleanUp;
+            EventHolder.OnChoosingStarted -= Disable;
+            EventHolder.OnChoosingFinished -= Enable;
+            EventHolder.OnPlayerDie -= Disable;
         }
         protected virtual void Start()
         {
+            col = GetComponent<Collider2D>();
             gameObject.layer = LayerMask.NameToLayer("Enemy");
             
             rb = GetComponent<Rigidbody2D>();
@@ -46,7 +55,23 @@ namespace ZevWaxGames.CursorHero
         {
             // Base collision logic (if any)
         }
+        private void Enable()
+        {
+            col.enabled = true;
+        }
+        private void Disable()
+        {
+            col.enabled = false;
+        }
         protected override void Die()
+        {
+            for (int i = 0; i < disksToDrop; i++)
+            {
+                Spawner.NewDisk(transform.position);
+            }
+            Destroy(gameObject);
+        }
+        private void CleanUp()
         {
             Destroy(gameObject);
         }

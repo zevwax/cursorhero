@@ -24,13 +24,41 @@ namespace ZevWaxGames.CursorHero
         private float currentTotalPoints;
         private float waveBudget;
         private AspectRatioHandler aspectHandler;
+        private Coroutine spawnCoroutine;
+        private Coroutine waveCoroutine;
+
+        private void Awake()
+        {
+            aspectHandler = Camera.main.GetComponent<AspectRatioHandler>();
+        }
+
+        private void OnEnable()
+        {
+            EventHolder.OnRunStarted += Refresh;
+        }
+
+        private void OnDisable()
+        {
+            EventHolder.OnRunStarted -= Refresh;
+        }
 
         private void Start()
         {
-            aspectHandler = Camera.main.GetComponent<AspectRatioHandler>();
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+            if (waveCoroutine != null) StopCoroutine(waveCoroutine);
+
+            patternIndex = 0;
+            currentWave = 1;
             currentTotalPoints = initialDifficultyPoints;
-            StartCoroutine(SpawnRoutine());
-            StartCoroutine(WaveRoutine());
+            waveBudget = initialDifficultyPoints;
+
+            spawnCoroutine = StartCoroutine(SpawnRoutine());
+            waveCoroutine = StartCoroutine(WaveRoutine());
         }
 
         private IEnumerator SpawnRoutine()
@@ -38,35 +66,36 @@ namespace ZevWaxGames.CursorHero
             while (true)
             {
                 SpawnEnemies();
-                
                 yield return new WaitForSeconds(spawnRate);
             }
         }
+
         private IEnumerator WaveRoutine()
         {
             while (true)
             {
+                yield return new WaitForSeconds(waveDuration);
+
                 float increase = pattern[patternIndex] * difficultyMultiplierX;
                 currentTotalPoints += increase;
                 waveBudget = currentTotalPoints;
                 
                 patternIndex = (patternIndex + 1) % pattern.Length;
                 currentWave++;
-                
-                yield return new WaitForSeconds(waveDuration);
             }
         }
 
         private void SpawnEnemies()
         {
-            var seed = Random.Range(0, waveDuration);
-            var numberOfEnemies = (int)default;
-            if (seed == 0) // 1/30
+            var seed = Random.Range(0, (int)waveDuration);
+            var numberOfEnemies = 0;
+            if (seed == 0)
                 numberOfEnemies = 10;
-            else if (seed <= 5) // 5/30
+            else if (seed <= 5)
                 numberOfEnemies = 5;
-            else if (seed <= 15) // 10/30
+            else if (seed <= 15)
                 numberOfEnemies = 1;
+
             for (var i = 0; i < numberOfEnemies; i++)
             {
                 if (waveBudget >= 100)

@@ -6,7 +6,6 @@ namespace ZevWaxGames.CursorHero
     public class MainCharacter : Cursor
     {
         public bool is_trackable = true;
-        private Collider2D col;
         public static MainCharacter Instance { get; private set; }
         private void OnEnable()
         {
@@ -18,8 +17,6 @@ namespace ZevWaxGames.CursorHero
         }
         private void Start()
         {
-            col = GetComponent<Collider2D>();
-            
             HP = 10f;
             
             gun = Guns.Library[GunName.Yellow];
@@ -91,19 +88,18 @@ namespace ZevWaxGames.CursorHero
             HP = 10;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
             is_trackable = true;
-            col.enabled = true;
+            
+            StartCoroutine(ShootingRoutine());
         }
         private void StartChoosing()
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_link");
             is_trackable = false;
-            col.enabled = false;
         }
         private void StopChoosing()
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
             is_trackable = true;
-            col.enabled = true;
         }
         protected override void Die()
         {
@@ -112,7 +108,6 @@ namespace ZevWaxGames.CursorHero
                 GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_wait");
                 is_trackable = false;
                 Spawner.NewSoul(transform.position);
-                col.enabled = false;
                 EventHolder.OnPlayerDie?.Invoke();
             }
         }

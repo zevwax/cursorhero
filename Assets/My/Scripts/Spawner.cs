@@ -96,5 +96,12 @@ namespace ZevWaxGames.CursorHero
 
             return obj;
         }
+        
+        public static GameObject NewDisk(Vector2 pos)
+        {
+            var obj = NewEntity<Disk>(pos, "Disk", "My/My/Sprites/disk", 15f, 15f, 0f, 0f);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            return obj;
+        }
     }
 }
