@@ -103,5 +103,18 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
+        
+        public static GameObject NewFallingDisk(Vector2 pos)
+        {
+            GameObject obj = new GameObject("FallingDisk");
+            obj.transform.position = new Vector3(pos.x, pos.y, 0);
+    
+            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+            sr.sprite = Resources.Load<Sprite>("My/My/Sprites/disk");
+            sr.sortingOrder = 5; // Behind the UI but above the grass
+
+            obj.AddComponent<FallingDisk>();
+            return obj;
+        }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -10,8 +11,15 @@ namespace ZevWaxGames.CursorHero
         
         [Header("Settings")]
         [Range(0, 1)] public float value = 0f;
-        public Color blockColor = new Color(0.2f, 0.8f, 0.2f); // XP Green
+        public Color blockColor = new Color(0.2f, 0.8f, 0.2f);
         
+        [Header("Rainbow Animation")]
+        public float cycleDuration = 0.75f;
+        public float transitionSpeed = 0.5f;
+        public Color deepBlue = new Color(0f, 0f, 0.5f);
+        public Color cyan = Color.cyan;
+        public Color lightRed = new Color(1f, 0.4f, 0.4f);
+
         [Header("Spacing")]
         public float blockWidth = 12f;
         public float blockHeightOffset = 4f;
@@ -19,11 +27,17 @@ namespace ZevWaxGames.CursorHero
 
         private RectTransform rectTransform;
         private List<Image> blocks = new List<Image>();
+        private Sequence rainbowSequence;
+        private Tween transitionTween;
+        
+        private Color rainbowColor;
+        private Color displayColor;
 
         private void Awake()
         {
             Instance = this;
             rectTransform = GetComponent<RectTransform>();
+            displayColor = blockColor;
         }
 
         private void Start()
@@ -34,12 +48,12 @@ namespace ZevWaxGames.CursorHero
         private void Update()
         {
             UpdateProgress();
+            HandleRainbowEffect();
         }
 
         private void CreateBlocks()
         {
             float totalWidth = rectTransform.rect.width;
-            float totalHeight = rectTransform.rect.height;
             float currentX = gap;
 
             while (currentX + blockWidth + gap <= totalWidth)
@@ -66,10 +80,44 @@ namespace ZevWaxGames.CursorHero
         private void UpdateProgress()
         {
             int blocksToShow = Mathf.FloorToInt(value * blocks.Count);
-
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].enabled = i < blocksToShow;
+                blocks[i].color = displayColor;
+            }
+        }
+
+        private void HandleRainbowEffect()
+        {
+            if (value >= 1f)
+            {
+                if (rainbowSequence == null)
+                {
+                    rainbowColor = deepBlue;
+                    rainbowSequence = DOTween.Sequence();
+                    rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, cyan, cycleDuration / 2).SetEase(Ease.Linear));
+                    rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, lightRed, cycleDuration / 2).SetEase(Ease.Linear));
+                    rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, deepBlue, cycleDuration / 2).SetEase(Ease.Linear));
+                    rainbowSequence.SetLoops(-1, LoopType.Restart);
+
+                    transitionTween?.Kill();
+                    transitionTween = DOTween.To(() => displayColor, x => displayColor = x, rainbowColor, transitionSpeed)
+                        .OnUpdate(() => { if(value >= 1f) displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 5f); });
+                }
+                
+                // Keep displayColor in sync with the cycling rainbowColor once fully transitioned
+                displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 10f);
+            }
+            else
+            {
+                if (rainbowSequence != null)
+                {
+                    rainbowSequence.Kill();
+                    rainbowSequence = null;
+
+                    transitionTween?.Kill();
+                    transitionTween = DOTween.To(() => displayColor, x => displayColor = x, blockColor, transitionSpeed);
+                }
             }
         }
 
