@@ -8,6 +8,14 @@ namespace ZevWaxGames.CursorHero
         public bool is_trackable = true;
         private Collider2D col;
         public static MainCharacter Instance { get; private set; }
+        private void OnEnable()
+        {
+            EventHolder.OnRunStarted += Born;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnRunStarted -= Born;
+        }
         private void Start()
         {
             col = GetComponent<Collider2D>();
@@ -80,6 +88,7 @@ namespace ZevWaxGames.CursorHero
         }
         public void Born()
         {
+            HP = 10;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
             is_trackable = true;
             col.enabled = true;

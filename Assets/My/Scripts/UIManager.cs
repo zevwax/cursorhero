@@ -13,14 +13,20 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             EventHolder.OnPlayerDie += ShowGameOver;
+            EventHolder.OnRunStarted += HideGameOver;
         }
         private void OnDisable()
         {
             EventHolder.OnPlayerDie -= ShowGameOver;
+            EventHolder.OnRunStarted -= HideGameOver;
         }
         private void ShowGameOver()
         {
             gameOverPanel.SetActive(true);
+        }
+        private void HideGameOver()
+        {
+            gameOverPanel.SetActive(false);
         }
     }
 }

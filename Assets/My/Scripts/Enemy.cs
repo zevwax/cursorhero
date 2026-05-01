@@ -5,8 +5,14 @@ namespace ZevWaxGames.CursorHero
     public abstract class Enemy : Cursor
     {
         [SerializeField] protected float speed = 3f;
-        
-
+        private void OnEnable()
+        {
+            EventHolder.OnRunStarted += Die;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnRunStarted -= Die;
+        }
         protected virtual void Start()
         {
             gameObject.layer = LayerMask.NameToLayer("Enemy");
