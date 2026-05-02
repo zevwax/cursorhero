@@ -6,6 +6,10 @@ namespace ZevWaxGames.CursorHero
     public class MainCharacter : Cursor
     {
         public bool is_trackable = true;
+        public float ProjectileDamage = 1f;
+        public float ProjectileSpeed = 6f;
+        public float Sensitivity = 8f;
+        public float Firerate = 8f;
         public static MainCharacter Instance { get; private set; }
         private void OnEnable()
         {
@@ -57,7 +61,7 @@ namespace ZevWaxGames.CursorHero
             {
                 virtualMousePixels += Mouse.current.delta.ReadValue();
             }
-            return Camera.main.ScreenToWorldPoint((Vector3)virtualMousePixels + Vector3.forward * 10f);
+            return Camera.main.ScreenToWorldPoint((Vector3)virtualMousePixels + Vector3.forward * Sensitivity);
         }
         public GameObject GetClosestEnemy()
         {
@@ -86,26 +90,26 @@ namespace ZevWaxGames.CursorHero
         public void Born()
         {
             HP = 10;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_arrow");
             is_trackable = true;
             
             StartCoroutine(ShootingRoutine());
         }
         private void StartChoosing()
         {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_link");
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_link");
             is_trackable = false;
         }
         private void StopChoosing()
         {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_arrow");
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_arrow");
             is_trackable = true;
         }
         protected override void Die()
         {
             if (is_trackable)
             {
-                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/WinXp/Cursor/default_wait");
+                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_wait");
                 is_trackable = false;
                 Spawner.NewSoul(transform.position);
                 EventHolder.OnPlayerDie?.Invoke();

@@ -5,6 +5,7 @@ namespace ZevWaxGames.CursorHero
     public class UIManager : MonoBehaviour
     {
         [SerializeField] private GameObject gameOverPanel;
+        private GameObject playBtn;
         private void Awake()
         {
             if (gameOverPanel != null)
@@ -23,10 +24,12 @@ namespace ZevWaxGames.CursorHero
         private void ShowGameOver()
         {
             gameOverPanel.SetActive(true);
+            playBtn = Spawner.NewPlayButton(Vector2.zero);
         }
         private void HideGameOver()
         {
             gameOverPanel.SetActive(false);
+            Destroy(playBtn);
         }
     }
 }

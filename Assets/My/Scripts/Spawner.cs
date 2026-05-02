@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace ZevWaxGames.CursorHero
@@ -30,7 +31,7 @@ namespace ZevWaxGames.CursorHero
 
         public static GameObject NewMainCharacter(Vector2 pos)
         {
-            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/WinXp/Cursor/default_arrow", 9f, 18f, 11f - 16f, 12f - 16f);
+            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/default_arrow", 9f, 18f, 11f - 16f, 7f - 16f);
             obj.GetComponent<SpriteRenderer>().sortingOrder = 100;
             return obj;
         }
@@ -114,6 +115,84 @@ namespace ZevWaxGames.CursorHero
             sr.sortingOrder = 5; // Behind the UI but above the grass
 
             obj.AddComponent<FallingDisk>();
+            return obj;
+        }
+        
+        public static GameObject NewTooltip(string text, Vector2 pos)
+        {
+            GameObject canvasObj = GameObject.Find("FG Canvas");
+            if (canvasObj == null) return null;
+            
+            GameObject obj = new GameObject("Tooltip");
+            obj.transform.SetParent(canvasObj.transform, false);
+            
+            RectTransform rt = obj.AddComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(200, 50);
+            rt.anchorMin = new Vector2(0.5f, 0.5f);
+            rt.anchorMax = new Vector2(0.5f, 0.5f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            
+            UnityEngine.UI.Image bgImage = obj.AddComponent<UnityEngine.UI.Image>();
+            bgImage.color = new Color(0, 0, 0, 0.6f);
+            
+            GameObject textObj = new GameObject("Text");
+            textObj.transform.SetParent(obj.transform, false);
+            
+            RectTransform textRt = textObj.AddComponent<RectTransform>();
+            textRt.sizeDelta = new Vector2(200, 50); 
+            textRt.anchorMin = new Vector2(0.5f, 0.5f);
+            textRt.anchorMax = new Vector2(0.5f, 0.5f);
+            textRt.pivot = new Vector2(0.5f, 0.5f);
+            textRt.anchoredPosition = Vector2.zero;
+            
+            TextMeshProUGUI t = textObj.AddComponent<TextMeshProUGUI>();
+            t.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma");
+            t.text = text;
+            t.alignment = TextAlignmentOptions.Center;
+            t.color = Color.white;
+            t.fontSize = 18;
+            t.raycastTarget = false;
+            
+            Tooltip tooltip = obj.AddComponent<Tooltip>();
+            tooltip.textComponent = t;
+            tooltip.rectTransform = rt;
+            tooltip.gap = 60f;
+
+            return obj;
+        }
+
+
+
+        public static GameObject NewPlayButton(Vector2 pos)
+        {
+            GameObject obj = CreateBaseButton<Play>(pos, "PlayButton");
+            Play script = obj.GetComponent<Play>();
+            script.tooltipText = "Start Game";
+            script.iconPath = "your_play_icon_path";
+            return obj;
+        }
+
+        public static void NewUpgradeButton(string upgradeName, Vector2 pos)
+        {
+            GameObject obj;
+            switch (upgradeName)
+            {
+                case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage"); break;
+                case "FireRate": obj = CreateBaseButton<Firerate>(pos, "UpgradeFireRate"); break;
+                case "Speed": obj = CreateBaseButton<ProjectileSpeed>(pos, "UpgradeSpeed"); break;
+                case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity"); break;
+                default: return;
+            }
+            obj.GetComponent<Button>().tooltipText = "Upgrade " + upgradeName;
+        }
+
+        private static GameObject CreateBaseButton<T>(Vector2 pos, string name) where T : Button
+        {
+            GameObject obj = NewEntity<T>(pos, name, "My/My/Sprites/btn", 32f, 32f, -16f, -16f);
+            var sr = obj.GetComponent<SpriteRenderer>();
+            sr.sortingOrder = 90;
+            var col = obj.GetComponent<BoxCollider2D>();
+            col.isTrigger = true;
             return obj;
         }
     }

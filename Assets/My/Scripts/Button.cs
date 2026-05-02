@@ -1,0 +1,109 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using DG.Tweening;
+
+namespace ZevWaxGames.CursorHero
+{
+    public abstract class Button : MonoBehaviour
+    {
+        public string boxPath = "My/My/Sprites/btn";
+        public string iconPath; 
+        public string tooltipText = "Default Tooltip";
+        
+        private SpriteRenderer boxSr;
+        private SpriteRenderer iconSr;
+        private GameObject currentTooltip;
+        private bool isHovered;
+        private Tween idleTween;
+        private Collider2D myCollider;
+
+        protected virtual void Start()
+        {
+            boxSr = GetComponent<SpriteRenderer>();
+            boxSr.sprite = Resources.Load<Sprite>(boxPath);
+            
+            myCollider = GetComponent<Collider2D>();
+
+            GameObject iconObj = new GameObject("Icon");
+            iconObj.transform.SetParent(transform);
+            iconObj.transform.localPosition = Vector3.zero;
+            
+            iconSr = iconObj.AddComponent<SpriteRenderer>();
+            iconSr.sprite = Resources.Load<Sprite>(iconPath);
+            iconSr.sortingOrder = boxSr.sortingOrder + 1;
+
+            StartHangedAnimation();
+            SetStateIdle();
+        }
+
+        private void StartHangedAnimation()
+        {
+            idleTween?.Kill();
+            transform.localRotation = Quaternion.Euler(0, 0, -5f);
+            idleTween = transform.DORotate(new Vector3(0, 0, 5f), 2f)
+                .SetEase(Ease.InOutQuad)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
+
+        protected virtual void Update()
+        {
+            if (MainCharacter.Instance == null) return;
+            
+            Collider2D charCol = MainCharacter.Instance.GetComponent<Collider2D>();
+            bool collision = myCollider.IsTouching(charCol);
+
+            if (collision)
+            {
+                if (!isHovered) OnHoverEnter();
+
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    SetStatePushed();
+                }
+                else if (Mouse.current.leftButton.wasReleasedThisFrame)
+                {
+                    SetStateHover();
+                    if (currentTooltip != null) Destroy(currentTooltip);
+                    ButtonAction();
+                }
+            }
+            else
+            {
+                if (isHovered) OnHoverExit();
+            }
+        }
+
+        private void OnHoverEnter()
+        {
+            isHovered = true;
+            SetStateHover();
+            currentTooltip = Spawner.NewTooltip(tooltipText, transform.position);
+        }
+
+        private void OnHoverExit()
+        {
+            isHovered = false;
+            SetStateIdle();
+            if (currentTooltip != null) Destroy(currentTooltip);
+        }
+
+        private void SetStateIdle()
+        {
+            transform.DOScale(1f, 0.2f);
+        }
+
+        private void SetStateHover()
+        {
+            transform.DOScale(1.1f, 0.2f);
+        }
+
+        private void SetStatePushed()
+        {
+            transform.DOScale(0.9f, 0.1f);
+        }
+
+        private void OnDestroy() => idleTween?.Kill();
+
+        public abstract void ButtonAction();
+    }
+}

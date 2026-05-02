@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c820de175b579bf4b97195334d3e908b
+guid: eb9024052ec564c4e8fac542ec1178c5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8326084831269809061
-    second: play_btn_0
+      213: 2278774293071124138
+    second: btn_upgrade_sen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: play_btn_0
+      name: btn_upgrade_sen_0
       rect:
         serializedVersion: 2
         x: 1
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5abea916a023c8370800000000000000
-      internalID: 8326084831269809061
+      spriteID: aa6dbc56525df9f10800000000000000
+      internalID: 2278774293071124138
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      play_btn_0: 8326084831269809061
+      btn_upgrade_sen_0: 2278774293071124138
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

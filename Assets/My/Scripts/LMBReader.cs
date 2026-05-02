@@ -9,7 +9,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                EventHolder.OnRunStarted?.Invoke();
+                
             }
         }
     }

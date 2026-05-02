@@ -6,8 +6,8 @@ namespace ZevWaxGames.CursorHero
     {
         protected override void Setup()
         {
-            damage = 1f;
-            speed = 6f;
+            damage = MainCharacter.Instance.ProjectileDamage;
+            speed = MainCharacter.Instance.ProjectileSpeed;
             gameObject.layer = LayerMask.NameToLayer("MainCharacterProjectile");
         }
     }
