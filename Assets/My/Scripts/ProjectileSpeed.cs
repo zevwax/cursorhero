@@ -7,6 +7,11 @@ namespace ZevWaxGames.CursorHero
             tooltipText = "Increase Speed";
             base.Start();
         }
-        public override void ButtonAction() => MainCharacter.Instance.ProjectileSpeed += 1f;
+
+        public override void ButtonAction()
+        {
+            MainCharacter.Instance.ProjectileSpeed += 1f;
+            base.ButtonAction();
+        }
     }
 }

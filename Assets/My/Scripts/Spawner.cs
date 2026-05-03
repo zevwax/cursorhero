@@ -32,41 +32,54 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewMainCharacter(Vector2 pos)
         {
             var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/default_arrow", 9f, 18f, 11f - 16f, 7f - 16f);
-            obj.GetComponent<SpriteRenderer>().sortingOrder = 100;
+            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Pointer";
             return obj;
         }
-        
         public static void NewSoul(Vector2 pos)
         {
             GameObject obj = new GameObject("Soul");
             obj.transform.position = new Vector3(pos.x, pos.y, 0);
-            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+            var sr = obj.AddComponent<SpriteRenderer>();
+            sr.sortingLayerName = "Soul";
             sr.sprite = Resources.Load<Sprite>("My/WinXP/Cursor/default_arrow");
             obj.AddComponent<Soul>();
         }
-        
-        public static GameObject NewWhite(Vector2 pos) 
-            => NewEntity<White>(pos, "Enemy", "My/WinXp/Cursor/3dwarro", 9f, 17f, 0f - 16f, 1f - 16f);
-        public static GameObject NewYellow(Vector2 pos) 
-            => NewEntity<Yellow>(pos, "Enemy", "My/WinXp/Cursor/3dgarro", 9f, 17f, 0f - 16f, 1f - 16f);
-        public static GameObject NewCyan(Vector2 pos) 
-            => NewEntity<Cyan>(pos, "Enemy", "My/WinXp/Cursor/3dsarro", 9f, 17f, 0f - 16f, 1f - 16f);
-
+        public static GameObject NewWhite(Vector2 pos)
+        {
+            var obj = NewEntity<White>(pos, "Enemy", "My/WinXp/Cursor/3dwarro", 9f, 17f, 0f - 16f, 1f - 16f);
+            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
+            return obj;
+        }
+        public static GameObject NewYellow(Vector2 pos)
+        {
+            var obj = NewEntity<Yellow>(pos, "Enemy", "My/WinXp/Cursor/3dgarro", 9f, 17f, 0f - 16f, 1f - 16f);
+            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
+            return obj;
+        }
+        public static GameObject NewCyan(Vector2 pos)
+        {
+            var obj = NewEntity<Cyan>(pos, "Enemy", "My/WinXp/Cursor/3dsarro", 9f, 17f, 0f - 16f, 1f - 16f);
+            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
+            return obj;
+        }
         public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/main_character_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
+            projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRedP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<RedP>(pos,"RedP", "My/My/Sprites/enemy_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
+            projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRingP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<RingP>(pos,"RingP", "My/My/Sprites/ring_projectile", 20f, 20f, 6f - 16f, 6f - 16f);
+            projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
@@ -101,6 +114,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewDisk(Vector2 pos)
         {
             var obj = NewEntity<Disk>(pos, "Disk", "My/My/Sprites/disk", 15f, 15f, 0f, 0f);
+            obj.GetComponent<SpriteRenderer>().sortingLayerName = "RealDisks";
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
@@ -112,16 +126,16 @@ namespace ZevWaxGames.CursorHero
     
             SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/disk");
-            sr.sortingOrder = 5; // Behind the UI but above the grass
+            sr.sortingLayerName = "FallingDisks";
 
             obj.AddComponent<FallingDisk>();
             return obj;
         }
         
-        public static GameObject NewTooltip(string text, Vector2 pos)
+        public static GameObject NewTooltip(string text)
         {
-            GameObject canvasObj = GameObject.Find("FG Canvas");
-            if (canvasObj == null) return null;
+            var canvasObj = GameObject.Find("Tooltip Canvas");
+            if (canvasObj == null) throw new System.Exception("canvas not found");
             
             GameObject obj = new GameObject("Tooltip");
             obj.transform.SetParent(canvasObj.transform, false);
@@ -161,8 +175,6 @@ namespace ZevWaxGames.CursorHero
             return obj;
         }
 
-
-
         public static GameObject NewPlayButton(Vector2 pos)
         {
             GameObject obj = CreateBaseButton<Play>(pos, "PlayButton");
@@ -172,7 +184,7 @@ namespace ZevWaxGames.CursorHero
             return obj;
         }
 
-        public static void NewUpgradeButton(string upgradeName, Vector2 pos)
+        public static GameObject NewUpgradeButton(string upgradeName, Vector2 pos)
         {
             GameObject obj;
             switch (upgradeName)
@@ -181,16 +193,18 @@ namespace ZevWaxGames.CursorHero
                 case "FireRate": obj = CreateBaseButton<Firerate>(pos, "UpgradeFireRate"); break;
                 case "Speed": obj = CreateBaseButton<ProjectileSpeed>(pos, "UpgradeSpeed"); break;
                 case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity"); break;
-                default: return;
+                default: throw new System.NotImplementedException();
             }
             obj.GetComponent<Button>().tooltipText = "Upgrade " + upgradeName;
+            return obj;
         }
 
         private static GameObject CreateBaseButton<T>(Vector2 pos, string name) where T : Button
         {
             GameObject obj = NewEntity<T>(pos, name, "My/My/Sprites/btn", 32f, 32f, -16f, -16f);
+            obj.layer = LayerMask.NameToLayer("Button");
             var sr = obj.GetComponent<SpriteRenderer>();
-            sr.sortingOrder = 90;
+            sr.sortingLayerName = "Buttons";
             var col = obj.GetComponent<BoxCollider2D>();
             col.isTrigger = true;
             return obj;

@@ -7,6 +7,11 @@ namespace ZevWaxGames.CursorHero
             tooltipText = "Decrease Cooldown";
             base.Start();
         }
-        public override void ButtonAction() => Guns.Library[GunName.Yellow].Cooldown -= 0.1f;
+
+        public override void ButtonAction()
+        {
+            Guns.Library[GunName.Yellow].Cooldown -= 0.1f;
+            base.ButtonAction();
+        }
     }
 }

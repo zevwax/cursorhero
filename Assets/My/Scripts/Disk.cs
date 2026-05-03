@@ -71,7 +71,7 @@ namespace ZevWaxGames.CursorHero
             if (collision.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
             {
                 var pbar = ProgressBar.Instance;
-                pbar.SetValue(pbar.value + 0.1f);
+                pbar.SetValue(pbar.Value + 0.1f);
                 Die();
             }
         }

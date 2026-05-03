@@ -10,7 +10,8 @@ namespace ZevWaxGames.CursorHero
         public static ProgressBar Instance { get; private set; }
         
         [Header("Settings")]
-        [Range(0, 1)] public float value = 0f;
+        public float Value { get => value; }
+        private float value = 0f;
         public Color blockColor = new Color(0.2f, 0.8f, 0.2f);
         
         [Header("Rainbow Animation")]
@@ -32,7 +33,16 @@ namespace ZevWaxGames.CursorHero
         
         private Color rainbowColor;
         private Color displayColor;
-
+        
+        private void OnEnable()
+        {
+            EventHolder.OnChoosingFinished += ResetValue;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnChoosingFinished -= ResetValue;
+        }
+        
         private void Awake()
         {
             Instance = this;
@@ -79,7 +89,7 @@ namespace ZevWaxGames.CursorHero
 
         private void UpdateProgress()
         {
-            int blocksToShow = Mathf.FloorToInt(value * blocks.Count);
+            int blocksToShow = Mathf.FloorToInt(Value * blocks.Count);
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].enabled = i < blocksToShow;
@@ -89,23 +99,13 @@ namespace ZevWaxGames.CursorHero
 
         private void HandleRainbowEffect()
         {
-            if (value >= 1f)
+            if (Value >= 1f)
             {
                 if (rainbowSequence == null)
                 {
-                    rainbowColor = deepBlue;
-                    rainbowSequence = DOTween.Sequence();
-                    rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, cyan, cycleDuration / 2).SetEase(Ease.Linear));
-                    rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, lightRed, cycleDuration / 2).SetEase(Ease.Linear));
-                    rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, deepBlue, cycleDuration / 2).SetEase(Ease.Linear));
-                    rainbowSequence.SetLoops(-1, LoopType.Restart);
-
-                    transitionTween?.Kill();
-                    transitionTween = DOTween.To(() => displayColor, x => displayColor = x, rainbowColor, transitionSpeed)
-                        .OnUpdate(() => { if(value >= 1f) displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 5f); });
+                    StartRainbowAnimation();
                 }
                 
-                // Keep displayColor in sync with the cycling rainbowColor once fully transitioned
                 displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 10f);
             }
             else
@@ -121,9 +121,27 @@ namespace ZevWaxGames.CursorHero
             }
         }
 
+        private void StartRainbowAnimation()
+        {
+            EventHolder.OnChoosingStarted?.Invoke();
+            
+            rainbowColor = deepBlue;
+            rainbowSequence = DOTween.Sequence();
+            rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, cyan, cycleDuration / 2).SetEase(Ease.Linear));
+            rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, lightRed, cycleDuration / 2).SetEase(Ease.Linear));
+            rainbowSequence.Append(DOTween.To(() => rainbowColor, x => rainbowColor = x, deepBlue, cycleDuration / 2).SetEase(Ease.Linear));
+            rainbowSequence.SetLoops(-1, LoopType.Restart);
+
+            transitionTween?.Kill();
+            transitionTween = DOTween.To(() => displayColor, x => displayColor = x, rainbowColor, transitionSpeed)
+                .OnUpdate(() => { if (Value >= 1f) displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 5f); });
+        }
+        
         public void SetValue(float newValue)
         {
             value = Mathf.Clamp01(newValue);
         }
+
+        public void ResetValue() => SetValue(0f);
     }
 }

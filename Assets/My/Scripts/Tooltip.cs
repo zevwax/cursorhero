@@ -14,10 +14,12 @@ namespace ZevWaxGames.CursorHero
             if (MainCharacter.Instance != null)
                 UpdateUIPosition();
         }
-
         public void UpdateUIPosition()
         {
-            var mainCharPos = MainCharacter.Instance.transform.position;
+            var mainChar = MainCharacter.Instance;
+            var mainCharTranformPos = mainChar.transform.position;
+            var collider = mainChar.GetComponent<BoxCollider2D>();
+            var mainCharPos = mainCharTranformPos + (Vector3)collider.offset;
             
             Vector2 screenPos = Camera.main.WorldToScreenPoint(mainCharPos);
             
@@ -34,7 +36,9 @@ namespace ZevWaxGames.CursorHero
             {
                 float offsetX = mainCharPos.x < 0 ? gap : -gap; 
                 float offsetY = mainCharPos.y < 0 ? gap : -gap;
-                rectTransform.anchoredPosition = localPoint + new Vector2(offsetX, offsetY);
+                float halfWidth = rectTransform.sizeDelta.x * 0.5f;
+                float halfHeight = rectTransform.sizeDelta.y * 0.5f;
+                rectTransform.anchoredPosition = localPoint + new Vector2(offsetX, offsetY) + new Vector2(halfWidth, halfHeight);
             }
         }
     }

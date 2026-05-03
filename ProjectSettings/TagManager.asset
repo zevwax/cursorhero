@@ -16,7 +16,7 @@ TagManager:
   - Enemy
   - MainCharacterProjectile
   - EnemyProjectile
-  - 
+  - Button
   - 
   - 
   - 
@@ -40,6 +40,36 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2895773915
+    locked: 0
+  - name: RealDisks
+    uniqueID: 482455791
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3598673145
+    locked: 0
+  - name: Enemies
+    uniqueID: 197784847
+    locked: 0
+  - name: Soul
+    uniqueID: 2511468013
+    locked: 0
+  - name: FallingDisks
+    uniqueID: 2868427883
+    locked: 0
+  - name: Windows
+    uniqueID: 4063274577
+    locked: 0
+  - name: Buttons
+    uniqueID: 1832763641
+    locked: 0
+  - name: Pointer
+    uniqueID: 3777054953
+    locked: 0
+  - name: Tooltips
+    uniqueID: 528894725
     locked: 0
   m_RenderingLayers:
   - Default

@@ -49,11 +49,15 @@ namespace ZevWaxGames.CursorHero
         {
             if (MainCharacter.Instance == null) return;
             
-            Collider2D charCol = MainCharacter.Instance.GetComponent<Collider2D>();
+            var mainChar = MainCharacter.Instance;
+            
+            Collider2D charCol = mainChar.GetComponent<Collider2D>();
             bool collision = myCollider.IsTouching(charCol);
 
             if (collision)
             {
+                mainChar.SetLink();
+                
                 if (!isHovered) OnHoverEnter();
 
                 if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -69,7 +73,11 @@ namespace ZevWaxGames.CursorHero
             }
             else
             {
-                if (isHovered) OnHoverExit();
+                if (isHovered)
+                {
+                    mainChar.SetArrow();
+                    OnHoverExit();
+                }
             }
         }
 
@@ -77,7 +85,7 @@ namespace ZevWaxGames.CursorHero
         {
             isHovered = true;
             SetStateHover();
-            currentTooltip = Spawner.NewTooltip(tooltipText, transform.position);
+            currentTooltip = Spawner.NewTooltip(tooltipText);
         }
 
         private void OnHoverExit()

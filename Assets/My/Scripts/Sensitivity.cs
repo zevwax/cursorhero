@@ -7,6 +7,11 @@ namespace ZevWaxGames.CursorHero
             tooltipText = "Increase Sensitivity";
             base.Start();
         }
-        public override void ButtonAction() => MainCharacter.Instance.Sensitivity += 0.5f;
+
+        public override void ButtonAction()
+        {
+            MainCharacter.Instance.Sensitivity += 0.5f;
+            base.ButtonAction();
+        }
     }
 }

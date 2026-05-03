@@ -18,7 +18,7 @@ namespace ZevWaxGames.CursorHero
 
         private void Update()
         {
-            bool shouldBeActive = ProgressBar.Instance != null && ProgressBar.Instance.value >= 1f;
+            bool shouldBeActive = ProgressBar.Instance != null && ProgressBar.Instance.Value >= 1f;
 
             if (shouldBeActive)
             {

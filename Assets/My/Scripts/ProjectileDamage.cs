@@ -6,6 +6,11 @@ namespace ZevWaxGames.CursorHero
             iconPath = "My/My/Sprites/btn_upgrade_dmg";
             base.Start();
         }
-        public override void ButtonAction() => MainCharacter.Instance.ProjectileDamage += 1f;
+
+        public override void ButtonAction()
+        {
+            MainCharacter.Instance.ProjectileDamage += 1f;
+            base.ButtonAction();
+        }
     }
 }

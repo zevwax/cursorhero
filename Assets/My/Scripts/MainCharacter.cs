@@ -5,22 +5,28 @@ namespace ZevWaxGames.CursorHero
 {
     public class MainCharacter : Cursor
     {
+        public static MainCharacter Instance { get; private set; }
         public bool is_trackable = true;
         public float ProjectileDamage = 1f;
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 8f;
         public float Firerate = 8f;
-        public static MainCharacter Instance { get; private set; }
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
+            EventHolder.OnChoosingStarted += Disable;
+            EventHolder.OnChoosingFinished += Enable;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Born;
+            EventHolder.OnChoosingStarted -= Disable;
+            EventHolder.OnChoosingFinished -= Enable;
         }
         private void Start()
         {
+            Instance = this;
+            
             HP = 10f;
             
             gun = Guns.Library[GunName.Yellow];
@@ -34,8 +40,6 @@ namespace ZevWaxGames.CursorHero
             
             lastMousePos = GetMousePos();
             virtualPos = rb.position;
-            
-            Instance = this;
             
             base.Start();
         }
@@ -90,30 +94,35 @@ namespace ZevWaxGames.CursorHero
         public void Born()
         {
             HP = 10;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_arrow");
-            is_trackable = true;
-            
-            StartCoroutine(ShootingRoutine());
-        }
-        private void StartChoosing()
-        {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_link");
-            is_trackable = false;
-        }
-        private void StopChoosing()
-        {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_arrow");
-            is_trackable = true;
+            Enable();
         }
         protected override void Die()
         {
             if (is_trackable)
             {
-                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_wait");
-                is_trackable = false;
+                /*GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_wait");*/
+                Disable();
                 Spawner.NewSoul(transform.position);
                 EventHolder.OnPlayerDie?.Invoke();
             }
+        }
+        private void Enable()
+        {
+            is_trackable = true;
+            SetArrow();
+            StartCoroutine(ShootingRoutine());
+        }
+        private void Disable()
+        {
+            is_trackable = false;
+        }
+        public void SetArrow()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_arrow");
+        }
+        public void SetLink()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_link");
         }
     }
 }

@@ -57,7 +57,9 @@ namespace ZevWaxGames.CursorHero
         }
         private void Enable()
         {
+            targetObj = mainCharacter.gameObject;
             col.enabled = true;
+            StartCoroutine(ShootingRoutine());
         }
         private void Disable()
         {
