@@ -1,38 +1,145 @@
+using UnityEngine;
+using UnityEngine.UI;
+
 namespace ZevWaxGames.CursorHero
 {
-    using UnityEngine;
-
     public abstract class Projectile : MonoBehaviour
     {
+        private static Texture2D _editableTexture;
         protected float damage;
         public float speed;
         public Vector3 direction;
+        private Collider2D col;
+
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Die;
+            EventHolder.OnChoosingStarted += Disable;
+            EventHolder.OnChoosingFinished += Enable;
+            EventHolder.OnPlayerDie += Disable;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Die;
+            EventHolder.OnChoosingStarted -= Disable;
+            EventHolder.OnChoosingFinished -= Enable;
+            EventHolder.OnPlayerDie -= Disable;
         }
+
         protected virtual void Start()
         {
+            col = GetComponent<Collider2D>();
             Setup();
         }
+
         protected abstract void Setup();
+
         public void Launch(Vector3 launchDirection)
         {
             direction = launchDirection.normalized;
         }
+
         protected virtual void Update()
         {
             transform.position += direction * speed * Time.deltaTime;
         }
+
         protected void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.GetComponent<Cursor>() != null)
+            {
                 other.gameObject.GetComponent<Cursor>().HP -= damage;
+                DrawBloodOnWallpaper(other.transform.position);
+            }
             Die();
+        }
+
+        private void DrawBloodOnWallpaper(Vector3 hitPosition)
+        {
+            GameObject wallObj = GameObject.Find("Wallpapers");
+            if (wallObj == null) return;
+
+            Image wallImage = wallObj.GetComponent<Image>();
+            RectTransform rectTransform = wallObj.GetComponent<RectTransform>();
+
+            if (_editableTexture == null)
+            {
+                Texture2D originalTex = wallImage.sprite.texture;
+                _editableTexture = Instantiate(originalTex);
+                
+                wallImage.sprite = Sprite.Create(
+                    _editableTexture, 
+                    new Rect(0, 0, _editableTexture.width, _editableTexture.height), 
+                    new Vector2(0.5f, 0.5f)
+                );
+            }
+
+            Texture2D tex = _editableTexture;
+
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                rectTransform, 
+                Camera.main.WorldToScreenPoint(hitPosition), 
+                Camera.main, 
+                out localPoint
+            );
+
+            float xInsideRect = localPoint.x + (rectTransform.rect.width * rectTransform.pivot.x);
+            float yInsideRect = localPoint.y + (rectTransform.rect.height * rectTransform.pivot.y);
+
+            int dropletsCount = Random.Range(12, 16);
+            Color bloodColor = new Color(0.7f, 0, 0, 1f);
+
+            for (int i = 0; i < dropletsCount; i++)
+            {
+                float forwardShift = i * Random.Range(6f, 7f);
+                float sideShift = Random.Range(-12f, 12f);
+
+                Vector2 tangent = new Vector2(-direction.y, direction.x);
+                
+                Vector2 dropPos = new Vector2(xInsideRect, yInsideRect) 
+                                  + (new Vector2(direction.x, direction.y) * forwardShift) 
+                                  + (tangent * sideShift);
+
+                int pxCenter = (int)((dropPos.x / rectTransform.rect.width) * tex.width);
+                int pyCenter = (int)((dropPos.y / rectTransform.rect.height) * tex.height);
+
+                int radius = Random.Range(2, 7 - (i / 2));
+                if (radius < 1) radius = 1;
+
+                DrawCircle(tex, pxCenter, pyCenter, radius, bloodColor);
+            }
+
+            tex.Apply();
+        }
+
+        private void DrawCircle(Texture2D tex, int cx, int cy, int r, Color color)
+        {
+            for (int x = -r; x < r; x++)
+            {
+                for (int y = -r; y < r; y++)
+                {
+                    if (x * x + y * y <= r * r)
+                    {
+                        int px = cx + x;
+                        int py = cy + y;
+
+                        if (px >= 0 && px < tex.width && py >= 0 && py < tex.height)
+                        {
+                            Color currentColor = tex.GetPixel(px, py);
+                            tex.SetPixel(px, py, Color.Lerp(currentColor, color, 0.85f));
+                        }
+                    }
+                }
+            }
+        }
+        private void Enable()
+        {
+            col.enabled = true;
+        }
+        private void Disable()
+        {
+            col.enabled = false;
         }
         private void Die()
         {

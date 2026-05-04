@@ -13,12 +13,13 @@ namespace ZevWaxGames.CursorHero
         protected Rigidbody2D rb;
         protected Vector2 lastMousePos;
         protected Vector2 virtualPos;
-        protected MainCharacter mainCharacter;
+        protected static MainCharacter mainCharacter;
+        protected Coroutine shootingRoutine;
 
         protected void Start()
         {
             mainCharacter = MainCharacter.Instance;
-            StartCoroutine(ShootingRoutine());
+            StartShooting();
         }
         protected virtual void Update()
         {
@@ -31,6 +32,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected IEnumerator ShootingRoutine()
         {
+            yield return new WaitForSeconds(1);
             while (mainCharacter.is_trackable)
             {
                 if (targetObj != null && gun != null)
@@ -46,6 +48,12 @@ namespace ZevWaxGames.CursorHero
         protected virtual void Die()
         {
             throw new System.NotImplementedException();
+        }
+        protected void StartShooting()
+        {
+            if (shootingRoutine != null)
+                StopCoroutine(shootingRoutine);
+            shootingRoutine = StartCoroutine(ShootingRoutine());
         }
     }
 }

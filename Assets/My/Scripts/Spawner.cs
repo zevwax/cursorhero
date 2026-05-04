@@ -206,6 +206,45 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
+        public static GameObject NewHealthBar()
+        {
+            var obj = new GameObject("HealthBar");
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.sortingLayerName = "Pointer";
+
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(9, 1);
+            rectTransform.localScale = new Vector3(0, 0, 1); 
+
+            obj.AddComponent<CanvasScaler>();
+            obj.AddComponent<GraphicRaycaster>();
+            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            var healthBar = obj.AddComponent<HealthBar>();
+    
+            var bgObj = new GameObject("BG");
+            bgObj.transform.SetParent(obj.transform, false);
+            var bgRt = bgObj.AddComponent<RectTransform>();
+            bgRt.anchorMin = Vector2.zero;
+            bgRt.anchorMax = Vector2.one;
+            bgRt.offsetMin = Vector2.zero;
+            bgRt.offsetMax = Vector2.zero;
+            bgObj.AddComponent<Image>().color = Color.black;
+    
+            var fgObj = new GameObject("FG");
+            fgObj.transform.SetParent(obj.transform, false);
+            var fgRt = fgObj.AddComponent<RectTransform>();
+            fgRt.anchorMin = Vector2.zero;
+            fgRt.anchorMax = Vector2.one;
+            fgRt.offsetMin = Vector2.zero;
+            fgRt.offsetMax = Vector2.zero;
+            fgObj.AddComponent<Image>().color = Color.red;
+    
+            healthBar.Setup(fgRt);
+
+            return obj;
+        }
 
         public static GameObject NewPlayButton(Vector2 pos)
         {

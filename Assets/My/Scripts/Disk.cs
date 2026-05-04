@@ -33,6 +33,7 @@ namespace ZevWaxGames.CursorHero
         
         private void Start()
         {
+            gameObject.layer = LayerMask.NameToLayer("Disk");
             rb = GetComponent<Rigidbody2D>();
             sr = GetComponent<SpriteRenderer>();
             col = GetComponent<Collider2D>();

@@ -40,6 +40,8 @@ namespace ZevWaxGames.CursorHero
             
             lastMousePos = GetMousePos();
             virtualPos = rb.position;
+
+            Spawner.NewHealthBar();
             
             base.Start();
         }
@@ -110,7 +112,7 @@ namespace ZevWaxGames.CursorHero
         {
             is_trackable = true;
             SetArrow();
-            StartCoroutine(ShootingRoutine());
+            StartShooting();
         }
         private void Disable()
         {
