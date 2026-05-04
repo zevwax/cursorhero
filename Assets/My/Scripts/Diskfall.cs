@@ -1,24 +1,36 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ZevWaxGames.CursorHero
 {
     public class Diskfall : MonoBehaviour
     {
-        [SerializeField] private float spawnRate = 0.005f;
-        [SerializeField] private float spawnRangeX = 20f;
+        private float spawnRate = 0.01f;
+        private float spawnRangeX = 20f;
+        private Queue<GameObject> diskPool = new Queue<GameObject>();
         private Transform poolContainer;
+        private int poolSize = 500;
         private float spawnTimer;
         private bool isActive;
 
         private void Start()
         {
             poolContainer = new GameObject("DiskPool").transform;
-            poolContainer.SetParent(transform);
+            poolContainer.transform.position = new Vector3(0f, 0f, 0f);
+            poolContainer.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            poolContainer.transform.localScale = new Vector3(1f, 1f, 1f);
+            for (int i = 0; i < poolSize; i++)
+            {
+                var disk = Spawner.NewFallingDisk(Vector2.zero);
+                disk.transform.SetParent(poolContainer);
+                disk.SetActive(false);
+                diskPool.Enqueue(disk);
+            }
         }
 
         private void Update()
         {
-            bool shouldBeActive = ProgressBar.Instance != null && ProgressBar.Instance.Value >= 1f;
+            var shouldBeActive = ProgressBar.Instance != null && ProgressBar.Instance.Value >= 1f;
 
             if (shouldBeActive)
             {
@@ -34,24 +46,22 @@ namespace ZevWaxGames.CursorHero
             else if (isActive)
             {
                 isActive = false;
-                ClearPool();
+                DeactivateAll();
             }
         }
 
         private void SpawnFallingDisk()
         {
-            float randomX = Random.Range(-spawnRangeX, spawnRangeX);
-            float spawnY = 7f; 
-            GameObject disk = Spawner.NewFallingDisk(new Vector2(randomX, spawnY));
-            disk.transform.SetParent(poolContainer);
+            if (diskPool.Count == 0) return;
+            var disk = diskPool.Dequeue();
+            disk.GetComponent<FallingDisk>().Refresh();
+            diskPool.Enqueue(disk);
         }
 
-        private void ClearPool()
+        private void DeactivateAll()
         {
-            foreach (Transform child in poolContainer)
-            {
-                Destroy(child.gameObject);
-            }
+            foreach (Transform disk in poolContainer)
+                disk.GetComponent<FallingDisk>().Die();
         }
     }
 }

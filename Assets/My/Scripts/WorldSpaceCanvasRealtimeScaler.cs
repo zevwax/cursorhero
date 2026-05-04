@@ -3,12 +3,12 @@ using UnityEngine;
 namespace ZevWaxGames.CursorHero
 {
     [RequireComponent(typeof(Canvas))]
-    public class WorldSpaceCanvasScaler : MonoBehaviour
+    public class WorldSpaceCanvasRealtimeScaler : MonoBehaviour
     {
         [SerializeField] private AspectRatioHandler ratioHandler;
         private RectTransform rectTransform;
 
-        void Start()
+        private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
             
@@ -18,15 +18,15 @@ namespace ZevWaxGames.CursorHero
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (ratioHandler == null || rectTransform == null) return;
             
             float worldHeight = ratioHandler.Height * 2f;
             float worldWidth = ratioHandler.Width * 2f;
             
-            float scaleX = worldWidth / rectTransform.rect.width;
-            float scaleY = worldHeight / rectTransform.rect.height;
+            float scaleX = worldWidth / 480;
+            float scaleY = worldHeight / 270;
             
             rectTransform.localScale = new Vector3(scaleX, scaleY, 1f);
         }

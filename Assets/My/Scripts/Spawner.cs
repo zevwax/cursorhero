@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -121,57 +122,88 @@ namespace ZevWaxGames.CursorHero
         
         public static GameObject NewFallingDisk(Vector2 pos)
         {
-            GameObject obj = new GameObject("FallingDisk");
-            obj.transform.position = new Vector3(pos.x, pos.y, 0);
-    
-            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
-            sr.sprite = Resources.Load<Sprite>("My/My/Sprites/disk");
-            sr.sortingLayerName = "FallingDisks";
-
-            obj.AddComponent<FallingDisk>();
+            var obj = new GameObject("FallingDisk");
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.sortingLayerName = "FallingDisks";
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(15, 15);
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasOnInitScaler>();
+            var fallingDisk = obj.AddComponent<FallingDisk>();
+            
+            var imageObj = new GameObject("Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/disk");
+            imageObj.AddComponent<CanvasRenderer>();
+            
             return obj;
         }
         
         public static GameObject NewTooltip(string text)
         {
-            var canvasObj = GameObject.Find("Tooltip Canvas");
-            if (canvasObj == null) throw new System.Exception("canvas not found");
+            var obj = new GameObject("Tooltip");
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.sortingLayerName = "Tooltips";
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(90, 30);
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            var tooltip = obj.AddComponent<Tooltip>();
             
-            GameObject obj = new GameObject("Tooltip");
-            obj.transform.SetParent(canvasObj.transform, false);
+            var imageObj = new GameObject("Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/tooltip");
+            image.type = Image.Type.Sliced;
+            imageObj.AddComponent<CanvasRenderer>();
             
-            RectTransform rt = obj.AddComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(200, 50);
-            rt.anchorMin = new Vector2(0.5f, 0.5f);
-            rt.anchorMax = new Vector2(0.5f, 0.5f);
-            rt.pivot = new Vector2(0.5f, 0.5f);
+            var textObj = new GameObject("Text");
+            textObj.transform.SetParent(imageObj.transform, false);
+            var textRt = textObj.AddComponent<RectTransform>();
+            textRt.anchorMin = Vector2.zero;
+            textRt.anchorMax = Vector2.one;
+            textRt.offsetMin = new Vector2(2, 2);
+            textRt.offsetMax = new Vector2(-2, -2);
             
-            UnityEngine.UI.Image bgImage = obj.AddComponent<UnityEngine.UI.Image>();
-            bgImage.color = new Color(0, 0, 0, 0.6f);
+            var textTxt = textObj.AddComponent<TextMeshProUGUI>();
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt");
+            textTxt.text = text;
+            textTxt.alignment = TextAlignmentOptions.Center;
+            textTxt.color = Color.black;
+            textTxt.enableAutoSizing = true;
+            textTxt.fontSizeMin = ushort.MinValue;
+            textTxt.fontSizeMax = ushort.MaxValue;
+            textTxt.raycastTarget = false;
             
-            GameObject textObj = new GameObject("Text");
-            textObj.transform.SetParent(obj.transform, false);
-            
-            RectTransform textRt = textObj.AddComponent<RectTransform>();
-            textRt.sizeDelta = new Vector2(200, 50); 
-            textRt.anchorMin = new Vector2(0.5f, 0.5f);
-            textRt.anchorMax = new Vector2(0.5f, 0.5f);
-            textRt.pivot = new Vector2(0.5f, 0.5f);
-            textRt.anchoredPosition = Vector2.zero;
-            
-            TextMeshProUGUI t = textObj.AddComponent<TextMeshProUGUI>();
-            t.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma");
-            t.text = text;
-            t.alignment = TextAlignmentOptions.Center;
-            t.color = Color.white;
-            t.fontSize = 18;
-            t.raycastTarget = false;
-            
-            Tooltip tooltip = obj.AddComponent<Tooltip>();
-            tooltip.textComponent = t;
-            tooltip.rectTransform = rt;
-            tooltip.gap = 60f;
-
             return obj;
         }
 

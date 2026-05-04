@@ -112,6 +112,8 @@ namespace ZevWaxGames.CursorHero
             {
                 if (rainbowSequence != null)
                 {
+                    transform.parent.GetComponent<Canvas>().sortingLayerName = "ProgressBarBG";
+                    
                     rainbowSequence.Kill();
                     rainbowSequence = null;
 
@@ -123,6 +125,8 @@ namespace ZevWaxGames.CursorHero
 
         private void StartRainbowAnimation()
         {
+            transform.parent.GetComponent<Canvas>().sortingLayerName = "ProgressBarFG";
+            
             EventHolder.OnChoosingStarted?.Invoke();
             
             rainbowColor = deepBlue;

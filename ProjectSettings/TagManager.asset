@@ -44,6 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 2895773915
     locked: 0
+  - name: ProgressBarBG
+    uniqueID: 3518818291
+    locked: 0
   - name: RealDisks
     uniqueID: 482455791
     locked: 0
@@ -58,6 +61,9 @@ TagManager:
     locked: 0
   - name: FallingDisks
     uniqueID: 2868427883
+    locked: 0
+  - name: ProgressBarFG
+    uniqueID: 1420179229
     locked: 0
   - name: Windows
     uniqueID: 4063274577
