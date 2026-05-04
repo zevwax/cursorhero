@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -13,14 +15,14 @@ namespace ZevWaxGames.CursorHero
 
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Die;
+            EventHolder.OnRunStarted += Clean;
             EventHolder.OnChoosingStarted += Disable;
             EventHolder.OnChoosingFinished += Enable;
             EventHolder.OnPlayerDie += Disable;
         }
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Die;
+            EventHolder.OnRunStarted -= Clean;
             EventHolder.OnChoosingStarted -= Disable;
             EventHolder.OnChoosingFinished -= Enable;
             EventHolder.OnPlayerDie -= Disable;
@@ -53,7 +55,6 @@ namespace ZevWaxGames.CursorHero
             }
             Die();
         }
-
         private void DrawBloodOnWallpaper(Vector3 hitPosition)
         {
             GameObject wallObj = GameObject.Find("Wallpapers");
@@ -112,7 +113,6 @@ namespace ZevWaxGames.CursorHero
 
             tex.Apply();
         }
-
         private void DrawCircle(Texture2D tex, int cx, int cy, int r, Color color)
         {
             for (int x = -r; x < r; x++)
@@ -133,6 +133,36 @@ namespace ZevWaxGames.CursorHero
                 }
             }
         }
+        public void RefreshWallpapers()
+        {
+            // 1. Load the clean data source
+            var cleanSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Bliss");
+            if (cleanSprite == null) return;
+
+            var wallObj = GameObject.Find("Wallpapers");
+            if (wallObj == null) return;
+            var wallImage = wallObj.GetComponent<Image>();
+
+            // 2. If we don't have an editable texture yet, create it now
+            if (_editableTexture == null)
+            {
+                _editableTexture = Instantiate(cleanSprite.texture);
+            }
+            else
+            {
+                // 3. Otherwise, copy the clean pixels into our existing editable texture
+                Graphics.CopyTexture(cleanSprite.texture, _editableTexture);
+                _editableTexture.Apply();
+            }
+
+            // 4. IMPORTANT: Ensure the UI Image is using a sprite created FROM our editable texture
+            // If we just set it to cleanSprite, we can't draw on it anymore.
+            wallImage.sprite = Sprite.Create(
+                _editableTexture, 
+                new Rect(0, 0, _editableTexture.width, _editableTexture.height), 
+                new Vector2(0.5f, 0.5f)
+            );
+        }
         private void Enable()
         {
             col.enabled = true;
@@ -140,6 +170,11 @@ namespace ZevWaxGames.CursorHero
         private void Disable()
         {
             col.enabled = false;
+        }
+        private void Clean()
+        {
+            RefreshWallpapers();
+            Die();
         }
         private void Die()
         {

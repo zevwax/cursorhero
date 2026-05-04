@@ -32,7 +32,7 @@ namespace ZevWaxGames.CursorHero
 
         public static GameObject NewMainCharacter(Vector2 pos)
         {
-            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/default_arrow", 9f, 18f, 11f - 16f, 7f - 16f);
+            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/default_arrow", 11f, 20f, 10f - 16f, 6f - 16f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Pointer";
             return obj;
         }
@@ -215,7 +215,7 @@ namespace ZevWaxGames.CursorHero
             canvas.sortingLayerName = "Pointer";
 
             var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(9, 1);
+            rectTransform.sizeDelta = new Vector2(11, 1);
             rectTransform.localScale = new Vector3(0, 0, 1); 
 
             obj.AddComponent<CanvasScaler>();

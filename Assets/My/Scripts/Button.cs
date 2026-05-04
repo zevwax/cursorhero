@@ -29,6 +29,7 @@ namespace ZevWaxGames.CursorHero
             iconObj.transform.localPosition = Vector3.zero;
             
             iconSr = iconObj.AddComponent<SpriteRenderer>();
+            iconSr.sortingLayerName = "Buttons";
             iconSr.sprite = Resources.Load<Sprite>(iconPath);
             iconSr.sortingOrder = boxSr.sortingOrder + 1;
 
