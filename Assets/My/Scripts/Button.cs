@@ -24,9 +24,9 @@ namespace ZevWaxGames.CursorHero
             
             myCollider = GetComponent<Collider2D>();
 
-            GameObject iconObj = new GameObject("Icon");
+            var iconObj = new GameObject("Icon");
             iconObj.transform.SetParent(transform);
-            iconObj.transform.localPosition = Vector3.zero;
+            iconObj.transform.localPosition = new Vector3(-0.045f, 0.065f, 0);
             
             iconSr = iconObj.AddComponent<SpriteRenderer>();
             iconSr.sortingLayerName = "Buttons";

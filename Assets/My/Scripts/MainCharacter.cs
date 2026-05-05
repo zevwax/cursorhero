@@ -9,8 +9,7 @@ namespace ZevWaxGames.CursorHero
         public bool is_trackable = true;
         public float ProjectileDamage = 1f;
         public float ProjectileSpeed = 6f;
-        public float Sensitivity = 8f;
-        public float Firerate = 8f;
+        public float Sensitivity = 0.3f;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -65,9 +64,9 @@ namespace ZevWaxGames.CursorHero
         {
             for(int i = 0; i < 12; i++) 
             {
-                virtualMousePixels += Mouse.current.delta.ReadValue();
+                virtualMousePixels += Mouse.current.delta.ReadValue() * Sensitivity;
             }
-            return Camera.main.ScreenToWorldPoint((Vector3)virtualMousePixels + Vector3.forward * Sensitivity);
+            return Camera.main.ScreenToWorldPoint((Vector3)virtualMousePixels + Vector3.forward);
         }
         public GameObject GetClosestEnemy()
         {
@@ -96,6 +95,10 @@ namespace ZevWaxGames.CursorHero
         public void Born()
         {
             HP = 10;
+            ProjectileDamage = 1f;
+            ProjectileSpeed = 6f;
+            Sensitivity = 0.3f;
+            Guns.Library[GunName.Yellow].Cooldown = 2f;
             Enable();
         }
         protected override void Die()

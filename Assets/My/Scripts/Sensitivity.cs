@@ -10,7 +10,7 @@ namespace ZevWaxGames.CursorHero
 
         public override void ButtonAction()
         {
-            MainCharacter.Instance.Sensitivity += 0.5f;
+            MainCharacter.Instance.Sensitivity += 0.2f;
             base.ButtonAction();
         }
     }

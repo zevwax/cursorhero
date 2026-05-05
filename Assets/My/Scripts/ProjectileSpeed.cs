@@ -10,7 +10,7 @@ namespace ZevWaxGames.CursorHero
 
         public override void ButtonAction()
         {
-            MainCharacter.Instance.ProjectileSpeed += 1f;
+            MainCharacter.Instance.ProjectileSpeed += 3f;
             base.ButtonAction();
         }
     }

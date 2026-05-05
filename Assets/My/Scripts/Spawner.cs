@@ -273,6 +273,7 @@ namespace ZevWaxGames.CursorHero
         private static GameObject CreateBaseButton<T>(Vector2 pos, string name) where T : Button
         {
             GameObject obj = NewEntity<T>(pos, name, "My/My/Sprites/btn", 32f, 32f, -16f, -16f);
+            //obj.transform.localScale = new Vector3(32f/30f, 32f/30f, 1f);
             obj.layer = LayerMask.NameToLayer("Button");
             var sr = obj.GetComponent<SpriteRenderer>();
             sr.sortingLayerName = "Buttons";

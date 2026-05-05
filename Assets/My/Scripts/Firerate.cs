@@ -10,7 +10,7 @@ namespace ZevWaxGames.CursorHero
 
         public override void ButtonAction()
         {
-            Guns.Library[GunName.Yellow].Cooldown -= 0.1f;
+            Guns.Library[GunName.Yellow].Cooldown *= 0.666f;
             base.ButtonAction();
         }
     }

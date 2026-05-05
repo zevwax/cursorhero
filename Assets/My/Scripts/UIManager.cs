@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -40,9 +41,16 @@ namespace ZevWaxGames.CursorHero
         private void ShowChooseAnUpgradeWindow()
         {
             chooseAnUpgradeWindow.SetActive(true);
-            btns[0] = Spawner.NewUpgradeButton("Damage", new Vector2(-2f, 0f));
-            btns[1] = Spawner.NewUpgradeButton("FireRate", Vector2.zero);
-            btns[2] = Spawner.NewUpgradeButton("Speed", new Vector2(2f, 0f));
+            var buttons = GetThreeRandom
+            (
+                "Damage",
+                "FireRate",
+                "Speed",
+                "Sensitivity"
+            );
+            btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2f, 0f));
+            btns[1] = Spawner.NewUpgradeButton(buttons[1], Vector2.zero);
+            btns[2] = Spawner.NewUpgradeButton(buttons[2], new Vector2(2f, 0f));
         }
         private void HideChooseAnUpgradeWindow()
         {
@@ -55,6 +63,11 @@ namespace ZevWaxGames.CursorHero
         {
             tryAgainWindow.SetActive(false);
             Destroy(btns[0]);
+        }
+        public T[] GetThreeRandom<T>(params T[] source)
+        {
+            if (source.Length <= 3) return source;
+            return source.OrderBy(x => UnityEngine.Random.value).Take(3).ToArray();
         }
     }
 }
