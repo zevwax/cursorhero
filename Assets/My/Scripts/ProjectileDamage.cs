@@ -4,6 +4,7 @@ namespace ZevWaxGames.CursorHero
     {
         protected override void Start() {
             iconPath = "My/My/Sprites/btn_upgrade_dmg";
+            tooltipText = "Increase Bullet Damage";
             base.Start();
         }
 

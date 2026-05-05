@@ -1,11 +1,13 @@
+using Unity.Mathematics;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 namespace ZevWaxGames.CursorHero
 {
     public abstract class Enemy : Cursor
     {
         [SerializeField] protected float speed = 3f;
-        [SerializeField] protected int disksToDrop = 3;
+        [SerializeField] protected int2 dropRange;
         private Collider2D col;
         private void OnEnable()
         {
@@ -67,10 +69,9 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Die()
         {
+            var disksToDrop = UnityEngine.Random.Range(dropRange.x, dropRange.y+1);
             for (int i = 0; i < disksToDrop; i++)
-            {
                 Spawner.NewDisk(transform.position);
-            }
             Destroy(gameObject);
         }
         private void CleanUp()

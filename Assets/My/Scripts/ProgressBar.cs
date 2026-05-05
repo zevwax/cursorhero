@@ -145,7 +145,10 @@ namespace ZevWaxGames.CursorHero
         {
             value = Mathf.Clamp01(newValue);
         }
-
-        public void ResetValue() => SetValue(0f);
+        public void ResetValue()
+        {
+            Disk.xp *= 0.75f;
+            SetValue(0f);
+        }
     }
 }

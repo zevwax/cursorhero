@@ -10,6 +10,7 @@ namespace ZevWaxGames.CursorHero
         [SerializeField] private float acceleration = 15f;
         [SerializeField] private float slideForce = 1.5f;
         [SerializeField] private float drag = 5f;
+        public static float xp = 0.333f;
         
         private Rigidbody2D rb;
         private SpriteRenderer sr;
@@ -17,7 +18,7 @@ namespace ZevWaxGames.CursorHero
 
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Die;
+            EventHolder.OnRunStarted += Clean;
             EventHolder.OnChoosingStarted += Disable;
             EventHolder.OnChoosingFinished += Enable;
             EventHolder.OnPlayerDie += Disable;
@@ -25,7 +26,7 @@ namespace ZevWaxGames.CursorHero
 
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Die;
+            EventHolder.OnRunStarted -= Clean;
             EventHolder.OnChoosingStarted -= Disable;
             EventHolder.OnChoosingFinished -= Enable;
             EventHolder.OnPlayerDie -= Disable;
@@ -72,7 +73,7 @@ namespace ZevWaxGames.CursorHero
             if (collision.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
             {
                 var pbar = ProgressBar.Instance;
-                pbar.SetValue(pbar.Value + 0.1f);
+                pbar.SetValue(pbar.Value + ExtractXP());
                 Die();
             }
         }
@@ -80,9 +81,18 @@ namespace ZevWaxGames.CursorHero
         private void Enable() => col.enabled = true;
         private void Disable() => col.enabled = false;
 
+        private void Clean()
+        {
+            xp = 0.2f;
+            Die();
+        }
         private void Die()
         {
             Destroy(gameObject);
+        }
+        private float ExtractXP()
+        {
+            return xp;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace ZevWaxGames.CursorHero
         }
         private void DrawBloodOnWallpaper(Vector3 hitPosition)
         {
-            GameObject wallObj = GameObject.Find("Wallpapers");
+            var wallObj = GameObject.Find("Blood Canvas");
             if (wallObj == null) return;
 
             Image wallImage = wallObj.GetComponent<Image>();
@@ -136,10 +136,10 @@ namespace ZevWaxGames.CursorHero
         public void RefreshWallpapers()
         {
             // 1. Load the clean data source
-            var cleanSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Bliss");
+            var cleanSprite = Resources.Load<Sprite>("My/My/Sprites/blood_canvas");
             if (cleanSprite == null) return;
 
-            var wallObj = GameObject.Find("Wallpapers");
+            var wallObj = GameObject.Find("Blood Canvas");
             if (wallObj == null) return;
             var wallImage = wallObj.GetComponent<Image>();
 

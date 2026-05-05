@@ -4,7 +4,7 @@ namespace ZevWaxGames.CursorHero
     {
         protected override void Start() {
             iconPath = "My/My/Sprites/btn_upgrade_cdn";
-            tooltipText = "Decrease Cooldown";
+            tooltipText = "Increase Fire Rate";
             base.Start();
         }
 

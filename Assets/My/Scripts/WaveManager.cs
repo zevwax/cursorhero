@@ -1,151 +1,197 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 namespace ZevWaxGames.CursorHero
 {
     public class WaveManager : MonoBehaviour
     {
-        [Header("Wave Settings")]
-        public float waveDuration = 30f;
-        public float spawnRate = 1f;
-        public float initialDifficultyPoints = 1000f;
-        
-        [Header("Scaling Pattern")]
-        public float difficultyMultiplierX = 10f;
-        public float[] pattern = { 3f, 8f, 1f };
-        
-        [Header("Unlock Waves")]
-        public int yellowUnlockWave = 2;
-        public int cyanUnlockWave = 4;
-
-        private int patternIndex = 0;
-        private int currentWave = 1;
-        private float currentTotalPoints;
-        private float waveBudget;
+        private List<WaveConfig> waves = new List<WaveConfig>();
+        private int currentWaveIndex = 0;
+        private float waveStartTime = 0;
+        private float loopSpeedMultiplier = 1f;
         private AspectRatioHandler aspectHandler;
         private Coroutine spawnCoroutine;
-        private Coroutine waveCoroutine;
 
         private void Awake()
         {
             aspectHandler = Camera.main.GetComponent<AspectRatioHandler>();
+            SetupWaves();
         }
 
-        private void OnEnable()
+        private void OnEnable() => EventHolder.OnRunStarted += StartManager;
+        private void OnDisable() => EventHolder.OnRunStarted -= StartManager;
+
+        private void SetupWaves()
         {
-            EventHolder.OnRunStarted += Refresh;
+            waves.Clear();
+
+            waves.Add(new WaveConfig {
+                duration = 20f,
+                spawnRate = 2.5f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 4,
+                maxEnemiesPerSpawn = 1,
+                yellowLimit = 0,
+                cyanLimit = 0,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Bliss")
+            });
+
+            waves.Add(new WaveConfig {
+                duration = 20f,
+                spawnRate = 4f,
+                spawnWhiteMobAtStart = false,
+                maxEnemiesPerSpawn = 3,
+                yellowLimit = 1,
+                cyanLimit = 0
+            });
+
+            waves.Add(new WaveConfig {
+                duration = 20f,
+                spawnRate = 5f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 8,
+                maxEnemiesPerSpawn = 4,
+                yellowLimit = 5,
+                cyanLimit = 0
+            });
+
+            waves.Add(new WaveConfig {
+                duration = 20f,
+                spawnRate = 6f,
+                spawnWhiteMobAtStart = false,
+                whiteMobSize = 8,
+                maxEnemiesPerSpawn = 4,
+                yellowLimit = 999,
+                cyanLimit = 1,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Autumn")
+            });
+
+            waves.Add(new WaveConfig {
+                duration = 20f,
+                spawnRate = 5f,
+                spawnWhiteMobAtStart = false,
+                whiteMobSize = 8,
+                maxEnemiesPerSpawn = 4,
+                yellowLimit = 999,
+                cyanLimit = 5
+            });
+
+            waves.Add(new WaveConfig {
+                duration = 20f,
+                spawnRate = 4f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 8,
+                maxEnemiesPerSpawn = 4,
+                yellowLimit = 0,
+                cyanLimit = 999
+            });
         }
 
-        private void OnDisable()
+        private void StartManager()
         {
-            EventHolder.OnRunStarted -= Refresh;
+            Clock.Instance.Refresh(); //Doesnt matter w/ this row or without: it skips the 1st wave
+            currentWaveIndex = 0;
+            loopSpeedMultiplier = 1f;
+            StartWave(0);
         }
 
-        private void Start()
+        private void Update()
         {
-            Refresh();
+            if (waves.Count == 0 || Clock.Instance == null) return;
+
+            float currentTime = Clock.Instance.ElapsedTime;
+            float currentWaveDuration = waves[currentWaveIndex].duration / loopSpeedMultiplier;
+
+            if (currentTime - waveStartTime >= currentWaveDuration)
+            {
+                NextWave();
+            }
         }
 
-        public void Refresh()
+        private void NextWave()
         {
+            currentWaveIndex++;
+            if (currentWaveIndex >= waves.Count)
+            {
+                currentWaveIndex = 0;
+                loopSpeedMultiplier *= 2f; 
+            }
+            StartWave(currentWaveIndex);
+        }
+
+        private void StartWave(int index)
+        {
+            waveStartTime = Clock.Instance.ElapsedTime;
+            WaveConfig config = waves[index];
+
+            if (config.backgroundSprite != null)
+                StartCoroutine(RefreshWallpapers(config.backgroundSprite));
+            
             if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
-            if (waveCoroutine != null) StopCoroutine(waveCoroutine);
+            spawnCoroutine = StartCoroutine(SpawnRoutine(config));
 
-            patternIndex = 0;
-            currentWave = 1;
-            currentTotalPoints = initialDifficultyPoints;
-            waveBudget = initialDifficultyPoints;
-
-            spawnCoroutine = StartCoroutine(SpawnRoutine());
-            waveCoroutine = StartCoroutine(WaveRoutine());
-        }
-
-        private IEnumerator SpawnRoutine()
-        {
-            while (true)
+            if (config.spawnWhiteMobAtStart)
             {
-                SpawnEnemies();
-                yield return new WaitForSeconds(spawnRate);
+                for (int i = 0; i < config.whiteMobSize; i++)
+                    Spawner.NewWhite(GetRandomPos());
             }
         }
 
-        private IEnumerator WaveRoutine()
+        private IEnumerator SpawnRoutine(WaveConfig config)
         {
+            float adjustedRate = config.spawnRate / loopSpeedMultiplier;
             while (true)
             {
-                yield return new WaitForSeconds(waveDuration);
-
-                float increase = pattern[patternIndex] * difficultyMultiplierX;
-                currentTotalPoints += increase;
-                waveBudget = currentTotalPoints;
-                
-                patternIndex = (patternIndex + 1) % pattern.Length;
-                currentWave++;
-            }
-        }
-
-        private void SpawnEnemies()
-        {
-            var seed = Random.Range(0, (int)waveDuration);
-            var numberOfEnemies = 0;
-            if (seed == 0)
-                numberOfEnemies = 10;
-            else if (seed <= 5)
-                numberOfEnemies = 5;
-            else if (seed <= 15)
-                numberOfEnemies = 1;
-
-            for (var i = 0; i < numberOfEnemies; i++)
-            {
-                if (waveBudget >= 100)
+                yield return new WaitForSeconds(adjustedRate);
+                int spawnCount = Random.Range(1, config.maxEnemiesPerSpawn + 1);
+                for (int i = 0; i < spawnCount; i++)
                 {
-                    List<int> availableChoices = new List<int> { 0 };
-                    if (currentWave >= yellowUnlockWave) availableChoices.Add(1);
-                    if (currentWave >= cyanUnlockWave) availableChoices.Add(2);
-
-                    int choice = availableChoices[Random.Range(0, availableChoices.Count)];
-
-                    switch (choice)
-                    {
-                        case 0:
-                            Spawner.NewWhite(GetRandomPos());
-                            waveBudget -= 100;
-                            break;
-                        case 1:
-                            Spawner.NewYellow(GetRandomPos());
-                            waveBudget -= 120;
-                            break;
-                        case 2:
-                            Spawner.NewCyan(GetRandomPos());
-                            waveBudget -= 200;
-                            break;
-                    }
+                    SpawnRandomEnemy(config);
                 }
-                else
-                    break;
             }
+        }
+
+        private void SpawnRandomEnemy(WaveConfig config)
+        {
+            int choice = Random.Range(0, 3); 
+
+            if (choice == 2 && GetActiveCount<Cyan>() < config.cyanLimit)
+                Spawner.NewCyan(GetRandomPos());
+            else if (choice == 1 && GetActiveCount<Yellow>() < config.yellowLimit)
+                Spawner.NewYellow(GetRandomPos());
+            else
+                Spawner.NewWhite(GetRandomPos());
+        }
+
+        private int GetActiveCount<T>() where T : MonoBehaviour
+        {
+            return Object.FindObjectsByType<T>(FindObjectsSortMode.None).Length;
         }
 
         public Vector2 GetRandomPos()
         {
             if (aspectHandler == null) return Vector2.zero;
-
             int side = Random.Range(0, 4);
             float buffer = 1f;
-
             switch (side)
             {
-                case 0:
-                    return new Vector2(-aspectHandler.Width - buffer, Random.Range(-aspectHandler.Height, aspectHandler.Height));
-                case 1:
-                    return new Vector2(aspectHandler.Width + buffer, Random.Range(-aspectHandler.Height, aspectHandler.Height));
-                case 2:
-                    return new Vector2(Random.Range(-aspectHandler.Width, aspectHandler.Width), aspectHandler.Height + buffer);
-                case 3:
-                default:
-                    return new Vector2(Random.Range(-aspectHandler.Width, aspectHandler.Width), -aspectHandler.Height - buffer);
+                case 0: return new Vector2(-aspectHandler.Width - buffer, Random.Range(-aspectHandler.Height, aspectHandler.Height));
+                case 1: return new Vector2(aspectHandler.Width + buffer, Random.Range(-aspectHandler.Height, aspectHandler.Height));
+                case 2: return new Vector2(Random.Range(-aspectHandler.Width, aspectHandler.Width), aspectHandler.Height + buffer);
+                default: return new Vector2(Random.Range(-aspectHandler.Width, aspectHandler.Width), -aspectHandler.Height - buffer);
             }
+        }
+        private IEnumerator RefreshWallpapers(Sprite newWallpapers)
+        {
+            var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
+            var wallpapersFG = GameObject.Find("Wallpapers FG").GetComponent<Image>();
+            wallpapersFG.sprite = newWallpapers;
+            yield return wallpapersFG.DOFade(1f, 1f).WaitForCompletion();
+            wallpapersBG.sprite = newWallpapers;
+            wallpapersFG.color = new Color(1, 1, 1, 0);
         }
     }
 }

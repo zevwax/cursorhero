@@ -4,23 +4,26 @@ namespace ZevWaxGames.CursorHero
 {
     public class Clock : MonoBehaviour
     {
+        public static Clock Instance { get; private set; }
         private TextMeshProUGUI clockText;
+        public float ElapsedTime => elapsedTime;
         private float elapsedTime = 0;
-        private bool isRunning = true;
+        private bool isRunning = false;
         private void Awake()
         {
+            Instance = this;
             clockText = GetComponent<TextMeshProUGUI>();
         }
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Refresh;
+            /*EventHolder.OnRunStarted += Refresh;*/
             EventHolder.OnChoosingStarted += Stop;
             EventHolder.OnChoosingFinished += Resume;
             EventHolder.OnPlayerDie += Stop;
         }
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Refresh;
+            /*EventHolder.OnRunStarted -= Refresh;*/
             EventHolder.OnChoosingStarted -= Stop;
             EventHolder.OnChoosingFinished -= Resume;
             EventHolder.OnPlayerDie -= Stop;

@@ -47,19 +47,19 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewWhite(Vector2 pos)
         {
-            var obj = NewEntity<White>(pos, "Enemy", "My/WinXp/Cursor/3dwarro", 9f, 17f, 0f - 16f, 1f - 16f);
+            var obj = NewEntity<White>(pos, "Enemy", "My/WinXp/Cursor/3dwarro", 9f, 17f, 0f - 9/2f, 0f - 17/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static GameObject NewYellow(Vector2 pos)
         {
-            var obj = NewEntity<Yellow>(pos, "Enemy", "My/WinXp/Cursor/3dgarro", 9f, 17f, 0f - 16f, 1f - 16f);
+            var obj = NewEntity<Yellow>(pos, "Enemy", "My/WinXp/Cursor/3dgarro", 9f, 17f, 0f - 9/2f, 0f - 17/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static GameObject NewCyan(Vector2 pos)
         {
-            var obj = NewEntity<Cyan>(pos, "Enemy", "My/WinXp/Cursor/3dsarro", 9f, 17f, 0f - 16f, 1f - 16f);
+            var obj = NewEntity<Cyan>(pos, "Enemy", "My/WinXp/Cursor/3dsarro", 9f, 17f, 0f - 9/2f, 0f - 17/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
@@ -149,7 +149,8 @@ namespace ZevWaxGames.CursorHero
             imageRt.offsetMax = Vector2.zero;
             var image = imageObj.AddComponent<Image>();
             image.sprite = Resources.Load<Sprite>("My/My/Sprites/disk");
-            imageObj.AddComponent<CanvasRenderer>();
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
             
             return obj;
         }
@@ -266,7 +267,6 @@ namespace ZevWaxGames.CursorHero
                 case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity"); break;
                 default: throw new System.NotImplementedException();
             }
-            obj.GetComponent<Button>().tooltipText = "Upgrade " + upgradeName;
             return obj;
         }
 
