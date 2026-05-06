@@ -44,6 +44,13 @@ namespace ZevWaxGames.CursorHero
         protected virtual void Update()
         {
             transform.position += direction * speed * Time.deltaTime;
+            
+            if (direction != Vector3.zero)
+            {
+                float angle = Vector2.SignedAngle(Vector2.up, direction);
+                float offset = -28.8f;
+                transform.rotation = Quaternion.Euler(0, 0, angle + offset);
+            }
         }
 
         protected void OnTriggerEnter2D(Collider2D other)
@@ -87,10 +94,10 @@ namespace ZevWaxGames.CursorHero
 
             float xInsideRect = localPoint.x + (rectTransform.rect.width * rectTransform.pivot.x);
             float yInsideRect = localPoint.y + (rectTransform.rect.height * rectTransform.pivot.y);
-
+            
             int dropletsCount = Random.Range(12, 16);
-            Color bloodColor = new Color(0, 0, 0.7f, 1f);
-
+            Color bloodColor = new Color(0.7f, 0, 0, 1f);
+            
             for (int i = 0; i < dropletsCount; i++)
             {
                 float forwardShift = i * Random.Range(6f, 7f);

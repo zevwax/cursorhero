@@ -25,6 +25,17 @@ namespace ZevWaxGames.CursorHero
         {
             if (mainCharacter.is_trackable && HP <= 0)
                 Die();
+            
+            RotateTowardsTarget();
+        }
+        protected void RotateTowardsTarget()
+        {
+            if (targetObj != null)
+            {
+                Vector2 direction = targetObj.transform.position - transform.position;
+                float angle = Vector2.SignedAngle(Vector2.up, direction);
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
         }
         protected virtual void OnCollisionStay2D(Collision2D collision)
         {

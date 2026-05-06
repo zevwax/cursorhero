@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 085a8e85a72105f4ab2fd197f9c3eefa
+guid: 4f513893cc469984798f65f61cb90c17
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5176319558234916264
-    second: ring_projectile_0
+      213: 3573345199597508206
+    second: yellow_circ_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,17 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ring_projectile_0
+      name: yellow_circ_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 5
-        width: 22
-        height: 22
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a5cf70863bf5d740800000000000000
-      internalID: 5176319558234916264
+      spriteID: e665bd1d682179130800000000000000
+      internalID: 3573345199597508206
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ring_projectile_0: 5176319558234916264
+      yellow_circ_0: 3573345199597508206
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

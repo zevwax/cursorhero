@@ -42,6 +42,7 @@ namespace ZevWaxGames.CursorHero
             virtualPos = rb.position;
 
             Spawner.NewHealthBar();
+            Spawner.NewYellowCirc();
             
             base.Start();
         }
@@ -125,11 +126,11 @@ namespace ZevWaxGames.CursorHero
         }
         public void SetArrow()
         {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_arrow");
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
         }
         public void SetLink()
         {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_link");
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
         }
     }
 }

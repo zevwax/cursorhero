@@ -32,7 +32,7 @@ namespace ZevWaxGames.CursorHero
 
         public static GameObject NewMainCharacter(Vector2 pos)
         {
-            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/default_arrow", 11f, 20f, 10f - 16f, 6f - 16f);
+            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/glove", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Pointer";
             return obj;
         }
@@ -47,39 +47,39 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewWhite(Vector2 pos)
         {
-            var obj = NewEntity<White>(pos, "Enemy", "My/WinXp/Cursor/3dwarro", 9f, 17f, 0f - 9/2f, 0f - 17/2f);
+            var obj = NewEntity<White>(pos, "Enemy", "My/My/Sprites/pointer", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static GameObject NewYellow(Vector2 pos)
         {
-            var obj = NewEntity<Yellow>(pos, "Enemy", "My/WinXp/Cursor/3dgarro", 9f, 17f, 0f - 9/2f, 0f - 17/2f);
+            var obj = NewEntity<Yellow>(pos, "Enemy", "My/My/Sprites/pointer", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static GameObject NewCyan(Vector2 pos)
         {
-            var obj = NewEntity<Cyan>(pos, "Enemy", "My/WinXp/Cursor/3dsarro", 9f, 17f, 0f - 9/2f, 0f - 17/2f);
+            var obj = NewEntity<Cyan>(pos, "Enemy", "My/My/Sprites/pointer", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/main_character_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
+            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/glass", 11, 20, 0 - 11/2f, 0 - 20/2f);
             projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRedP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<RedP>(pos,"RedP", "My/My/Sprites/enemy_projectile", 6f, 6f, 13f - 16f, 13f - 16f);
+            var projectile = NewEntity<RedP>(pos,"RedP", "My/My/Sprites/arrow", 11, 20, 0 - 11/2f, 0 - 20/2f);
             projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRingP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<RingP>(pos,"RingP", "My/My/Sprites/ring_projectile", 20f, 20f, 6f - 16f, 6f - 16f);
+            var projectile = NewEntity<RingP>(pos,"RingP", "My/My/Sprites/arrow", 11, 20, 0 - 11/2f, 0 - 20/2f);
             projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
@@ -155,6 +155,39 @@ namespace ZevWaxGames.CursorHero
             return obj;
         }
         
+        public static GameObject NewYellowCirc()
+        {
+            var obj = new GameObject("Yellow Circ");
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.sortingLayerName = "YellowCirc";
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(32, 32);
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            var yellowCirc = obj.AddComponent<YellowCirc>();
+            
+            var imageObj = new GameObject("Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/yellow_circ");
+            imageObj.AddComponent<CanvasRenderer>();
+            
+            return obj;
+        }
         public static GameObject NewTooltip(string text)
         {
             var obj = new GameObject("Tooltip");
