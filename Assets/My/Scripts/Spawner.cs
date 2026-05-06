@@ -8,7 +8,7 @@ namespace ZevWaxGames.CursorHero
     {
         public static PhysicsMaterial2D CreateIceMaterial()
         {
-            PhysicsMaterial2D ice = new PhysicsMaterial2D("Ice");
+            var ice = new PhysicsMaterial2D("Ice");
             ice.friction = 0f;
             return ice;
         }
@@ -192,8 +192,8 @@ namespace ZevWaxGames.CursorHero
             var textRt = textObj.AddComponent<RectTransform>();
             textRt.anchorMin = Vector2.zero;
             textRt.anchorMax = Vector2.one;
-            textRt.offsetMin = new Vector2(2, 2);
-            textRt.offsetMax = new Vector2(-2, -2);
+            textRt.offsetMin = new Vector2(4, 4);
+            textRt.offsetMax = new Vector2(-4, -4);
             
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
             textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt");
@@ -249,13 +249,16 @@ namespace ZevWaxGames.CursorHero
 
         public static GameObject NewPlayButton(Vector2 pos)
         {
-            GameObject obj = CreateBaseButton<Play>(pos, "PlayButton");
-            Play script = obj.GetComponent<Play>();
-            script.tooltipText = "Start Game";
-            script.iconPath = "your_play_icon_path";
+            var obj = CreateBaseButton<Play>(pos, "PlayButton");
+            var script = obj.GetComponent<Play>();
             return obj;
         }
-
+        public static GameObject NewEndlessModeButton(Vector2 pos)
+        {
+            var obj = CreateBaseButton<EndlessMode>(pos, "EndlessModeButton");
+            var script = obj.GetComponent<EndlessMode>();
+            return obj;
+        }
         public static GameObject NewUpgradeButton(string upgradeName, Vector2 pos)
         {
             GameObject obj;
@@ -265,6 +268,7 @@ namespace ZevWaxGames.CursorHero
                 case "FireRate": obj = CreateBaseButton<Firerate>(pos, "UpgradeFireRate"); break;
                 case "Speed": obj = CreateBaseButton<ProjectileSpeed>(pos, "UpgradeSpeed"); break;
                 case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity"); break;
+                case "Heart": obj = CreateBaseButton<Heart>(pos, "UpgradeHeart"); break;
                 default: throw new System.NotImplementedException();
             }
             return obj;

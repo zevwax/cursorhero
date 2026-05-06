@@ -8,7 +8,9 @@ namespace ZevWaxGames.CursorHero
         private TextMeshProUGUI clockText;
         public float ElapsedTime => elapsedTime;
         private float elapsedTime = 0;
+        public bool IsRunning => isRunning;
         private bool isRunning = false;
+        private bool theEndScreenIsShown = false;
         private void Awake()
         {
             Instance = this;
@@ -34,6 +36,12 @@ namespace ZevWaxGames.CursorHero
 
             elapsedTime += Time.deltaTime;
             UpdateClockDisplay();
+
+            if (!theEndScreenIsShown && elapsedTime > 300)
+            {
+                EventHolder.OnChoosingStarted?.Invoke();
+                theEndScreenIsShown = true;
+            }
         }
         public void Stop()
         {
@@ -51,9 +59,23 @@ namespace ZevWaxGames.CursorHero
         }
         private void UpdateClockDisplay()
         {
-            int minutes = Mathf.FloorToInt(elapsedTime / 60f);
-            int seconds = Mathf.FloorToInt(elapsedTime % 60f);
-            clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            if (elapsedTime < 301f)
+            {
+                var remainingTime = 301 - elapsedTime;
+                int minutes = Mathf.FloorToInt(remainingTime / 60f);
+                int seconds = Mathf.FloorToInt(remainingTime % 60f);
+                clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
+            else if (301f <= elapsedTime && elapsedTime <= 311f)
+            {
+                clockText.text = "0:00";
+            }
+            else
+            {
+                int minutes = Mathf.FloorToInt(elapsedTime / 60f);
+                int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+                clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
         }
     }
 }

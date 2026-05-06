@@ -77,5 +77,8 @@ TagManager:
   - name: Tooltips
     uniqueID: 528894725
     locked: 0
+  - name: TheEndScreen
+    uniqueID: 3855164161
+    locked: 0
   m_RenderingLayers:
   - Default

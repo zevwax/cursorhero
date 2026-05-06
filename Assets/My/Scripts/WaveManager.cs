@@ -8,7 +8,9 @@ namespace ZevWaxGames.CursorHero
 {
     public class WaveManager : MonoBehaviour
     {
+        public static WaveManager Instance { get; private set; }
         private List<WaveConfig> waves = new List<WaveConfig>();
+        public int CurrentWaveIndex => currentWaveIndex;
         private int currentWaveIndex = 0;
         private float waveStartTime = 0;
         private float loopSpeedMultiplier = 1f;
@@ -17,6 +19,7 @@ namespace ZevWaxGames.CursorHero
 
         private void Awake()
         {
+            Instance = this;
             aspectHandler = Camera.main.GetComponent<AspectRatioHandler>();
             SetupWaves();
         }
@@ -29,8 +32,8 @@ namespace ZevWaxGames.CursorHero
             waves.Clear();
 
             waves.Add(new WaveConfig {
-                duration = 20f,
-                spawnRate = 2.5f,
+                maxNumOfEnemiesOnScreen = 2,
+                spawnRate = 1.2f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 1,
@@ -40,59 +43,310 @@ namespace ZevWaxGames.CursorHero
             });
 
             waves.Add(new WaveConfig {
-                duration = 20f,
-                spawnRate = 4f,
+                maxNumOfEnemiesOnScreen = 3,
+                spawnRate = 1.1f,
                 spawnWhiteMobAtStart = false,
-                maxEnemiesPerSpawn = 3,
+                
+                maxEnemiesPerSpawn = 2,
                 yellowLimit = 1,
                 cyanLimit = 0
             });
 
             waves.Add(new WaveConfig {
-                duration = 20f,
-                spawnRate = 5f,
+                maxNumOfEnemiesOnScreen = 1,
+                spawnRate = 1f*2f,
                 spawnWhiteMobAtStart = true,
-                whiteMobSize = 8,
-                maxEnemiesPerSpawn = 4,
+                whiteMobSize = 4,
+                maxEnemiesPerSpawn = 3,
                 yellowLimit = 5,
                 cyanLimit = 0
             });
 
             waves.Add(new WaveConfig {
-                duration = 20f,
-                spawnRate = 6f,
+                maxNumOfEnemiesOnScreen = 3,
+                spawnRate = 1.1f*1.5f,
                 spawnWhiteMobAtStart = false,
-                whiteMobSize = 8,
+                
                 maxEnemiesPerSpawn = 4,
-                yellowLimit = 999,
+                yellowLimit = 0,
                 cyanLimit = 1,
                 backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Autumn")
             });
 
             waves.Add(new WaveConfig {
-                duration = 20f,
-                spawnRate = 5f,
+                maxNumOfEnemiesOnScreen = 4,
+                spawnRate = 1f,
                 spawnWhiteMobAtStart = false,
-                whiteMobSize = 8,
-                maxEnemiesPerSpawn = 4,
-                yellowLimit = 999,
+                
+                maxEnemiesPerSpawn = 5,
+                yellowLimit = 5,
                 cyanLimit = 5
             });
 
             waves.Add(new WaveConfig {
-                duration = 20f,
-                spawnRate = 4f,
+                maxNumOfEnemiesOnScreen = 2,
+                spawnRate = 0.9f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 8,
+                maxEnemiesPerSpawn = 6,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+            
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 4,
+                spawnRate = 1f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 7,
+                yellowLimit = 999,
+                cyanLimit = 999,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Red_moon_desert")
+            });
+            
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 5,
+                spawnRate = 0.9f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 8,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 3,
+                spawnRate = 0.8f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 12,
+                maxEnemiesPerSpawn = 9,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 5,
+                spawnRate = 0.9f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 10,
+                yellowLimit = 999,
+                cyanLimit = 999,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Radiance")
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 6,
+                spawnRate = 0.8f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 11,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 4,
+                spawnRate = 0.7f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 16,
+                maxEnemiesPerSpawn = 12,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 6,
+                spawnRate = 0.8f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 13,
+                yellowLimit = 999,
+                cyanLimit = 999,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Vortec_space")
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 7,
+                spawnRate = 0.7f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 14,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 5,
+                spawnRate = 0.6f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 20,
+                maxEnemiesPerSpawn = 15,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+            
+            //=================
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 2*4,
+                spawnRate = 1.2f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 4,
+                maxEnemiesPerSpawn = 1,
+                yellowLimit = 0,
+                cyanLimit = 0,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Ascent")
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 3*4,
+                spawnRate = 1.1f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 2,
+                yellowLimit = 1,
+                cyanLimit = 0
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 1*4,
+                spawnRate = 1f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 4,
+                maxEnemiesPerSpawn = 3,
+                yellowLimit = 5,
+                cyanLimit = 0
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 3*4,
+                spawnRate = 1.1f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
                 maxEnemiesPerSpawn = 4,
                 yellowLimit = 0,
+                cyanLimit = 1,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Azul")
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 4*4,
+                spawnRate = 1f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 5,
+                yellowLimit = 5,
+                cyanLimit = 5
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 2*4,
+                spawnRate = 0.9f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 8,
+                maxEnemiesPerSpawn = 6,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+            
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 4*4,
+                spawnRate = 1f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 7,
+                yellowLimit = 999,
+                cyanLimit = 999,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Follow")
+            });
+            
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 5*4,
+                spawnRate = 0.9f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 8,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 3*4,
+                spawnRate = 0.8f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 12,
+                maxEnemiesPerSpawn = 9,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 5*4,
+                spawnRate = 0.9f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 10,
+                yellowLimit = 999,
+                cyanLimit = 999,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Tulips")
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 6*4,
+                spawnRate = 0.8f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 11,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 4*4,
+                spawnRate = 0.7f*2f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 16,
+                maxEnemiesPerSpawn = 12,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 6*4,
+                spawnRate = 0.8f*1.5f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 13,
+                yellowLimit = 999,
+                cyanLimit = 999,
+                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Wind")
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 7*4,
+                spawnRate = 0.7f,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 14,
+                yellowLimit = 999,
+                cyanLimit = 999
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 5*4,
+                spawnRate = 0.6f,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 20,
+                maxEnemiesPerSpawn = 15,
+                yellowLimit = 999,
                 cyanLimit = 999
             });
         }
 
         private void StartManager()
         {
-            Clock.Instance.Refresh(); //Doesnt matter w/ this row or without: it skips the 1st wave
+            Clock.Instance.Refresh();
             currentWaveIndex = 0;
             loopSpeedMultiplier = 1f;
             StartWave(0);
@@ -146,6 +400,11 @@ namespace ZevWaxGames.CursorHero
             while (true)
             {
                 yield return new WaitForSeconds(adjustedRate);
+                
+                if (!Clock.Instance.IsRunning)
+                    while (!Clock.Instance.IsRunning)
+                        yield return null;
+                
                 int spawnCount = Random.Range(1, config.maxEnemiesPerSpawn + 1);
                 for (int i = 0; i < spawnCount; i++)
                 {
@@ -156,6 +415,8 @@ namespace ZevWaxGames.CursorHero
 
         private void SpawnRandomEnemy(WaveConfig config)
         {
+            if (GetActiveCount<Enemy>() >= config.maxNumOfEnemiesOnScreen) return;
+            
             int choice = Random.Range(0, 3); 
 
             if (choice == 2 && GetActiveCount<Cyan>() < config.cyanLimit)

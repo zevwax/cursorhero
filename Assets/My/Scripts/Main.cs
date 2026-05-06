@@ -9,7 +9,7 @@ namespace ZevWaxGames.CursorHero
             //Screen.SetResolution(300, 900, FullScreenMode.Windowed);
             //Screen.SetResolution(320, 180, FullScreenMode.FullScreenWindow);
             //Screen.fullScreen = true;
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
             Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
             
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -21,7 +21,7 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewWall(Wall.WallType.Bottom);
             Spawner.NewMainCharacter(new Vector2(0, 0));
             
-            EventHolder.OnRunStarted?.Invoke();
+            UIManager.Instance.ShowStartGameWindow();
         }
     }
 }

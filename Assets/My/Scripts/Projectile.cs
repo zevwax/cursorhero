@@ -89,7 +89,7 @@ namespace ZevWaxGames.CursorHero
             float yInsideRect = localPoint.y + (rectTransform.rect.height * rectTransform.pivot.y);
 
             int dropletsCount = Random.Range(12, 16);
-            Color bloodColor = new Color(0.7f, 0, 0, 1f);
+            Color bloodColor = new Color(0, 0, 0.7f, 1f);
 
             for (int i = 0; i < dropletsCount; i++)
             {

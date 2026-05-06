@@ -10,6 +10,7 @@ namespace ZevWaxGames.CursorHero
         public float ProjectileDamage = 1f;
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.3f;
+        public float MaxHP = 10f;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -94,7 +95,8 @@ namespace ZevWaxGames.CursorHero
         }
         public void Born()
         {
-            HP = 10;
+            MaxHP = 10f;
+            HP = 10f;
             ProjectileDamage = 1f;
             ProjectileSpeed = 6f;
             Sensitivity = 0.3f;

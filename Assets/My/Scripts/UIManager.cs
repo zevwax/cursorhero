@@ -1,42 +1,63 @@
+using System.Collections;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 namespace ZevWaxGames.CursorHero
 {
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance { get; private set; }
-        [SerializeField] private GameObject tryAgainWindow;
+        [SerializeField] private GameObject startGameWindow;
+        [SerializeField] private GameObject youWinWindow;
         [SerializeField] private GameObject chooseAnUpgradeWindow;
+        [SerializeField] private GameObject tryAgainWindow;
         private GameObject[] btns;
         private void Awake()
         {
+            Instance = this;
             if (tryAgainWindow != null)
                 tryAgainWindow.SetActive(false);
             btns = new GameObject[3];
         }
-        private void Start()
-        {
-            Instance = this;
-        }
         private void OnEnable()
         {
             EventHolder.OnPlayerDie += ShowTryAgainWindow;
-            EventHolder.OnChoosingStarted += ShowChooseAnUpgradeWindow;
-            EventHolder.OnChoosingFinished += HideChooseAnUpgradeWindow;
-            EventHolder.OnRunStarted += HideTryAgainWindow;
+            EventHolder.OnChoosingStarted += HandleChoosingStarted;
+            EventHolder.OnChoosingFinished += HideYouWinNChooseAnUpgradeWindows;
+            EventHolder.OnRunStarted += HideStartGameNTryAgainWindows;
         }
         private void OnDisable()
         {
             EventHolder.OnPlayerDie -= ShowTryAgainWindow;
-            EventHolder.OnChoosingStarted -= ShowChooseAnUpgradeWindow;
-            EventHolder.OnChoosingFinished -= HideChooseAnUpgradeWindow;
-            EventHolder.OnRunStarted -= HideTryAgainWindow;
+            EventHolder.OnChoosingStarted -= HandleChoosingStarted;
+            EventHolder.OnChoosingFinished -= HideYouWinNChooseAnUpgradeWindows;
+            EventHolder.OnRunStarted -= HideStartGameNTryAgainWindows;
+        }
+        public void ShowStartGameWindow()
+        {
+            StartCoroutine(FadeIn());
+            startGameWindow.SetActive(true);
+            btns[0] = Spawner.NewPlayButton(Vector2.zero);
         }
         private void ShowTryAgainWindow()
         {
             tryAgainWindow.SetActive(true);
             btns[0] = Spawner.NewPlayButton(Vector2.zero);
+        }
+        public void ShowYouWinWindow()
+        {
+            youWinWindow.SetActive(true);
+        }
+        private void HandleChoosingStarted()
+        {
+            if (ProgressBar.Instance.Value >= 1f)
+                ShowChooseAnUpgradeWindow();
+            else
+            {
+                ShowYouWinWindow();
+                StartCoroutine(ShowTheEnd());
+            }
         }
         private void ShowChooseAnUpgradeWindow()
         {
@@ -46,21 +67,27 @@ namespace ZevWaxGames.CursorHero
                 "Damage",
                 "FireRate",
                 "Speed",
-                "Sensitivity"
+                "Sensitivity",
+                "Heart"
             );
             btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2f, 0f));
             btns[1] = Spawner.NewUpgradeButton(buttons[1], Vector2.zero);
             btns[2] = Spawner.NewUpgradeButton(buttons[2], new Vector2(2f, 0f));
         }
-        private void HideChooseAnUpgradeWindow()
+        private void HideYouWinNChooseAnUpgradeWindows()
         {
+            youWinWindow.SetActive(false);
             chooseAnUpgradeWindow.SetActive(false);
-            Destroy(btns[0]);
-            Destroy(btns[1]);
-            Destroy(btns[2]);
+            if (btns[0] != null)
+                Destroy(btns[0]);
+            if (btns[1] != null)
+                Destroy(btns[1]);
+            if (btns[2] != null)
+                Destroy(btns[2]);
         }
-        private void HideTryAgainWindow()
+        private void HideStartGameNTryAgainWindows()
         {
+            startGameWindow.SetActive(false);
             tryAgainWindow.SetActive(false);
             Destroy(btns[0]);
         }
@@ -68,6 +95,68 @@ namespace ZevWaxGames.CursorHero
         {
             if (source.Length <= 3) return source;
             return source.OrderBy(x => UnityEngine.Random.value).Take(3).ToArray();
+        }
+        private IEnumerator ShowTheEnd()
+        {
+            var endCanvas = GameObject.Find("TheEndCanvas").GetComponent<CanvasGroup>();
+            
+            yield return new WaitForSeconds(5.5f);
+            
+            var alpha = 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha += 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha += 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha += 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha += 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            
+            btns[0] = Spawner.NewEndlessModeButton(Vector2.zero);
+            
+            yield return new WaitForSeconds(5.5f);
+            
+            alpha -= 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+        }
+        private IEnumerator FadeIn()
+        {
+            var endCanvas = GameObject.Find("FadeInCanvas").GetComponent<CanvasGroup>();
+            yield return new WaitForSeconds(1f);
+            var alpha = 0.95f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.1f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.15f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.2f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.25f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+            yield return new WaitForSeconds(0.5f);
+            alpha -= 0.25f;
+            yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
         }
     }
 }

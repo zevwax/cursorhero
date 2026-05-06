@@ -73,7 +73,7 @@ namespace ZevWaxGames.CursorHero
             if (collision.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
             {
                 var pbar = ProgressBar.Instance;
-                pbar.SetValue(pbar.Value + ExtractXP());
+                pbar.SetValue(pbar.Value + Collect());
                 Die();
             }
         }
@@ -90,8 +90,9 @@ namespace ZevWaxGames.CursorHero
         {
             Destroy(gameObject);
         }
-        private float ExtractXP()
+        private float Collect()
         {
+            DJ.PlayDisk();
             return xp;
         }
     }
