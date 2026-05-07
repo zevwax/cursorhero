@@ -5,6 +5,8 @@ namespace ZevWaxGames.CursorHero
 {
     public class Bottle : MonoBehaviour
     {
+        private static Transform psholder;
+        private static GameObject beerSplash;
         public RectTransform waterRect;
 
         [Header("Spring Physics")]
@@ -38,14 +40,27 @@ namespace ZevWaxGames.CursorHero
         private float _waterDisplacement;
 
         private Collider2D myCollider;
-
-        void Start()
+        
+        private ContactFilter2D _wallFilter;
+        private readonly Collider2D[] _results = new Collider2D[1];
+        private void Start()
         {
             lastPosition = transform.position;
             myCollider = GetComponent<Collider2D>();
+            psholder = GameObject.Find("PSHolder").transform;
+            beerSplash = Resources.Load<GameObject>("My/My/Prefabs/BeerSplash");
+            
+            _wallFilter = new ContactFilter2D();
+            _wallFilter.SetLayerMask(LayerMask.GetMask("Wall"));
+            _wallFilter.useTriggers = true;
         }
-
         private void Update()
+        {
+            UpdatePosition();
+            HandleDragNDropLogic();
+            WallCheck();
+        }
+        private void UpdatePosition()
         {
             float deltaTime = Time.deltaTime;
             if (deltaTime <= 0) return;
@@ -83,15 +98,14 @@ namespace ZevWaxGames.CursorHero
             waterRect.localRotation = Quaternion.Euler(0, 0, rotationZ);
 
             lastPosition = transform.position;
-            HandleDragNDropLogic();
         }
-
         private void HandleDragNDropLogic()
         {
             if (MainCharacter.Instance == null) return;
             var mainChar = MainCharacter.Instance;
             
             bool collision = myCollider.IsTouching(mainChar.GetComponent<Collider2D>());
+            
             bool mouseHold = Mouse.current.leftButton.isPressed;
             bool mouseDown = Mouse.current.leftButton.wasPressedThisFrame;
 
@@ -110,6 +124,19 @@ namespace ZevWaxGames.CursorHero
             }
             else if (collision) mainChar.SetTake();
             else mainChar.SetRealLink();
+        }
+        private void WallCheck()
+        {
+            // Use the non-deprecated 'Overlap' method with your pre-configured class variables
+            int count = myCollider.Overlap(_wallFilter, _results);
+    
+            bool wallCollision = count > 0;
+    
+            if (wallCollision)
+            {
+                Instantiate(beerSplash, transform.position, Quaternion.identity, psholder);
+                Destroy(gameObject);
+            }
         }
     }
 }

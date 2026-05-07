@@ -7,9 +7,9 @@ namespace ZevWaxGames.CursorHero
 {
     public abstract class Projectile : MonoBehaviour
     {
+        private static Transform psholder;
         private static GameObject bloodSplash;
         private static Texture2D _editableTexture;
-        private static Transform psholder;
         protected float damage;
         public float speed;
         public Vector3 direction;

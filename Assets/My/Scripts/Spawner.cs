@@ -339,6 +339,7 @@ namespace ZevWaxGames.CursorHero
 
             var rootRt = obj.GetComponent<RectTransform>();
             rootRt.sizeDelta = new Vector2(w, h);
+            rootRt.localScale = new Vector3(0, 0, 1);
 
             var bottleSprite = Resources.Load<Sprite>("My/My/Sprites/bottle");
 
@@ -356,7 +357,7 @@ namespace ZevWaxGames.CursorHero
             var water = new GameObject("Background_Water");
             water.transform.SetParent(maskObj.transform, false);
             var waterImg = water.AddComponent<Image>();
-            waterImg.color = new Color(0.66f, 0.33f, 0f, 0.66f);
+            waterImg.color = new Color(0.5f, 0.25f, 0f, 0.8f);
 
             var waterRt = water.GetComponent<RectTransform>();
             waterRt.anchorMin = new Vector2(0, 0);
