@@ -66,7 +66,9 @@ namespace ZevWaxGames.CursorHero
         public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
             var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/glass", 11, 20, 0 - 11/2f, 0 - 20/2f);
-            projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
+            var sr = projectile.GetComponent<SpriteRenderer>();
+            sr.sortingLayerName = "Projectiles";
+            sr.color = new Color(1, 1, 1, 0.75f);
             projectile.GetComponent<BoxCollider2D>().isTrigger = true;
             projectile.GetComponent<Projectile>().direction = direction;
         }
@@ -354,7 +356,7 @@ namespace ZevWaxGames.CursorHero
             var water = new GameObject("Background_Water");
             water.transform.SetParent(maskObj.transform, false);
             var waterImg = water.AddComponent<Image>();
-            waterImg.color = new Color(0.2f, 0.5f, 1f, 1f);
+            waterImg.color = new Color(0.66f, 0.33f, 0f, 0.66f);
 
             var waterRt = water.GetComponent<RectTransform>();
             waterRt.anchorMin = new Vector2(0, 0);
@@ -365,7 +367,7 @@ namespace ZevWaxGames.CursorHero
             foreground.transform.SetParent(obj.transform, false);
             var fgImage = foreground.AddComponent<Image>();
             fgImage.sprite = bottleSprite;
-            fgImage.color = new Color(1f, 1f, 1f, 0.8f);
+            fgImage.color = new Color(1f, 1f, 1f, 0.75f);
 
             var fgRt = foreground.GetComponent<RectTransform>();
             fgRt.anchorMin = Vector2.zero;

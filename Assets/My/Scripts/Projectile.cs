@@ -7,7 +7,9 @@ namespace ZevWaxGames.CursorHero
 {
     public abstract class Projectile : MonoBehaviour
     {
+        private static GameObject bloodSplash;
         private static Texture2D _editableTexture;
+        private static Transform psholder;
         protected float damage;
         public float speed;
         public Vector3 direction;
@@ -31,6 +33,8 @@ namespace ZevWaxGames.CursorHero
         protected virtual void Start()
         {
             col = GetComponent<Collider2D>();
+            psholder = GameObject.Find("PSHolder").transform;
+            bloodSplash = Resources.Load<GameObject>("My/My/Prefabs/BloodSplash");
             Setup();
         }
 
@@ -58,6 +62,13 @@ namespace ZevWaxGames.CursorHero
             if (other.gameObject.GetComponent<Cursor>() != null)
             {
                 other.gameObject.GetComponent<Cursor>().HP -= damage;
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                var rotation = Quaternion.Euler(0, 0, angle - 90f);
+                Instantiate(bloodSplash, other.transform.position, rotation, psholder);
+                
+                Debug.Log(direction);
+                
                 DrawBloodOnWallpaper(other.transform.position);
             }
             Die();
