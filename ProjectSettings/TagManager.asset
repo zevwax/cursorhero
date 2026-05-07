@@ -71,6 +71,9 @@ TagManager:
   - name: Buttons
     uniqueID: 1832763641
     locked: 0
+  - name: Bottles
+    uniqueID: 1413295005
+    locked: 0
   - name: YellowCirc
     uniqueID: 1085615039
     locked: 0

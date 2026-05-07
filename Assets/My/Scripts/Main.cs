@@ -21,6 +21,8 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewWall(Wall.WallType.Bottom);
             Spawner.NewMainCharacter(new Vector2(0, 0));
             
+            Spawner.NewBottle(new Vector2(3, -2));
+            
             UIManager.Instance.ShowStartGameWindow();
         }
     }

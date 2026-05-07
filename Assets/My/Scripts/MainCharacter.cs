@@ -117,20 +117,28 @@ namespace ZevWaxGames.CursorHero
         private void Enable()
         {
             is_trackable = true;
-            SetArrow();
+            SetRealLink();
             StartShooting();
         }
         private void Disable()
         {
             is_trackable = false;
         }
-        public void SetArrow()
+        public void SetRealLink()
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
         }
         public void SetLink()
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
+        }
+        public void SetTake()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/take");
+        }
+        public void SetGrab()
+        {
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/grab");
         }
     }
 }

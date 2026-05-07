@@ -76,7 +76,7 @@ namespace ZevWaxGames.CursorHero
             {
                 if (isHovered)
                 {
-                    mainChar.SetArrow();
+                    mainChar.SetRealLink();
                     OnHoverExit();
                 }
             }

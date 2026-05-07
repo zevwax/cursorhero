@@ -87,23 +87,23 @@ namespace ZevWaxGames.CursorHero
         
         private static GameObject NewEntity<T>(Vector2 pos, string name, string spritePath, float w, float h, float left, float top) where T : MonoBehaviour
         {
-            GameObject obj = new GameObject(name);
+            var obj = new GameObject(name);
             obj.transform.position = new Vector3(pos.x, pos.y, 0);
             
-            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
-            Sprite sprite = Resources.Load<Sprite>(spritePath);
+            var sr = obj.AddComponent<SpriteRenderer>();
+            var sprite = Resources.Load<Sprite>(spritePath);
             sr.sprite = sprite;
             sr.sortingOrder = 0;
             
-            Rigidbody2D rb = obj.AddComponent<Rigidbody2D>();
+            var rb = obj.AddComponent<Rigidbody2D>();
             rb.sharedMaterial = CreateIceMaterial();
             rb.gravityScale = 0;
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             
-            BoxCollider2D box = obj.AddComponent<BoxCollider2D>();
-            float ppu = sprite.pixelsPerUnit;
+            var box = obj.AddComponent<BoxCollider2D>();
+            var ppu = sprite.pixelsPerUnit;
             box.size = new Vector2(w / ppu, h / ppu);
             box.offset = new Vector2((left + (w / 2f)) / ppu, (-top - (h / 2f)) / ppu);
             
@@ -218,7 +218,8 @@ namespace ZevWaxGames.CursorHero
             var image = imageObj.AddComponent<Image>();
             image.sprite = Resources.Load<Sprite>("My/My/Sprites/tooltip");
             image.type = Image.Type.Sliced;
-            imageObj.AddComponent<CanvasRenderer>();
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
             
             var textObj = new GameObject("Text");
             textObj.transform.SetParent(imageObj.transform, false);
@@ -316,6 +317,70 @@ namespace ZevWaxGames.CursorHero
             sr.sortingLayerName = "Buttons";
             var col = obj.GetComponent<BoxCollider2D>();
             col.isTrigger = true;
+            return obj;
+        }
+        public static GameObject NewBottle(Vector2 pos)
+        {
+            var bottleFullness = 0.25f;
+            var w = 26f;
+            var h = 60f;
+            var obj = NewEntity<Bottle>(pos, "Bottle", "My/My/Sprites/bottle", w, h, 0 - w / 2f, 0 - h / 2f);
+
+            Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
+
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "Bottles";
+            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+
+            var rootRt = obj.GetComponent<RectTransform>();
+            rootRt.sizeDelta = new Vector2(w, h);
+
+            var bottleSprite = Resources.Load<Sprite>("My/My/Sprites/bottle");
+
+            var maskObj = new GameObject("MaskContainer");
+            maskObj.transform.SetParent(obj.transform, false);
+            var maskImg = maskObj.AddComponent<Image>();
+            maskImg.sprite = bottleSprite;
+            maskObj.AddComponent<Mask>().showMaskGraphic = false; 
+
+            var maskRt = maskObj.GetComponent<RectTransform>();
+            maskRt.anchorMin = Vector2.zero;
+            maskRt.anchorMax = Vector2.one;
+            maskRt.sizeDelta = Vector2.zero;
+
+            var water = new GameObject("Background_Water");
+            water.transform.SetParent(maskObj.transform, false);
+            var waterImg = water.AddComponent<Image>();
+            waterImg.color = new Color(0.2f, 0.5f, 1f, 1f);
+
+            var waterRt = water.GetComponent<RectTransform>();
+            waterRt.anchorMin = new Vector2(0, 0);
+            waterRt.anchorMax = new Vector2(1, bottleFullness); 
+            waterRt.sizeDelta = new Vector2(w * 10f, w);
+
+            var foreground = new GameObject("Foreground");
+            foreground.transform.SetParent(obj.transform, false);
+            var fgImage = foreground.AddComponent<Image>();
+            fgImage.sprite = bottleSprite;
+            fgImage.color = new Color(1f, 1f, 1f, 0.8f);
+
+            var fgRt = foreground.GetComponent<RectTransform>();
+            fgRt.anchorMin = Vector2.zero;
+            fgRt.anchorMax = Vector2.one;
+            fgRt.sizeDelta = Vector2.zero;
+
+            var box = obj.GetComponent<BoxCollider2D>();
+            box.isTrigger = true;
+            
+            box.size = new Vector2(w, h);
+            box.offset = Vector2.zero;
+
+            var bottleScript = obj.GetComponent<Bottle>();
+            bottleScript.waterRect = waterRt;
+
             return obj;
         }
     }
