@@ -207,6 +207,7 @@ namespace ZevWaxGames.CursorHero
             raycaster.ignoreReversedGraphics = true;
             raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
             raycaster.blockingMask = -1;
+            obj.AddComponent<CanvasGroup>();
             var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
             var tooltip = obj.AddComponent<Tooltip>();
             

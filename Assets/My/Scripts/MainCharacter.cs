@@ -11,6 +11,7 @@ namespace ZevWaxGames.CursorHero
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.3f;
         public float MaxHP = 10f;
+        private GameObject skinSetter = null;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -117,28 +118,40 @@ namespace ZevWaxGames.CursorHero
         private void Enable()
         {
             is_trackable = true;
-            SetRealLink();
+            SetGlove();
             StartShooting();
         }
         private void Disable()
         {
             is_trackable = false;
         }
-        public void SetRealLink()
+        private void SetGlove()
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
         }
-        public void SetLink()
+        public void SetGlove(GameObject skinSetter)
         {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
+            if (!(skinSetter == this.skinSetter)) return;
+            SetGlove();
+            this.skinSetter = null;
         }
-        public void SetTake()
+        public void SetTake(GameObject skinSetter)
         {
+            if (!(this.skinSetter == null || skinSetter == this.skinSetter)) return;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/take");
+            this.skinSetter = skinSetter;
         }
-        public void SetGrab()
+        public void SetGrab(GameObject skinSetter)
         {
+            if (!(this.skinSetter == null || skinSetter == this.skinSetter)) return;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/grab");
+            this.skinSetter = skinSetter;
+        }
+        public void SetButtonLink(GameObject skinSetter)
+        {
+            if (!(this.skinSetter == null || skinSetter == this.skinSetter)) return;
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
+            this.skinSetter = skinSetter;
         }
     }
 }

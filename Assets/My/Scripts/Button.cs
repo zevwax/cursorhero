@@ -7,7 +7,7 @@ namespace ZevWaxGames.CursorHero
     public abstract class Button : MonoBehaviour
     {
         public string boxPath = "My/My/Sprites/btn";
-        public string iconPath; 
+        public string iconPath;
         public string tooltipText = "Default Tooltip";
         
         private SpriteRenderer boxSr;
@@ -57,7 +57,7 @@ namespace ZevWaxGames.CursorHero
 
             if (collision)
             {
-                mainChar.SetLink();
+                mainChar.SetButtonLink(gameObject);
                 
                 if (!isHovered) OnHoverEnter();
 
@@ -68,7 +68,7 @@ namespace ZevWaxGames.CursorHero
                 else if (Mouse.current.leftButton.wasReleasedThisFrame)
                 {
                     SetStateHover();
-                    if (currentTooltip != null) Destroy(currentTooltip);
+                    if (currentTooltip != null) currentTooltip.GetComponent<Tooltip>().Die();
                     ButtonAction();
                 }
             }
@@ -76,7 +76,7 @@ namespace ZevWaxGames.CursorHero
             {
                 if (isHovered)
                 {
-                    mainChar.SetRealLink();
+                    mainChar.SetGlove(gameObject);
                     OnHoverExit();
                 }
             }
@@ -93,7 +93,7 @@ namespace ZevWaxGames.CursorHero
         {
             isHovered = false;
             SetStateIdle();
-            if (currentTooltip != null) Destroy(currentTooltip);
+            if (currentTooltip != null) currentTooltip.GetComponent<Tooltip>().Die();
         }
 
         private void SetStateIdle()

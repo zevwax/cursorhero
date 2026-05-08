@@ -120,10 +120,10 @@ namespace ZevWaxGames.CursorHero
             if (_isHeld)
             {
                 transform.position = mainChar.transform.position + (Vector3)_grabOffset;
-                mainChar.SetGrab();
+                mainChar.SetGrab(gameObject);
             }
-            else if (collision) mainChar.SetTake();
-            else mainChar.SetRealLink();
+            else if (collision) mainChar.SetTake(gameObject);
+            else mainChar.SetGlove(gameObject);
         }
         private void WallCheck()
         {
@@ -140,6 +140,8 @@ namespace ZevWaxGames.CursorHero
                 var piecesToDrop = UnityEngine.Random.Range(2, 3+1);
                 for (int i = 0; i < piecesToDrop; i++)
                     Spawner.NewLayingPieceOfGlass(transform.position);
+                
+                MainCharacter.Instance.SetGlove(gameObject);
                 
                 Destroy(gameObject);
             }

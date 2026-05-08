@@ -7,13 +7,20 @@ namespace ZevWaxGames.CursorHero
 {
     public class LayingPieceOfGlass : MonoBehaviour
     {
+        private float size;
+        private float edge;
+        
         [Header("Settings")]
         [SerializeField] private float slideForce = 15f;
         [SerializeField] private float torqueForce = 30f;
         [SerializeField] private float drag = 5f;
+        
+        public string tooltipText = "Default Tooltip";
 
         private Vector2 _grabOffset;
         private bool _isHeld = false;
+        private bool _isHovered = false; // Track hover state
+        private GameObject _currentTooltip; // Reference to active tooltip
 
         private Collider2D myCollider;
         private Rigidbody2D rb;
@@ -21,6 +28,10 @@ namespace ZevWaxGames.CursorHero
 
         private void Start()
         {
+            size = Random.Range(1f, 3f);
+            edge = Random.Range(1f, 3f);
+            tooltipText = string.Format("Edge: {0:F1} / Size: {1:F1}", edge, size);
+            
             myCollider = GetComponent<Collider2D>();
             rb = GetComponent<Rigidbody2D>();
             canvasGroup = GetComponent<CanvasGroup>();
@@ -63,6 +74,25 @@ namespace ZevWaxGames.CursorHero
             bool mouseHold = Mouse.current.leftButton.isPressed;
             bool mouseDown = Mouse.current.leftButton.wasPressedThisFrame;
 
+            // --- Tooltip & Hover Logic ---
+            if (collision && !_isHeld)
+            {
+                if (!_isHovered)
+                {
+                    _isHovered = true;
+                    _currentTooltip = Spawner.NewTooltip(tooltipText);
+                }
+            }
+            else
+            {
+                if (_isHovered)
+                {
+                    _isHovered = false;
+                    if (_currentTooltip != null) _currentTooltip.GetComponent<Tooltip>().Die();
+                }
+            }
+
+            // --- Drag Logic ---
             if (collision && mouseDown)
             {
                 _isHeld = true;
@@ -70,7 +100,10 @@ namespace ZevWaxGames.CursorHero
                 
                 rb.linearVelocity = Vector2.zero;
                 rb.angularVelocity = 0f;
-                rb.simulated = false; 
+                rb.simulated = false;
+
+                // Hide tooltip immediately when grabbed
+                if (_currentTooltip != null) _currentTooltip.GetComponent<Tooltip>().Die();
             }
 
             if (!mouseHold)
@@ -82,10 +115,15 @@ namespace ZevWaxGames.CursorHero
             if (_isHeld)
             {
                 transform.position = mainChar.transform.position + (Vector3)_grabOffset;
-                mainChar.SetGrab();
+                mainChar.SetGrab(gameObject);
             }
-            else if (collision) mainChar.SetTake();
-            else mainChar.SetRealLink();
+            else if (collision) mainChar.SetTake(gameObject);
+            else mainChar.SetGlove(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (_currentTooltip != null) _currentTooltip.GetComponent<Tooltip>().Die();
         }
     }
 }
