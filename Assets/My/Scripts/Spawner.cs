@@ -244,6 +244,41 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
+        public static GameObject NewSelection()
+        {
+            var obj = new GameObject("Selection");
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.sortingLayerName = "Selection";
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(0, 0);
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            var script = obj.AddComponent<Selection>();
+            
+            var imageObj = new GameObject("Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/tooltip");
+            image.type = Image.Type.Sliced;
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
+            
+            return obj;
+        }
         public static GameObject NewHealthBar()
         {
             var obj = new GameObject("HealthBar");
@@ -283,7 +318,6 @@ namespace ZevWaxGames.CursorHero
 
             return obj;
         }
-
         public static GameObject NewPlayButton(Vector2 pos)
         {
             var obj = CreateBaseButton<Play>(pos, "PlayButton");
@@ -310,7 +344,6 @@ namespace ZevWaxGames.CursorHero
             }
             return obj;
         }
-
         private static GameObject CreateBaseButton<T>(Vector2 pos, string name) where T : Button
         {
             GameObject obj = NewEntity<T>(pos, name, "My/My/Sprites/btn", 32f, 32f, -16f, -16f);

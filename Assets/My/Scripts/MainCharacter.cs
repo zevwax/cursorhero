@@ -11,6 +11,7 @@ namespace ZevWaxGames.CursorHero
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.3f;
         public float MaxHP = 10f;
+        public GameObject SkinSetter => skinSetter;
         private GameObject skinSetter = null;
         private void OnEnable()
         {
@@ -44,6 +45,7 @@ namespace ZevWaxGames.CursorHero
 
             Spawner.NewHealthBar();
             Spawner.NewYellowCirc();
+            Spawner.NewSelection();
             
             base.Start();
         }
@@ -125,33 +127,37 @@ namespace ZevWaxGames.CursorHero
         {
             is_trackable = false;
         }
-        private void SetGlove()
-        {
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
-        }
         public void SetGlove(GameObject skinSetter)
         {
-            if (!(skinSetter == this.skinSetter)) return;
+            if (!IsAbleForReskinBy(skinSetter)) return;
             SetGlove();
             this.skinSetter = null;
         }
+        public void SetCross(GameObject skinSetter)
+        {
+            if (!IsAbleForReskinBy(skinSetter)) return;
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/cross");
+            this.skinSetter = skinSetter;
+        }
         public void SetTake(GameObject skinSetter)
         {
-            if (!(this.skinSetter == null || skinSetter == this.skinSetter)) return;
+            if (!IsAbleForReskinBy(skinSetter)) return;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/take");
             this.skinSetter = skinSetter;
         }
         public void SetGrab(GameObject skinSetter)
         {
-            if (!(this.skinSetter == null || skinSetter == this.skinSetter)) return;
+            if (!IsAbleForReskinBy(skinSetter)) return;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/grab");
             this.skinSetter = skinSetter;
         }
         public void SetButtonLink(GameObject skinSetter)
         {
-            if (!(this.skinSetter == null || skinSetter == this.skinSetter)) return;
+            if (!IsAbleForReskinBy(skinSetter)) return;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
             this.skinSetter = skinSetter;
         }
+        public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
+        private void SetGlove() => GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
     }
 }

@@ -77,6 +77,9 @@ TagManager:
   - name: YellowCirc
     uniqueID: 1085615039
     locked: 0
+  - name: Selection
+    uniqueID: 166598741
+    locked: 0
   - name: Pointer
     uniqueID: 3777054953
     locked: 0
