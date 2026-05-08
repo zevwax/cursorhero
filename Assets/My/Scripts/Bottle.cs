@@ -127,14 +127,20 @@ namespace ZevWaxGames.CursorHero
         }
         private void WallCheck()
         {
-            // Use the non-deprecated 'Overlap' method with your pre-configured class variables
             int count = myCollider.Overlap(_wallFilter, _results);
     
-            bool wallCollision = count > 0;
-    
-            if (wallCollision)
+            if (count > 0)
             {
-                Instantiate(beerSplash, transform.position, Quaternion.identity, psholder);
+                Vector2 collisionPoint = _results[0].ClosestPoint(transform.position);
+                Vector2 awayFromWall = (Vector2)transform.position - collisionPoint;
+                float angle = Mathf.Atan2(awayFromWall.y, awayFromWall.x) * Mathf.Rad2Deg;
+                
+                Instantiate(beerSplash, transform.position, Quaternion.Euler(0, 0, angle - 90), psholder);
+                
+                var piecesToDrop = UnityEngine.Random.Range(2, 3+1);
+                for (int i = 0; i < piecesToDrop; i++)
+                    Spawner.NewLayingPieceOfGlass(transform.position);
+                
                 Destroy(gameObject);
             }
         }

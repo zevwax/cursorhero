@@ -30,7 +30,10 @@ namespace ZevWaxGames.CursorHero
         private IEnumerator CreateABottleWDelay()
         {
             yield return new WaitForSeconds(2);
+            Spawner.NewBottle(new Vector2(-3, -2));
             Spawner.NewBottle(new Vector2(3, -2));
+            Spawner.NewBottle(new Vector2(-3, 2));
+            Spawner.NewBottle(new Vector2(3, 2));
         }
     }
 }

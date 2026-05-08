@@ -65,7 +65,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/glass", 11, 20, 0 - 11/2f, 0 - 20/2f);
+            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/glass", 11, 15, 0 - 11/2f, 0 - 20/2f);
             var sr = projectile.GetComponent<SpriteRenderer>();
             sr.sortingLayerName = "Projectiles";
             sr.color = new Color(1, 1, 1, 0.75f);
@@ -383,6 +383,48 @@ namespace ZevWaxGames.CursorHero
 
             var bottleScript = obj.GetComponent<Bottle>();
             bottleScript.waterRect = waterRt;
+
+            return obj;
+        }
+        public static GameObject NewLayingPieceOfGlass(Vector2 pos)
+        {
+            var w = 11f;
+            var h = 15f;
+            var obj = NewEntity<LayingPieceOfGlass>(pos, "Bottle", "My/My/Sprites/bottle", w, h, 0 - w / 2f, 0 - h / 2f);
+            obj.GetComponent<Rigidbody2D>().freezeRotation = false;
+            
+            Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
+            
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "Bottles";
+            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            obj.AddComponent<CanvasGroup>();
+
+            var rootRt = obj.GetComponent<RectTransform>();
+            rootRt.sizeDelta = new Vector2(w, h);
+            rootRt.localScale = new Vector3(0, 0, 1);
+
+            var bottleSprite = Resources.Load<Sprite>("My/My/Sprites/glass");
+
+            var foreground = new GameObject("Foreground");
+            foreground.transform.SetParent(obj.transform, false);
+            var fgImage = foreground.AddComponent<Image>();
+            fgImage.sprite = bottleSprite;
+            fgImage.color = new Color(1f, 1f, 1f, 0.75f);
+
+            var fgRt = foreground.GetComponent<RectTransform>();
+            fgRt.anchorMin = Vector2.zero;
+            fgRt.anchorMax = Vector2.one;
+            fgRt.sizeDelta = Vector2.zero;
+
+            var box = obj.GetComponent<BoxCollider2D>();
+            box.isTrigger = true;
+            
+            box.size = new Vector2(w, h);
+            box.offset = Vector2.zero;
 
             return obj;
         }
