@@ -34,12 +34,18 @@ namespace ZevWaxGames.CursorHero
         private Color rainbowColor;
         private Color displayColor;
         
+        private float visualValue = 0f;
+        private float visualVelocity;
+        public float visualSmoothTime = 0.33f;
+        
         private void OnEnable()
         {
+            EventHolder.OnRunStarted += Refresh;
             EventHolder.OnChoosingFinished += ResetValue;
         }
         private void OnDisable()
         {
+            EventHolder.OnRunStarted -= Refresh;
             EventHolder.OnChoosingFinished -= ResetValue;
         }
         
@@ -89,7 +95,9 @@ namespace ZevWaxGames.CursorHero
 
         private void UpdateProgress()
         {
-            int blocksToShow = Mathf.FloorToInt(Value * blocks.Count);
+            visualValue = Mathf.SmoothDamp(visualValue, value, ref visualVelocity, visualSmoothTime);
+            int blocksToShow = Mathf.FloorToInt(visualValue * blocks.Count);
+
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].enabled = i < blocksToShow;
@@ -99,8 +107,9 @@ namespace ZevWaxGames.CursorHero
 
         private void HandleRainbowEffect()
         {
-            if (Value >= 1f)
+            if (visualValue >= 0.99f && value >= 1f)
             {
+                visualValue = 1f;
                 if (rainbowSequence == null)
                 {
                     StartRainbowAnimation();
@@ -147,7 +156,11 @@ namespace ZevWaxGames.CursorHero
         }
         public void ResetValue()
         {
-            Disk.xp *= 0.75f;
+            Disk.Inflate();
+            SetValue(0f);
+        }
+        public void Refresh()
+        {
             SetValue(0f);
         }
     }

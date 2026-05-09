@@ -10,7 +10,8 @@ namespace ZevWaxGames.CursorHero
         [SerializeField] private float acceleration = 15f;
         [SerializeField] private float slideForce = 1.5f;
         [SerializeField] private float drag = 5f;
-        public static float xp = 0.333f;
+        private const float initXP = 0.333f;
+        private static float currXP = 0.333f;
         
         private Rigidbody2D rb;
         private SpriteRenderer sr;
@@ -18,7 +19,7 @@ namespace ZevWaxGames.CursorHero
 
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Clean;
+            EventHolder.OnRunStarted += Refresh;
             EventHolder.OnChoosingStarted += Disable;
             EventHolder.OnChoosingFinished += Enable;
             EventHolder.OnPlayerDie += Disable;
@@ -26,7 +27,7 @@ namespace ZevWaxGames.CursorHero
 
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Clean;
+            EventHolder.OnRunStarted -= Refresh;
             EventHolder.OnChoosingStarted -= Disable;
             EventHolder.OnChoosingFinished -= Enable;
             EventHolder.OnPlayerDie -= Disable;
@@ -81,9 +82,9 @@ namespace ZevWaxGames.CursorHero
         private void Enable() => col.enabled = true;
         private void Disable() => col.enabled = false;
 
-        private void Clean()
+        private void Refresh()
         {
-            xp = 0.2f;
+            currXP = initXP;
             Die();
         }
         private void Die()
@@ -93,7 +94,11 @@ namespace ZevWaxGames.CursorHero
         private float Collect()
         {
             DJ.PlayDisk();
-            return xp;
+            return currXP;
+        }
+        public static void Inflate()
+        {
+            currXP *= 0.75f;
         }
     }
 }

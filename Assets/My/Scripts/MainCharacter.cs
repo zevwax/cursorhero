@@ -106,6 +106,8 @@ namespace ZevWaxGames.CursorHero
             Sensitivity = 0.3f;
             Guns.Library[GunName.Yellow].Cooldown = 2f;
             Enable();
+            Projectile.RefreshWallpapers1();
+            Projectile.RefreshWallpapers2();
         }
         protected override void Die()
         {
