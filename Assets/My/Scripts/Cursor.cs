@@ -66,5 +66,9 @@ namespace ZevWaxGames.CursorHero
                 StopCoroutine(shootingRoutine);
             shootingRoutine = StartCoroutine(ShootingRoutine());
         }
+        public virtual void GetDamage(float damage)
+        {
+            HP -= damage;
+        }
     }
 }

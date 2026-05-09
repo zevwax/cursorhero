@@ -165,5 +165,11 @@ namespace ZevWaxGames.CursorHero
         }
         public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
         private void SetGlove() => GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
+
+        public override void GetDamage(float damage)
+        {
+            base.GetDamage(damage);
+            ImpulseSource.Instance.Invoke();
+        }
     }
 }

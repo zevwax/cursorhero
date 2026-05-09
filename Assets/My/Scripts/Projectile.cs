@@ -56,7 +56,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (other.gameObject.GetComponent<Cursor>() != null)
             {
-                other.gameObject.GetComponent<Cursor>().HP -= damage;
+                other.gameObject.GetComponent<Cursor>().GetDamage(damage);
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 var rotation = Quaternion.Euler(0, 0, angle - 90f);

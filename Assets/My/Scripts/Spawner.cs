@@ -47,19 +47,19 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewWhite(Vector2 pos)
         {
-            var obj = NewEntity<White>(pos, "Enemy", "My/My/Sprites/pointer", 17, 22, 0 - 17/2f, 0 - 22/2f);
+            var obj = NewEntity<White>(pos, "Enemy", "My/My/Sprites/pointer_1", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static GameObject NewYellow(Vector2 pos)
         {
-            var obj = NewEntity<Yellow>(pos, "Enemy", "My/My/Sprites/pointer", 17, 22, 0 - 17/2f, 0 - 22/2f);
+            var obj = NewEntity<Yellow>(pos, "Enemy", "My/My/Sprites/pointer_2", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
         public static GameObject NewCyan(Vector2 pos)
         {
-            var obj = NewEntity<Cyan>(pos, "Enemy", "My/My/Sprites/pointer", 17, 22, 0 - 17/2f, 0 - 22/2f);
+            var obj = NewEntity<Cyan>(pos, "Enemy", "My/My/Sprites/pointer_3", 17, 22, 0 - 17/2f, 0 - 22/2f);
             obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
             return obj;
         }
@@ -233,7 +233,7 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMax = new Vector2(-4, -4);
             
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt");
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
             textTxt.text = text;
             textTxt.alignment = TextAlignmentOptions.Center;
             textTxt.color = Color.black;
