@@ -7,8 +7,10 @@ namespace ZevWaxGames.CursorHero
 {
     public class LayingPieceOfGlass : MonoBehaviour
     {
-        private float size;
+        public float Edge => edge;
+        public float Size => size;
         private float edge;
+        private float size;
         
         [Header("Settings")]
         [SerializeField] private float slideForce = 15f;

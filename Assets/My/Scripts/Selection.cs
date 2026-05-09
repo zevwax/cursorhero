@@ -54,9 +54,15 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(0.5f);
             }
         }
-
         public void FinishSelecting()
         {
+            var o = GetSelectedObject();
+            if (o != null)
+            {
+                MainCharacter.Instance.edge = o.Edge;
+                MainCharacter.Instance.size = o.Size;
+                ClipboardTextbox.Instance.UpdateContents();
+            }
             isActive = false;
             _rectTransform.sizeDelta = Vector2.zero;
             MainCharacter.Instance.SetGlove(gameObject);
@@ -68,5 +74,32 @@ namespace ZevWaxGames.CursorHero
             MainCharacter.Instance.SetCross(gameObject);
         }
         private Vector3 GetPointerPos() => MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
+        private LayingPieceOfGlass GetSelectedObject()
+        {
+            var allScripts = Object.FindObjectsByType<LayingPieceOfGlass>(FindObjectsSortMode.None);
+            var ppu = 30;
+            var halfOfW = (_rectTransform.sizeDelta.x / ppu) * 0.5f;
+            var halfOfH = (_rectTransform.sizeDelta.y / ppu) * 0.5f;
+            foreach (var piece in allScripts)
+            {
+                var posXOfLeftSideOfThePiece = piece.transform.position.x - piece.transform.lossyScale.x / 2;
+                var posXOfRightSideOfThePiece = piece.transform.position.x + piece.transform.lossyScale.x / 2;
+                var posYOfBottomSideOfThePiece = piece.transform.position.y - piece.transform.lossyScale.y / 2;
+                var posYOfTopSideOfThePiece = piece.transform.position.y + piece.transform.lossyScale.y / 2;
+                var posXOfLeftSideOfTheSelection = transform.position.x - halfOfW;
+                var posXOfRightSideOfTheSelection = transform.position.x + halfOfW;
+                var posYOfBottomSideOfTheSelection = transform.position.y - halfOfH;
+                var posYOfTopSideOfTheSelection = transform.position.y + halfOfH;
+                if
+                (
+                    posXOfLeftSideOfTheSelection < posXOfLeftSideOfThePiece &&
+                    posXOfRightSideOfThePiece < posXOfRightSideOfTheSelection &&
+                    posYOfBottomSideOfTheSelection < posYOfBottomSideOfThePiece &&
+                    posYOfTopSideOfThePiece < posYOfTopSideOfTheSelection
+                )
+                    return piece;
+            }
+            return null;
+        }
     }
 }

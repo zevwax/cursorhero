@@ -6,6 +6,10 @@ namespace ZevWaxGames.CursorHero
     public class MainCharacter : Cursor
     {
         public static MainCharacter Instance { get; private set; }
+        
+        public float edge;
+        public float size;
+        
         public bool is_trackable = true;
         public float ProjectileDamage = 1f;
         public float ProjectileSpeed = 6f;
