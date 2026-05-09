@@ -19,14 +19,14 @@ namespace ZevWaxGames.CursorHero
         {
             EventHolder.OnRunStarted += Clean;
             EventHolder.OnChoosingStarted += Disable;
-            EventHolder.OnChoosingFinished += Enable;
+            EventHolder.OnChoosingFinished += Die;
             EventHolder.OnPlayerDie += Disable;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Clean;
             EventHolder.OnChoosingStarted -= Disable;
-            EventHolder.OnChoosingFinished -= Enable;
+            EventHolder.OnChoosingFinished -= Die;
             EventHolder.OnPlayerDie -= Disable;
         }
         protected virtual void Start()
@@ -264,10 +264,6 @@ namespace ZevWaxGames.CursorHero
                 new Vector2(0.5f, 0.5f)
             );
             Debug.Log("RefreshWallpapers2");
-        }
-        private void Enable()
-        {
-            col.enabled = true;
         }
         private void Disable()
         {

@@ -5,6 +5,7 @@ namespace ZevWaxGames.CursorHero
 {
     public class Diskfall : MonoBehaviour
     {
+        public static Diskfall Instance { get; private set; }
         private float spawnRate = 0.01f;
         private float spawnRangeX = 20f;
         private Queue<GameObject> diskPool = new Queue<GameObject>();
@@ -12,9 +13,11 @@ namespace ZevWaxGames.CursorHero
         private int poolSize = 500;
         private float spawnTimer;
         private bool isActive;
+        private bool shouldBeActive;
 
         private void Start()
         {
+            Instance = this;
             poolContainer = new GameObject("DiskPool").transform;
             poolContainer.transform.position = new Vector3(0f, 0f, 0f);
             poolContainer.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
@@ -30,8 +33,6 @@ namespace ZevWaxGames.CursorHero
 
         private void Update()
         {
-            var shouldBeActive = ProgressBar.Instance != null && ProgressBar.Instance.Value >= 1f;
-
             if (shouldBeActive)
             {
                 isActive = true;
@@ -49,7 +50,7 @@ namespace ZevWaxGames.CursorHero
                 DeactivateAll();
             }
         }
-
+        public void SetActive(bool active) => shouldBeActive = active;
         private void SpawnFallingDisk()
         {
             if (diskPool.Count == 0) return;

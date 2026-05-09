@@ -3009,7 +3009,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.1.9
+  m_text: 0.1.10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3036,7 +3036,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.4
+  m_fontSize: 4.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4180,10 +4180,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'you
+  m_text: 'Liminal Stages
 
 
-    zev wax'
+    You
+
+
+    Zev Wax'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 141a48677560237408a18d0767e1c829, type: 2}
   m_sharedMaterial: {fileID: 4615088062282092983, guid: 141a48677560237408a18d0767e1c829, type: 2}
@@ -4210,7 +4213,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.4
+  m_fontSize: 6.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4754,10 +4757,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'player
+  m_text: 'Composer
 
 
-    creator'
+    Player
+
+
+    Creator'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 141a48677560237408a18d0767e1c829, type: 2}
   m_sharedMaterial: {fileID: 4615088062282092983, guid: 141a48677560237408a18d0767e1c829, type: 2}
@@ -4784,7 +4790,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.4
+  m_fontSize: 6.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5804,9 +5810,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Computer
-
-    After School'
+  m_text: IdolOS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2babb2bc87981524c952aae5a30d9e91, type: 2}
   m_sharedMaterial: {fileID: 4082678017577302547, guid: 2babb2bc87981524c952aae5a30d9e91, type: 2}
@@ -5833,7 +5837,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.8
+  m_fontSize: 47.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
