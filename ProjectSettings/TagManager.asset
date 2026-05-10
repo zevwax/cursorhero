@@ -19,9 +19,9 @@ TagManager:
   - EnemyProjectile
   - Button
   - Disk
-  - 
-  - 
-  - 
+  - GUI
+  - ColoristCameraOutput
+  - DitheringCameraOutput
   - 
   - 
   - 
@@ -86,6 +86,9 @@ TagManager:
     locked: 0
   - name: Tooltips
     uniqueID: 528894725
+    locked: 0
+  - name: DamageNumbers
+    uniqueID: 380735913
     locked: 0
   - name: TheEndScreen
     uniqueID: 3855164161

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0be33ff98975deb44818efc3e38562f3
+guid: 50145c3da80b7aa46b4a0ba80de2c8aa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3165710878552226329
-    second: window - Copy_0
+      213: -7628825838070591699
+    second: projectile_xp_logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: window - Copy_0
+      name: projectile_xp_logo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 66
-        height: 95
+        width: 9
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 91af1b9754ddeeb20800000000000000
-      internalID: 3165710878552226329
+      spriteID: d2f0b7cc157f02690800000000000000
+      internalID: -7628825838070591699
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      window - Copy_0: 3165710878552226329
+      projectile_xp_logo_0: -7628825838070591699
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -169,6 +169,7 @@ namespace ZevWaxGames.CursorHero
         public override void GetDamage(float damage)
         {
             base.GetDamage(damage);
+            Spawner.NewDamageNumbers(transform.position, false, damage);
             ImpulseSource.Instance.Invoke();
         }
     }

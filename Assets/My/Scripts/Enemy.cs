@@ -78,5 +78,10 @@ namespace ZevWaxGames.CursorHero
         {
             Destroy(gameObject);
         }
+        public override void GetDamage(float damage)
+        {
+            base.GetDamage(damage);
+            Spawner.NewDamageNumbers(transform.position, true, damage);
+        }
     }
 }
