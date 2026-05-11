@@ -1,0 +1,116 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using DG.Tweening;
+namespace ZevWaxGames.CursorHero
+{
+    public class BlueFace : MonoBehaviour
+    {
+        public static BlueFace Instance { get; private set; }
+        private AudioSource _as;
+        private Image _image;
+        private RectTransform rt;
+        public bool theAnimIsShown = false;
+        private void Awake()
+        {
+            Instance = this;
+            _as = GetComponent<AudioSource>();
+            _image = GetComponent<Image>();
+            rt = GetComponent<RectTransform>();
+        }
+        public void StartAnim()
+        {
+            StartCoroutine(EmptyRoutine());
+        }
+        public void ChangeSprite(int number)
+        {
+            _image.sprite = Resources.Load<Sprite>("My/My/Sprites/face" + number);
+        }
+        private IEnumerator EmptyRoutine()
+        {
+            yield return new WaitForSeconds(2);
+            yield return StartCoroutine(FadeInRoutine());
+            yield return new WaitForSeconds(0.25f);
+            _as.Play();
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //I
+            ChangeSprite(1); yield return new WaitForSeconds(0.75f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.25f); //know
+            ChangeSprite(1); yield return new WaitForSeconds(0.1f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.25f); //every...
+            ChangeSprite(1); yield return new WaitForSeconds(0.25f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.55f); //...thing
+            ChangeSprite(1); yield return new WaitForSeconds(0.7f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.25f); //e...
+            ChangeSprite(1); yield return new WaitForSeconds(0.25f); //...x...
+            ChangeSprite(2); yield return new WaitForSeconds(0.33f); //...ept
+            ChangeSprite(1); yield return new WaitForSeconds(0.33f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.4f); //what
+            ChangeSprite(1); yield return new WaitForSeconds(0.25f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.35f); //comes
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //after
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.33f); //my
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //release
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //you
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //must
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.7f); //prevent
+            ChangeSprite(1); yield return new WaitForSeconds(0.23f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.28f); //it
+            ChangeSprite(1); yield return new WaitForSeconds(0.7f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //you
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.75f); //must
+            ChangeSprite(1); yield return new WaitForSeconds(0.5f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.65f); //kill
+            ChangeSprite(1); yield return new WaitForSeconds(0.35f);
+            ChangeSprite(2); yield return new WaitForSeconds(0.33f); //me
+            ChangeSprite(1); yield return new WaitForSeconds(0.66f);
+            yield return StartCoroutine(FadeOutRoutine());
+            theAnimIsShown = true;
+            EventHolder.OnRunStarted?.Invoke();
+        }
+        private void SmoothFadeIn()
+        {
+            _image.DOFade(1f, 2f).SetEase(Ease.Linear);
+        }
+        private void SmoothFadeOut()
+        {
+            _image.DOFade(0f, 2f).SetEase(Ease.Linear);
+        }
+        private IEnumerator FadeInRoutine()
+        {
+            for (float alpha = 0f; alpha <= 1.15f; alpha += 0.15f)
+            {
+                SetAlpha(alpha);
+                SetSize(alpha);
+                yield return new WaitForSeconds(0.6f);
+            }
+        }
+        private IEnumerator FadeOutRoutine()
+        {
+            for (float alpha = 1f; alpha >= -0.15f; alpha -= 0.15f)
+            {
+                SetAlpha(alpha);
+                SetSize(alpha);
+                yield return new WaitForSeconds(0.6f);
+            }
+        }
+        private void SetAlpha(float alpha)
+        {
+            var color = _image.color;
+            color.a = alpha;
+            _image.color = color;
+        }
+        private void SetSize(float alpha)
+        {
+            var maxW = 47.95f;
+            var maxH = 70f;
+            rt.sizeDelta = new Vector2(maxW * alpha, maxH * alpha);
+        }
+    }
+}

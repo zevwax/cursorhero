@@ -9,7 +9,13 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
-            EventHolder.OnRunStarted?.Invoke();
+            if (BlueFace.Instance.theAnimIsShown)
+                EventHolder.OnRunStarted?.Invoke();
+            else
+            {
+                BlueFace.Instance.StartAnim();
+                UIManager.Instance.HideStartGameNTryAgainWindows();
+            }
         }
     }
 }

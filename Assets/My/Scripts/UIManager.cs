@@ -85,7 +85,7 @@ namespace ZevWaxGames.CursorHero
             if (btns[2] != null)
                 Destroy(btns[2]);
         }
-        private void HideStartGameNTryAgainWindows()
+        public void HideStartGameNTryAgainWindows()
         {
             startGameWindow.SetActive(false);
             tryAgainWindow.SetActive(false);
