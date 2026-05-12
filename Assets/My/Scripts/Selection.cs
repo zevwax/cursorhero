@@ -58,11 +58,19 @@ namespace ZevWaxGames.CursorHero
         {
             var o = GetSelectedObject();
             if (o != null)
-            {
-                MainCharacter.Instance.edge = o.Edge;
-                MainCharacter.Instance.size = o.Size;
-                ClipboardTextbox.Instance.UpdateContents();
-            }
+                if (o.GetComponent<LayingPieceOfGlass>() != null)
+                {
+                    MainCharacter.Instance.edge = o.GetComponent<LayingPieceOfGlass>().Edge;
+                    MainCharacter.Instance.size = o.GetComponent<LayingPieceOfGlass>().Size;
+                    ClipboardTextbox.Instance.UpdateContents();
+                    Spawner.NewDamageNumbers(transform.position, "Copied projectile.png");
+                }
+                else if (o.GetComponent<Apple>() != null)
+                {
+                    MainCharacter.Instance.HP = MainCharacter.Instance.MaxHP;
+                    Spawner.NewDamageNumbers(transform.position, "HP Restored");
+                    Destroy(o);
+                }
             isActive = false;
             _rectTransform.sizeDelta = Vector2.zero;
             MainCharacter.Instance.SetGlove(gameObject);
@@ -74,7 +82,7 @@ namespace ZevWaxGames.CursorHero
             MainCharacter.Instance.SetCross(gameObject);
         }
         private Vector3 GetPointerPos() => MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
-        private LayingPieceOfGlass GetSelectedObject()
+        private GameObject GetSelectedObject()
         {
             var allScripts = Object.FindObjectsByType<LayingPieceOfGlass>(FindObjectsSortMode.None);
             var ppu = 30;
@@ -97,8 +105,30 @@ namespace ZevWaxGames.CursorHero
                     posYOfBottomSideOfTheSelection < posYOfBottomSideOfThePiece &&
                     posYOfTopSideOfThePiece < posYOfTopSideOfTheSelection
                 )
-                    return piece;
+                    return piece.gameObject;
             }
+            
+            var allApples = Object.FindObjectsByType<Apple>(FindObjectsSortMode.None);
+            foreach (var apple in allApples)
+            {
+                var posXOfLeftSideOfThePiece = apple.transform.position.x - apple.transform.lossyScale.x / 2;
+                var posXOfRightSideOfThePiece = apple.transform.position.x + apple.transform.lossyScale.x / 2;
+                var posYOfBottomSideOfThePiece = apple.transform.position.y - apple.transform.lossyScale.y / 2;
+                var posYOfTopSideOfThePiece = apple.transform.position.y + apple.transform.lossyScale.y / 2;
+                var posXOfLeftSideOfTheSelection = transform.position.x - halfOfW;
+                var posXOfRightSideOfTheSelection = transform.position.x + halfOfW;
+                var posYOfBottomSideOfTheSelection = transform.position.y - halfOfH;
+                var posYOfTopSideOfTheSelection = transform.position.y + halfOfH;
+                if
+                (
+                    posXOfLeftSideOfTheSelection < posXOfLeftSideOfThePiece &&
+                    posXOfRightSideOfThePiece < posXOfRightSideOfTheSelection &&
+                    posYOfBottomSideOfTheSelection < posYOfBottomSideOfThePiece &&
+                    posYOfTopSideOfThePiece < posYOfTopSideOfTheSelection
+                )
+                    return apple.gameObject;
+            }
+            
             return null;
         }
     }

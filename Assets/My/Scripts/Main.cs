@@ -25,6 +25,7 @@ namespace ZevWaxGames.CursorHero
             //StartCoroutine(CreateABottleWDelay());
             
             UIManager.Instance.ShowStartGameWindow();
+            Spawner.NewBinButton(new Vector2(-8f+0.75f, 4.5f-1f-0.75f));
         }
 
         private IEnumerator CreateABottleWDelay()

@@ -298,6 +298,49 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
+        public static GameObject NewDamageNumbers(Vector2 pos, string text)
+        {
+            var obj = new GameObject("DamageNumbers");
+            obj.layer = LayerMask.NameToLayer("GUI");
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.sortingLayerName = "DamageNumbers";
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.position = pos;
+            rectTransform.sizeDelta = new Vector2(80, 25);
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            obj.AddComponent<CanvasGroup>();
+            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            var tooltip = obj.AddComponent<DamageNumbers>();
+            
+            var textObj = new GameObject("Text");
+            textObj.layer = LayerMask.NameToLayer("GUI");
+            textObj.transform.SetParent(obj.transform, false);
+            var textRt = textObj.AddComponent<RectTransform>();
+            textRt.anchorMin = Vector2.zero;
+            textRt.anchorMax = Vector2.one;
+            textRt.offsetMin = Vector2.zero;
+            textRt.offsetMax = Vector2.zero;
+            var textTxt = textObj.AddComponent<TextMeshProUGUI>();
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
+            textTxt.alignment = TextAlignmentOptions.Center;
+            textTxt.color = new Color32(0, 170, 0, 255);
+            textTxt.text = text;
+            textTxt.enableAutoSizing = true;
+            textTxt.fontSizeMin = ushort.MinValue;
+            textTxt.fontSizeMax = ushort.MaxValue;
+            textTxt.raycastTarget = false;
+            
+            return obj;
+        }
         public static GameObject NewSelection()
         {
             var obj = new GameObject("Selection");
@@ -375,7 +418,11 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewPlayButton(Vector2 pos)
         {
             var obj = CreateBaseButton<Play>(pos, "PlayButton");
-            var script = obj.GetComponent<Play>();
+            return obj;
+        }
+        public static GameObject NewBinButton(Vector2 pos)
+        {
+            var obj = CreateBaseButton<RecycleBinButton>(pos, "BinButton");
             return obj;
         }
         public static GameObject NewEndlessModeButton(Vector2 pos)
@@ -478,7 +525,7 @@ namespace ZevWaxGames.CursorHero
         {
             var w = 11f;
             var h = 15f;
-            var obj = NewEntity<LayingPieceOfGlass>(pos, "Bottle", "My/My/Sprites/bottle", w, h, 0 - w / 2f, 0 - h / 2f);
+            var obj = NewEntity<LayingPieceOfGlass>(pos, "LayingPieceOfGlass", "My/My/Sprites/glass", w, h, 0 - w / 2f, 0 - h / 2f);
             obj.GetComponent<Rigidbody2D>().freezeRotation = false;
             
             Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
@@ -495,13 +542,55 @@ namespace ZevWaxGames.CursorHero
             rootRt.sizeDelta = new Vector2(w, h);
             rootRt.localScale = new Vector3(0, 0, 1);
 
-            var bottleSprite = Resources.Load<Sprite>("My/My/Sprites/glass");
+            var sprite = Resources.Load<Sprite>("My/My/Sprites/glass");
 
             var foreground = new GameObject("Foreground");
             foreground.transform.SetParent(obj.transform, false);
             var fgImage = foreground.AddComponent<Image>();
-            fgImage.sprite = bottleSprite;
+            fgImage.sprite = sprite;
             fgImage.color = new Color(1f, 1f, 1f, 0.75f);
+
+            var fgRt = foreground.GetComponent<RectTransform>();
+            fgRt.anchorMin = Vector2.zero;
+            fgRt.anchorMax = Vector2.one;
+            fgRt.sizeDelta = Vector2.zero;
+
+            var box = obj.GetComponent<BoxCollider2D>();
+            box.isTrigger = true;
+            
+            box.size = new Vector2(w, h);
+            box.offset = Vector2.zero;
+
+            return obj;
+        }
+        public static GameObject NewApple(Vector2 pos)
+        {
+            var w = 16f;
+            var h = 24f;
+            var obj = NewEntity<Apple>(pos, "Apple", "My/My/Sprites/apple", w, h, 0 - w / 2f, 0 - h / 2f);
+            obj.GetComponent<Rigidbody2D>().freezeRotation = false;
+            
+            Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
+            
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "Bottles";
+            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            obj.AddComponent<CanvasGroup>();
+
+            var rootRt = obj.GetComponent<RectTransform>();
+            rootRt.sizeDelta = new Vector2(w, h);
+            rootRt.localScale = new Vector3(0, 0, 1);
+
+            var sprite = Resources.Load<Sprite>("My/My/Sprites/apple");
+
+            var foreground = new GameObject("Foreground");
+            foreground.transform.SetParent(obj.transform, false);
+            var fgImage = foreground.AddComponent<Image>();
+            fgImage.sprite = sprite;
+            fgImage.color = new Color(1f, 1f, 1f, 1f);
 
             var fgRt = foreground.GetComponent<RectTransform>();
             fgRt.anchorMin = Vector2.zero;

@@ -6,7 +6,7 @@ namespace ZevWaxGames.CursorHero
 {
     public abstract class Button : MonoBehaviour
     {
-        public string boxPath = "My/My/Sprites/btn";
+        protected string boxPath = "My/My/Sprites/btn";
         public string iconPath;
         public string tooltipText = "Default Tooltip";
         

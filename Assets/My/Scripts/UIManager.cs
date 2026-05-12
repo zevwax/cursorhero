@@ -9,6 +9,7 @@ namespace ZevWaxGames.CursorHero
     {
         public static UIManager Instance { get; private set; }
         [SerializeField] private GameObject startGameWindow;
+        [SerializeField] private GameObject recycleBinWindow;
         [SerializeField] private GameObject youWinWindow;
         [SerializeField] private GameObject chooseAnUpgradeWindow;
         [SerializeField] private GameObject tryAgainWindow;
@@ -19,6 +20,10 @@ namespace ZevWaxGames.CursorHero
             if (tryAgainWindow != null)
                 tryAgainWindow.SetActive(false);
             btns = new GameObject[3];
+        }
+        private void Start()
+        {
+            StartCoroutine(FadeIn());
         }
         private void OnEnable()
         {
@@ -36,7 +41,6 @@ namespace ZevWaxGames.CursorHero
         }
         public void ShowStartGameWindow()
         {
-            StartCoroutine(FadeIn());
             startGameWindow.SetActive(true);
             btns[0] = Spawner.NewPlayButton(Vector2.zero);
         }
@@ -73,6 +77,12 @@ namespace ZevWaxGames.CursorHero
             btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2f, 0f));
             btns[1] = Spawner.NewUpgradeButton(buttons[1], Vector2.zero);
             btns[2] = Spawner.NewUpgradeButton(buttons[2], new Vector2(2f, 0f));
+        }
+        public void ShowRecycleBinWindow()
+        {
+            recycleBinWindow.SetActive(true);
+            Spawner.NewBottle(new Vector2(-0.25f, -0.25f));
+            Spawner.NewApple(new Vector2(0.25f, 0.25f));
         }
         private void HideYouWinNChooseAnUpgradeWindows()
         {
@@ -157,6 +167,27 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(0.5f);
             alpha -= 0.25f;
             yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
+        }
+        private IEnumerator FastFadeIn()
+        {
+            var endCanvas = GameObject.Find("FadeInCanvas").GetComponent<CanvasGroup>();
+            yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.85f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.7f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.5f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.25f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0, 0).WaitForCompletion();
+        }
+        private IEnumerator FastFadeOut()
+        {
+            yield return new WaitForSeconds(79f);
+            var endCanvas = GameObject.Find("FadeInCanvas").GetComponent<CanvasGroup>();
+            yield return endCanvas.DOFade(0.25f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.5f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.7f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.85f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(1f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace ZevWaxGames.CursorHero
     {
         [Header("Animation Settings")]
         [SerializeField] private float floatDistance = 1.5f;
+
         [SerializeField] private float duration = 0.8f;
         [SerializeField] private Ease moveEase = Ease.OutQuint;
 
