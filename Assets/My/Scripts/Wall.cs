@@ -5,15 +5,15 @@ namespace ZevWaxGames.CursorHero
     public class Wall : MonoBehaviour
     {
         public enum WallType { Left, Right, Top, Bottom }
-        public WallType type;
-        
+        /*public WallType type;
+
         private BoxCollider2D col;
         private AspectRatioHandler aspectHandler;
 
         void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("Wall");
-            
+
             col = GetComponent<BoxCollider2D>();
             aspectHandler = Camera.main.GetComponent<AspectRatioHandler>();
         }
@@ -44,6 +44,6 @@ namespace ZevWaxGames.CursorHero
                     col.size = new Vector2(w, col.size.y);
                     break;
             }
-        }
+        }*/
     }
 }

@@ -12,24 +12,6 @@ namespace ZevWaxGames.CursorHero
             ice.friction = 0f;
             return ice;
         }
-        public static GameObject NewWall(Wall.WallType type)
-        {
-            GameObject obj = new GameObject("Wall");
-            
-            Rigidbody2D rb = obj.AddComponent<Rigidbody2D>();
-            rb.sharedMaterial = CreateIceMaterial();
-            rb.gravityScale = 0;
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-            rb.bodyType = RigidbodyType2D.Static;
-            
-            obj.AddComponent<BoxCollider2D>();
-            Wall script = obj.AddComponent<Wall>();
-            script.type = type;
-            return obj;
-        }
-
         public static GameObject NewMainCharacter(Vector2 pos)
         {
             var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/glove", 17, 22, 0 - 17/2f, 0 - 22/2f);
@@ -111,6 +93,59 @@ namespace ZevWaxGames.CursorHero
             
             obj.AddComponent<T>();
 
+            return obj;
+        }
+        
+        public static GameObject NewEntity2<T>(Vector2 pos, string name, string spriteName, string sortingLayerName, bool collider, string objectLayer) where T : MonoBehaviour
+        {
+            var obj = new GameObject(name);
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            if (sortingLayerName != null)
+                canvas.sortingLayerName = sortingLayerName;
+            var rectTransform = obj.GetComponent<RectTransform>();
+            var sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
+            rectTransform.position = new Vector3(pos.x, pos.y, 0);
+            var size = new Vector2(sprite.rect.width, sprite.rect.height);
+            rectTransform.sizeDelta = size;
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            obj.AddComponent<T>();
+            
+            var imageObj = new GameObject("Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = sprite;
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
+            
+            if (collider)
+            {
+                obj.layer = LayerMask.NameToLayer(objectLayer);
+                Rigidbody2D rb = obj.AddComponent<Rigidbody2D>();
+                rb.sharedMaterial = CreateIceMaterial();
+                rb.gravityScale = 0;
+                rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                rb.bodyType = RigidbodyType2D.Static;
+                var box = obj.AddComponent<BoxCollider2D>();
+                box.size = size;
+                box.offset = Vector2.zero;
+            }
+            
             return obj;
         }
         

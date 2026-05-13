@@ -11,7 +11,8 @@ namespace ZevWaxGames.CursorHero
         private static GameObject bloodSplash;
         private static Texture2D _editableTexture1;
         private static Texture2D _editableTexture2;
-        protected float damage;
+        protected float edge;
+        protected float size;
         public float speed;
         public Vector3 direction;
         private Collider2D col;
@@ -56,7 +57,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (other.gameObject.GetComponent<Cursor>() != null)
             {
-                other.gameObject.GetComponent<Cursor>().GetDamage(damage);
+                other.gameObject.GetComponent<Cursor>().GetDamage(edge);
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 var rotation = Quaternion.Euler(0, 0, angle - 90f);
