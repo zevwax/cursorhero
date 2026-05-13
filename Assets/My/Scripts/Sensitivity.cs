@@ -3,7 +3,6 @@ namespace ZevWaxGames.CursorHero
     public class Sensitivity : Upgrade
     {
         protected override void Start() {
-            iconPath = "My/My/Sprites/btn_upgrade_sen";
             tooltipText = "Increase Sensitivity";
             base.Start();
         }

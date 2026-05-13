@@ -8,7 +8,7 @@ namespace ZevWaxGames.CursorHero
     {
         [SerializeField] protected float speed = 3f;
         [SerializeField] protected int2 dropRange;
-        private Collider2D col;
+        private BoxCollider2D col;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += CleanUp;
@@ -25,7 +25,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected virtual void Start()
         {
-            col = GetComponent<Collider2D>();
+            col = GetComponent<BoxCollider2D>();
             gameObject.layer = LayerMask.NameToLayer("Enemy");
             
             rb = GetComponent<Rigidbody2D>();

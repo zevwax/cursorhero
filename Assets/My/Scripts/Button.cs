@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using DG.Tweening;
 
 namespace ZevWaxGames.CursorHero
@@ -10,28 +11,31 @@ namespace ZevWaxGames.CursorHero
         public string iconPath;
         public string tooltipText = "Default Tooltip";
         
-        private SpriteRenderer boxSr;
-        private SpriteRenderer iconSr;
         private GameObject currentTooltip;
         private bool isHovered;
         private Tween idleTween;
-        private Collider2D myCollider;
+        private BoxCollider2D myCollider;
 
+        private WorldSpaceCanvasRealtimeScaler scaler;
+        private Tween sizeTween;
+
+        private void Awake()
+        {
+            scaler = GetComponent<WorldSpaceCanvasRealtimeScaler>();
+        }
         protected virtual void Start()
         {
-            boxSr = GetComponent<SpriteRenderer>();
-            boxSr.sprite = Resources.Load<Sprite>(boxPath);
+            transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(boxPath);
             
-            myCollider = GetComponent<Collider2D>();
-
-            var iconObj = new GameObject("Icon");
-            iconObj.transform.SetParent(transform);
-            iconObj.transform.localPosition = new Vector3(-0.045f, 0.065f, 0);
-            
-            iconSr = iconObj.AddComponent<SpriteRenderer>();
-            iconSr.sortingLayerName = "Buttons";
-            iconSr.sprite = Resources.Load<Sprite>(iconPath);
-            iconSr.sortingOrder = boxSr.sortingOrder + 1;
+            myCollider = GetComponent<BoxCollider2D>();
+            //here add something that will let me find the instance in hierarchy
+            if (myCollider == null)
+            {
+                Debug.LogError($"[Missing Collider] This GameObject is missing BoxCollider2D!", gameObject);
+                #if UNITY_EDITOR
+                UnityEditor.EditorGUIUtility.PingObject(gameObject);
+                #endif
+            }
 
             StartHangedAnimation();
             SetStateIdle();
@@ -52,7 +56,7 @@ namespace ZevWaxGames.CursorHero
             
             var mainChar = MainCharacter.Instance;
             
-            Collider2D charCol = mainChar.GetComponent<Collider2D>();
+            var charCol = mainChar.GetComponent<BoxCollider2D>();
             bool collision = myCollider.IsTouching(charCol);
 
             if (collision)
@@ -96,19 +100,28 @@ namespace ZevWaxGames.CursorHero
             if (currentTooltip != null) currentTooltip.GetComponent<Tooltip>().Die();
         }
 
+        
+
         private void SetStateIdle()
         {
-            transform.DOScale(1f, 0.2f);
+            AnimateMult(1.0f, 0.2f);
         }
 
         private void SetStateHover()
         {
-            transform.DOScale(1.1f, 0.2f);
+            AnimateMult(1.1f, 0.2f);
         }
 
         private void SetStatePushed()
         {
-            transform.DOScale(0.9f, 0.1f);
+            AnimateMult(0.9f, 0.1f);
+        }
+
+        private void AnimateMult(float targetValue, float duration)
+        {
+            sizeTween?.Kill();
+            sizeTween = DOTween.To(() => scaler.mult, x => scaler.mult = x, targetValue, duration)
+                .SetEase(Ease.OutQuad);
         }
 
         private void OnDestroy() => idleTween?.Kill();

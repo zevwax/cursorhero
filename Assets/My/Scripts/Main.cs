@@ -16,11 +16,11 @@ namespace ZevWaxGames.CursorHero
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             
-            Spawner.NewEntity2<Wall>(new Vector2(-8.5f, 0), "Left Wall", "vertical_wall", null, true, "Wall");
-            Spawner.NewEntity2<Wall>(new Vector2(8.5f, 0), "Right Wall", "vertical_wall", null, true, "Wall");
-            Spawner.NewEntity2<Wall>(new Vector2(0, -5f), "Bottom Wall", "horizontal_wall", null, true, "Wall");
-            Spawner.NewEntity2<Wall>(new Vector2(0, 5f), "Top Wall", "horizontal_wall", null, true, "Wall");
-            Spawner.NewMainCharacter(new Vector2(0, 0));
+            Spawner.NewEntity<Wall>(new Vector2(-8.5f, 0), "Left Wall", "vertical_wall", null, true, "Wall", true);
+            Spawner.NewEntity<Wall>(new Vector2(8.5f, 0), "Right Wall", "vertical_wall", null, true, "Wall", true);
+            Spawner.NewEntity<Wall>(new Vector2(0, -5f), "Bottom Wall", "horizontal_wall", null, true, "Wall", true);
+            Spawner.NewEntity<Wall>(new Vector2(0, 5f), "Top Wall", "horizontal_wall", null, true, "Wall", true);
+            Spawner.NewEntity<MainCharacter>(new Vector2(0, 0), "MainCharacter", "glove", "Pointer", true, "MainCharacter", false);
             
             //StartCoroutine(CreateABottleWDelay());
             

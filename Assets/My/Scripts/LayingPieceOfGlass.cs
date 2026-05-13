@@ -24,7 +24,7 @@ namespace ZevWaxGames.CursorHero
         private bool _isHovered = false; // Track hover state
         private GameObject _currentTooltip; // Reference to active tooltip
 
-        private Collider2D myCollider;
+        private BoxCollider2D myCollider;
         private Rigidbody2D rb;
         private CanvasGroup canvasGroup;
 
@@ -32,9 +32,9 @@ namespace ZevWaxGames.CursorHero
         {
             size = Random.Range(1f, 3f);
             edge = Random.Range(1f, 3f);
-            tooltipText = string.Format("Edge: {0:F1} / Size: {1:F1}", edge, size);
+            tooltipText = string.Format("projectile.png\nEdge: {0:F1} / Size: {1:F1}", edge, size);
             
-            myCollider = GetComponent<Collider2D>();
+            myCollider = GetComponent<BoxCollider2D>();
             rb = GetComponent<Rigidbody2D>();
             canvasGroup = GetComponent<CanvasGroup>();
 

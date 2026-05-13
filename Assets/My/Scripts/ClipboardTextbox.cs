@@ -13,6 +13,6 @@ public class ClipboardTextbox : MonoBehaviour
     public void UpdateContents()
     {
         var mainChar = MainCharacter.Instance;
-        GetComponent<TextMeshProUGUI>().text = string.Format("Edge: {0:F1} / Size: {1:F1}", mainChar.edge, mainChar.size);
+        GetComponent<TextMeshProUGUI>().text = string.Format("projectile.png\nEdge: {0:F1} / Size: {1:F1}", mainChar.edge, mainChar.size);
     }
 }

@@ -39,14 +39,14 @@ namespace ZevWaxGames.CursorHero
         private float _waterVelocity;
         private float _waterDisplacement;
 
-        private Collider2D myCollider;
+        private BoxCollider2D myCollider;
         
         private ContactFilter2D _wallFilter;
-        private readonly Collider2D[] _results = new Collider2D[1];
+        private readonly BoxCollider2D[] _results = new BoxCollider2D[1];
         private void Start()
         {
             lastPosition = transform.position;
-            myCollider = GetComponent<Collider2D>();
+            myCollider = GetComponent<BoxCollider2D>();
             psholder = GameObject.Find("PSHolder").transform;
             beerSplash = Resources.Load<GameObject>("My/My/Prefabs/BeerSplash");
             
@@ -62,6 +62,8 @@ namespace ZevWaxGames.CursorHero
         }
         private void UpdatePosition()
         {
+            if (waterRect == null) return;
+            
             float deltaTime = Time.deltaTime;
             if (deltaTime <= 0) return;
 
@@ -104,7 +106,7 @@ namespace ZevWaxGames.CursorHero
             if (MainCharacter.Instance == null) return;
             var mainChar = MainCharacter.Instance;
             
-            bool collision = myCollider.IsTouching(mainChar.GetComponent<Collider2D>());
+            bool collision = myCollider.IsTouching(mainChar.GetComponent<BoxCollider2D>());
             
             bool mouseHold = Mouse.current.leftButton.isPressed;
             bool mouseDown = Mouse.current.leftButton.wasPressedThisFrame;

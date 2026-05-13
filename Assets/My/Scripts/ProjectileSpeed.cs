@@ -3,7 +3,6 @@ namespace ZevWaxGames.CursorHero
     public class ProjectileSpeed : Upgrade
     {
         protected override void Start() {
-            iconPath = "My/My/Sprites/btn_upgrade_spd";
             tooltipText = "Increase Bullet Speed";
             base.Start();
         }

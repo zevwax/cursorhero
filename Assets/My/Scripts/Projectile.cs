@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         protected float size;
         public float speed;
         public Vector3 direction;
-        private Collider2D col;
+        private BoxCollider2D col;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Clean;
@@ -32,7 +32,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected virtual void Start()
         {
-            col = GetComponent<Collider2D>();
+            col = GetComponent<BoxCollider2D>();
             psholder = GameObject.Find("PSHolder").transform;
             bloodSplash = Resources.Load<GameObject>("My/My/Prefabs/BloodSplash");
             Setup();

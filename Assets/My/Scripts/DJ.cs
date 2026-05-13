@@ -44,13 +44,34 @@ namespace ZevWaxGames.CursorHero
         private void Awake()
         {
             Instance = this;
+            Init();
+        }
+        private void Init()
+        {
             fightThemeAS = SetupAudioSource("My/My/Clips/808 VIP Wizard Club", true);
             upgradeThemeAS = SetupAudioSource("My/My/Clips/Ancient Dream", true);
             diskAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Pop-up Blocked", false);
             lmbAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Menu Command", false);
             completeAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Print complete", false);
             deathAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Critical Stop", false);
+            
+            PreloadClip(fightThemeAS.clip);
+            PreloadClip(upgradeThemeAS.clip);
+            PreloadClip(diskAS.clip);
+            PreloadClip(lmbAS.clip);
+            PreloadClip(completeAS.clip);
+            PreloadClip(deathAS.clip);
+            
             weNeedToDecrease = false;
+        }
+        private void PreloadClip(AudioClip clip)
+        {
+            if (clip == null) return;
+            
+            if (clip.loadState != AudioDataLoadState.Loaded)
+            {
+                clip.LoadAudioData();
+            }
         }
         private void Update()
         {

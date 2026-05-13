@@ -12,12 +12,6 @@ namespace ZevWaxGames.CursorHero
             ice.friction = 0f;
             return ice;
         }
-        public static GameObject NewMainCharacter(Vector2 pos)
-        {
-            var obj = NewEntity<MainCharacter>(pos, "MainCharacter", "My/My/Sprites/glove", 17, 22, 0 - 17/2f, 0 - 22/2f);
-            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Pointer";
-            return obj;
-        }
         public static void NewSoul(Vector2 pos)
         {
             GameObject obj = new GameObject("Soul");
@@ -27,49 +21,33 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/WinXP/Cursor/default_arrow");
             obj.AddComponent<Soul>();
         }
-        public static GameObject NewWhite(Vector2 pos)
-        {
-            var obj = NewEntity<White>(pos, "Enemy", "My/My/Sprites/pointer_1", 17, 22, 0 - 17/2f, 0 - 22/2f);
-            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
-            return obj;
-        }
-        public static GameObject NewYellow(Vector2 pos)
-        {
-            var obj = NewEntity<Yellow>(pos, "Enemy", "My/My/Sprites/pointer_2", 17, 22, 0 - 17/2f, 0 - 22/2f);
-            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
-            return obj;
-        }
-        public static GameObject NewCyan(Vector2 pos)
-        {
-            var obj = NewEntity<Cyan>(pos, "Enemy", "My/My/Sprites/pointer_3", 17, 22, 0 - 17/2f, 0 - 22/2f);
-            obj.GetComponent<SpriteRenderer>().sortingLayerName = "Enemies";
-            return obj;
-        }
+        public static GameObject NewWhite(Vector2 pos) => NewEntity<White>(
+            pos, "White Enemy", "pointer_1", "Enemies", true, "Enemy", false);
+        public static GameObject NewYellow(Vector2 pos) => NewEntity<Yellow>(
+            pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy", false);
+        public static GameObject NewCyan(Vector2 pos) => NewEntity<Cyan>(
+            pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy", false);
         public static void NewYellowP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<YellowP>(pos,"YellowP", "My/My/Sprites/glass", 11, 15, 0 - 11/2f, 0 - 20/2f);
-            var sr = projectile.GetComponent<SpriteRenderer>();
-            sr.sortingLayerName = "Projectiles";
-            sr.color = new Color(1, 1, 1, 0.75f);
-            projectile.GetComponent<BoxCollider2D>().isTrigger = true;
-            projectile.GetComponent<Projectile>().direction = direction;
+            var obj = NewEntity<YellowP>(pos, "Yellow Projectile", "glass", "Projectiles", true, "MainCharacterProjectile", false);
+            obj.GetComponent<CanvasGroup>().alpha = 0.75f;
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            obj.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRedP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<RedP>(pos,"RedP", "My/My/Sprites/arrow", 11, 20, 0 - 11/2f, 0 - 20/2f);
-            projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
-            projectile.GetComponent<BoxCollider2D>().isTrigger = true;
-            projectile.GetComponent<Projectile>().direction = direction;
+            var obj = NewEntity<RedP>(pos, "Red Projectile", "arrow", "Projectiles", true, "EnemyProjectile", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            obj.GetComponent<Projectile>().direction = direction;
         }
         public static void NewRingP(Vector2 pos, Vector2 direction)
         {
-            var projectile = NewEntity<RingP>(pos,"RingP", "My/My/Sprites/arrow", 11, 20, 0 - 11/2f, 0 - 20/2f);
-            projectile.GetComponent<SpriteRenderer>().sortingLayerName = "Projectiles";
-            projectile.GetComponent<BoxCollider2D>().isTrigger = true;
-            projectile.GetComponent<Projectile>().direction = direction;
+            var obj = NewEntity<RingP>(pos, "Ring Projectile", "arrow", "Projectiles", true, "EnemyProjectile", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            obj.GetComponent<Projectile>().direction = direction;
         }
         
-        private static GameObject NewEntity<T>(Vector2 pos, string name, string spritePath, float w, float h, float left, float top) where T : MonoBehaviour
+        /*private static GameObject NewEntityLegacy<T>(Vector2 pos, string name, string spritePath, float w, float h, float left, float top) where T : MonoBehaviour
         {
             var obj = new GameObject(name);
             obj.transform.position = new Vector3(pos.x, pos.y, 0);
@@ -94,9 +72,9 @@ namespace ZevWaxGames.CursorHero
             obj.AddComponent<T>();
 
             return obj;
-        }
+        }*/
         
-        public static GameObject NewEntity2<T>(Vector2 pos, string name, string spriteName, string sortingLayerName, bool collider, string objectLayer) where T : MonoBehaviour
+        public static GameObject NewEntity<T>(Vector2 pos, string name, string spriteName, string sortingLayerName, bool collider, string objectLayer, bool isStatic) where T : MonoBehaviour
         {
             var obj = new GameObject(name);
             var canvas = obj.AddComponent<Canvas>();
@@ -118,6 +96,7 @@ namespace ZevWaxGames.CursorHero
             raycaster.blockingMask = -1;
             obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
             obj.AddComponent<T>();
+            obj.AddComponent<CanvasGroup>();
             
             var imageObj = new GameObject("Image");
             imageObj.transform.SetParent(obj.transform, false);
@@ -134,13 +113,14 @@ namespace ZevWaxGames.CursorHero
             if (collider)
             {
                 obj.layer = LayerMask.NameToLayer(objectLayer);
-                Rigidbody2D rb = obj.AddComponent<Rigidbody2D>();
+                var rb = obj.AddComponent<Rigidbody2D>();
                 rb.sharedMaterial = CreateIceMaterial();
                 rb.gravityScale = 0;
                 rb.interpolation = RigidbodyInterpolation2D.Interpolate;
                 rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                rb.bodyType = RigidbodyType2D.Static;
+                if (isStatic)
+                    rb.bodyType = RigidbodyType2D.Static;
                 var box = obj.AddComponent<BoxCollider2D>();
                 box.size = size;
                 box.offset = Vector2.zero;
@@ -151,8 +131,7 @@ namespace ZevWaxGames.CursorHero
         
         public static GameObject NewDisk(Vector2 pos)
         {
-            var obj = NewEntity<Disk>(pos, "Disk", "My/My/Sprites/disk", 15f, 15f, 0f, 0f);
-            obj.GetComponent<SpriteRenderer>().sortingLayerName = "RealDisks";
+            var obj = NewEntity<Disk>(pos, "Disk", "disk", "RealDisks", true, "Disk", false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
@@ -378,37 +357,8 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewSelection()
         {
-            var obj = new GameObject("Selection");
-            var canvas = obj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.WorldSpace;
-            canvas.worldCamera = Camera.main;
-            canvas.sortingLayerName = "Selection";
-            var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(0, 0);
-            rectTransform.localScale = new Vector3(0, 0, 1);
-            var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 30f;
-            canvasScaler.referencePixelsPerUnit = 30f;
-            var raycaster = obj.AddComponent<GraphicRaycaster>();
-            raycaster.ignoreReversedGraphics = true;
-            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
-            raycaster.blockingMask = -1;
-            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-            var script = obj.AddComponent<Selection>();
-            
-            var imageObj = new GameObject("Image");
-            imageObj.transform.SetParent(obj.transform, false);
-            var imageRt = imageObj.AddComponent<RectTransform>();
-            imageRt.anchorMin = Vector2.zero;
-            imageRt.anchorMax = Vector2.one;
-            imageRt.offsetMin = Vector2.zero;
-            imageRt.offsetMax = Vector2.zero;
-            var image = imageObj.AddComponent<Image>();
-            image.sprite = Resources.Load<Sprite>("My/My/Sprites/tooltip");
-            image.type = Image.Type.Sliced;
-            if (imageObj.GetComponent<CanvasRenderer>() == null)
-                imageObj.AddComponent<CanvasRenderer>();
-            
+            var obj = NewEntity<Selection>(Vector2.zero, "Selection", "s1", "Selection", false, "Default", false);
+            obj.transform.GetChild(0).GetComponent<Image>().type = Image.Type.Sliced;
             return obj;
         }
         public static GameObject NewHealthBar()
@@ -450,194 +400,93 @@ namespace ZevWaxGames.CursorHero
 
             return obj;
         }
-        public static GameObject NewPlayButton(Vector2 pos)
-        {
-            var obj = CreateBaseButton<Play>(pos, "PlayButton");
-            return obj;
-        }
-        public static GameObject NewBinButton(Vector2 pos)
-        {
-            var obj = CreateBaseButton<RecycleBinButton>(pos, "BinButton");
-            return obj;
-        }
-        public static GameObject NewEndlessModeButton(Vector2 pos)
-        {
-            var obj = CreateBaseButton<EndlessMode>(pos, "EndlessModeButton");
-            var script = obj.GetComponent<EndlessMode>();
-            return obj;
-        }
+        public static GameObject NewPlayButton(Vector2 pos) => CreateBaseButton<Play>(pos, "PlayButton", "btn_play");
+        public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<RecycleBinButton>(pos, "BinButton", "bin");
+        public static GameObject NewEndlessModeButton(Vector2 pos) => CreateBaseButton<EndlessMode>(pos, "EndlessModeButton", "btn_endless_mode");
         public static GameObject NewUpgradeButton(string upgradeName, Vector2 pos)
         {
             GameObject obj;
             switch (upgradeName)
             {
-                case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage"); break;
-                case "FireRate": obj = CreateBaseButton<Firerate>(pos, "UpgradeFireRate"); break;
-                case "Speed": obj = CreateBaseButton<ProjectileSpeed>(pos, "UpgradeSpeed"); break;
-                case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity"); break;
-                case "Heart": obj = CreateBaseButton<Heart>(pos, "UpgradeHeart"); break;
+                case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage", "btn_upgrade_dmg"); break;
+                case "FireRate": obj = CreateBaseButton<Firerate>(pos, "UpgradeFireRate", "btn_upgrade_cdn"); break;
+                case "Speed": obj = CreateBaseButton<ProjectileSpeed>(pos, "UpgradeSpeed", "btn_upgrade_spd"); break;
+                case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity", "btn_upgrade_sen"); break;
+                case "Heart": obj = CreateBaseButton<Heart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
                 default: throw new System.NotImplementedException();
             }
             return obj;
         }
-        private static GameObject CreateBaseButton<T>(Vector2 pos, string name) where T : Button
+        private static GameObject CreateBaseButton<T>(Vector2 pos, string name, string spriteName) where T : Button
         {
-            GameObject obj = NewEntity<T>(pos, name, "My/My/Sprites/btn", 32f, 32f, -16f, -16f);
-            //obj.transform.localScale = new Vector3(32f/30f, 32f/30f, 1f);
-            obj.layer = LayerMask.NameToLayer("Button");
-            var sr = obj.GetComponent<SpriteRenderer>();
-            sr.sortingLayerName = "Buttons";
-            var col = obj.GetComponent<BoxCollider2D>();
-            col.isTrigger = true;
+            GameObject obj = NewEntity<T>(pos, name, "btn", "Buttons", true, "Button", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            
+            var imageObj = new GameObject("Icon Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = new Vector2(6f, 13f);
+            imageRt.offsetMax = new Vector2(-9f, -8f);
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
+            
             return obj;
         }
         public static GameObject NewBottle(Vector2 pos)
         {
             var bottleFullness = 0.25f;
-            var w = 26f;
-            var h = 60f;
-            var obj = NewEntity<Bottle>(pos, "Bottle", "My/My/Sprites/bottle", w, h, 0 - w / 2f, 0 - h / 2f);
+            var obj = NewEntity<Bottle>(pos, "Bottle", "bottle", "Bottles", true, "Default", false);
 
-            Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
-
-            var canvas = obj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.WorldSpace;
-            canvas.worldCamera = Camera.main;
-            canvas.overrideSorting = true;
-            canvas.sortingLayerName = "Bottles";
-            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-
-            var rootRt = obj.GetComponent<RectTransform>();
-            rootRt.sizeDelta = new Vector2(w, h);
-            rootRt.localScale = new Vector3(0, 0, 1);
-
-            var bottleSprite = Resources.Load<Sprite>("My/My/Sprites/bottle");
-
-            var maskObj = new GameObject("MaskContainer");
-            maskObj.transform.SetParent(obj.transform, false);
-            var maskImg = maskObj.AddComponent<Image>();
-            maskImg.sprite = bottleSprite;
-            maskObj.AddComponent<Mask>().showMaskGraphic = false; 
-
-            var maskRt = maskObj.GetComponent<RectTransform>();
-            maskRt.anchorMin = Vector2.zero;
-            maskRt.anchorMax = Vector2.one;
-            maskRt.sizeDelta = Vector2.zero;
-
-            var water = new GameObject("Background_Water");
-            water.transform.SetParent(maskObj.transform, false);
-            var waterImg = water.AddComponent<Image>();
-            waterImg.color = new Color(0.5f, 0.25f, 0f, 0.8f);
-
-            var waterRt = water.GetComponent<RectTransform>();
-            waterRt.anchorMin = new Vector2(0, 0);
-            waterRt.anchorMax = new Vector2(1, bottleFullness); 
-            waterRt.sizeDelta = new Vector2(w * 10f, w);
-
-            var foreground = new GameObject("Foreground");
-            foreground.transform.SetParent(obj.transform, false);
-            var fgImage = foreground.AddComponent<Image>();
-            fgImage.sprite = bottleSprite;
-            fgImage.color = new Color(1f, 1f, 1f, 0.75f);
-
-            var fgRt = foreground.GetComponent<RectTransform>();
-            fgRt.anchorMin = Vector2.zero;
-            fgRt.anchorMax = Vector2.one;
-            fgRt.sizeDelta = Vector2.zero;
-
-            var box = obj.GetComponent<BoxCollider2D>();
-            box.isTrigger = true;
+            var maskObj = obj.transform.GetChild(0).gameObject;
+            maskObj.AddComponent<Mask>().showMaskGraphic = false;
             
-            box.size = new Vector2(w, h);
-            box.offset = Vector2.zero;
-
+            var waterImageObj = new GameObject("Water");
+            waterImageObj.transform.SetParent(maskObj.transform, false);
+            var waterImageRt = waterImageObj.AddComponent<RectTransform>();
+            waterImageRt.anchorMin = Vector2.zero;
+            waterImageRt.anchorMax = new Vector2(1, bottleFullness);
+            waterImageRt.offsetMin = Vector2.zero;
+            waterImageRt.offsetMax = Vector2.zero;
+            waterImageRt.sizeDelta = new Vector2(260f, 26f);
+            var waterImage = waterImageObj.AddComponent<Image>();
+            if (waterImageObj.GetComponent<CanvasRenderer>() == null)
+                waterImageObj.AddComponent<CanvasRenderer>();
+            waterImage.color = new Color(0.5f, 0.25f, 0f, 0.8f);
+            
+            var glassImageObj = new GameObject("Glass");
+            glassImageObj.transform.SetParent(obj.transform, false);
+            var glassImageRt = glassImageObj.AddComponent<RectTransform>();
+            glassImageRt.anchorMin = Vector2.zero;
+            glassImageRt.anchorMax = Vector2.one;
+            glassImageRt.offsetMin = Vector2.zero;
+            glassImageRt.offsetMax = Vector2.zero;
+            glassImageRt.sizeDelta = Vector2.zero;
+            var glassImage = glassImageObj.AddComponent<Image>();
+            if (glassImageObj.GetComponent<CanvasRenderer>() == null)
+                glassImageObj.AddComponent<CanvasRenderer>();
+            glassImage.sprite = maskObj.GetComponent<Image>().sprite;
+            glassImage.color = new Color(1f, 1f, 1f, 0.75f);
+            
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
             var bottleScript = obj.GetComponent<Bottle>();
-            bottleScript.waterRect = waterRt;
-
+            bottleScript.waterRect = waterImageRt;
             return obj;
         }
         public static GameObject NewLayingPieceOfGlass(Vector2 pos)
         {
-            var w = 11f;
-            var h = 15f;
-            var obj = NewEntity<LayingPieceOfGlass>(pos, "LayingPieceOfGlass", "My/My/Sprites/glass", w, h, 0 - w / 2f, 0 - h / 2f);
-            obj.GetComponent<Rigidbody2D>().freezeRotation = false;
-            
-            Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
-            
-            var canvas = obj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.WorldSpace;
-            canvas.worldCamera = Camera.main;
-            canvas.overrideSorting = true;
-            canvas.sortingLayerName = "Bottles";
-            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-            obj.AddComponent<CanvasGroup>();
-
-            var rootRt = obj.GetComponent<RectTransform>();
-            rootRt.sizeDelta = new Vector2(w, h);
-            rootRt.localScale = new Vector3(0, 0, 1);
-
-            var sprite = Resources.Load<Sprite>("My/My/Sprites/glass");
-
-            var foreground = new GameObject("Foreground");
-            foreground.transform.SetParent(obj.transform, false);
-            var fgImage = foreground.AddComponent<Image>();
-            fgImage.sprite = sprite;
-            fgImage.color = new Color(1f, 1f, 1f, 0.75f);
-
-            var fgRt = foreground.GetComponent<RectTransform>();
-            fgRt.anchorMin = Vector2.zero;
-            fgRt.anchorMax = Vector2.one;
-            fgRt.sizeDelta = Vector2.zero;
-
-            var box = obj.GetComponent<BoxCollider2D>();
-            box.isTrigger = true;
-            
-            box.size = new Vector2(w, h);
-            box.offset = Vector2.zero;
-
+            var obj = NewEntity<LayingPieceOfGlass>(pos, "LayingPieceOfGlass", "glass", "Bottles", true, "Default", false);
+            obj.GetComponent<CanvasGroup>().alpha = 0.75f;
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
         public static GameObject NewApple(Vector2 pos)
         {
-            var w = 16f;
-            var h = 24f;
-            var obj = NewEntity<Apple>(pos, "Apple", "My/My/Sprites/apple", w, h, 0 - w / 2f, 0 - h / 2f);
-            obj.GetComponent<Rigidbody2D>().freezeRotation = false;
-            
-            Object.DestroyImmediate(obj.GetComponent<SpriteRenderer>());
-            
-            var canvas = obj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.WorldSpace;
-            canvas.worldCamera = Camera.main;
-            canvas.overrideSorting = true;
-            canvas.sortingLayerName = "Bottles";
-            obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-            obj.AddComponent<CanvasGroup>();
-
-            var rootRt = obj.GetComponent<RectTransform>();
-            rootRt.sizeDelta = new Vector2(w, h);
-            rootRt.localScale = new Vector3(0, 0, 1);
-
-            var sprite = Resources.Load<Sprite>("My/My/Sprites/apple");
-
-            var foreground = new GameObject("Foreground");
-            foreground.transform.SetParent(obj.transform, false);
-            var fgImage = foreground.AddComponent<Image>();
-            fgImage.sprite = sprite;
-            fgImage.color = new Color(1f, 1f, 1f, 1f);
-
-            var fgRt = foreground.GetComponent<RectTransform>();
-            fgRt.anchorMin = Vector2.zero;
-            fgRt.anchorMax = Vector2.one;
-            fgRt.sizeDelta = Vector2.zero;
-
-            var box = obj.GetComponent<BoxCollider2D>();
-            box.isTrigger = true;
-            
-            box.size = new Vector2(w, h);
-            box.offset = Vector2.zero;
-
+            var obj = NewEntity<Apple>(pos, "Apple", "apple", "Bottles", true, "Default", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
     }

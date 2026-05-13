@@ -5,6 +5,7 @@ namespace ZevWaxGames.CursorHero
     [RequireComponent(typeof(Canvas))]
     public class WorldSpaceCanvasRealtimeScaler : MonoBehaviour
     {
+        public float mult = 1f;
         [SerializeField] private AspectRatioHandler ratioHandler;
         private RectTransform rectTransform;
 
@@ -28,7 +29,7 @@ namespace ZevWaxGames.CursorHero
             float scaleX = worldWidth / 480;
             float scaleY = worldHeight / 270;
             
-            rectTransform.localScale = new Vector3(scaleX, scaleY, 1f);
+            rectTransform.localScale = new Vector3(scaleX * mult, scaleY * mult, 1f);
         }
     }
 }

@@ -14,8 +14,8 @@ namespace ZevWaxGames.CursorHero
         private static float currXP = 0.333f;
         
         private Rigidbody2D rb;
-        private SpriteRenderer sr;
-        private Collider2D col;
+        private CanvasGroup cg;
+        private BoxCollider2D col;
 
         private void OnEnable()
         {
@@ -37,8 +37,8 @@ namespace ZevWaxGames.CursorHero
         {
             gameObject.layer = LayerMask.NameToLayer("Disk");
             rb = GetComponent<Rigidbody2D>();
-            sr = GetComponent<SpriteRenderer>();
-            col = GetComponent<Collider2D>();
+            cg = GetComponent<CanvasGroup>();
+            col = GetComponent<BoxCollider2D>();
 
             rb.linearDamping = drag;
 
@@ -50,8 +50,8 @@ namespace ZevWaxGames.CursorHero
 
         private IEnumerator BlinkRoutine()
         {
-            sr.DOFade(0.2f, 0.2f).SetLoops(10, LoopType.Yoyo).OnComplete(() => {
-                sr.DOFade(1f, 0.1f);
+            cg.DOFade(0.2f, 0.2f).SetLoops(10, LoopType.Yoyo).OnComplete(() => {
+                cg.DOFade(1f, 0.1f);
             });
             yield return null;
         }

@@ -15,6 +15,7 @@ namespace ZevWaxGames.CursorHero
         private void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
+            _rectTransform.sizeDelta = Vector2.zero;
             _image = transform.GetChild(0).GetComponent<Image>();
             _startPos = GetPointerPos();
             _sprites = new Sprite[3];

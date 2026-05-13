@@ -3,7 +3,6 @@ namespace ZevWaxGames.CursorHero
     public class Firerate : Upgrade
     {
         protected override void Start() {
-            iconPath = "My/My/Sprites/btn_upgrade_cdn";
             tooltipText = "Increase Fire Rate";
             base.Start();
         }

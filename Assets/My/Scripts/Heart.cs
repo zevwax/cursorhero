@@ -3,7 +3,6 @@ namespace ZevWaxGames.CursorHero
     public class Heart : Upgrade
     {
         protected override void Start() {
-            iconPath = "My/My/Sprites/btn_upgrade_hrt";
             tooltipText = "Increase Max Health";
             base.Start();
         }

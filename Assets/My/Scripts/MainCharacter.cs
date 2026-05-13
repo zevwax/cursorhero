@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -142,29 +143,30 @@ namespace ZevWaxGames.CursorHero
         public void SetCross(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/cross");
+            SetSkin("cross");
             this.skinSetter = skinSetter;
         }
         public void SetTake(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/take");
+            SetSkin("take");
             this.skinSetter = skinSetter;
         }
         public void SetGrab(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/grab");
+            SetSkin("grab");
             this.skinSetter = skinSetter;
         }
         public void SetButtonLink(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
+            SetSkin("glove");
             this.skinSetter = skinSetter;
         }
+        public void SetSkin(string spriteName) => transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
         public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
-        private void SetGlove() => GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/glove");
+        private void SetGlove() => SetSkin("glove");
 
         public override void GetDamage(float damage)
         {
