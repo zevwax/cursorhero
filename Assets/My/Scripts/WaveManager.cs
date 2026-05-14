@@ -13,9 +13,9 @@ namespace ZevWaxGames.CursorHero
         public int CurrentWaveIndex => currentWaveIndex;
         private int currentWaveIndex = 0;
         private float waveStartTime = 0;
-        private float loopSpeedMultiplier = 1f;
         private AspectRatioHandler aspectHandler;
         private Coroutine spawnCoroutine;
+        private float waveDuration = 20f;
 
         private void Awake()
         {
@@ -24,8 +24,8 @@ namespace ZevWaxGames.CursorHero
             SetupWaves();
         }
 
-        private void OnEnable() => EventHolder.OnPCStarted += StartManager;
-        private void OnDisable() => EventHolder.OnPCStarted -= StartManager;
+        private void OnEnable() => EventHolder.OnRunStarted += StartManager;
+        private void OnDisable() => EventHolder.OnRunStarted -= StartManager;
 
         private void SetupWaves()
         {
@@ -338,34 +338,24 @@ namespace ZevWaxGames.CursorHero
         {
             Clock.Instance.Refresh();
             currentWaveIndex = 0;
-            loopSpeedMultiplier = 1f;
-            StartWave(0);
         }
 
         private void Update()
         {
             if (waves.Count == 0 || Clock.Instance == null) return;
-
             float currentTime = Clock.Instance.ElapsedTime;
-            float currentWaveDuration = waves[currentWaveIndex].duration / loopSpeedMultiplier;
-
-            if (currentTime - waveStartTime >= currentWaveDuration)
-            {
+            if (currentTime > 0 && currentWaveIndex == 0)
                 NextWave();
-            }
+            else if (currentTime - waveStartTime >= waveDuration)
+                NextWave();
         }
-
         private void NextWave()
         {
-            currentWaveIndex++;
             if (currentWaveIndex >= waves.Count)
-            {
-                currentWaveIndex = 0;
-                loopSpeedMultiplier *= 2f; 
-            }
+                throw new System.Exception("No wave available");
             StartWave(currentWaveIndex);
+            currentWaveIndex++;
         }
-
         private void StartWave(int index)
         {
             waveStartTime = Clock.Instance.ElapsedTime;
@@ -380,10 +370,9 @@ namespace ZevWaxGames.CursorHero
                     Spawner.NewWhite(GetRandomPos());
             }
         }
-
         private IEnumerator SpawnRoutine(WaveConfig config)
         {
-            float adjustedRate = config.spawnRate / loopSpeedMultiplier;
+            float adjustedRate = config.spawnRate;
             while (true)
             {
                 yield return new WaitForSeconds(adjustedRate);
@@ -399,7 +388,6 @@ namespace ZevWaxGames.CursorHero
                 }
             }
         }
-
         private void SpawnRandomEnemy(WaveConfig config)
         {
             if (GetActiveCount<Enemy>() >= config.maxNumOfEnemiesOnScreen) return;
@@ -413,12 +401,10 @@ namespace ZevWaxGames.CursorHero
             else
                 Spawner.NewWhite(GetRandomPos());
         }
-
         private int GetActiveCount<T>() where T : MonoBehaviour
         {
             return Object.FindObjectsByType<T>(FindObjectsSortMode.None).Length;
         }
-
         public Vector2 GetRandomPos()
         {
             if (aspectHandler == null) return Vector2.zero;

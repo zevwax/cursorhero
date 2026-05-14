@@ -1,7 +1,6 @@
 using UnityEngine;
 public class WaveConfig
 {
-    public float duration = 20f;
     public int maxNumOfEnemiesOnScreen;
     public float spawnRate;
     public bool spawnWhiteMobAtStart;

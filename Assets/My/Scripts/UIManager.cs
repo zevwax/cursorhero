@@ -28,17 +28,17 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnEnable()
         {
-            EventHolder.OnRunFinished += ShowTryAgainWindow;
+            EventHolder.OnRunStarted += HideStartGameNTryAgainWindows;
             EventHolder.OnChoosingStarted += HandleChoosingStarted;
             EventHolder.OnChoosingFinished += HideYouWinNChooseAnUpgradeWindows;
-            EventHolder.OnRunStarted += HideStartGameNTryAgainWindows;
+            EventHolder.OnRunFinished += ShowTryAgainWindow;
         }
         private void OnDisable()
         {
-            EventHolder.OnRunFinished -= ShowTryAgainWindow;
+            EventHolder.OnRunStarted -= HideStartGameNTryAgainWindows;
             EventHolder.OnChoosingStarted -= HandleChoosingStarted;
             EventHolder.OnChoosingFinished -= HideYouWinNChooseAnUpgradeWindows;
-            EventHolder.OnRunStarted -= HideStartGameNTryAgainWindows;
+            EventHolder.OnRunFinished -= ShowTryAgainWindow;
         }
         public void ShowStartGameWindow()
         {
@@ -82,8 +82,13 @@ namespace ZevWaxGames.CursorHero
         public void ShowRecycleBinWindow()
         {
             recycleBinWindow.SetActive(true);
-            Spawner.NewBottle(new Vector2(-0.25f, -0.25f));
-            Spawner.NewApple(new Vector2(0.25f, 0.25f));
+            Spawner.NewBottle(new Vector2(-0.4f, -0.25f));
+            Spawner.NewApple(new Vector2(0f, 0.4f));
+            Spawner.NewNewspaper(new Vector2(0.4f, -0.25f));
+        }
+        public void HideRecycleBinWindow()
+        {
+            recycleBinWindow.SetActive(false);
         }
         private void HideYouWinNChooseAnUpgradeWindows()
         {
@@ -101,6 +106,7 @@ namespace ZevWaxGames.CursorHero
             startGameWindow.SetActive(false);
             tryAgainWindow.SetActive(false);
             Destroy(btns[0]);
+            ResetWallpapers();
         }
         public T[] GetThreeRandom<T>(params T[] source)
         {
@@ -173,9 +179,11 @@ namespace ZevWaxGames.CursorHero
         private IEnumerator CSwitchPC()
         {
             yield return FastFadeOut();
+            EventHolder.OnLimbo?.Invoke();
             RefreshWallpapers();
             G.Instance.bin.DisableButton();
             G.Instance.net.DisableButton();
+            HideRecycleBinWindow();
             yield return FastFadeIn();
             EventHolder.OnPCStarted?.Invoke();
         }
@@ -190,6 +198,11 @@ namespace ZevWaxGames.CursorHero
             yield return endCanvas.DOFade(1f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
         }
         private string wallpaperDirectory = "My/WinXp/Wallpapers";
+        private void ResetWallpapers()
+        {
+            var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
+            wallpapersBG.sprite = Resources.Load<Sprite>(wallpaperDirectory + "/Bliss");
+        }
         private void RefreshWallpapers()
         {
             Sprite[] allWallpapers = Resources.LoadAll<Sprite>(wallpaperDirectory);

@@ -11,6 +11,7 @@ namespace ZevWaxGames.CursorHero
         public bool IsRunning => isRunning;
         private bool isRunning = false;
         private bool theEndScreenIsShown = false;
+        private float initNextStamp = 60f;
         private float nextStamp = 60f;
         private void Awake()
         {
@@ -22,7 +23,7 @@ namespace ZevWaxGames.CursorHero
             /*EventHolder.OnRunStarted += Refresh;*/
             EventHolder.OnPCStarted += Resume;
             EventHolder.OnChoosingStarted += Stop;
-            EventHolder.OnChoosingFinished += Resume;
+            EventHolder.OnChoosingFinished += ResumeIfNeeded;
             EventHolder.OnPCFinished += Stop;
             EventHolder.OnRunFinished += Stop;
         }
@@ -31,7 +32,7 @@ namespace ZevWaxGames.CursorHero
             /*EventHolder.OnRunStarted -= Refresh;*/
             EventHolder.OnPCStarted -= Resume;
             EventHolder.OnChoosingStarted -= Stop;
-            EventHolder.OnChoosingFinished -= Resume;
+            EventHolder.OnChoosingFinished -= ResumeIfNeeded;
             EventHolder.OnPCFinished -= Stop;
             EventHolder.OnRunFinished -= Stop;
         }
@@ -43,7 +44,7 @@ namespace ZevWaxGames.CursorHero
                 {
                     EventHolder.OnPCFinished?.Invoke();
                     isRunning = false;
-                    nextStamp += 60f;
+                    nextStamp += initNextStamp;
                 }
                 return;
             }
@@ -67,17 +68,22 @@ namespace ZevWaxGames.CursorHero
         {
             isRunning = true;
         }
+        public void ResumeIfNeeded()
+        {
+            if (!G.Instance.bin.IsEnabled)
+                Resume();
+        }
         public void Refresh()
         {
             elapsedTime = 0f;
-            isRunning = true;
+            nextStamp = initNextStamp;
             UpdateClockDisplay();
         }
         private void UpdateClockDisplay()
         {
             if (elapsedTime < 301f)
             {
-                var remainingTime = 301 - elapsedTime;
+                var remainingTime = 300 - elapsedTime;
                 int minutes = Mathf.FloorToInt(remainingTime / 60f);
                 int seconds = Mathf.FloorToInt(remainingTime % 60f);
                 clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);

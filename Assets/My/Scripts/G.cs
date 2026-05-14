@@ -29,8 +29,6 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewEntity<Wall>(new Vector2(0, 5f), "Top Wall", "horizontal_wall", null, true, "Wall", true);
             Spawner.NewEntity<MainCharacter>(new Vector2(0, 0), "MainCharacter", "glove", "Pointer", true, "MainCharacter", false);
             
-            //StartCoroutine(CreateABottleWDelay());
-            
             UIManager.Instance.ShowStartGameWindow();
             var b1 = Spawner.NewBinButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f));
             var b2 = Spawner.NewNetButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f-1f-0.25f));
@@ -38,15 +36,6 @@ namespace ZevWaxGames.CursorHero
             net = b2.GetComponent<Button>();
             bin.DisableButton();
             net.DisableButton();
-        }
-
-        private IEnumerator CreateABottleWDelay()
-        {
-            yield return new WaitForSeconds(2);
-            Spawner.NewBottle(new Vector2(-3, -2));
-            Spawner.NewBottle(new Vector2(3, -2));
-            Spawner.NewBottle(new Vector2(-3, 2));
-            Spawner.NewBottle(new Vector2(3, 2));
         }
     }
 }

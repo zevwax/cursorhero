@@ -164,6 +164,11 @@ namespace ZevWaxGames.CursorHero
             SetSkin("glove");
             this.skinSetter = skinSetter;
         }
+        public void StopBeingSkinSetter(GameObject skinSetter)
+        {
+            if (skinSetter == this.skinSetter)
+                this.skinSetter = null;
+        }
         public void SetSkin(string spriteName) => transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
         public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
         private void SetGlove() => SetSkin("glove");

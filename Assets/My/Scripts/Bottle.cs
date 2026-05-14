@@ -43,6 +43,15 @@ namespace ZevWaxGames.CursorHero
         
         private ContactFilter2D _wallFilter;
         private readonly BoxCollider2D[] _results = new BoxCollider2D[1];
+        
+        private void OnEnable()
+        {
+            EventHolder.OnLimbo += Die;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnLimbo -= Die;
+        }
         private void Start()
         {
             lastPosition = transform.position;
@@ -144,9 +153,14 @@ namespace ZevWaxGames.CursorHero
                     Spawner.NewLayingPieceOfGlass(transform.position);
                 
                 MainCharacter.Instance.SetGlove(gameObject);
-                
-                Destroy(gameObject);
+
+                Die();
             }
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject);
         }
     }
 }

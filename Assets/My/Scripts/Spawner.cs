@@ -484,6 +484,12 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
+        public static GameObject NewNewspaper(Vector2 pos)
+        {
+            var obj = NewEntity<Newspaper>(pos, "Newspaper", "newspaper", "Bottles", true, "Default", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            return obj;
+        }
         public static GameObject NewApple(Vector2 pos)
         {
             var obj = NewEntity<Apple>(pos, "Apple", "apple", "Bottles", true, "Default", false);

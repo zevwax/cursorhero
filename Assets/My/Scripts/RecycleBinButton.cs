@@ -23,6 +23,8 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
+            DisableButton();
+            MainCharacter.Instance.StopBeingSkinSetter(gameObject);
             UIManager.Instance.ShowRecycleBinWindow();
         }
     }

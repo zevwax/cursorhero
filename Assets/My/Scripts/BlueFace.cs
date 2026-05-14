@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.InputSystem;
+
 namespace ZevWaxGames.CursorHero
 {
     public class BlueFace : MonoBehaviour
@@ -11,6 +13,10 @@ namespace ZevWaxGames.CursorHero
         private Image _image;
         private RectTransform rt;
         public bool theAnimIsShown = false;
+
+        // Переменная для хранения ссылки на активную корутину
+        private Coroutine _animCoroutine;
+
         private void Awake()
         {
             Instance = this;
@@ -18,14 +24,52 @@ namespace ZevWaxGames.CursorHero
             _image = GetComponent<Image>();
             rt = GetComponent<RectTransform>();
         }
+
+        private void Update()
+        {
+            // Проверяем нажатие клавиши P, если анимация еще не завершена
+            if (Keyboard.current.pKey.wasPressedThisFrame && !theAnimIsShown)
+            {
+                SkipAnimation();
+            }
+        }
+
         public void StartAnim()
         {
-            StartCoroutine(EmptyRoutine());
+            // Записываем корутину в переменную при старте
+            _animCoroutine = StartCoroutine(EmptyRoutine());
         }
+
+        // Метод для мгновенного пропуска анимации
+        private void SkipAnimation()
+        {
+            if (_animCoroutine != null)
+            {
+                StopCoroutine(_animCoroutine);
+                _animCoroutine = null;
+            }
+
+            // Останавливаем звук, если он успел включиться
+            if (_as.isPlaying)
+            {
+                _as.Stop();
+            }
+
+            // Принудительно скрываем изображение и ставим финальный спрайт
+            ChangeSprite(1);
+            SetAlpha(0f);
+            SetSize(0f);
+
+            // Выполняем финальный блок из EmptyRoutine
+            theAnimIsShown = true;
+            EventHolder.OnPCStarted?.Invoke();
+        }
+
         public void ChangeSprite(int number)
         {
             _image.sprite = Resources.Load<Sprite>("My/My/Sprites/face" + number);
         }
+
         private IEnumerator EmptyRoutine()
         {
             yield return new WaitForSeconds(2);
@@ -74,14 +118,17 @@ namespace ZevWaxGames.CursorHero
             theAnimIsShown = true;
             EventHolder.OnPCStarted?.Invoke();
         }
+
         private void SmoothFadeIn()
         {
             _image.DOFade(1f, 2f).SetEase(Ease.Linear);
         }
+
         private void SmoothFadeOut()
         {
             _image.DOFade(0f, 2f).SetEase(Ease.Linear);
         }
+
         private IEnumerator FadeInRoutine()
         {
             for (float alpha = 0f; alpha <= 1.15f; alpha += 0.15f)
@@ -91,6 +138,7 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(0.6f);
             }
         }
+
         private IEnumerator FadeOutRoutine()
         {
             for (float alpha = 1f; alpha >= -0.15f; alpha -= 0.15f)
@@ -100,17 +148,20 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(0.6f);
             }
         }
+
         private void SetAlpha(float alpha)
         {
             var color = _image.color;
-            color.a = alpha;
+            color.a = Mathf.Clamp01(alpha); // Ограничиваем альфу от 0 до 1
             _image.color = color;
         }
+
         private void SetSize(float alpha)
         {
             var maxW = 47.95f;
             var maxH = 70f;
-            rt.sizeDelta = new Vector2(maxW * alpha, maxH * alpha);
+            float clampedAlpha = Mathf.Clamp01(alpha);
+            rt.sizeDelta = new Vector2(maxW * clampedAlpha, maxH * clampedAlpha);
         }
     }
 }

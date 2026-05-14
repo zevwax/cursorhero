@@ -59,17 +59,17 @@ namespace ZevWaxGames.CursorHero
         {
             var o = GetSelectedObject();
             if (o != null)
-                if (o.GetComponent<LayingPieceOfGlass>() != null)
+                if (o.GetComponent<Newspaper>() != null)
                 {
-                    MainCharacter.Instance.edge = o.GetComponent<LayingPieceOfGlass>().Edge;
-                    MainCharacter.Instance.size = o.GetComponent<LayingPieceOfGlass>().Size;
+                    MainCharacter.Instance.edge = o.GetComponent<Newspaper>().Edge;
+                    MainCharacter.Instance.size = o.GetComponent<Newspaper>().Size;
                     ClipboardTextbox.Instance.UpdateContents();
                     Spawner.NewDamageNumbers(transform.position, "Copied projectile.png");
                 }
                 else if (o.GetComponent<Apple>() != null)
                 {
                     MainCharacter.Instance.HP = MainCharacter.Instance.MaxHP;
-                    Spawner.NewDamageNumbers(transform.position, "HP Restored");
+                    Spawner.NewDamageNumbers(transform.position, "+10");
                     Destroy(o);
                 }
             isActive = false;
@@ -85,7 +85,7 @@ namespace ZevWaxGames.CursorHero
         private Vector3 GetPointerPos() => MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
         private GameObject GetSelectedObject()
         {
-            var allScripts = Object.FindObjectsByType<LayingPieceOfGlass>(FindObjectsSortMode.None);
+            var allScripts = Object.FindObjectsByType<Newspaper>(FindObjectsSortMode.None);
             var ppu = 30;
             var halfOfW = (_rectTransform.sizeDelta.x / ppu) * 0.5f;
             var halfOfH = (_rectTransform.sizeDelta.y / ppu) * 0.5f;

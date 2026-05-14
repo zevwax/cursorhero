@@ -122,12 +122,16 @@ namespace ZevWaxGames.CursorHero
             PlayComplete();
             
             FadeOut();
+            FadeOut3();
             FadeIn2();
         }
         private void HandleChoosingFinished()
         {
             FadeOut2();
-            FadeIn();
+            if (G.Instance.bin.IsEnabled)
+                FadeIn3();
+            else
+                FadeIn();
         }
         private void HandlePCFinished()
         {
