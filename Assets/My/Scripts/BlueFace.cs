@@ -72,7 +72,7 @@ namespace ZevWaxGames.CursorHero
             ChangeSprite(1); yield return new WaitForSeconds(0.66f);
             yield return StartCoroutine(FadeOutRoutine());
             theAnimIsShown = true;
-            EventHolder.OnRunStarted?.Invoke();
+            EventHolder.OnPCStarted?.Invoke();
         }
         private void SmoothFadeIn()
         {

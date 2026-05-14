@@ -24,8 +24,8 @@ namespace ZevWaxGames.CursorHero
             SetupWaves();
         }
 
-        private void OnEnable() => EventHolder.OnRunStarted += StartManager;
-        private void OnDisable() => EventHolder.OnRunStarted -= StartManager;
+        private void OnEnable() => EventHolder.OnPCStarted += StartManager;
+        private void OnDisable() => EventHolder.OnPCStarted -= StartManager;
 
         private void SetupWaves()
         {
@@ -38,8 +38,7 @@ namespace ZevWaxGames.CursorHero
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 1,
                 yellowLimit = 0,
-                cyanLimit = 0,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Bliss")
+                cyanLimit = 0
             });
 
             waves.Add(new WaveConfig {
@@ -69,8 +68,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 4,
                 yellowLimit = 0,
-                cyanLimit = 1,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Autumn")
+                cyanLimit = 1
             });
 
             waves.Add(new WaveConfig {
@@ -100,8 +98,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 7,
                 yellowLimit = 999,
-                cyanLimit = 999,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Red_moon_desert")
+                cyanLimit = 999
             });
             
             waves.Add(new WaveConfig {
@@ -131,8 +128,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 10,
                 yellowLimit = 999,
-                cyanLimit = 999,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Radiance")
+                cyanLimit = 999
             });
 
             waves.Add(new WaveConfig {
@@ -162,8 +158,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 13,
                 yellowLimit = 999,
-                cyanLimit = 999,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Vortec_space")
+                cyanLimit = 999
             });
 
             waves.Add(new WaveConfig {
@@ -195,8 +190,7 @@ namespace ZevWaxGames.CursorHero
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 1,
                 yellowLimit = 0,
-                cyanLimit = 0,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Ascent")
+                cyanLimit = 0
             });
 
             waves.Add(new WaveConfig {
@@ -226,8 +220,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 4,
                 yellowLimit = 0,
-                cyanLimit = 1,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Azul")
+                cyanLimit = 1
             });
 
             waves.Add(new WaveConfig {
@@ -257,8 +250,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 7,
                 yellowLimit = 999,
-                cyanLimit = 999,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Follow")
+                cyanLimit = 999
             });
             
             waves.Add(new WaveConfig {
@@ -288,8 +280,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 10,
                 yellowLimit = 999,
-                cyanLimit = 999,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Tulips")
+                cyanLimit = 999
             });
 
             waves.Add(new WaveConfig {
@@ -319,8 +310,7 @@ namespace ZevWaxGames.CursorHero
                 
                 maxEnemiesPerSpawn = 13,
                 yellowLimit = 999,
-                cyanLimit = 999,
-                backgroundSprite = Resources.Load<Sprite>("My/WinXp/Wallpapers/Wind")
+                cyanLimit = 999
             });
 
             waves.Add(new WaveConfig {
@@ -380,9 +370,6 @@ namespace ZevWaxGames.CursorHero
         {
             waveStartTime = Clock.Instance.ElapsedTime;
             WaveConfig config = waves[index];
-
-            if (config.backgroundSprite != null)
-                StartCoroutine(RefreshWallpapers(config.backgroundSprite));
             
             if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
             spawnCoroutine = StartCoroutine(SpawnRoutine(config));
@@ -444,15 +431,6 @@ namespace ZevWaxGames.CursorHero
                 case 2: return new Vector2(Random.Range(-aspectHandler.Width, aspectHandler.Width), aspectHandler.Height + buffer);
                 default: return new Vector2(Random.Range(-aspectHandler.Width, aspectHandler.Width), -aspectHandler.Height - buffer);
             }
-        }
-        private IEnumerator RefreshWallpapers(Sprite newWallpapers)
-        {
-            var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
-            var wallpapersFG = GameObject.Find("Wallpapers FG").GetComponent<Image>();
-            wallpapersFG.sprite = newWallpapers;
-            yield return wallpapersFG.DOFade(1f, 1f).WaitForCompletion();
-            wallpapersBG.sprite = newWallpapers;
-            wallpapersFG.color = new Color(1, 1, 1, 0);
         }
     }
 }

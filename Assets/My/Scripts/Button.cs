@@ -15,16 +15,19 @@ namespace ZevWaxGames.CursorHero
         private bool isHovered;
         private Tween idleTween;
         private BoxCollider2D myCollider;
+        private Tween alphaTween;
 
         private WorldSpaceCanvasRealtimeScaler scaler;
         private Tween sizeTween;
-
-        private void Awake()
-        {
-            scaler = GetComponent<WorldSpaceCanvasRealtimeScaler>();
-        }
+        private CanvasGroup canvasGroup;
+        
+        public bool IsEnabled { get; private set; } = true;
         protected virtual void Start()
         {
+            scaler = GetComponent<WorldSpaceCanvasRealtimeScaler>();
+            
+            canvasGroup = GetComponent<CanvasGroup>();
+            
             transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(boxPath);
             
             myCollider = GetComponent<BoxCollider2D>();
@@ -38,9 +41,16 @@ namespace ZevWaxGames.CursorHero
             }
 
             StartHangedAnimation();
-            SetStateIdle();
+            if (!IsEnabled)
+            {
+                idleTween?.Pause();
+                transform.localRotation = Quaternion.identity;
+                canvasGroup.alpha = 0.5f;
+                AnimateMult(1f, 0f);
+            }
+            else
+                SetStateIdle();
         }
-
         private void StartHangedAnimation()
         {
             idleTween?.Kill();
@@ -49,9 +59,9 @@ namespace ZevWaxGames.CursorHero
                 .SetEase(Ease.InOutQuad)
                 .SetLoops(-1, LoopType.Yoyo);
         }
-
         protected virtual void Update()
         {
+            if (!IsEnabled) return;
             if (MainCharacter.Instance == null) return;
             
             var mainChar = MainCharacter.Instance;
@@ -85,47 +95,64 @@ namespace ZevWaxGames.CursorHero
                 }
             }
         }
-
         private void OnHoverEnter()
         {
             isHovered = true;
             SetStateHover();
             currentTooltip = Spawner.NewTooltip(tooltipText);
         }
-
         private void OnHoverExit()
         {
             isHovered = false;
             SetStateIdle();
             if (currentTooltip != null) currentTooltip.GetComponent<Tooltip>().Die();
         }
-
-        
-
         private void SetStateIdle()
         {
             AnimateMult(1.0f, 0.2f);
         }
-
         private void SetStateHover()
         {
             AnimateMult(1.1f, 0.2f);
         }
-
         private void SetStatePushed()
         {
             AnimateMult(0.9f, 0.1f);
         }
-
         private void AnimateMult(float targetValue, float duration)
         {
             sizeTween?.Kill();
             sizeTween = DOTween.To(() => scaler.mult, x => scaler.mult = x, targetValue, duration)
                 .SetEase(Ease.OutQuad);
         }
-
         private void OnDestroy() => idleTween?.Kill();
 
         public abstract void ButtonAction();
+        private void AnimateAlpha(float targetValue, float duration)
+        {
+            alphaTween?.Kill();
+            alphaTween = canvasGroup.DOFade(targetValue, duration)
+                .SetEase(Ease.InOutQuad);
+        }
+        public void DisableButton()
+        {
+            if (!IsEnabled) return;
+            IsEnabled = false;
+            
+            if (isHovered) OnHoverExit();
+            idleTween?.Pause();
+            transform.DORotate(Vector3.zero, 0.3f).SetEase(Ease.OutQuad);
+            AnimateMult(1f, 0.3f);
+            AnimateAlpha(0.5f, 0.3f);
+        }
+
+        public void EnableButton()
+        {
+            if (IsEnabled) return;
+            IsEnabled = true;
+            SetStateIdle();
+            idleTween?.Play();
+            AnimateAlpha(1f, 0.3f);
+        }
     }
 }

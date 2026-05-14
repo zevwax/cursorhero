@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -27,14 +28,14 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnEnable()
         {
-            EventHolder.OnPlayerDie += ShowTryAgainWindow;
+            EventHolder.OnRunFinished += ShowTryAgainWindow;
             EventHolder.OnChoosingStarted += HandleChoosingStarted;
             EventHolder.OnChoosingFinished += HideYouWinNChooseAnUpgradeWindows;
             EventHolder.OnRunStarted += HideStartGameNTryAgainWindows;
         }
         private void OnDisable()
         {
-            EventHolder.OnPlayerDie -= ShowTryAgainWindow;
+            EventHolder.OnRunFinished -= ShowTryAgainWindow;
             EventHolder.OnChoosingStarted -= HandleChoosingStarted;
             EventHolder.OnChoosingFinished -= HideYouWinNChooseAnUpgradeWindows;
             EventHolder.OnRunStarted -= HideStartGameNTryAgainWindows;
@@ -148,7 +149,7 @@ namespace ZevWaxGames.CursorHero
         }
         private IEnumerator FadeIn()
         {
-            var endCanvas = GameObject.Find("FadeInCanvas").GetComponent<CanvasGroup>();
+            var endCanvas = GameObject.Find("FadeCanvas").GetComponent<CanvasGroup>();
             yield return new WaitForSeconds(1f);
             var alpha = 0.95f;
             yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
@@ -168,26 +169,50 @@ namespace ZevWaxGames.CursorHero
             alpha -= 0.25f;
             yield return endCanvas.DOFade(alpha, 0).WaitForCompletion();
         }
-        private IEnumerator FastFadeIn()
+        public void SwitchPC() => StartCoroutine(CSwitchPC());
+        private IEnumerator CSwitchPC()
         {
-            var endCanvas = GameObject.Find("FadeInCanvas").GetComponent<CanvasGroup>();
-            yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
-            yield return endCanvas.DOFade(0.85f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
-            yield return endCanvas.DOFade(0.7f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
-            yield return endCanvas.DOFade(0.5f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
-            yield return endCanvas.DOFade(0.25f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
-            yield return endCanvas.DOFade(0, 0).WaitForCompletion();
+            yield return FastFadeOut();
+            RefreshWallpapers();
+            G.Instance.bin.DisableButton();
+            G.Instance.net.DisableButton();
+            yield return FastFadeIn();
+            EventHolder.OnPCStarted?.Invoke();
         }
         private IEnumerator FastFadeOut()
         {
-            yield return new WaitForSeconds(79f);
-            var endCanvas = GameObject.Find("FadeInCanvas").GetComponent<CanvasGroup>();
+            var endCanvas = GameObject.Find("FadeCanvas").GetComponent<CanvasGroup>();
             yield return endCanvas.DOFade(0.25f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(0.5f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(0.7f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(0.85f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(1f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+        }
+        private string wallpaperDirectory = "My/WinXp/Wallpapers";
+        private void RefreshWallpapers()
+        {
+            Sprite[] allWallpapers = Resources.LoadAll<Sprite>(wallpaperDirectory);
+
+            if (allWallpapers != null && allWallpapers.Length > 0)
+            {
+                var randomIndex = Random.Range(0, allWallpapers.Length);
+                var newWallpapers = allWallpapers[randomIndex];
+                var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
+                wallpapersBG.sprite = newWallpapers;
+            }
+            else
+                Debug.LogWarning($"No sprites found in Resources/{wallpaperDirectory}");
+        }
+        private IEnumerator FastFadeIn()
+        {
+            var endCanvas = GameObject.Find("FadeCanvas").GetComponent<CanvasGroup>();
+            yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.85f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.7f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.5f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0.25f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
+            yield return endCanvas.DOFade(0, 0).WaitForCompletion();
         }
     }
 }

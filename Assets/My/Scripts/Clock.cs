@@ -11,6 +11,7 @@ namespace ZevWaxGames.CursorHero
         public bool IsRunning => isRunning;
         private bool isRunning = false;
         private bool theEndScreenIsShown = false;
+        private float nextStamp = 60f;
         private void Awake()
         {
             Instance = this;
@@ -19,19 +20,34 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             /*EventHolder.OnRunStarted += Refresh;*/
+            EventHolder.OnPCStarted += Resume;
             EventHolder.OnChoosingStarted += Stop;
             EventHolder.OnChoosingFinished += Resume;
-            EventHolder.OnPlayerDie += Stop;
+            EventHolder.OnPCFinished += Stop;
+            EventHolder.OnRunFinished += Stop;
         }
         private void OnDisable()
         {
             /*EventHolder.OnRunStarted -= Refresh;*/
+            EventHolder.OnPCStarted -= Resume;
             EventHolder.OnChoosingStarted -= Stop;
             EventHolder.OnChoosingFinished -= Resume;
-            EventHolder.OnPlayerDie -= Stop;
+            EventHolder.OnPCFinished -= Stop;
+            EventHolder.OnRunFinished -= Stop;
         }
         private void Update()
         {
+            if (elapsedTime > nextStamp)
+            {
+                if (FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length == 0)
+                {
+                    EventHolder.OnPCFinished?.Invoke();
+                    isRunning = false;
+                    nextStamp += 60f;
+                }
+                return;
+            }
+            
             if (!isRunning) return;
 
             elapsedTime += Time.deltaTime;

@@ -3,8 +3,15 @@ using System.Collections;
 
 namespace ZevWaxGames.CursorHero
 {
-    public class Main : MonoBehaviour
+    public class G : MonoBehaviour
     {
+        public static G Instance { get; private set; }
+        public Button bin;
+        public Button net;
+        private void Awake()
+        {
+            Instance = this;
+        }
         private void Start()
         {
             //Screen.SetResolution(300, 900, FullScreenMode.Windowed);
@@ -25,7 +32,12 @@ namespace ZevWaxGames.CursorHero
             //StartCoroutine(CreateABottleWDelay());
             
             UIManager.Instance.ShowStartGameWindow();
-            Spawner.NewBinButton(new Vector2(-8f+0.75f, 4.5f-1f-0.75f));
+            var b1 = Spawner.NewBinButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f));
+            var b2 = Spawner.NewNetButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f-1f-0.25f));
+            bin = b1.GetComponent<Button>();
+            net = b2.GetComponent<Button>();
+            bin.DisableButton();
+            net.DisableButton();
         }
 
         private IEnumerator CreateABottleWDelay()

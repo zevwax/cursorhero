@@ -45,6 +45,9 @@ TagManager:
   - name: Background
     uniqueID: 2895773915
     locked: 0
+  - name: ButtonsBG
+    uniqueID: 2437501039
+    locked: 0
   - name: ProgressBarBG
     uniqueID: 3518818291
     locked: 0
@@ -69,7 +72,7 @@ TagManager:
   - name: Windows
     uniqueID: 4063274577
     locked: 0
-  - name: Buttons
+  - name: ButtonsFG
     uniqueID: 1832763641
     locked: 0
   - name: Bottles

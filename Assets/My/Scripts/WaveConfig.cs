@@ -9,5 +9,4 @@ public class WaveConfig
     public int maxEnemiesPerSpawn;
     public int yellowLimit;
     public int cyanLimit;
-    public Sprite backgroundSprite;
 }

@@ -8,8 +8,9 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
+            EventHolder.OnRunStarted?.Invoke();
             if (BlueFace.Instance.theAnimIsShown)
-                EventHolder.OnRunStarted?.Invoke();
+                EventHolder.OnPCStarted?.Invoke();
             else
             {
                 BlueFace.Instance.StartAnim();

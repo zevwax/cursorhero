@@ -21,14 +21,14 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted += Clean;
             EventHolder.OnChoosingStarted += Disable;
             EventHolder.OnChoosingFinished += Die;
-            EventHolder.OnPlayerDie += Disable;
+            EventHolder.OnRunFinished += Disable;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Clean;
             EventHolder.OnChoosingStarted -= Disable;
             EventHolder.OnChoosingFinished -= Die;
-            EventHolder.OnPlayerDie -= Disable;
+            EventHolder.OnRunFinished -= Disable;
         }
         protected virtual void Start()
         {

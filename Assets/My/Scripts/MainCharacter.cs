@@ -121,7 +121,7 @@ namespace ZevWaxGames.CursorHero
                 /*GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_wait");*/
                 Disable();
                 Spawner.NewSoul(transform.position);
-                EventHolder.OnPlayerDie?.Invoke();
+                EventHolder.OnRunFinished?.Invoke();
             }
         }
         private void Enable()

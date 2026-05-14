@@ -22,7 +22,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted += Refresh;
             EventHolder.OnChoosingStarted += Disable;
             EventHolder.OnChoosingFinished += Enable;
-            EventHolder.OnPlayerDie += Disable;
+            EventHolder.OnRunFinished += Disable;
         }
 
         private void OnDisable()
@@ -30,7 +30,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted -= Refresh;
             EventHolder.OnChoosingStarted -= Disable;
             EventHolder.OnChoosingFinished -= Enable;
-            EventHolder.OnPlayerDie -= Disable;
+            EventHolder.OnRunFinished -= Disable;
         }
         
         private void Start()

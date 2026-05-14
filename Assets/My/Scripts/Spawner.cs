@@ -402,6 +402,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewPlayButton(Vector2 pos) => CreateBaseButton<Play>(pos, "PlayButton", "btn_play");
         public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<RecycleBinButton>(pos, "BinButton", "bin");
+        public static GameObject NewNetButton(Vector2 pos) => CreateBaseButton<BtnNet>(pos, "NetButton", "btn_net");
         public static GameObject NewEndlessModeButton(Vector2 pos) => CreateBaseButton<EndlessMode>(pos, "EndlessModeButton", "btn_endless_mode");
         public static GameObject NewUpgradeButton(string upgradeName, Vector2 pos)
         {
@@ -419,7 +420,7 @@ namespace ZevWaxGames.CursorHero
         }
         private static GameObject CreateBaseButton<T>(Vector2 pos, string name, string spriteName) where T : Button
         {
-            GameObject obj = NewEntity<T>(pos, name, "btn", "Buttons", true, "Button", false);
+            var obj = NewEntity<T>(pos, name, "btn", "ButtonsFG", true, "Button", false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             
             var imageObj = new GameObject("Icon Image");

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace ZevWaxGames.CursorHero
 {
-    public class RecycleBinButton : Button
+    public class BtnNet : Button
     {
         private void OnEnable()
         {
@@ -16,14 +16,12 @@ namespace ZevWaxGames.CursorHero
         protected override void Start()
         {
             transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 0);
-            boxPath = "My/My/Sprites/bin";
-            tooltipText = "Recycle Bin";
+            boxPath = "My/My/Sprites/btn_net";
+            tooltipText = "Switch PC";
             GetComponent<Canvas>().sortingLayerName = "ButtonsBG";
             base.Start();
         }
-        public override void ButtonAction()
-        {
-            UIManager.Instance.ShowRecycleBinWindow();
-        }
+
+        public override void ButtonAction() => UIManager.Instance.SwitchPC();
     }
 }
