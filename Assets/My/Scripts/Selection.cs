@@ -61,10 +61,14 @@ namespace ZevWaxGames.CursorHero
             if (o != null)
                 if (o.GetComponent<Newspaper>() != null)
                 {
-                    MainCharacter.Instance.edge = o.GetComponent<Newspaper>().Edge;
-                    MainCharacter.Instance.size = o.GetComponent<Newspaper>().Size;
+                    var w = o.GetComponent<Newspaper>().Weight;
+                    var s = o.GetComponent<Newspaper>().Size;
+                    MainCharacter.Instance.edge = w;
+                    MainCharacter.Instance.size = s;
+                    Guns.Library[GunName.Yellow].Weight = w;
+                    Guns.Library[GunName.Yellow].Size = s;
                     ClipboardTextbox.Instance.UpdateContents();
-                    Spawner.NewDamageNumbers(transform.position, "Copied projectile.png");
+                    Spawner.NewDamageNumbers(transform.position, "Copied A.glyph");
                 }
                 else if (o.GetComponent<Apple>() != null)
                 {

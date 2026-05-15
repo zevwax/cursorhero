@@ -27,9 +27,30 @@ namespace ZevWaxGames.CursorHero
             pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy", false);
         public static GameObject NewCyan(Vector2 pos) => NewEntity<Cyan>(
             pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy", false);
-        public static void NewYellowP(Vector2 pos, Vector2 direction) => CreateBaseProjectile<YellowP>(pos, direction, "Yellow Projectile", "MainCharacterProjectile");
-        public static void NewRedP(Vector2 pos, Vector2 direction) => CreateBaseProjectile<RedP>(pos, direction, "Red Projectile", "EnemyProjectile");
-        public static void NewRingP(Vector2 pos, Vector2 direction) => CreateBaseProjectile<RingP>(pos, direction, "Ring Projectile", "EnemyProjectile");
+
+        public static void NewYellowP(Vector2 pos, Vector2 direction, Gun g)
+        {
+            var obj = CreateBaseProjectile<YellowP>(pos, direction, "Yellow Projectile", "MainCharacterProjectile");
+            obj.GetComponent<Projectile>().SetTeam(true);
+            obj.GetComponent<Projectile>().SetWeight(g.Weight);
+            obj.GetComponent<Projectile>().SetSize(g.Size);
+        }
+
+        public static void NewRedP(Vector2 pos, Vector2 direction, Gun g)
+        {
+            var obj = CreateBaseProjectile<RedP>(pos, direction, "Red Projectile", "EnemyProjectile");
+            obj.GetComponent<Projectile>().SetTeam(false);
+            obj.GetComponent<Projectile>().SetWeight(g.Weight);
+            obj.GetComponent<Projectile>().SetSize(g.Size);
+        }
+
+        public static void NewRingP(Vector2 pos, Vector2 direction, Gun g)
+        {
+            var obj = CreateBaseProjectile<RingP>(pos, direction, "Ring Projectile", "EnemyProjectile");
+            obj.GetComponent<Projectile>().SetTeam(false);
+            obj.GetComponent<Projectile>().SetWeight(g.Weight);
+            obj.GetComponent<Projectile>().SetSize(g.Size);
+        }
         private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer) where T : Projectile
         {
             var obj = NewEntity<T>(pos, name, "projectile", "Projectiles", true, objLayer, false);
@@ -60,7 +81,8 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMin = Vector2.zero;
             textRt.offsetMax = Vector2.zero;
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/quarter_raster_hinted");
+            var fontAsset = Resources.Load<TMP_FontAsset>("My/My/Fonts/pxp_glyphs_raster_hinted");
+            textTxt.font = fontAsset;
             textTxt.text = "A";
             textTxt.alignment = alignment;
             textTxt.color = color;

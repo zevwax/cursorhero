@@ -12,7 +12,7 @@ namespace ZevWaxGames.CursorHero
         public float size;
         
         public bool is_trackable = true;
-        public float ProjectileDamage = 1f;
+        public float WeightBuff = 0f;
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.3f;
         public float MaxHP = 10f;
@@ -106,10 +106,12 @@ namespace ZevWaxGames.CursorHero
         {
             MaxHP = 10f;
             HP = 10f;
-            ProjectileDamage = 1f;
+            WeightBuff = 0f;
             ProjectileSpeed = 6f;
             Sensitivity = 0.3f;
             Guns.Library[GunName.Yellow].Cooldown = 2f;
+            Guns.Library[GunName.Yellow].Weight = 1f;
+            Guns.Library[GunName.Yellow].Size = 1f;
             Enable();
             Projectile.RefreshWallpapers1();
             Projectile.RefreshWallpapers2();
@@ -178,6 +180,11 @@ namespace ZevWaxGames.CursorHero
             base.GetDamage(damage);
             Spawner.NewDamageNumbers(transform.position, false, damage);
             ImpulseSource.Instance.Invoke();
+        }
+        public void IncreaseWeightBuff(float diff)
+        {
+            WeightBuff += diff;
+            ClipboardTextbox.Instance.UpdateContents();
         }
     }
 }

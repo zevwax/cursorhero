@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -11,7 +12,8 @@ namespace ZevWaxGames.CursorHero
         private static GameObject bloodSplash;
         private static Texture2D _editableTexture1;
         private static Texture2D _editableTexture2;
-        protected float edge;
+        protected bool teamIsAlly;
+        protected float weight;
         protected float size;
         public float speed;
         public Vector3 direction;
@@ -57,7 +59,12 @@ namespace ZevWaxGames.CursorHero
         {
             if (other.gameObject.GetComponent<Cursor>() != null)
             {
-                other.gameObject.GetComponent<Cursor>().GetDamage(edge);
+                var dmg = (float)default;
+                if (teamIsAlly)
+                    dmg = weight + MainCharacter.Instance.WeightBuff;
+                else
+                    dmg = weight;
+                other.gameObject.GetComponent<Cursor>().GetDamage(dmg);
 
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 var rotation = Quaternion.Euler(0, 0, angle - 90f);
@@ -277,6 +284,58 @@ namespace ZevWaxGames.CursorHero
         private void Die()
         {
             Destroy(gameObject);
+        }
+        public void SetTeam(bool isAlly)
+        {
+            teamIsAlly = isAlly;
+            var objLayer = (string)default;
+            var color = (Color)default;
+            var text = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            if (isAlly)
+            {
+                objLayer = "MainCharacterProjectile";
+                color = new Color(0f, 0f, 1f, 1f);
+            }
+            else
+            {
+                objLayer = "EnemyProjectile";
+                color = new Color(1f, 0f, 0f, 1f);
+            }
+            gameObject.layer = LayerMask.NameToLayer(objLayer);
+            for (var i = 0; i < 8; i++)
+                transform.GetChild(i + 1).GetComponent<TextMeshProUGUI>().color = color;
+        }
+        public void SetWeight(float w)
+        {
+            var minWeight = 1f;
+            var maxWeight = 3f;
+            if (w < minWeight || maxWeight < w)
+            {
+                Debug.LogError("Set weight must be between 1 and 3");
+                w = Math.Clamp(w, minWeight, maxWeight);
+            }
+            weight = w;
+            var weightNormalized = (w - minWeight) / (maxWeight - minWeight);
+            var text = transform.GetChild(9).GetComponent<TextMeshProUGUI>();
+            text.fontSizeMax = ushort.MaxValue;
+            text.ForceMeshUpdate();
+            var maxSizeAtAll = text.fontSize;
+            var maxSizeInFractionsOfMaxVal = 0.9f;
+            var maxSize = maxSizeAtAll * maxSizeInFractionsOfMaxVal;
+            var minSizeOf8CharsInFractionsOfMaxVal = 0.833f;
+            var sizeOf8CharsAtWeight3 = maxSizeAtAll * minSizeOf8CharsInFractionsOfMaxVal;
+            var minSizeOf1CharInFractionsOfMaxVal = 0.2f;
+            var sizeOf1CharAtWeight3 = maxSizeAtAll * minSizeOf1CharInFractionsOfMaxVal;
+            var newSizeOf1Char = Mathf.Lerp(maxSize, sizeOf1CharAtWeight3, weightNormalized);
+            var newSizeOf8Chars = Mathf.Lerp(maxSize, sizeOf8CharsAtWeight3, weightNormalized);
+            for (var i = 0; i < 8; i++)
+                transform.GetChild(i + 1).GetComponent<TextMeshProUGUI>().fontSizeMax = newSizeOf8Chars;
+            transform.GetChild(9).GetComponent<TextMeshProUGUI>().fontSizeMax = newSizeOf1Char;
+        }
+        public void SetSize(float s)
+        {
+            size = s;
+            GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s;
         }
     }
 }

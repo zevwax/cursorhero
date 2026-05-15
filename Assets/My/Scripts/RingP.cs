@@ -6,7 +6,7 @@ namespace ZevWaxGames.CursorHero
     {
         protected override void Setup()
         {
-            edge = 1f;
+            weight = 1f;
             speed = 1f;
             gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
         }

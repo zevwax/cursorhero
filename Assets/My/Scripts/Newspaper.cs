@@ -7,9 +7,9 @@ namespace ZevWaxGames.CursorHero
 {
     public class Newspaper : MonoBehaviour
     {
-        public float Edge => edge;
+        public float Weight => weight;
         public float Size => size;
-        private float edge;
+        private float weight;
         private float size;
         
         [Header("Settings")]
@@ -35,9 +35,9 @@ namespace ZevWaxGames.CursorHero
         }
         private void Start()
         {
-            size = Random.Range(1f, 3f);
-            edge = Random.Range(1f, 3f);
-            tooltipText = string.Format("projectile.png\nEdge: {0:F1} / Size: {1:F1}", edge, size);
+            size = 3f;//Random.Range(1f, 3f);
+            weight = 3f;//Random.Range(1f, 3f);
+            tooltipText = string.Format("A.glyph\nWeight: {0:F1} / Size: {1:F1}", weight, size);
             
             myCollider = GetComponent<BoxCollider2D>();
             rb = GetComponent<Rigidbody2D>();
