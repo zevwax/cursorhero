@@ -30,7 +30,7 @@ namespace ZevWaxGames.CursorHero
 
         public static void NewYellowP(Vector2 pos, Vector2 direction, Gun g)
         {
-            var obj = CreateBaseProjectile<YellowP>(pos, direction, "Yellow Projectile", "MainCharacterProjectile");
+            var obj = CreateBaseProjectile<YellowP>(pos, direction, "Yellow Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
             obj.GetComponent<Projectile>().SetTeam(true);
             obj.GetComponent<Projectile>().SetWeight(g.Weight);
             obj.GetComponent<Projectile>().SetSize(g.Size);
@@ -38,7 +38,7 @@ namespace ZevWaxGames.CursorHero
 
         public static void NewRedP(Vector2 pos, Vector2 direction, Gun g)
         {
-            var obj = CreateBaseProjectile<RedP>(pos, direction, "Red Projectile", "EnemyProjectile");
+            var obj = CreateBaseProjectile<RedP>(pos, direction, "Red Projectile", "EnemyProjectile", "EnemyProjectiles");
             obj.GetComponent<Projectile>().SetTeam(false);
             obj.GetComponent<Projectile>().SetWeight(g.Weight);
             obj.GetComponent<Projectile>().SetSize(g.Size);
@@ -46,14 +46,14 @@ namespace ZevWaxGames.CursorHero
 
         public static void NewRingP(Vector2 pos, Vector2 direction, Gun g)
         {
-            var obj = CreateBaseProjectile<RingP>(pos, direction, "Ring Projectile", "EnemyProjectile");
+            var obj = CreateBaseProjectile<RingP>(pos, direction, "Ring Projectile", "EnemyProjectile", "EnemyProjectiles");
             obj.GetComponent<Projectile>().SetTeam(false);
             obj.GetComponent<Projectile>().SetWeight(g.Weight);
             obj.GetComponent<Projectile>().SetSize(g.Size);
         }
-        private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer) where T : Projectile
+        private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer, string sortLayer) where T : Projectile
         {
-            var obj = NewEntity<T>(pos, name, "projectile", "Projectiles", true, objLayer, false);
+            var obj = NewEntity<T>(pos, name, "projectile", sortLayer, true, objLayer, false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             obj.GetComponent<Projectile>().direction = direction;
             

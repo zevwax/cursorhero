@@ -8,8 +8,8 @@ namespace ZevWaxGames.CursorHero
     {
         public static MainCharacter Instance { get; private set; }
         
-        public float edge;
-        public float size;
+        public float edge = 1f;
+        public float size = 1f;
         
         public bool is_trackable = true;
         public float WeightBuff = 0f;
@@ -104,6 +104,8 @@ namespace ZevWaxGames.CursorHero
         }
         public void Born()
         {
+            edge = 1f;
+            size = 1f;
             MaxHP = 10f;
             HP = 10f;
             WeightBuff = 0f;

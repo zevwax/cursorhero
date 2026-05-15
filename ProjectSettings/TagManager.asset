@@ -54,8 +54,11 @@ TagManager:
   - name: RealDisks
     uniqueID: 482455791
     locked: 0
-  - name: Projectiles
+  - name: MainCharacterProjectiles
     uniqueID: 3598673145
+    locked: 0
+  - name: EnemyProjectiles
+    uniqueID: 2364338195
     locked: 0
   - name: Enemies
     uniqueID: 197784847

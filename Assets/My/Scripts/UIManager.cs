@@ -82,9 +82,9 @@ namespace ZevWaxGames.CursorHero
         public void ShowRecycleBinWindow()
         {
             recycleBinWindow.SetActive(true);
-            Spawner.NewBottle(new Vector2(-0.4f, -0.25f));
-            Spawner.NewApple(new Vector2(0f, 0.4f));
-            Spawner.NewNewspaper(new Vector2(0.4f, -0.25f));
+            Spawner.NewBottle(new Vector2(-2f, -1f));
+            Spawner.NewApple(new Vector2(0f, 1f));
+            Spawner.NewNewspaper(new Vector2(2f, -1f));
         }
         public void HideRecycleBinWindow()
         {
@@ -197,7 +197,7 @@ namespace ZevWaxGames.CursorHero
             yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(1f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
         }
-        private string wallpaperDirectory = "My/WinXp/Wallpapers";
+        private string wallpaperDirectory = "My/My/Sprites/Wallpapers";
         private void ResetWallpapers()
         {
             var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
