@@ -27,26 +27,49 @@ namespace ZevWaxGames.CursorHero
             pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy", false);
         public static GameObject NewCyan(Vector2 pos) => NewEntity<Cyan>(
             pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy", false);
-        public static void NewYellowP(Vector2 pos, Vector2 direction)
+        public static void NewYellowP(Vector2 pos, Vector2 direction) => CreateBaseProjectile<YellowP>(pos, direction, "Yellow Projectile", "MainCharacterProjectile");
+        public static void NewRedP(Vector2 pos, Vector2 direction) => CreateBaseProjectile<RedP>(pos, direction, "Red Projectile", "EnemyProjectile");
+        public static void NewRingP(Vector2 pos, Vector2 direction) => CreateBaseProjectile<RingP>(pos, direction, "Ring Projectile", "EnemyProjectile");
+        private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer) where T : Projectile
         {
-            var obj = NewEntity<YellowP>(pos, "Yellow Projectile", "glass", "Projectiles", true, "MainCharacterProjectile", false);
-            obj.GetComponent<CanvasGroup>().alpha = 0.75f;
+            var obj = NewEntity<T>(pos, name, "projectile", "Projectiles", true, objLayer, false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             obj.GetComponent<Projectile>().direction = direction;
+            
+            NewText(obj.transform, objLayer, TextAlignmentOptions.BottomLeft, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.MidlineLeft, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.TopLeft, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.Bottom, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.Top, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.BottomRight, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.MidlineRight, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.TopRight, new Color(1f, 0.25f, 0.25f, 1f));
+            NewText(obj.transform, objLayer, TextAlignmentOptions.Center, new Color(1f, 1f, 1f, 1f));
+            
+            return obj;
         }
-        public static void NewRedP(Vector2 pos, Vector2 direction)
+
+        private static GameObject NewText(Transform parent, string objLayer, TextAlignmentOptions alignment, Color color)
         {
-            var obj = NewEntity<RedP>(pos, "Red Projectile", "arrow", "Projectiles", true, "EnemyProjectile", false);
-            obj.GetComponent<BoxCollider2D>().isTrigger = true;
-            obj.GetComponent<Projectile>().direction = direction;
+            var textObj = new GameObject("Text");
+            textObj.layer = LayerMask.NameToLayer(objLayer);
+            textObj.transform.SetParent(parent, false);
+            var textRt = textObj.AddComponent<RectTransform>();
+            textRt.anchorMin = Vector2.zero;
+            textRt.anchorMax = Vector2.one;
+            textRt.offsetMin = Vector2.zero;
+            textRt.offsetMax = Vector2.zero;
+            var textTxt = textObj.AddComponent<TextMeshProUGUI>();
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/quarter_raster_hinted");
+            textTxt.text = "A";
+            textTxt.alignment = alignment;
+            textTxt.color = color;
+            textTxt.enableAutoSizing = true;
+            textTxt.fontSizeMin = ushort.MinValue;
+            textTxt.fontSizeMax = ushort.MaxValue;
+            textTxt.raycastTarget = false;
+            return textObj;
         }
-        public static void NewRingP(Vector2 pos, Vector2 direction)
-        {
-            var obj = NewEntity<RingP>(pos, "Ring Projectile", "arrow", "Projectiles", true, "EnemyProjectile", false);
-            obj.GetComponent<BoxCollider2D>().isTrigger = true;
-            obj.GetComponent<Projectile>().direction = direction;
-        }
-        
         /*private static GameObject NewEntityLegacy<T>(Vector2 pos, string name, string spritePath, float w, float h, float left, float top) where T : MonoBehaviour
         {
             var obj = new GameObject(name);

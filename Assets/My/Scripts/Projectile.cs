@@ -49,7 +49,7 @@ namespace ZevWaxGames.CursorHero
             if (direction != Vector3.zero)
             {
                 float angle = Vector2.SignedAngle(Vector2.up, direction);
-                float offset = -28.8f;
+                float offset = 0f;
                 transform.rotation = Quaternion.Euler(0, 0, angle + offset);
             }
         }
