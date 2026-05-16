@@ -173,14 +173,12 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
-        
         public static GameObject NewDisk(Vector2 pos)
         {
             var obj = NewEntity<Disk>(pos, "Disk", "disk", "RealDisks", true, "Disk", false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
-        
         public static GameObject NewFallingDisk(Vector2 pos)
         {
             var obj = new GameObject("FallingDisk");
@@ -215,28 +213,19 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
-        
         public static GameObject NewYellowCirc()
         {
-            var obj = new GameObject("Yellow Circ");
-            var canvas = obj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.WorldSpace;
-            canvas.worldCamera = Camera.main;
-            canvas.sortingLayerName = "YellowCirc";
-            var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(32, 32);
-            rectTransform.localScale = new Vector3(0, 0, 1);
-            var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 30f;
-            canvasScaler.referencePixelsPerUnit = 30f;
-            var raycaster = obj.AddComponent<GraphicRaycaster>();
-            raycaster.ignoreReversedGraphics = true;
-            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
-            raycaster.blockingMask = -1;
-            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-            var yellowCirc = obj.AddComponent<YellowCirc>();
+            var obj = NewEntity<YellowCirc>(Vector2.zero, "Yellow Circle", "yellow_circ", "YellowCirc", false, "Default", false);
+            obj.GetComponent<CanvasGroup>().alpha = 1/3f;
             
-            var imageObj = new GameObject("Image");
+            return obj;
+        }
+        public static GameObject NewShield()
+        {
+            var obj = NewEntity<YellowCirc>(Vector2.zero, "Shield", "shield32", "Shield", true, "Shield", false);
+            obj.transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 1, 1);
+            
+            var imageObj = new GameObject("Fill");
             imageObj.transform.SetParent(obj.transform, false);
             var imageRt = imageObj.AddComponent<RectTransform>();
             imageRt.anchorMin = Vector2.zero;
@@ -244,8 +233,9 @@ namespace ZevWaxGames.CursorHero
             imageRt.offsetMin = Vector2.zero;
             imageRt.offsetMax = Vector2.zero;
             var image = imageObj.AddComponent<Image>();
-            image.sprite = Resources.Load<Sprite>("My/My/Sprites/yellow_circ");
-            imageObj.AddComponent<CanvasRenderer>();
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/shield30");
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
             
             return obj;
         }

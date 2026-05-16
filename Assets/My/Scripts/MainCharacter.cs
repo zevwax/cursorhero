@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ namespace ZevWaxGames.CursorHero
         public float MaxHP = 10f;
         public GameObject SkinSetter => skinSetter;
         private GameObject skinSetter = null;
+        private GameObject currentShield;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -176,12 +178,21 @@ namespace ZevWaxGames.CursorHero
         public void SetSkin(string spriteName) => transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
         public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
         private void SetGlove() => SetSkin("glove");
-
         public override void GetDamage(float damage)
         {
+            if (currentShield != null) return;
+            StartCoroutine(CastShield());
             base.GetDamage(damage);
             Spawner.NewDamageNumbers(transform.position, false, damage);
             ImpulseSource.Instance.Invoke();
+        }
+        private IEnumerator CastShield()
+        {
+            currentShield = Spawner.NewShield();
+            yield return new WaitForSeconds(2f);
+            currentShield.GetComponent<CanvasGroup>().alpha = 0;
+            yield return new WaitForSeconds(1f);
+            Destroy(currentShield.gameObject);
         }
         public void IncreaseWeightBuff(float diff)
         {

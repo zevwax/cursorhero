@@ -23,7 +23,7 @@ TagManager:
   - ColoristCameraOutput
   - DitheringCameraOutput
   - BlueFace
-  - 
+  - Shield
   - 
   - 
   - 
@@ -83,6 +83,9 @@ TagManager:
     locked: 0
   - name: YellowCirc
     uniqueID: 1085615039
+    locked: 0
+  - name: Shield
+    uniqueID: 3213085137
     locked: 0
   - name: Selection
     uniqueID: 166598741

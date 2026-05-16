@@ -72,8 +72,8 @@ namespace ZevWaxGames.CursorHero
                 }
                 else if (o.GetComponent<Apple>() != null)
                 {
-                    MainCharacter.Instance.HP = MainCharacter.Instance.MaxHP;
-                    Spawner.NewDamageNumbers(transform.position, "+10");
+                    MainCharacter.Instance.HP += 3;
+                    Spawner.NewDamageNumbers(transform.position, "+3 HP");
                     Destroy(o);
                 }
             isActive = false;
