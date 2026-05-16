@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -18,7 +20,7 @@ namespace ZevWaxGames.CursorHero
             obj.transform.position = new Vector3(pos.x, pos.y, 0);
             var sr = obj.AddComponent<SpriteRenderer>();
             sr.sortingLayerName = "Soul";
-            sr.sprite = Resources.Load<Sprite>("My/WinXP/Cursor/default_arrow");
+            sr.sprite = Resources.Load<Sprite>("My/WinXP/Cursor/glove");
             obj.AddComponent<Soul>();
         }
         public static GameObject NewWhite(Vector2 pos) => NewEntity<White>(
@@ -237,6 +239,42 @@ namespace ZevWaxGames.CursorHero
             if (imageObj.GetComponent<CanvasRenderer>() == null)
                 imageObj.AddComponent<CanvasRenderer>();
             
+            return obj;
+        }
+        public static GameObject NewGlitch()
+        {
+            var xMax = 8f;
+            var yMax = 4.5f;
+            var x = Random.Range(-xMax, xMax);
+            var y = Random.Range(-yMax, yMax);
+            var color = (Color)default;
+            switch (Random.Range(0, 6+1))
+            {
+                case 0:
+                    color = Color.red;
+                    break;
+                case 1:
+                    color = Color.green;
+                    break;
+                case 2:
+                    color = Color.blue;
+                    break;
+                case 3:
+                    color = Color.magenta;
+                    break;
+                case 4:
+                    color = Color.yellow;
+                    break;
+                case 5:
+                    color = Color.cyan;
+                    break;
+                case 6:
+                    color = Color.white;
+                    break;
+            }
+            var spriteName = "g" + Convert.ToString(Random.Range(1, 3+1));
+            var obj = NewEntity<Glitch>(new Vector2(x, y), "Glitch", spriteName, "Glitch", false, "Default", false);
+            obj.transform.GetChild(0).GetComponent<Image>().color = color;
             return obj;
         }
         public static GameObject NewTooltip(string text)

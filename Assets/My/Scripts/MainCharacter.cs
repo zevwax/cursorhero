@@ -182,9 +182,19 @@ namespace ZevWaxGames.CursorHero
         {
             if (currentShield != null) return;
             StartCoroutine(CastShield());
+            StartCoroutine(DoGlitch());
             base.GetDamage(damage);
             Spawner.NewDamageNumbers(transform.position, false, damage);
             ImpulseSource.Instance.Invoke();
+        }
+
+        private IEnumerator DoGlitch()
+        {
+            for (var i = 0; i < 15; i++)
+            {
+                Spawner.NewGlitch();
+                yield return new WaitForSeconds(0.033f);
+            }
         }
         private IEnumerator CastShield()
         {

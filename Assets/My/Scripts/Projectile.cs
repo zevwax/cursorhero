@@ -12,6 +12,8 @@ namespace ZevWaxGames.CursorHero
         private static GameObject bloodSplash;
         private static Texture2D _editableTexture1;
         private static Texture2D _editableTexture2;
+        /*protected bool isBouncy = true;
+        protected bool isPiercing = true;*/
         protected bool teamIsAlly;
         protected float weight;
         protected float size;
@@ -57,6 +59,23 @@ namespace ZevWaxGames.CursorHero
         }
         protected void OnTriggerEnter2D(Collider2D other)
         {
+            /*if (other.gameObject.GetComponent("Wall") != null)
+            {
+                if (isBouncy)
+                {
+                    Vector2 closestPoint = other.ClosestPoint(transform.position);
+                    Vector2 normal = ((Vector2)transform.position - closestPoint).normalized;
+                    direction = Vector2.Reflect(direction, normal).normalized;
+                    if (Random.Range(0, 4) == 0)
+                        isBouncy = false;
+                    return; 
+                }
+                else
+                {
+                    Die();
+                    return;
+                }
+            }*/
             if (other.gameObject.GetComponent<Cursor>() != null)
             {
                 var dmg = (float)default;
@@ -72,8 +91,10 @@ namespace ZevWaxGames.CursorHero
                 
                 DrawBloodOnWallpaper1(other.transform.position);
                 DrawBloodOnWallpaper2(other.transform.position);
+                
+                /*if (!isPiercing)*/
+                    Die();
             }
-            Die();
         }
         private void DrawBloodOnWallpaper1(Vector3 hitPosition)
         {
@@ -323,11 +344,11 @@ namespace ZevWaxGames.CursorHero
             var maxSizeInFractionsOfMaxVal = 0.9f;
             var maxSize = maxSizeAtAll * maxSizeInFractionsOfMaxVal;
             var minSizeOf8CharsInFractionsOfMaxVal = 0.833f;
-            var sizeOf8CharsAtWeight3 = maxSizeAtAll * minSizeOf8CharsInFractionsOfMaxVal;
-            var minSizeOf1CharInFractionsOfMaxVal = 0.2f;
-            var sizeOf1CharAtWeight3 = maxSizeAtAll * minSizeOf1CharInFractionsOfMaxVal;
-            var newSizeOf1Char = Mathf.Lerp(maxSize, sizeOf1CharAtWeight3, weightNormalized);
-            var newSizeOf8Chars = Mathf.Lerp(maxSize, sizeOf8CharsAtWeight3, weightNormalized);
+            var minSizeOf8Chars = maxSizeAtAll * minSizeOf8CharsInFractionsOfMaxVal;
+            var minSizeOf1CharInFractionsOfMaxVal = 1/3f;
+            var minSizeOf1Char = maxSizeAtAll * minSizeOf1CharInFractionsOfMaxVal;
+            var newSizeOf1Char = Mathf.Lerp(minSizeOf1Char, maxSize, weightNormalized);
+            var newSizeOf8Chars = Mathf.Lerp(minSizeOf8Chars, maxSize, weightNormalized);
             for (var i = 0; i < 8; i++)
                 transform.GetChild(i + 1).GetComponent<TextMeshProUGUI>().fontSizeMax = newSizeOf8Chars;
             transform.GetChild(9).GetComponent<TextMeshProUGUI>().fontSizeMax = newSizeOf1Char;

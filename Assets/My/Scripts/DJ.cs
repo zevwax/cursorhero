@@ -33,10 +33,10 @@ namespace ZevWaxGames.CursorHero
             if (Instance != null && !Instance.completeAS.isPlaying)
                 Instance.completeAS.Play();
         }
-        public static void PlayDeath()
+        private IEnumerator PlayDeath()
         {
-            if (Instance != null && !Instance.deathAS.isPlaying)
-                Instance.deathAS.Play();
+            yield return new WaitForSeconds(2f);
+            Instance.deathAS.Play();
         }
         #endregion
         private void Awake()
@@ -143,6 +143,7 @@ namespace ZevWaxGames.CursorHero
             FadeOut();
             FadeOut2();
             FadeOut3();
+            StartCoroutine(PlayDeath());
         }
         private void Reset(AudioSource aSource)
         {

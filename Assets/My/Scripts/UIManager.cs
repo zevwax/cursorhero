@@ -13,6 +13,7 @@ namespace ZevWaxGames.CursorHero
         [SerializeField] private GameObject recycleBinWindow;
         [SerializeField] private GameObject youWinWindow;
         [SerializeField] private GameObject chooseAnUpgradeWindow;
+        [SerializeField] private GameObject BSOD;
         [SerializeField] private GameObject tryAgainWindow;
         private GameObject[] btns;
         private void Awake()
@@ -47,8 +48,21 @@ namespace ZevWaxGames.CursorHero
         }
         private void ShowTryAgainWindow()
         {
+            StartCoroutine(StartBSOD());
+        }
+        private IEnumerator StartBSOD()
+        {
+            yield return new WaitForSeconds(2f);
+            BSOD.SetActive(true);
+            yield return new WaitForSeconds(1.25f);
+            InstantFadeOut();
+            
+            BSOD.SetActive(false);
             tryAgainWindow.SetActive(true);
             btns[0] = Spawner.NewPlayButton(Vector2.zero);
+            
+            yield return new WaitForSeconds(0.75f);
+            StartCoroutine(FadeIn());
         }
         public void ShowYouWinWindow()
         {
@@ -186,6 +200,11 @@ namespace ZevWaxGames.CursorHero
             HideRecycleBinWindow();
             yield return FastFadeIn();
             EventHolder.OnPCStarted?.Invoke();
+        }
+        private void InstantFadeOut()
+        {
+            var endCanvas = GameObject.Find("FadeCanvas").GetComponent<CanvasGroup>();
+            endCanvas.DOFade(1f, 0);
         }
         private IEnumerator FastFadeOut()
         {
