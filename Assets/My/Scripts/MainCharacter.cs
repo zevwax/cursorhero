@@ -187,6 +187,7 @@ namespace ZevWaxGames.CursorHero
         public override void GetDamage(float damage)
         {
             if (currentShield != null) return;
+            DJ.Instance.HandleGettingDamage();
             StartCoroutine(CastShield());
             StartCoroutine(DoGlitch());
             base.GetDamage(damage);

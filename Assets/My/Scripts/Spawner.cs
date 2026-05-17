@@ -124,6 +124,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewEntity<T>(Vector2 pos, string name, string spriteName, string sortingLayerName, bool collider, string objectLayer, bool isStatic) where T : MonoBehaviour
         {
             var obj = new GameObject(name);
+            obj.layer = LayerMask.NameToLayer(objectLayer);
             var canvas = obj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.WorldSpace;
             if (sortingLayerName != null)
@@ -160,7 +161,6 @@ namespace ZevWaxGames.CursorHero
             
             if (collider)
             {
-                obj.layer = LayerMask.NameToLayer(objectLayer);
                 var rb = obj.AddComponent<Rigidbody2D>();
                 rb.sharedMaterial = CreateIceMaterial();
                 rb.gravityScale = 0;

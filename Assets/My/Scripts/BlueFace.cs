@@ -9,7 +9,6 @@ namespace ZevWaxGames.CursorHero
     public class BlueFace : MonoBehaviour
     {
         public static BlueFace Instance { get; private set; }
-        private AudioSource _as;
         private Image _image;
         private RectTransform rt;
         public bool theAnimIsShown = false;
@@ -20,7 +19,6 @@ namespace ZevWaxGames.CursorHero
         private void Awake()
         {
             Instance = this;
-            _as = GetComponent<AudioSource>();
             _image = GetComponent<Image>();
             rt = GetComponent<RectTransform>();
         }
@@ -49,11 +47,7 @@ namespace ZevWaxGames.CursorHero
                 _animCoroutine = null;
             }
 
-            // Останавливаем звук, если он успел включиться
-            if (_as.isPlaying)
-            {
-                _as.Stop();
-            }
+            DJ.StopVoice();
 
             // Принудительно скрываем изображение и ставим финальный спрайт
             ChangeSprite(1);
@@ -75,7 +69,7 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(2);
             yield return StartCoroutine(FadeInRoutine());
             yield return new WaitForSeconds(0.25f);
-            _as.Play();
+            DJ.PlayVoice();
             ChangeSprite(2); yield return new WaitForSeconds(0.75f); //I
             ChangeSprite(1); yield return new WaitForSeconds(0.75f);
             ChangeSprite(2); yield return new WaitForSeconds(0.25f); //know

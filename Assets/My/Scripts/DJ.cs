@@ -1,14 +1,21 @@
 using UnityEngine;
+using System;
 using System.Collections;
+using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
 namespace ZevWaxGames.CursorHero
 {
     public class DJ : MonoBehaviour
     {
+        private float VoiceVolume = 0.25f;
+        private float MusicVolume = 0.25f;
         public static DJ Instance { get; private set; }
+        private AudioSource blueFaceVoiceAS;
         private AudioSource fightThemeAS;
         private AudioSource upgradeThemeAS;
+        private AudioSource glitchedThemeAS;
         private AudioSource recBinThemeAS;
         private AudioSource diskAS;
         private AudioSource lmbAS;
@@ -17,21 +24,27 @@ namespace ZevWaxGames.CursorHero
         private Coroutine activeFade;
         private Coroutine activeFade2;
         private Coroutine activeFade3;
+        private Coroutine activeFade4;
         #region Public Static Play Methods
         public static void PlayDisk()
         {
-            if (Instance != null && !Instance.diskAS.isPlaying)
-                Instance.diskAS.Play();
+            Instance.diskAS.Play();
+        }
+        public static void PlayVoice()
+        {
+            Instance.blueFaceVoiceAS.Play();
+        }
+        public static void StopVoice()
+        {
+            Instance.blueFaceVoiceAS.Stop();
         }
         public static void PlayLMB()
         {
-            if (Instance != null && !Instance.lmbAS.isPlaying)
-                Instance.lmbAS.Play();
+            Instance.lmbAS.Play();
         }
         public static void PlayComplete()
         {
-            if (Instance != null && !Instance.completeAS.isPlaying)
-                Instance.completeAS.Play();
+            Instance.completeAS.Play();
         }
         private IEnumerator PlayDeath()
         {
@@ -46,21 +59,27 @@ namespace ZevWaxGames.CursorHero
         }
         private void Init()
         {
-            fightThemeAS = SetupAudioSource("My/My/Clips/808 VIP Wizard Club", true);
-            upgradeThemeAS = SetupAudioSource("My/My/Clips/Ancient Dream", true);
+            blueFaceVoiceAS = SetupAudioSource("My/My/Clips/BlueFaceVoice", false);
+            fightThemeAS = SetupAudioSource("My/My/Clips/Sewerslvt - Pretty Cvnt", true);
+            upgradeThemeAS = SetupAudioSource("My/My/Clips/Sewerslvt - Pretty Cvnt FK10", true);
+            glitchedThemeAS = SetupAudioSource("My/My/Clips/Sewerslvt - Pretty Cvnt BC75", true);
             recBinThemeAS = SetupAudioSource("My/My/Clips/Was It Real", true);
             diskAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Pop-up Blocked", false);
             lmbAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Menu Command", false);
             completeAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Print complete", false);
             deathAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Critical Stop", false);
             
+            PreloadClip(blueFaceVoiceAS.clip);
             PreloadClip(fightThemeAS.clip);
             PreloadClip(upgradeThemeAS.clip);
+            PreloadClip(glitchedThemeAS.clip);
             PreloadClip(recBinThemeAS.clip);
             PreloadClip(diskAS.clip);
             PreloadClip(lmbAS.clip);
             PreloadClip(completeAS.clip);
             PreloadClip(deathAS.clip);
+            
+            blueFaceVoiceAS.volume = VoiceVolume;
         }
         private void PreloadClip(AudioClip clip)
         {
@@ -111,10 +130,13 @@ namespace ZevWaxGames.CursorHero
             
             if (activeFade3 != null) StopCoroutine(activeFade3);
             Reset(recBinThemeAS);
+            
+            if (activeFade4 != null) StopCoroutine(activeFade4);
+            Reset(glitchedThemeAS);
         }
         private void HandlePCStarted()
         {
-            FadeOut3();
+            FadeOut2();
             FadeIn();
         }
         private void HandleChoosingStarted()
@@ -136,7 +158,7 @@ namespace ZevWaxGames.CursorHero
         private void HandlePCFinished()
         {
             FadeOut();
-            FadeIn3();
+            FadeIn2();
         }
         private void HandleRunFinished()
         {
@@ -145,131 +167,62 @@ namespace ZevWaxGames.CursorHero
             FadeOut3();
             StartCoroutine(PlayDeath());
         }
+        public void HandleGettingDamage() => StartCoroutine(CHandleGettingDamage());
+        public IEnumerator CHandleGettingDamage()
+        {
+            if (G.Instance.bin.IsEnabled)
+                InstantFadeOut2();
+            else
+                InstantFadeOut();
+            InstantFadeIn4();
+            yield return new WaitForSeconds(0.75f);
+            InstantFadeOut4();
+            if (G.Instance.bin.IsEnabled)
+                InstantFadeIn2();
+            else
+                InstantFadeIn();
+        }
         private void Reset(AudioSource aSource)
         {
             aSource.Play();
-            aSource.Pause();
+            aSource.DORestart();
             aSource.volume = 0f;
         }
-        private void FadeIn()
+        private void FadeIn() => ExecuteFade(ref activeFade, fightThemeAS, MusicVolume, true);
+        private void InstantFadeIn() => ExecuteFade(ref activeFade, fightThemeAS, MusicVolume, true, 0);
+        private void FadeOut() => ExecuteFade(ref activeFade, fightThemeAS, 0.0f, false);
+        private void InstantFadeOut() => ExecuteFade(ref activeFade, fightThemeAS, 0.0f, false, 0);
+        private void FadeIn2() => ExecuteFade(ref activeFade2, upgradeThemeAS, MusicVolume, true);
+        private void InstantFadeIn2() => ExecuteFade(ref activeFade2, upgradeThemeAS, MusicVolume, true, 0);
+        private void FadeOut2() => ExecuteFade(ref activeFade2, upgradeThemeAS, 0.0f, false);
+        private void InstantFadeOut2() => ExecuteFade(ref activeFade2, upgradeThemeAS, 0.0f, false, 0);
+        private void FadeIn3() => ExecuteFade(ref activeFade3, recBinThemeAS, MusicVolume, true);
+        private void FadeOut3() => ExecuteFade(ref activeFade3, recBinThemeAS, 0.0f, false);
+        private void InstantFadeIn4() => ExecuteFade(ref activeFade4, glitchedThemeAS, MusicVolume, true, 0);
+        private void InstantFadeOut4() => ExecuteFade(ref activeFade4, glitchedThemeAS, 0.0f, false, 0);
+        private void ExecuteFade(ref Coroutine activeCor, AudioSource source, float targetVol, bool unpause, float duration = 1.0f)
         {
-            fightThemeAS.UnPause();
-            if (activeFade != null) StopCoroutine(activeFade);
-            activeFade = StartCoroutine
-            (
-                FadeVolume
-                (
-                    1.0f,
-                    null
-                )
-            );
+            //if (unpause) source.UnPause();
+            if (activeCor != null) StopCoroutine(activeCor);
+            
+            //Action onComplete = !unpause ? () => source.Pause() : null;
+            activeCor = StartCoroutine(MasterFade(source, targetVol, duration/*, onComplete*/));
         }
-        private void FadeOut()
+        private IEnumerator MasterFade(AudioSource source, float targetVolume, float duration/*, Action onComplete*/)
         {
-            if (activeFade != null) StopCoroutine(activeFade);
-            activeFade = StartCoroutine
-            (
-                FadeVolume
-                (
-                    0.0f,
-                    () => fightThemeAS.Pause()
-                )
-            );
-        }
-        private void FadeIn2()
-        {
-            upgradeThemeAS.UnPause();
-            if (activeFade2 != null) StopCoroutine(activeFade2);
-            activeFade2 = StartCoroutine
-            (
-                FadeVolume2
-                (
-                    1.0f,
-                    null
-                )
-            );
-        }
-        private void FadeOut2()
-        {
-            if (activeFade2 != null) StopCoroutine(activeFade2);
-            activeFade2 = StartCoroutine
-            (
-                FadeVolume2
-                (
-                    0.0f,
-                    () => upgradeThemeAS.Pause()
-                )
-            );
-        }
-        private void FadeIn3()
-        {
-            recBinThemeAS.UnPause();
-            if (activeFade3 != null) StopCoroutine(activeFade3);
-            activeFade3 = StartCoroutine
-            (
-                FadeVolume3
-                (
-                    1.0f,
-                    null
-                )
-            );
-        }
-        private void FadeOut3()
-        {
-            if (activeFade3 != null) StopCoroutine(activeFade3);
-            activeFade3 = StartCoroutine
-            (
-                FadeVolume3
-                (
-                    0.0f,
-                    () => recBinThemeAS.Pause()
-                )
-            );
-        }
-        private IEnumerator FadeVolume(float targetVolume, System.Action onComplete)
-        {
-            var startVolume = fightThemeAS.volume;
+            float startVolume = source.volume;
             float timer = 0;
 
-            while (timer < 1.0f)
+            while (timer < duration)
             {
                 timer += Time.deltaTime;
-                fightThemeAS.volume = Mathf.Lerp(startVolume, targetVolume, timer);
+                var normalizedTime = duration > 0 ? timer / duration : 1.0f;
+                source.volume = Mathf.Lerp(startVolume, targetVolume, normalizedTime);
                 yield return null;
             }
 
-            fightThemeAS.volume = targetVolume;
-            onComplete?.Invoke();
-        }
-        private IEnumerator FadeVolume2(float targetVolume, System.Action onComplete)
-        {
-            var startVolume = upgradeThemeAS.volume;
-            float timer = 0;
-
-            while (timer < 1.0f)
-            {
-                timer += Time.deltaTime;
-                upgradeThemeAS.volume = Mathf.Lerp(startVolume, targetVolume, timer);
-                yield return null;
-            }
-
-            upgradeThemeAS.volume = targetVolume;
-            onComplete?.Invoke();
-        }
-        private IEnumerator FadeVolume3(float targetVolume, System.Action onComplete)
-        {
-            var startVolume = recBinThemeAS.volume;
-            float timer = 0;
-
-            while (timer < 1.0f)
-            {
-                timer += Time.deltaTime;
-                recBinThemeAS.volume = Mathf.Lerp(startVolume, targetVolume, timer);
-                yield return null;
-            }
-
-            recBinThemeAS.volume = targetVolume;
-            onComplete?.Invoke();
+            source.volume = targetVolume;
+            /*onComplete?.Invoke();*/
         }
     }
 }
