@@ -42,8 +42,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: RecursiveBackground
     uniqueID: 2895773915
+    locked: 0
+  - name: Background
+    uniqueID: 2861284499
     locked: 0
   - name: ButtonsBG
     uniqueID: 2437501039

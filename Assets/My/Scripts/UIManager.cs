@@ -10,11 +10,11 @@ namespace ZevWaxGames.CursorHero
     {
         public static UIManager Instance { get; private set; }
         [SerializeField] private GameObject startGameWindow;
-        [SerializeField] private GameObject recycleBinWindow;
-        [SerializeField] private GameObject youWinWindow;
-        [SerializeField] private GameObject chooseAnUpgradeWindow;
         [SerializeField] private GameObject BSOD;
         [SerializeField] private GameObject tryAgainWindow;
+        [SerializeField] private GameObject chooseAnUpgradeWindow;
+        [SerializeField] private GameObject recycleBinWindow;
+        [SerializeField] private GameObject youWinWindow;
         private GameObject[] btns;
         private void Awake()
         {

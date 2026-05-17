@@ -10,7 +10,7 @@ namespace ZevWaxGames.CursorHero
         private Image _image;
         private Vector3 _startPos;
         private Sprite[] _sprites;
-        private const float PixelsPerUnit = 30f;
+        private const float PixelsPerUnit = 60f;
         private bool isActive = false;
         private void Start()
         {
@@ -90,7 +90,7 @@ namespace ZevWaxGames.CursorHero
         private GameObject GetSelectedObject()
         {
             var allScripts = Object.FindObjectsByType<Newspaper>(FindObjectsSortMode.None);
-            var ppu = 30;
+            var ppu = 60;
             var halfOfW = (_rectTransform.sizeDelta.x / ppu) * 0.5f;
             var halfOfH = (_rectTransform.sizeDelta.y / ppu) * 0.5f;
             foreach (var piece in allScripts)

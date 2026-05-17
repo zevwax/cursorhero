@@ -27,7 +27,7 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewEntity<Wall>(new Vector2(8.5f, 0), "Right Wall", "vertical_wall", null, true, "Wall", true);
             Spawner.NewEntity<Wall>(new Vector2(0, -5f), "Bottom Wall", "horizontal_wall", null, true, "Wall", true);
             Spawner.NewEntity<Wall>(new Vector2(0, 5f), "Top Wall", "horizontal_wall", null, true, "Wall", true);
-            Spawner.NewEntity<MainCharacter>(new Vector2(0, 0), "MainCharacter", "glove", "Pointer", true, "MainCharacter", false);
+            Spawner.NewEntity<MainCharacter>(new Vector2(0, 0), "MainCharacter", "idle", "Pointer", true, "MainCharacter", false);
             
             UIManager.Instance.ShowStartGameWindow();
             var b1 = Spawner.NewBinButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f));

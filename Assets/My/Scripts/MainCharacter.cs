@@ -149,25 +149,31 @@ namespace ZevWaxGames.CursorHero
         public void SetCross(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("cross");
+            SetSkin("copy");
             this.skinSetter = skinSetter;
         }
         public void SetTake(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("take");
+            SetSkin("drop");
             this.skinSetter = skinSetter;
         }
         public void SetGrab(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("grab");
+            SetSkin("drag");
             this.skinSetter = skinSetter;
         }
         public void SetButtonLink(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("glove");
+            SetSkin("idle");
+            this.skinSetter = skinSetter;
+        }
+        public void SetPush(GameObject skinSetter)
+        {
+            if (!IsAbleForReskinBy(skinSetter)) return;
+            SetSkin("push");
             this.skinSetter = skinSetter;
         }
         public void StopBeingSkinSetter(GameObject skinSetter)
@@ -177,7 +183,7 @@ namespace ZevWaxGames.CursorHero
         }
         public void SetSkin(string spriteName) => transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
         public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
-        private void SetGlove() => SetSkin("glove");
+        private void SetGlove() => SetSkin("idle");
         public override void GetDamage(float damage)
         {
             if (currentShield != null) return;

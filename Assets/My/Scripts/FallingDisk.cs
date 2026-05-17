@@ -25,7 +25,7 @@ namespace ZevWaxGames.CursorHero
             posXMin = -8f;
             posXMax = 8f;
             posYMin = -4.5f + safeSpace;
-            posYMax = 4f;
+            posYMax = 4.25f;
             Refresh();
         }
         private void Update()

@@ -71,12 +71,14 @@ namespace ZevWaxGames.CursorHero
 
             if (collision)
             {
-                mainChar.SetButtonLink(gameObject);
+                if (!Mouse.current.leftButton.isPressed)
+                    mainChar.SetButtonLink(gameObject);
                 
                 if (!isHovered) OnHoverEnter();
 
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
+                    mainChar.SetPush(gameObject);
                     SetStatePushed();
                 }
                 else if (Mouse.current.leftButton.wasReleasedThisFrame)

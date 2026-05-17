@@ -158,8 +158,8 @@ namespace ZevWaxGames.CursorHero
 
         private void SetSize(float alpha)
         {
-            var maxW = 47.95f;
-            var maxH = 70f;
+            var maxW = 47.95f*3.1f;
+            var maxH = 70f*3.1f;
             float clampedAlpha = Mathf.Clamp01(alpha);
             rt.sizeDelta = new Vector2(maxW * clampedAlpha, maxH * clampedAlpha);
         }

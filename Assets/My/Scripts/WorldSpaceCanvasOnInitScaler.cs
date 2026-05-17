@@ -20,8 +20,8 @@ namespace ZevWaxGames.CursorHero
             if (ratioHandler == null || rectTransform == null) return;
             float worldHeight = ratioHandler.Height * 2f;
             float worldWidth = ratioHandler.Width * 2f;
-            float scaleX = worldWidth / 480;
-            float scaleY = worldHeight / 270;
+            float scaleX = worldWidth / 960;
+            float scaleY = worldHeight / 540;
             rectTransform.localScale = new Vector3(scaleX, scaleY, 1f);
         }
     }
