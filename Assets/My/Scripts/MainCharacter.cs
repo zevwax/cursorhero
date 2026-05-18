@@ -194,7 +194,11 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewDamageNumbers(transform.position, false, damage);
             ImpulseSource.Instance.Invoke();
         }
-
+        protected override void Shoot()
+        {
+            DJ.PlayShoot();
+            base.Shoot();
+        }
         private IEnumerator DoGlitch()
         {
             for (var i = 0; i < 15; i++)

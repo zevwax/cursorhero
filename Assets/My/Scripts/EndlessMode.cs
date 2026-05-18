@@ -1,8 +1,14 @@
+using UnityEngine;
+using UnityEngine.UI;
+
 namespace ZevWaxGames.CursorHero
 {
     public class EndlessMode : Button
     {
-        protected override void Start() {
+        protected override void Start()
+        {
+            boxPath = "My/My/Sprites/btn_endless_mode";
+            transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 0);
             tooltipText = "Endless Mode";
             base.Start();
         }

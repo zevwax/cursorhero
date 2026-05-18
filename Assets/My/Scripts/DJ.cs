@@ -9,14 +9,15 @@ namespace ZevWaxGames.CursorHero
 {
     public class DJ : MonoBehaviour
     {
-        private float VoiceVolume = 0.25f;
-        private float MusicVolume = 0.25f;
+        private float VoiceVolume = 0.1f;
+        private float MusicVolume = 0.1f;
         public static DJ Instance { get; private set; }
+        private AudioSource blueFaceVoiceAS;
+        private AudioSource shootAS;
         private AudioSource diskAS;
         private AudioSource lmbAS;
         private AudioSource completeAS;
         private AudioSource deathAS;
-        private AudioSource blueFaceVoiceAS;
         private AudioSource clubRGAS;
         private AudioSource clubBCAS;
         private AudioSource dreamAS;
@@ -28,6 +29,10 @@ namespace ZevWaxGames.CursorHero
         private Coroutine realRGFadeCoroutine;
         private Coroutine realBCFadeCoroutine;
         #region Public Static Play Methods
+        public static void PlayShoot()
+        {
+            Instance.shootAS.Play();
+        }
         public static void PlayDisk()
         {
             Instance.diskAS.Play();
@@ -62,6 +67,7 @@ namespace ZevWaxGames.CursorHero
         private void Init()
         {
             blueFaceVoiceAS = SetupAudioSource("My/My/Clips/BlueFaceVoice", false);
+            shootAS = SetupAudioSource("My/My/Clips/shoot", false);
             diskAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Pop-up Blocked", false);
             lmbAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Menu Command", false);
             completeAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Print complete", false);
@@ -73,6 +79,7 @@ namespace ZevWaxGames.CursorHero
             realBCAS = SetupAudioSource("My/My/Clips/Was_It_Real_BC", true);
             
             PreloadClip(blueFaceVoiceAS.clip);
+            PreloadClip(shootAS.clip);
             PreloadClip(diskAS.clip);
             PreloadClip(lmbAS.clip);
             PreloadClip(completeAS.clip);

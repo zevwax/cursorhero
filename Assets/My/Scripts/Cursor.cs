@@ -48,13 +48,18 @@ namespace ZevWaxGames.CursorHero
             {
                 if (targetObj != null && gun != null)
                 {
-                    Vector2 direction = (targetObj.transform.position - transform.position).normalized;
-                    gun.ProjectileSpawner.Invoke(new Vector2(transform.position.x, transform.position.y), direction, gun);
+                    Shoot();
                     yield return new WaitForSeconds(gun.Cooldown);
                 }
                 else
                     yield return new WaitForSeconds(0.1f);
             }
+        }
+
+        protected virtual void Shoot()
+        {
+            var direction = (targetObj.transform.position - transform.position).normalized;
+            gun.ProjectileSpawner.Invoke(new Vector2(transform.position.x, transform.position.y), direction, gun);
         }
         protected virtual void Die()
         {
