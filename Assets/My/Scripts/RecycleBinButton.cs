@@ -15,8 +15,8 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 0);
             boxPath = "My/My/Sprites/bin";
+            transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 0);
             tooltipText = "Recycle Bin";
             GetComponent<Canvas>().sortingLayerName = "ButtonsBG";
             base.Start();

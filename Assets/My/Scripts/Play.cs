@@ -1,8 +1,14 @@
+using UnityEngine;
+using UnityEngine.UI;
+
 namespace ZevWaxGames.CursorHero
 {
     public class Play : Button
     {
-        protected override void Start() {
+        protected override void Start()
+        {
+            boxPath = "My/My/Sprites/btn_play";
+            transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 0);
             tooltipText = "Play";
             base.Start();
         }

@@ -12,19 +12,21 @@ namespace ZevWaxGames.CursorHero
         private float VoiceVolume = 0.25f;
         private float MusicVolume = 0.25f;
         public static DJ Instance { get; private set; }
-        private AudioSource blueFaceVoiceAS;
-        private AudioSource fightThemeAS;
-        private AudioSource upgradeThemeAS;
-        private AudioSource glitchedThemeAS;
-        private AudioSource recBinThemeAS;
         private AudioSource diskAS;
         private AudioSource lmbAS;
         private AudioSource completeAS;
         private AudioSource deathAS;
-        private Coroutine activeFade;
-        private Coroutine activeFade2;
-        private Coroutine activeFade3;
-        private Coroutine activeFade4;
+        private AudioSource blueFaceVoiceAS;
+        private AudioSource clubRGAS;
+        private AudioSource clubBCAS;
+        private AudioSource dreamAS;
+        private AudioSource realRGAS;
+        private AudioSource realBCAS;
+        private Coroutine clubRGFadeCoroutine;
+        private Coroutine clubBCFadeCoroutine;
+        private Coroutine dreamFadeCoroutine;
+        private Coroutine realRGFadeCoroutine;
+        private Coroutine realBCFadeCoroutine;
         #region Public Static Play Methods
         public static void PlayDisk()
         {
@@ -60,24 +62,26 @@ namespace ZevWaxGames.CursorHero
         private void Init()
         {
             blueFaceVoiceAS = SetupAudioSource("My/My/Clips/BlueFaceVoice", false);
-            fightThemeAS = SetupAudioSource("My/My/Clips/Sewerslvt - Pretty Cvnt", true);
-            upgradeThemeAS = SetupAudioSource("My/My/Clips/Sewerslvt - Pretty Cvnt FK10", true);
-            glitchedThemeAS = SetupAudioSource("My/My/Clips/Sewerslvt - Pretty Cvnt BC75", true);
-            recBinThemeAS = SetupAudioSource("My/My/Clips/Was It Real", true);
             diskAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Pop-up Blocked", false);
             lmbAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Menu Command", false);
             completeAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Print complete", false);
             deathAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Critical Stop", false);
+            clubRGAS = SetupAudioSource("My/My/Clips/808_VIP_Wizard_Club_RG", true);
+            clubBCAS = SetupAudioSource("My/My/Clips/808_VIP_Wizard_Club_BC", true);
+            dreamAS = SetupAudioSource("My/My/Clips/Ancient_Dream", true);
+            realRGAS = SetupAudioSource("My/My/Clips/Was_It_Real_RG", true);
+            realBCAS = SetupAudioSource("My/My/Clips/Was_It_Real_BC", true);
             
             PreloadClip(blueFaceVoiceAS.clip);
-            PreloadClip(fightThemeAS.clip);
-            PreloadClip(upgradeThemeAS.clip);
-            PreloadClip(glitchedThemeAS.clip);
-            PreloadClip(recBinThemeAS.clip);
             PreloadClip(diskAS.clip);
             PreloadClip(lmbAS.clip);
             PreloadClip(completeAS.clip);
             PreloadClip(deathAS.clip);
+            PreloadClip(clubRGAS.clip);
+            PreloadClip(clubBCAS.clip);
+            PreloadClip(dreamAS.clip);
+            PreloadClip(realRGAS.clip);
+            PreloadClip(realBCAS.clip);
             
             blueFaceVoiceAS.volume = VoiceVolume;
         }
@@ -122,65 +126,77 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleRunStarted()
         {
-            if (activeFade != null) StopCoroutine(activeFade);
-            Reset(fightThemeAS);
+            if (clubRGFadeCoroutine != null) StopCoroutine(clubRGFadeCoroutine);
+            Reset(clubRGAS);
             
-            if (activeFade2 != null) StopCoroutine(activeFade2);
-            Reset(upgradeThemeAS);
+            if (clubBCFadeCoroutine != null) StopCoroutine(clubBCFadeCoroutine);
+            Reset(clubBCAS);
             
-            if (activeFade3 != null) StopCoroutine(activeFade3);
-            Reset(recBinThemeAS);
+            if (dreamFadeCoroutine != null) StopCoroutine(dreamFadeCoroutine);
+            Reset(dreamAS);
             
-            if (activeFade4 != null) StopCoroutine(activeFade4);
-            Reset(glitchedThemeAS);
+            if (realRGFadeCoroutine != null) StopCoroutine(realRGFadeCoroutine);
+            Reset(realRGAS);
+            
+            if (realBCFadeCoroutine != null) StopCoroutine(realBCFadeCoroutine);
+            Reset(realBCAS);
         }
         private void HandlePCStarted()
         {
-            FadeOut2();
-            FadeIn();
+            RealRGFadeOut();
+            ClubRGFadeIn();
         }
         private void HandleChoosingStarted()
         {
             PlayComplete();
             
-            FadeOut();
-            FadeOut3();
-            FadeIn2();
+            ClubRGFadeOut();
+            RealRGFadeOut();
+            DreamFadeIn();
         }
         private void HandleChoosingFinished()
         {
-            FadeOut2();
+            DreamFadeOut();
             if (G.Instance.bin.IsEnabled)
-                FadeIn3();
+                RealRGFadeIn();
             else
-                FadeIn();
+                ClubRGFadeIn();
         }
         private void HandlePCFinished()
         {
-            FadeOut();
-            FadeIn2();
+            ClubRGFadeOut();
+            RealRGFadeIn();
         }
         private void HandleRunFinished()
         {
-            FadeOut();
-            FadeOut2();
-            FadeOut3();
+            ClubRGFadeOut();
+            DreamFadeOut();
+            RealRGFadeOut();
             StartCoroutine(PlayDeath());
         }
-        public void HandleGettingDamage() => StartCoroutine(CHandleGettingDamage());
-        public IEnumerator CHandleGettingDamage()
+
+        public void HandleGettingDamage()
         {
             if (G.Instance.bin.IsEnabled)
-                InstantFadeOut2();
+                StartCoroutine(CHandleGettingDuringALimbo());
             else
-                InstantFadeOut();
-            InstantFadeIn4();
+                StartCoroutine(CHandleGettingDuringAFight());
+        }
+        public IEnumerator CHandleGettingDuringAFight()
+        {
+            ClubRGInstantFadeOut();
+            ClubBCInstantFadeIn();
             yield return new WaitForSeconds(0.75f);
-            InstantFadeOut4();
-            if (G.Instance.bin.IsEnabled)
-                InstantFadeIn2();
-            else
-                InstantFadeIn();
+            ClubBCInstantFadeOut();
+            ClubRGInstantFadeIn();
+        }
+        public IEnumerator CHandleGettingDuringALimbo()
+        {
+            RealRGInstantFadeOut();
+            RealBCInstantFadeIn();
+            yield return new WaitForSeconds(0.75f);
+            RealBCInstantFadeOut();
+            RealRGInstantFadeIn();
         }
         private void Reset(AudioSource aSource)
         {
@@ -188,18 +204,22 @@ namespace ZevWaxGames.CursorHero
             aSource.DORestart();
             aSource.volume = 0f;
         }
-        private void FadeIn() => ExecuteFade(ref activeFade, fightThemeAS, MusicVolume, true);
-        private void InstantFadeIn() => ExecuteFade(ref activeFade, fightThemeAS, MusicVolume, true, 0);
-        private void FadeOut() => ExecuteFade(ref activeFade, fightThemeAS, 0.0f, false);
-        private void InstantFadeOut() => ExecuteFade(ref activeFade, fightThemeAS, 0.0f, false, 0);
-        private void FadeIn2() => ExecuteFade(ref activeFade2, upgradeThemeAS, MusicVolume, true);
-        private void InstantFadeIn2() => ExecuteFade(ref activeFade2, upgradeThemeAS, MusicVolume, true, 0);
-        private void FadeOut2() => ExecuteFade(ref activeFade2, upgradeThemeAS, 0.0f, false);
-        private void InstantFadeOut2() => ExecuteFade(ref activeFade2, upgradeThemeAS, 0.0f, false, 0);
-        private void FadeIn3() => ExecuteFade(ref activeFade3, recBinThemeAS, MusicVolume, true);
-        private void FadeOut3() => ExecuteFade(ref activeFade3, recBinThemeAS, 0.0f, false);
-        private void InstantFadeIn4() => ExecuteFade(ref activeFade4, glitchedThemeAS, MusicVolume, true, 0);
-        private void InstantFadeOut4() => ExecuteFade(ref activeFade4, glitchedThemeAS, 0.0f, false, 0);
+        private void ClubRGFadeIn() => ExecuteFade(ref clubRGFadeCoroutine, clubRGAS, MusicVolume, true);
+        private void ClubRGInstantFadeIn() => ExecuteFade(ref clubRGFadeCoroutine, clubRGAS, MusicVolume, true, 0);
+        private void ClubRGFadeOut() => ExecuteFade(ref clubRGFadeCoroutine, clubRGAS, 0.0f, false);
+        private void ClubRGInstantFadeOut() => ExecuteFade(ref clubRGFadeCoroutine, clubRGAS, 0.0f, false, 0);
+        private void ClubBCInstantFadeIn() => ExecuteFade(ref clubBCFadeCoroutine, clubBCAS, MusicVolume, true, 0);
+        private void ClubBCInstantFadeOut() => ExecuteFade(ref clubBCFadeCoroutine, clubBCAS, 0.0f, false, 0);
+        private void DreamFadeIn() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, MusicVolume, true);
+        private void DreamInstantFadeIn() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, MusicVolume, true, 0);
+        private void DreamFadeOut() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, 0.0f, false);
+        private void DreamInstantFadeOut() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, 0.0f, false, 0);
+        private void RealRGFadeIn() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, MusicVolume, true);
+        private void RealRGInstantFadeIn() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, MusicVolume, true, 0);
+        private void RealRGFadeOut() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, 0.0f, false);
+        private void RealRGInstantFadeOut() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, 0.0f, false, 0);
+        private void RealBCInstantFadeIn() => ExecuteFade(ref realBCFadeCoroutine, realBCAS, MusicVolume, true, 0);
+        private void RealBCInstantFadeOut() => ExecuteFade(ref realBCFadeCoroutine, realBCAS, 0.0f, false, 0);
         private void ExecuteFade(ref Coroutine activeCor, AudioSource source, float targetVol, bool unpause, float duration = 1.0f)
         {
             //if (unpause) source.UnPause();
