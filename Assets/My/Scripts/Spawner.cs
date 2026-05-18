@@ -515,8 +515,8 @@ namespace ZevWaxGames.CursorHero
             var imageRt = imageObj.AddComponent<RectTransform>();
             imageRt.anchorMin = Vector2.zero;
             imageRt.anchorMax = Vector2.one;
-            imageRt.offsetMin = new Vector2(6f, 13f);
-            imageRt.offsetMax = new Vector2(-9f, -8f);
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
             var image = imageObj.AddComponent<Image>();
             image.sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
             if (imageObj.GetComponent<CanvasRenderer>() == null)

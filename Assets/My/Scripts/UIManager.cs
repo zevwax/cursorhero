@@ -89,9 +89,9 @@ namespace ZevWaxGames.CursorHero
                 "Sensitivity",
                 "Heart"
             );
-            btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2f, 0f));
+            btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2.75f, 0f));
             btns[1] = Spawner.NewUpgradeButton(buttons[1], Vector2.zero);
-            btns[2] = Spawner.NewUpgradeButton(buttons[2], new Vector2(2f, 0f));
+            btns[2] = Spawner.NewUpgradeButton(buttons[2], new Vector2(2.75f, 0f));
         }
         public void ShowRecycleBinWindow()
         {
