@@ -762,6 +762,7 @@ GameObject:
   - component: {fileID: 441337729}
   - component: {fileID: 441337731}
   - component: {fileID: 441337732}
+  - component: {fileID: 441337733}
   m_Layer: 0
   m_Name: TheHolder
   m_TagString: Untagged
@@ -822,6 +823,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2947bed52714945409179981da4da794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZevWaxGames.CursorHero.EventLogger
+--- !u!114 &441337733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441337728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 693aee89cc694b44792de809354828af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConditionManager
 --- !u!1 &511259928
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,7 +3480,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.6.6
+  m_text: 0.6.7
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

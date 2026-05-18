@@ -164,9 +164,9 @@ namespace ZevWaxGames.CursorHero
         private void HandleChoosingFinished()
         {
             DreamFadeOut();
-            if (G.Instance.bin.IsEnabled)
+            if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.AfterFightChilling)
                 RealRGFadeIn();
-            else
+            else if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.Fighting)
                 ClubRGFadeIn();
         }
         private void HandlePCFinished()
@@ -184,9 +184,9 @@ namespace ZevWaxGames.CursorHero
 
         public void HandleGettingDamage()
         {
-            if (G.Instance.bin.IsEnabled)
+            if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.AfterFightChilling)
                 StartCoroutine(CHandleGettingDuringALimbo());
-            else
+            else if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.Fighting)
                 StartCoroutine(CHandleGettingDuringAFight());
         }
         public IEnumerator CHandleGettingDuringAFight()

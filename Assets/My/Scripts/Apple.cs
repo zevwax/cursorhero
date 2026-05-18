@@ -5,11 +5,11 @@ namespace ZevWaxGames.CursorHero
     {
         private void OnEnable()
         {
-            EventHolder.OnLimbo += Die;
+            EventHolder.OnFadingInToPCStarted += Die;
         }
         private void OnDisable()
         {
-            EventHolder.OnLimbo -= Die;
+            EventHolder.OnFadingInToPCStarted -= Die;
         }
         private void Die()
         {

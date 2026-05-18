@@ -70,7 +70,7 @@ namespace ZevWaxGames.CursorHero
         }
         public void ResumeIfNeeded()
         {
-            if (!G.Instance.bin.IsEnabled)
+            if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.Fighting)
                 Resume();
         }
         public void Refresh()

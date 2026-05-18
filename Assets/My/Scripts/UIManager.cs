@@ -99,6 +99,7 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewBottle(new Vector2(-2f, -1f));
             Spawner.NewApple(new Vector2(0f, 1f));
             Spawner.NewNewspaper(new Vector2(2f, -1f));
+            EventHolder.OnBinStarted?.Invoke();
         }
         public void HideRecycleBinWindow()
         {
@@ -193,12 +194,13 @@ namespace ZevWaxGames.CursorHero
         private IEnumerator CSwitchPC()
         {
             yield return FastFadeOut();
-            EventHolder.OnLimbo?.Invoke();
+            EventHolder.OnFadingInToPCStarted?.Invoke();
             RefreshWallpapers();
             G.Instance.bin.DisableButton();
             G.Instance.net.DisableButton();
             HideRecycleBinWindow();
             yield return FastFadeIn();
+            EventHolder.OnBinFinished?.Invoke();
             EventHolder.OnPCStarted?.Invoke();
         }
         private void InstantFadeOut()

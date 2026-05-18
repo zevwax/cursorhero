@@ -14,11 +14,11 @@ namespace ZevWaxGames.CursorHero
         private Rigidbody2D rb;
         private void OnEnable()
         {
-            EventHolder.OnLimbo += Die;
+            EventHolder.OnFadingInToPCStarted += Die;
         }
         private void OnDisable()
         {
-            EventHolder.OnLimbo -= Die;
+            EventHolder.OnFadingInToPCStarted -= Die;
         }
         private void Start()
         {
