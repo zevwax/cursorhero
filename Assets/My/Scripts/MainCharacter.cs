@@ -167,7 +167,7 @@ namespace ZevWaxGames.CursorHero
         public void SetButtonLink(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("idle");
+            SetSkin("link");
             this.skinSetter = skinSetter;
         }
         public void SetPush(GameObject skinSetter)

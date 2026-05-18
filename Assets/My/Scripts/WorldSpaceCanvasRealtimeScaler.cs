@@ -5,7 +5,7 @@ namespace ZevWaxGames.CursorHero
     [RequireComponent(typeof(Canvas))]
     public class WorldSpaceCanvasRealtimeScaler : MonoBehaviour
     {
-        private float ppu = 60f;
+        private float ppu = 30f;
         public float mult = 1f;
         [SerializeField] private AspectRatioHandler ratioHandler;
         private RectTransform rectTransform;

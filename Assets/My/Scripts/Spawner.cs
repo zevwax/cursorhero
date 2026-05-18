@@ -24,11 +24,11 @@ namespace ZevWaxGames.CursorHero
             obj.AddComponent<Soul>();
         }
         public static GameObject NewWhite(Vector2 pos) => NewEntity<White>(
-            pos, "White Enemy", "idle", "Enemies", true, "Enemy", false);
+            pos, "White Enemy", "pointer_1", "Enemies", true, "Enemy", false);
         public static GameObject NewYellow(Vector2 pos) => NewEntity<Yellow>(
-            pos, "Yellow Enemy", "idle", "Enemies", true, "Enemy", false);
+            pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy", false);
         public static GameObject NewCyan(Vector2 pos) => NewEntity<Cyan>(
-            pos, "Cyan Enemy", "idle", "Enemies", true, "Enemy", false);
+            pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy", false);
 
         public static void NewYellowP(Vector2 pos, Vector2 direction, Gun g)
         {
@@ -136,7 +136,7 @@ namespace ZevWaxGames.CursorHero
             rectTransform.sizeDelta = size;
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 60f;
+            canvasScaler.dynamicPixelsPerUnit = 30f;
             var ppu = sprite.pixelsPerUnit;
             canvasScaler.referencePixelsPerUnit = ppu;
             var raycaster = obj.AddComponent<GraphicRaycaster>();
@@ -178,23 +178,32 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewDisk(Vector2 pos)
         {
-            var obj = NewEntity<Disk>(pos, "Disk", "disk", "RealDisks", true, "Disk", false);
+            var obj = NewEntity<Disk>(pos, "Disk", "disc15", "RealDisks", true, "Disk", false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
         public static GameObject NewFallingDisk(Vector2 pos)
         {
+            var isLarge = (bool)default;
+            if (Random.Range(0, 2) == 0)
+                isLarge = false;
+            else
+                isLarge = true;
+            
             var obj = new GameObject("FallingDisk");
             var canvas = obj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.WorldSpace;
             canvas.worldCamera = Camera.main;
             canvas.sortingLayerName = "FallingDisks";
             var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(26, 26);
+            if (isLarge)
+                rectTransform.sizeDelta = new Vector2(26, 26);
+            else
+                rectTransform.sizeDelta = new Vector2(15, 15);
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 60f;
-            canvasScaler.referencePixelsPerUnit = 60f;
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
             var raycaster = obj.AddComponent<GraphicRaycaster>();
             raycaster.ignoreReversedGraphics = true;
             raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
@@ -210,7 +219,10 @@ namespace ZevWaxGames.CursorHero
             imageRt.offsetMin = Vector2.zero;
             imageRt.offsetMax = Vector2.zero;
             var image = imageObj.AddComponent<Image>();
-            image.sprite = Resources.Load<Sprite>("My/My/Sprites/disk");
+            if (isLarge)
+                image.sprite = Resources.Load<Sprite>("My/My/Sprites/disc26");
+            else
+                image.sprite = Resources.Load<Sprite>("My/My/Sprites/disc15");
             if (imageObj.GetComponent<CanvasRenderer>() == null)
                 imageObj.AddComponent<CanvasRenderer>();
             
@@ -291,8 +303,8 @@ namespace ZevWaxGames.CursorHero
             rectTransform.sizeDelta = new Vector2(90, 30);
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 60f;
-            canvasScaler.referencePixelsPerUnit = 60f;
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
             var raycaster = obj.AddComponent<GraphicRaycaster>();
             raycaster.ignoreReversedGraphics = true;
             raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
@@ -348,8 +360,8 @@ namespace ZevWaxGames.CursorHero
             rectTransform.sizeDelta = new Vector2(30, 15);
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 60f;
-            canvasScaler.referencePixelsPerUnit = 60f;
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
             var raycaster = obj.AddComponent<GraphicRaycaster>();
             raycaster.ignoreReversedGraphics = true;
             raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
@@ -400,8 +412,8 @@ namespace ZevWaxGames.CursorHero
             rectTransform.sizeDelta = new Vector2(80, 25);
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 60f;
-            canvasScaler.referencePixelsPerUnit = 60f;
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            canvasScaler.referencePixelsPerUnit = 30f;
             var raycaster = obj.AddComponent<GraphicRaycaster>();
             raycaster.ignoreReversedGraphics = true;
             raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
