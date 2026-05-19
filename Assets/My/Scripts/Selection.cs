@@ -59,10 +59,10 @@ namespace ZevWaxGames.CursorHero
         {
             var o = GetSelectedObject();
             if (o != null)
-                if (o.GetComponent<Newspaper>() != null)
+                if (o.GetComponent<Key>() != null)
                 {
-                    var w = o.GetComponent<Newspaper>().Weight;
-                    var s = o.GetComponent<Newspaper>().Size;
+                    var w = o.GetComponent<Key>().Weight;
+                    var s = o.GetComponent<Key>().Size;
                     MainCharacter.Instance.edge = w;
                     MainCharacter.Instance.size = s;
                     Guns.Library[GunName.Yellow].Weight = w;
@@ -89,7 +89,7 @@ namespace ZevWaxGames.CursorHero
         private Vector3 GetPointerPos() => MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
         private GameObject GetSelectedObject()
         {
-            var allScripts = Object.FindObjectsByType<Newspaper>(FindObjectsSortMode.None);
+            var allScripts = Object.FindObjectsByType<Key>(FindObjectsSortMode.None);
             var ppu = 30;
             var halfOfW = (_rectTransform.sizeDelta.x / ppu) * 0.5f;
             var halfOfH = (_rectTransform.sizeDelta.y / ppu) * 0.5f;

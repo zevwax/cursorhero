@@ -8,7 +8,6 @@ namespace ZevWaxGames.CursorHero
     public class MainCharacter : Cursor
     {
         public static MainCharacter Instance { get; private set; }
-        
         public float edge = 1f;
         public float size = 1f;
         

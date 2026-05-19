@@ -15,5 +15,10 @@ namespace ZevWaxGames.CursorHero
         {
             Destroy(gameObject);
         }
+        public void Init()
+        {
+            var tooltip = string.Format("apple.png\nCut to eat");
+            GetComponent<TooltipHolder>().SetText(tooltip);
+        }
     }
 }

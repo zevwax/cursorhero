@@ -98,7 +98,7 @@ namespace ZevWaxGames.CursorHero
             recycleBinWindow.SetActive(true);
             Spawner.NewBottle(new Vector2(-2f, -1f));
             Spawner.NewApple(new Vector2(0f, 1f));
-            Spawner.NewNewspaper(new Vector2(2f, -1f));
+            Spawner.NewKey(new Vector2(2f, -1f));
             EventHolder.OnBinStarted?.Invoke();
         }
         public void HideRecycleBinWindow()

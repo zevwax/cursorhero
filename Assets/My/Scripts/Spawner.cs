@@ -562,6 +562,14 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             var bottleScript = obj.GetComponent<Bottle>();
             bottleScript.waterRect = waterImageRt;
+            
+            var tooltipHolder = obj.AddComponent<TooltipHolder>();
+            var dragable = obj.AddComponent<Dragable>();
+            var bottle = obj.GetComponent<Bottle>();
+            tooltipHolder.Init();
+            dragable.Init();
+            bottle.Init();
+            
             return obj;
         }
         public static GameObject NewLayingPieceOfGlass(Vector2 pos)
@@ -571,15 +579,27 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
-        public static GameObject NewNewspaper(Vector2 pos)
+        public static GameObject NewKey(Vector2 pos)
         {
-            var obj = NewEntity<Newspaper>(pos, "Newspaper", "newspaper", "Bottles", true, "Default", false);
+            var obj = NewEntity<Key>(pos, "Key", "key", "Bottles", true, "Default", false);
+            var tooltipHolder = obj.AddComponent<TooltipHolder>();
+            var dragable = obj.AddComponent<Dragable>();
+            var key = obj.GetComponent<Key>();
+            tooltipHolder.Init();
+            dragable.Init();
+            key.Init();
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
         public static GameObject NewApple(Vector2 pos)
         {
             var obj = NewEntity<Apple>(pos, "Apple", "apple", "Bottles", true, "Default", false);
+            var tooltipHolder = obj.AddComponent<TooltipHolder>();
+            var dragable = obj.AddComponent<Dragable>();
+            var apple = obj.GetComponent<Apple>();
+            tooltipHolder.Init();
+            dragable.Init();
+            apple.Init();
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }

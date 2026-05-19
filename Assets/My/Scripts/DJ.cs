@@ -184,9 +184,9 @@ namespace ZevWaxGames.CursorHero
 
         public void HandleGettingDamage()
         {
-            if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.AfterFightChilling)
+            if (ConditionManager.Instance.currCondition == ConditionManager.Condition.AfterFightChilling)
                 StartCoroutine(CHandleGettingDuringALimbo());
-            else if (ConditionManager.Instance.prevCondition == ConditionManager.Condition.Fighting)
+            else if (ConditionManager.Instance.currCondition == ConditionManager.Condition.Fighting)
                 StartCoroutine(CHandleGettingDuringAFight());
         }
         public IEnumerator CHandleGettingDuringAFight()
@@ -195,7 +195,7 @@ namespace ZevWaxGames.CursorHero
             ClubBCInstantFadeIn();
             yield return new WaitForSeconds(0.75f);
             ClubBCInstantFadeOut();
-            ClubRGInstantFadeIn();
+            BackToNormal();
         }
         public IEnumerator CHandleGettingDuringALimbo()
         {
@@ -203,7 +203,14 @@ namespace ZevWaxGames.CursorHero
             RealBCInstantFadeIn();
             yield return new WaitForSeconds(0.75f);
             RealBCInstantFadeOut();
-            RealRGInstantFadeIn();
+            BackToNormal();
+        }
+        private void BackToNormal()
+        {
+            if (ConditionManager.Instance.currCondition == ConditionManager.Condition.Fighting)
+                ClubRGInstantFadeIn();
+            else
+                RealRGInstantFadeIn();
         }
         private void Reset(AudioSource aSource)
         {

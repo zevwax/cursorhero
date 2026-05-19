@@ -52,8 +52,11 @@ namespace ZevWaxGames.CursorHero
         {
             EventHolder.OnFadingInToPCStarted -= Die;
         }
-        private void Start()
+        public void Init()
         {
+            var tooltip = string.Format("bottle.png\nTotally useless");
+            GetComponent<TooltipHolder>().SetText(tooltip);
+            
             lastPosition = transform.position;
             myCollider = GetComponent<BoxCollider2D>();
             psholder = GameObject.Find("PSHolder").transform;
@@ -66,7 +69,6 @@ namespace ZevWaxGames.CursorHero
         private void Update()
         {
             UpdatePosition();
-            HandleDragNDropLogic();
             WallCheck();
         }
         private void UpdatePosition()
@@ -110,32 +112,6 @@ namespace ZevWaxGames.CursorHero
 
             lastPosition = transform.position;
         }
-        private void HandleDragNDropLogic()
-        {
-            if (MainCharacter.Instance == null) return;
-            var mainChar = MainCharacter.Instance;
-            
-            bool collision = myCollider.IsTouching(mainChar.GetComponent<BoxCollider2D>());
-            
-            bool mouseHold = Mouse.current.leftButton.isPressed;
-            bool mouseDown = Mouse.current.leftButton.wasPressedThisFrame;
-
-            if (collision && mouseDown)
-            {
-                _isHeld = true;
-                _grabOffset = transform.position - mainChar.transform.position;
-            }
-
-            if (!mouseHold) _isHeld = false;
-
-            if (_isHeld)
-            {
-                transform.position = mainChar.transform.position + (Vector3)_grabOffset;
-                mainChar.SetGrab(gameObject);
-            }
-            else if (collision) mainChar.SetTake(gameObject);
-            else mainChar.SetGlove(gameObject);
-        }
         private void WallCheck()
         {
             int count = myCollider.Overlap(_wallFilter, _results);
@@ -157,7 +133,6 @@ namespace ZevWaxGames.CursorHero
                 Die();
             }
         }
-
         private void Die()
         {
             Destroy(gameObject);
