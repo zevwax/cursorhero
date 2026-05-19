@@ -12,7 +12,7 @@ namespace ZevWaxGames.CursorHero
         private Volume volume;
         private ChromaticAberration ca;
 
-        [Header("Settings")] private float min = 0.1f;
+        [Header("Settings")] private float min = 0.05f;
         private float max = 0.6f;
         private float duration = 0.7f;
         private void OnEnable()

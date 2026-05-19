@@ -3,7 +3,7 @@ namespace ZevWaxGames.CursorHero
     public class Firerate : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Increase Fire Rate";
+            tooltipText = "Increase Typing Speed";
             base.Start();
         }
 

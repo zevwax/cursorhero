@@ -582,7 +582,56 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewTabby()
         {
             var obj = NewEntity<Tabby>(Vector2.zero, "Tabby", "tabby", "Bottles", false, "Default", false);
+            
+            var imageObj = new GameObject("Tabby Textbox");
+            imageObj.transform.SetParent(obj.transform, false);
+            //
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = new Vector2(0.5f, 1f);
+            imageRt.anchorMax = new Vector2(0.5f, 1f);
+            imageRt.pivot = new Vector2(0.5f, 0f);
+            imageRt.anchoredPosition3D = new Vector3(-60f, 0f, 0f);
+            imageRt.sizeDelta = new Vector2(130f, 21f);
+            imageRt.localScale = Vector3.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            //
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/tabby_textbox");
+            image.type = Image.Type.Sliced;
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
+            
+            //==========
+            
+            var textObj = new GameObject("Text");
+            textObj.layer = LayerMask.NameToLayer("GUI");
+            textObj.transform.SetParent(imageObj.transform, false);
+            //
+            var textRt = textObj.AddComponent<RectTransform>();
+            textRt.anchorMin = Vector2.zero;
+            textRt.anchorMax = Vector2.one;
+            textRt.offsetMin = new Vector2(8, 24);
+            textRt.offsetMax = new Vector2(-8, -8);
+            //
+            var textTxt = textObj.AddComponent<TextMeshProUGUI>();
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
+            textTxt.text =
+                "Hey there!! I’m Tabby, your personal assistant.\n\n" +
+                "Let me onboard you..\n\n" +
+                "Look at the clipboard <color=#FF00FF>at the bottom of the screen</color>. " +
+                "Your glyph is your projectile. Let's improve its stats!!\n\n" +
+                "Try <color=#FF00FF>holding down the Left Mouse Button " +
+                "to select the glyph drawn on the keyboard key you found in the recycle bin</color>..";
+            textTxt.alignment = TextAlignmentOptions.Left;
+            textTxt.color = Color.black;
+            textTxt.enableAutoSizing = true;
+            textTxt.fontSizeMin = ushort.MinValue;
+            textTxt.fontSizeMax = ushort.MaxValue;
+            textTxt.raycastTarget = false;
+            
             obj.GetComponent<Tabby>().Init();
+            
             return obj;
         }
         public static GameObject NewKey(Vector2 pos)

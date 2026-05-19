@@ -50,7 +50,12 @@ namespace ZevWaxGames.CursorHero
                 KillTooltip();
             }
         }
-        private void OnDestroy() => KillTooltip();
+        private void OnDestroy()
+        {
+            if (mainCharIsReadingATooltip && isHovered)
+                mainCharIsReadingATooltip = false;
+            KillTooltip();
+        }
         private void KillTooltip()
         {
             if (_currentTooltip != null)

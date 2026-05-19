@@ -4,13 +4,14 @@ using System.Collections;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace ZevWaxGames.CursorHero
 {
     public class DJ : MonoBehaviour
     {
-        private float VoiceVolume = 0.1f;
-        private float MusicVolume = 0.1f;
+        private float VoiceVolume = 0.15f;
+        private float MusicVolume = 0.25f;
         public static DJ Instance { get; private set; }
         private AudioSource blueFaceVoiceAS;
         private AudioSource shootAS;
@@ -28,9 +29,12 @@ namespace ZevWaxGames.CursorHero
         private Coroutine dreamFadeCoroutine;
         private Coroutine realRGFadeCoroutine;
         private Coroutine realBCFadeCoroutine;
+        private Coroutine gettingDamageCoroutine;
         #region Public Static Play Methods
         public static void PlayShoot()
         {
+            Instance.shootAS.volume = Random.Range(0.8f, 0.9f);
+            Instance.shootAS.pitch = Random.Range(0.85f, 1.15f);
             Instance.shootAS.Play();
         }
         public static void PlayDisk()
@@ -67,7 +71,7 @@ namespace ZevWaxGames.CursorHero
         private void Init()
         {
             blueFaceVoiceAS = SetupAudioSource("My/My/Clips/BlueFaceVoice", false);
-            shootAS = SetupAudioSource("My/My/Clips/shoot", false);
+            shootAS = SetupAudioSource("My/My/Clips/key_clack", false);
             diskAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Pop-up Blocked", false);
             lmbAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Menu Command", false);
             completeAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Print complete", false);
@@ -97,9 +101,7 @@ namespace ZevWaxGames.CursorHero
             if (clip == null) return;
             
             if (clip.loadState != AudioDataLoadState.Loaded)
-            {
                 clip.LoadAudioData();
-            }
         }
         private void Update()
         {
@@ -176,18 +178,21 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleRunFinished()
         {
+            if (gettingDamageCoroutine != null) StopCoroutine(gettingDamageCoroutine);
             ClubRGFadeOut();
+            ClubBCInstantFadeOut();
             DreamFadeOut();
             RealRGFadeOut();
+            RealBCInstantFadeOut();
             StartCoroutine(PlayDeath());
         }
-
         public void HandleGettingDamage()
         {
+            if (gettingDamageCoroutine != null) StopCoroutine(gettingDamageCoroutine);
             if (ConditionManager.Instance.currCondition == ConditionManager.Condition.AfterFightChilling)
-                StartCoroutine(CHandleGettingDuringALimbo());
+                gettingDamageCoroutine = StartCoroutine(CHandleGettingDuringALimbo());
             else if (ConditionManager.Instance.currCondition == ConditionManager.Condition.Fighting)
-                StartCoroutine(CHandleGettingDuringAFight());
+                gettingDamageCoroutine = StartCoroutine(CHandleGettingDuringAFight());
         }
         public IEnumerator CHandleGettingDuringAFight()
         {
@@ -209,7 +214,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (ConditionManager.Instance.currCondition == ConditionManager.Condition.Fighting)
                 ClubRGInstantFadeIn();
-            else
+            else if (ConditionManager.Instance.currCondition == ConditionManager.Condition.AfterFightChilling)
                 RealRGInstantFadeIn();
         }
         private void Reset(AudioSource aSource)
@@ -225,9 +230,7 @@ namespace ZevWaxGames.CursorHero
         private void ClubBCInstantFadeIn() => ExecuteFade(ref clubBCFadeCoroutine, clubBCAS, MusicVolume, true, 0);
         private void ClubBCInstantFadeOut() => ExecuteFade(ref clubBCFadeCoroutine, clubBCAS, 0.0f, false, 0);
         private void DreamFadeIn() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, MusicVolume, true);
-        private void DreamInstantFadeIn() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, MusicVolume, true, 0);
         private void DreamFadeOut() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, 0.0f, false);
-        private void DreamInstantFadeOut() => ExecuteFade(ref dreamFadeCoroutine, dreamAS, 0.0f, false, 0);
         private void RealRGFadeIn() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, MusicVolume, true);
         private void RealRGInstantFadeIn() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, MusicVolume, true, 0);
         private void RealRGFadeOut() => ExecuteFade(ref realRGFadeCoroutine, realRGAS, 0.0f, false);

@@ -15,6 +15,7 @@ namespace ZevWaxGames.CursorHero
         [SerializeField] private GameObject chooseAnUpgradeWindow;
         [SerializeField] private GameObject recycleBinWindow;
         [SerializeField] private GameObject youWinWindow;
+        public bool forThe1stTime = true;
         private GameObject[] btns;
         private void Awake()
         {
@@ -95,10 +96,67 @@ namespace ZevWaxGames.CursorHero
         }
         public void ShowRecycleBinWindow()
         {
+            var pos1 = new Vector2(0f, 1f);
+            var pos2 = new Vector2(-2f, -1f);
+            var pos3 = new Vector2(2f, -1f);
+            if (forThe1stTime)
+            {
+                forThe1stTime = false;
+                var tabby = Spawner.NewTabby();
+                tabby.GetComponent<Tabby>().PlayAnimation();
+                
+                Spawner.NewApple(pos1);
+                Spawner.NewKey(pos2);
+            }
+            else
+            {
+                switch (Random.Range(0, 4))
+                {
+                    case 0:
+                        Spawner.NewApple(pos1);
+                        break;
+                    case 1:
+                        Spawner.NewKey(pos1);
+                        break;
+                    case 2:
+                        Spawner.NewBottle(pos1);
+                        break;
+                    case 3:
+                        //Nothing
+                        break;
+                }
+                switch (Random.Range(0, 4))
+                {
+                    case 0:
+                        Spawner.NewApple(pos2);
+                        break;
+                    case 1:
+                        Spawner.NewKey(pos2);
+                        break;
+                    case 2:
+                        Spawner.NewBottle(pos2);
+                        break;
+                    case 3:
+                        //Nothing
+                        break;
+                }
+                switch (Random.Range(0, 4))
+                {
+                    case 0:
+                        Spawner.NewApple(pos3);
+                        break;
+                    case 1:
+                        Spawner.NewKey(pos3);
+                        break;
+                    case 2:
+                        Spawner.NewBottle(pos3);
+                        break;
+                    case 3:
+                        //Nothing
+                        break;
+                }
+            }
             recycleBinWindow.SetActive(true);
-            Spawner.NewBottle(new Vector2(-2f, -1f));
-            Spawner.NewApple(new Vector2(0f, 1f));
-            Spawner.NewKey(new Vector2(2f, -1f));
             EventHolder.OnBinStarted?.Invoke();
         }
         public void HideRecycleBinWindow()
@@ -193,6 +251,7 @@ namespace ZevWaxGames.CursorHero
         public void SwitchPC() => StartCoroutine(CSwitchPC());
         private IEnumerator CSwitchPC()
         {
+            Tabby.Instance.hasToGo = true;
             yield return FastFadeOut();
             EventHolder.OnFadingInToPCStarted?.Invoke();
             RefreshWallpapers();
@@ -226,6 +285,9 @@ namespace ZevWaxGames.CursorHero
         }
         private void RefreshWallpapers()
         {
+            Projectile.RefreshWallpapers1();
+            Projectile.RefreshWallpapers2();
+            
             Sprite[] allWallpapers = Resources.LoadAll<Sprite>(wallpaperDirectory);
 
             if (allWallpapers != null && allWallpapers.Length > 0)

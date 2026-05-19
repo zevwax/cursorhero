@@ -12,8 +12,8 @@ namespace ZevWaxGames.CursorHero
         private static GameObject bloodSplash;
         private static Texture2D _editableTexture1;
         private static Texture2D _editableTexture2;
-        protected bool isBouncy = true;
-        protected bool isPiercing = true;
+        protected bool isBouncy = false;
+        protected bool isPiercing = false;
         protected bool teamIsAlly;
         protected float weight;
         protected float size;
@@ -347,9 +347,9 @@ namespace ZevWaxGames.CursorHero
             var maxSizeAtAll = text.fontSize;
             var maxSizeInFractionsOfMaxVal = 0.9f;
             var maxSize = maxSizeAtAll * maxSizeInFractionsOfMaxVal;
-            var minSizeOf8CharsInFractionsOfMaxVal = 0.833f;
+            var minSizeOf8CharsInFractionsOfMaxVal = 0.85f; //0.833f n 0.845f - too small
             var minSizeOf8Chars = maxSizeAtAll * minSizeOf8CharsInFractionsOfMaxVal;
-            var minSizeOf1CharInFractionsOfMaxVal = 1/3f;
+            var minSizeOf1CharInFractionsOfMaxVal = 0.666f; //0.333f n 0.5f - too small
             var minSizeOf1Char = maxSizeAtAll * minSizeOf1CharInFractionsOfMaxVal;
             var newSizeOf1Char = Mathf.Lerp(minSizeOf1Char, maxSize, weightNormalized);
             var newSizeOf8Chars = Mathf.Lerp(minSizeOf8Chars, maxSize, weightNormalized);

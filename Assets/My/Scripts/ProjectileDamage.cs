@@ -3,7 +3,7 @@ namespace ZevWaxGames.CursorHero
     public class ProjectileDamage : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Increase Bullet Damage";
+            tooltipText = "Increase Glyph Weight";
             base.Start();
         }
 

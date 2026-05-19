@@ -57,5 +57,9 @@ namespace ZevWaxGames.CursorHero
             else if (collision) mainChar.SetTake(gameObject);
             else mainChar.SetGlove(gameObject);
         }
+        private void OnDestroy()
+        {
+            MainCharacter.Instance.SetGlove(gameObject);
+        }
     }
 }

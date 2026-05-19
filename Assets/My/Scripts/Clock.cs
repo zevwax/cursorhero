@@ -13,6 +13,7 @@ namespace ZevWaxGames.CursorHero
         private bool theEndScreenIsShown = false;
         private float initNextStamp = 60f;
         private float nextStamp = 60f;
+        private float gameDuration = 300f;
         private void Awake()
         {
             Instance = this;
@@ -40,6 +41,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (elapsedTime > nextStamp)
             {
+                Stop();
                 if (FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length == 0)
                 {
                     EventHolder.OnPCFinished?.Invoke();
@@ -54,7 +56,7 @@ namespace ZevWaxGames.CursorHero
             elapsedTime += Time.deltaTime;
             UpdateClockDisplay();
 
-            if (!theEndScreenIsShown && elapsedTime > 300)
+            if (!theEndScreenIsShown && elapsedTime > gameDuration)
             {
                 EventHolder.OnChoosingStarted?.Invoke();
                 theEndScreenIsShown = true;
@@ -81,14 +83,14 @@ namespace ZevWaxGames.CursorHero
         }
         private void UpdateClockDisplay()
         {
-            if (elapsedTime < 301f)
+            if (elapsedTime < gameDuration+1f)
             {
-                var remainingTime = 300 - elapsedTime;
+                var remainingTime = gameDuration - elapsedTime;
                 int minutes = Mathf.FloorToInt(remainingTime / 60f);
                 int seconds = Mathf.FloorToInt(remainingTime % 60f);
                 clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             }
-            else if (301f <= elapsedTime && elapsedTime <= 311f)
+            else if (61f <= elapsedTime && elapsedTime <= gameDuration+4f)
             {
                 clockText.text = "0:00";
             }

@@ -7,11 +7,11 @@ namespace ZevWaxGames.CursorHero
     {
         private void OnEnable()
         {
-            EventHolder.OnPCFinished += EnableButton;
+            EventHolder.OnPCFinished += EnableSafely;
         }
         private void OnDisable()
         {
-            EventHolder.OnPCFinished -= EnableButton;
+            EventHolder.OnPCFinished -= EnableSafely;
         }
         protected override void Start()
         {
@@ -21,7 +21,16 @@ namespace ZevWaxGames.CursorHero
             GetComponent<Canvas>().sortingLayerName = "ButtonsBG";
             base.Start();
         }
+        private void EnableSafely()
+        {
+            if (!UIManager.Instance.forThe1stTime)
+                EnableButton();
+        }
 
-        public override void ButtonAction() => UIManager.Instance.SwitchPC();
+        public override void ButtonAction()
+        {
+            base.ButtonAction();
+            UIManager.Instance.SwitchPC();
+        }
     }
 }

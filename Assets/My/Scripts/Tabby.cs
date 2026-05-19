@@ -1,26 +1,41 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 namespace ZevWaxGames.CursorHero
 {
     public class Tabby : MonoBehaviour
     {
+        public static Tabby Instance { get; private set; }
         private Sprite[] blinkSprites;
         private Sprite[] walkSprites;
         private float frameRate = 1/8f;
-        private float walkDuration = 2f;
+        private float walkDuration = 4f;
 
         private Image uiImage;
         private Vector2 offScreenPosition;
         private Vector2 inScreenPosition;
         private bool isWalkingLooping;
-
+        
+        private Coroutine waitNGo;
+        
+        private bool messageIsUpdated = false;
+        public bool hasToGo = false;
+        private void Awake() => Instance = this;
+        private void OnEnable() => EventHolder.OnFadingInToPCStarted += Die;
+        private void OnDisable() => EventHolder.OnFadingInToPCStarted -= Die;
         public void Init()
         {
             offScreenPosition = new Vector2(8.5f, -3.5f);
-            inScreenPosition = new Vector2(7, -3.5f);
+            inScreenPosition = new Vector2(5.5f, -3.5f);
+            
+            transform.position = offScreenPosition;
+            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+            
             uiImage = transform.GetChild(0).GetComponent<Image>();
 
             Sprite[] allSprites = Resources.LoadAll<Sprite>("My/My/Sprites/tabby");
@@ -45,7 +60,7 @@ namespace ZevWaxGames.CursorHero
 
         private IEnumerator CPlayAnimation()
         {
-            yield return new WaitForSeconds(60);
+            yield return new WaitForSeconds(1f);
             
             transform.position = offScreenPosition;
             uiImage.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -57,7 +72,11 @@ namespace ZevWaxGames.CursorHero
             StartCoroutine(LoopWalkAnimation(false));
             yield return StartCoroutine(CBlink());
             
-            yield return new WaitForSeconds(2);
+            yield return StartCoroutine(MessageScaleUp(195f));
+            
+            yield return new WaitUntil(() => hasToGo);
+            
+            yield return StartCoroutine(MessageScaleDown());
             
             uiImage.transform.localRotation = Quaternion.Euler(0, 180, 0);
             StartCoroutine(LoopWalkAnimation(true));
@@ -98,5 +117,35 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(frameRate);
             }
         }
+        private IEnumerator MessageScaleUp(float height)
+        {
+            transform.GetChild(1).gameObject.SetActive(true);
+            var msg1 = transform.GetChild(1).GetComponent<RectTransform>();
+            var duration = 0.3f;
+            yield return msg1.DOSizeDelta(new Vector2(130f, height), duration).SetEase(Ease.OutBack).WaitForCompletion();
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+        }
+        private IEnumerator MessageScaleDown()
+        {
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+            var msg1 = transform.GetChild(1).GetComponent<RectTransform>();
+            var duration = 0.3f;
+            yield return msg1.DOSizeDelta(new Vector2(130f, 21f), duration).SetEase(Ease.OutBack).WaitForCompletion();
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+        public IEnumerator UpdateMessage()
+        {
+            if (messageIsUpdated) yield break;
+            yield return StartCoroutine(MessageScaleDown());
+            var msg1 = transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+            msg1.text =
+                "Good job, boss!!\n\n" +
+                "<color=#FF00FF>Hit the 'Switch PC' shortcut</color> when you're done looting, okay??";
+            yield return StartCoroutine(MessageScaleUp(65f));
+            yield return new WaitForSeconds(2f);
+            G.Instance.net.EnableButton();
+            messageIsUpdated = true;
+        }
+        private void Die() => Destroy(gameObject);
     }
 }

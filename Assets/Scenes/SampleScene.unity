@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7939312054727710233, guid: 26a5d61277676f04890072fa597ac729, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 81e8150aa0d0e834ba3d0dc380d08064, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1627,7 +1627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.88235295}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3482,7 +3482,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.6.9
+  m_text: 0.7.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3509,7 +3509,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4.1
+  m_fontSize: 7.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3766,6 +3766,10 @@ PrefabInstance:
       propertyPath: m_Padding.w
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4235560191934991145, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4fdf75245f7a01841b9851291cb4e7bf, type: 3}
     - target: {fileID: 6076298874241878713, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
       propertyPath: m_Name
       value: Background Blood Canvas
@@ -4750,6 +4754,10 @@ PrefabInstance:
       propertyPath: m_Padding.y
       value: 450
       objectReference: {fileID: 0}
+    - target: {fileID: 4235560191934991145, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4fdf75245f7a01841b9851291cb4e7bf, type: 3}
     - target: {fileID: 6076298874241878713, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
       propertyPath: m_Name
       value: Progress Bar Blood Canvas
@@ -5478,7 +5486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

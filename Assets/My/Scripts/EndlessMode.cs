@@ -14,6 +14,7 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
+            base.ButtonAction();
             EventHolder.OnChoosingFinished?.Invoke();
         }
     }

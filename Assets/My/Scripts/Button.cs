@@ -129,7 +129,11 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnDestroy() => idleTween?.Kill();
 
-        public abstract void ButtonAction();
+        public virtual void ButtonAction()
+        {
+            DisableButton();
+            MainCharacter.Instance.SetGlove(gameObject);
+        }
         private void AnimateAlpha(float targetValue, float duration)
         {
             alphaTween?.Kill();

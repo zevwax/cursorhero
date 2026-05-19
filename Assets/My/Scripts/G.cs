@@ -27,13 +27,11 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewEntity<Wall>(new Vector2(8.5f, 0), "Right Wall", "vertical_wall", null, true, "Wall", true);
             Spawner.NewEntity<Wall>(new Vector2(0, -5f), "Bottom Wall", "horizontal_wall", null, true, "Wall", true);
             Spawner.NewEntity<Wall>(new Vector2(0, 5f), "Top Wall", "horizontal_wall", null, true, "Wall", true);
-            Spawner.NewEntity<MainCharacter>(new Vector2(0, 0), "MainCharacter", "idle", "Pointer", true, "MainCharacter", false);
-            var tabby = Spawner.NewTabby();
-            tabby.GetComponent<Tabby>().PlayAnimation();
+            Spawner.NewEntity<MainCharacter>(new Vector2(1.6f, -0.9f), "MainCharacter", "idle", "Pointer", true, "MainCharacter", false);
             
             UIManager.Instance.ShowStartGameWindow();
-            var b1 = Spawner.NewBinButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f));
-            var b2 = Spawner.NewNetButton(new Vector2(-(8f-0.75f), 4.5f-1f-0.75f-1f-0.25f));
+            var b1 = Spawner.NewBinButton(new Vector2(-(8f-1f), 4.5f-1f-1f));
+            var b2 = Spawner.NewNetButton(new Vector2(-(8f-1f), 4.5f-1f-1f-1f-1f));
             bin = b1.GetComponent<Button>();
             net = b2.GetComponent<Button>();
             bin.DisableButton();

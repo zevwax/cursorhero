@@ -17,8 +17,8 @@ namespace ZevWaxGames.CursorHero
         public void Init()
         {
             weight = Random.Range(1f, 3f);
-            SetSize(Random.Range(1f, 3f));
-            var tooltip = string.Format("key.png\ncontains a glyph\n\nA.glyph\nWeight: {0:F1} / Size: {1:F1}", weight, size);
+            SetSize(Random.Range(1f, 3f));/*key.png\ncontains a glyph\n\n*/
+            var tooltip = string.Format("A.glyph\nWeight: {0:F1} / Size: {1:F1}", weight, size);
             GetComponent<TooltipHolder>().SetText(tooltip);
             
             rb = GetComponent<Rigidbody2D>();
@@ -30,7 +30,7 @@ namespace ZevWaxGames.CursorHero
         public void SetSize(float s)
         {
             size = s;
-            GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s;
+            GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s/3f;
         }
     }
 }

@@ -6,12 +6,15 @@ namespace ZevWaxGames.CursorHero
 {
     public class Selection : MonoBehaviour
     {
+        public static Selection Instance { get; private set; }
         private RectTransform _rectTransform;
         private Image _image;
         private Vector3 _startPos;
         private Sprite[] _sprites;
         private const float PixelsPerUnit = 30f;
         private bool isActive = false;
+
+        private void Awake() => Instance = this;
         private void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
@@ -59,6 +62,7 @@ namespace ZevWaxGames.CursorHero
         {
             var o = GetSelectedObject();
             if (o != null)
+            {
                 if (o.GetComponent<Key>() != null)
                 {
                     var w = o.GetComponent<Key>().Weight;
@@ -76,6 +80,8 @@ namespace ZevWaxGames.CursorHero
                     Spawner.NewDamageNumbers(transform.position, "+3 HP");
                     Destroy(o);
                 }
+                StartCoroutine(Tabby.Instance.UpdateMessage());
+            }
             isActive = false;
             _rectTransform.sizeDelta = Vector2.zero;
             MainCharacter.Instance.SetGlove(gameObject);

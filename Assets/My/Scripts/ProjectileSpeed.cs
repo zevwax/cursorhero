@@ -3,7 +3,7 @@ namespace ZevWaxGames.CursorHero
     public class ProjectileSpeed : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Increase Bullet Speed";
+            tooltipText = "Increase Glyph Speed";
             base.Start();
         }
 
