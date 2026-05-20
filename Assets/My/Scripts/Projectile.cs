@@ -239,7 +239,7 @@ namespace ZevWaxGames.CursorHero
         public static void RefreshWallpapers1()
         {
             // 1. Load the clean data source
-            var cleanSprite = Resources.Load<Sprite>("My/My/Sprites/blood_canvas");
+            var cleanSprite = Resources.Load<Sprite>("My/My/Sprites/SizeHolders/blood_canvas");
             if (cleanSprite == null) return;
 
             var wallObj = GameObject.Find("Background Blood Canvas");
@@ -270,7 +270,7 @@ namespace ZevWaxGames.CursorHero
         public static void RefreshWallpapers2()
         {
             // 1. Load the clean data source
-            var cleanSprite = Resources.Load<Sprite>("My/My/Sprites/blood_canvas");
+            var cleanSprite = Resources.Load<Sprite>("My/My/Sprites/SizeHolders/blood_canvas");
             if (cleanSprite == null) return;
 
             var wallObj = GameObject.Find("Progress Bar Blood Canvas");

@@ -277,28 +277,37 @@ namespace ZevWaxGames.CursorHero
             yield return endCanvas.DOFade(0.95f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
             yield return endCanvas.DOFade(1f, 0).WaitForCompletion(); yield return new WaitForSeconds(0.2f);
         }
-        private string wallpaperDirectory = "My/My/Sprites/Wallpapers";
+        private string wallpaperDirectory = "My/My/Sprites/wallpaper";
         private void ResetWallpapers()
         {
             var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
-            wallpapersBG.sprite = Resources.Load<Sprite>(wallpaperDirectory + "/Bliss");
+            
+            var allWallpapers = Resources.LoadAll<Sprite>(wallpaperDirectory);
+            var targetName = "wallpaper_16";
+            var specificSprite = System.Array.Find(allWallpapers, s => s.name == targetName);
+            
+            if (specificSprite != null)
+                wallpapersBG.sprite = specificSprite;
+            else
+                Debug.LogWarning($"Sprite with name {targetName} not found in {wallpaperDirectory}");
         }
         private void RefreshWallpapers()
         {
             Projectile.RefreshWallpapers1();
             Projectile.RefreshWallpapers2();
             
-            Sprite[] allWallpapers = Resources.LoadAll<Sprite>(wallpaperDirectory);
+            var allWallpapers = Resources.LoadAll<Sprite>(wallpaperDirectory);
+            var subSprites = System.Array.FindAll(allWallpapers, s => s.name != "wallpaper");
 
-            if (allWallpapers != null && allWallpapers.Length > 0)
+            if (subSprites != null && subSprites.Length > 0)
             {
-                var randomIndex = Random.Range(0, allWallpapers.Length);
-                var newWallpapers = allWallpapers[randomIndex];
+                var randomIndex = Random.Range(0, subSprites.Length);
+                var newWallpaper = subSprites[randomIndex];
                 var wallpapersBG = GameObject.Find("Wallpapers BG").GetComponent<Image>();
-                wallpapersBG.sprite = newWallpapers;
+                wallpapersBG.sprite = newWallpaper;
             }
             else
-                Debug.LogWarning($"No sprites found in Resources/{wallpaperDirectory}");
+                Debug.LogWarning($"No sliced sprites found for texture at Resources/{wallpaperDirectory}");
         }
         private IEnumerator FastFadeIn()
         {

@@ -6,7 +6,7 @@ namespace ZevWaxGames.CursorHero
     {
         public void Refresh()
         {
-            GetComponent<Image>().sprite = Resources.Load<Sprite>("My/My/Sprites/blood_canvas");
+            GetComponent<Image>().sprite = Resources.Load<Sprite>("My/My/Sprites/SizeHolders/blood_canvas");
         }
     }
 }

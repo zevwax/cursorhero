@@ -55,7 +55,7 @@ namespace ZevWaxGames.CursorHero
         }
         private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer, string sortLayer) where T : Projectile
         {
-            var obj = NewEntity<T>(pos, name, "projectile", sortLayer, true, objLayer, false);
+            var obj = NewEntity<T>(pos, name, "SizeHolders/projectile", sortLayer, true, objLayer, false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             obj.GetComponent<Projectile>().direction = direction;
             

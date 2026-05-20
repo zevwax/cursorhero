@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 81e8150aa0d0e834ba3d0dc380d08064, type: 3}
+  m_Sprite: {fileID: -635090943, guid: a3ecf6382c720284c99a5afe9278e9f4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 187230ee218231f429832826065d772f, type: 3}
+  m_Sprite: {fileID: 199288018, guid: 187230ee218231f429832826065d772f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2815,7 +2815,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89be8e3cac3510e4a8255f6a326b2b82, type: 3}
+  m_Sprite: {fileID: -449712076736121542, guid: 187230ee218231f429832826065d772f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3482,7 +3482,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.7.0
+  m_text: 0.7.1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3509,7 +3509,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.15
+  m_fontSize: 8.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3769,7 +3769,7 @@ PrefabInstance:
     - target: {fileID: 4235560191934991145, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4fdf75245f7a01841b9851291cb4e7bf, type: 3}
+      objectReference: {fileID: 21300000, guid: 33a35b07c21c7d1408c6ef323fd78989, type: 3}
     - target: {fileID: 6076298874241878713, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
       propertyPath: m_Name
       value: Background Blood Canvas
@@ -4299,7 +4299,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75cc1105dbc3fa348b918d2676554643, type: 3}
+  m_Sprite: {fileID: 2089467148, guid: 187230ee218231f429832826065d772f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4757,7 +4757,7 @@ PrefabInstance:
     - target: {fileID: 4235560191934991145, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4fdf75245f7a01841b9851291cb4e7bf, type: 3}
+      objectReference: {fileID: 21300000, guid: 33a35b07c21c7d1408c6ef323fd78989, type: 3}
     - target: {fileID: 6076298874241878713, guid: f7ef126db0c955445a3fc23c9cac45a2, type: 3}
       propertyPath: m_Name
       value: Progress Bar Blood Canvas
@@ -4891,6 +4891,7 @@ MonoBehaviour:
   chooseAnUpgradeWindow: {fileID: 1512858189}
   recycleBinWindow: {fileID: 1771380414}
   youWinWindow: {fileID: 1227849671}
+  forThe1stTime: 1
 --- !u!4 &1603226652
 Transform:
   m_ObjectHideFlags: 0

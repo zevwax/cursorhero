@@ -1,10 +1,28 @@
 fileFormatVersion: 2
-guid: 187230ee218231f429832826065d772f
+guid: acf424faed660a24a94ecab1c8b5f26d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -449712076736121542
-    second: taskbar_0
+      213: 4765342137216042532
+    second: mineswapper_0
+  - first:
+      213: 1686632734335532376
+    second: mineswapper_1
+  - first:
+      213: -3712716193324216560
+    second: mineswapper_2
+  - first:
+      213: -3263829053467210476
+    second: mineswapper_3
+  - first:
+      213: -1496252052822006882
+    second: mineswapper_4
+  - first:
+      213: -8230067821317403636
+    second: mineswapper_5
+  - first:
+      213: -3449738649335920535
+    second: mineswapper_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -111,7 +129,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: WebGL
-    maxTextureSize: 32
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,13 +144,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: taskbar_0
+      name: mineswapper_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 125
-        width: 97
-        height: 30
+        y: 111
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,96 +159,140 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a35b0f6bf3d42c9f0800000000000000
-      internalID: -449712076736121542
+      spriteID: 42686f90d65e12240800000000000000
+      internalID: 4765342137216042532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: taskbar_1
+      name: mineswapper_1
       rect:
         serializedVersion: 2
         x: 1
         y: 94
-        width: 97
-        height: 30
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7f9bb59fbaf15c342a1ba152c7e97b53
-      internalID: -1219589658
+      spriteID: 85d7d94298f186710800000000000000
+      internalID: 1686632734335532376
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: taskbar_2
+      name: mineswapper_2
       rect:
         serializedVersion: 2
         x: 1
-        y: 63
-        width: 97
-        height: 30
+        y: 77
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c82dfffe563345240b5e5dc8724d218e
-      internalID: -2081504586
+      spriteID: 01fc1110b48c97cc0800000000000000
+      internalID: -3712716193324216560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: taskbar_3
+      name: mineswapper_3
       rect:
         serializedVersion: 2
         x: 1
-        y: 32
-        width: 50
-        height: 30
+        y: 60
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 31f86c3cc05cfa14fa7e8f042045e352
-      internalID: 199288018
+      spriteID: 41dcc74b4cc84b2d0800000000000000
+      internalID: -3263829053467210476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: taskbar_4
+      name: mineswapper_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 43
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9368197fae3c3be0800000000000000
+      internalID: -1496252052822006882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mineswapper_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 26
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0cc009dbece8cd80800000000000000
+      internalID: -8230067821317403636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mineswapper_6
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 81
-        height: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7cfe7a01774772e4081f279e04cf572d
-      internalID: 2089467148
+      spriteID: 9688566d9f01020d0800000000000000
+      internalID: -3449738649335920535
       vertices: []
       indices: 
       edges: []
@@ -251,11 +313,13 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      taskbar_0: -449712076736121542
-      taskbar_1: -1219589658
-      taskbar_2: -2081504586
-      taskbar_3: 199288018
-      taskbar_4: 2089467148
+      mineswapper_0: 4765342137216042532
+      mineswapper_1: 1686632734335532376
+      mineswapper_2: -3712716193324216560
+      mineswapper_3: -3263829053467210476
+      mineswapper_4: -1496252052822006882
+      mineswapper_5: -8230067821317403636
+      mineswapper_6: -3449738649335920535
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
