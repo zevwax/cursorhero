@@ -394,9 +394,9 @@ namespace ZevWaxGames.CursorHero
             
             int choice = Random.Range(0, 3); 
 
-            if (choice == 2 && GetActiveCount<Cyan>() < config.cyanLimit)
+            if (choice == 2 && GetActiveCount<EnemyGoat>() < config.cyanLimit)
                 Spawner.NewCyan(GetRandomPos());
-            else if (choice == 1 && GetActiveCount<Yellow>() < config.yellowLimit)
+            else if (choice == 1 && GetActiveCount<EnemyBlackGlove>() < config.yellowLimit)
                 Spawner.NewYellow(GetRandomPos());
             else
                 Spawner.NewWhite(GetRandomPos());

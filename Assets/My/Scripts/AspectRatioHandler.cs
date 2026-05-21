@@ -16,9 +16,9 @@ namespace ZevWaxGames.CursorHero
 
         void Update()
         {
-            float targetAspect = 16.0f / 9.0f;
-            float windowAspect = (float)Screen.width / (float)Screen.height;
-            float scaleHeight = windowAspect / targetAspect;
+            var targetAspect = 16.0f / 9.0f;
+            var windowAspect = Screen.width / (float)Screen.height;
+            var scaleHeight = windowAspect / targetAspect;
 
             if (scaleHeight < 1.0f)
             {

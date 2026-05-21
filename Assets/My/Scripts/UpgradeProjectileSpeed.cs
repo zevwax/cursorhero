@@ -1,0 +1,16 @@
+namespace ZevWaxGames.CursorHero
+{
+    public class UpgradeProjectileSpeed : Upgrade
+    {
+        protected override void Start() {
+            tooltipText = "Increase Glyph Speed";
+            base.Start();
+        }
+
+        public override void ButtonAction()
+        {
+            MainCharacter.Instance.ProjectileSpeed += 3f;
+            base.ButtonAction();
+        }
+    }
+}

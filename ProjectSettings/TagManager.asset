@@ -102,6 +102,9 @@ TagManager:
   - name: DamageNumbers
     uniqueID: 380735913
     locked: 0
+  - name: RedArrow
+    uniqueID: 309428201
+    locked: 0
   - name: TheEndScreen
     uniqueID: 3855164161
     locked: 0

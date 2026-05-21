@@ -63,10 +63,10 @@ namespace ZevWaxGames.CursorHero
             var o = GetSelectedObject();
             if (o != null)
             {
-                if (o.GetComponent<Key>() != null)
+                if (o.GetComponent<ItemKey>() != null)
                 {
-                    var w = o.GetComponent<Key>().Weight;
-                    var s = o.GetComponent<Key>().Size;
+                    var w = o.GetComponent<ItemKey>().Weight;
+                    var s = o.GetComponent<ItemKey>().Size;
                     MainCharacter.Instance.edge = w;
                     MainCharacter.Instance.size = s;
                     Guns.Library[GunName.Yellow].Weight = w;
@@ -74,7 +74,7 @@ namespace ZevWaxGames.CursorHero
                     ClipboardTextbox.Instance.UpdateContents();
                     Spawner.NewDamageNumbers(transform.position, "Copied A.glyph");
                 }
-                else if (o.GetComponent<Apple>() != null)
+                else if (o.GetComponent<ItemApple>() != null)
                 {
                     MainCharacter.Instance.HP += 3;
                     Spawner.NewDamageNumbers(transform.position, "+3 HP");
@@ -95,7 +95,7 @@ namespace ZevWaxGames.CursorHero
         private Vector3 GetPointerPos() => MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
         private GameObject GetSelectedObject()
         {
-            var allScripts = Object.FindObjectsByType<Key>(FindObjectsSortMode.None);
+            var allScripts = Object.FindObjectsByType<ItemKey>(FindObjectsSortMode.None);
             var ppu = 30;
             var halfOfW = (_rectTransform.sizeDelta.x / ppu) * 0.5f;
             var halfOfH = (_rectTransform.sizeDelta.y / ppu) * 0.5f;
@@ -119,7 +119,7 @@ namespace ZevWaxGames.CursorHero
                     return piece.gameObject;
             }
             
-            var allApples = Object.FindObjectsByType<Apple>(FindObjectsSortMode.None);
+            var allApples = Object.FindObjectsByType<ItemApple>(FindObjectsSortMode.None);
             foreach (var apple in allApples)
             {
                 var posXOfLeftSideOfThePiece = apple.transform.position.x - apple.transform.lossyScale.x / 2;

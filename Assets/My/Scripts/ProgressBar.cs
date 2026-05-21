@@ -121,7 +121,7 @@ namespace ZevWaxGames.CursorHero
             {
                 if (rainbowSequence != null)
                 {
-                    Diskfall.Instance.SetActive(false);
+                    Discfall.Instance.SetActive(false);
                     transform.parent.GetComponent<Canvas>().sortingLayerName = "ProgressBarBG";
                     
                     rainbowSequence.Kill();
@@ -136,7 +136,7 @@ namespace ZevWaxGames.CursorHero
         private void StartRainbowAnimation()
         {
             transform.parent.GetComponent<Canvas>().sortingLayerName = "ProgressBarFG";
-            Diskfall.Instance.SetActive(true);
+            Discfall.Instance.SetActive(true);
             
             EventHolder.OnChoosingStarted?.Invoke();
             
@@ -158,7 +158,7 @@ namespace ZevWaxGames.CursorHero
         }
         public void ResetValue()
         {
-            Disk.Inflate();
+            Disc.Inflate();
             SetValue(0f);
         }
         public void Refresh()

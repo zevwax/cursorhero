@@ -23,7 +23,22 @@ namespace ZevWaxGames.CursorHero
         private Coroutine waitNGo;
         
         private bool messageIsUpdated = false;
-        public bool hasToGo = false;
+        private int currActionIndex = 0;
+        /*
+         * Actions:
+         * 0 - off screen
+         * on blue face finished
+         * 1 - greetings, clock info
+         * on LMB pressed
+         * 2 - off screen
+         * on 1st recycle bin opened
+         * 3 - projectile info; copy a glyph
+         * on glyph copied
+         * 4 - push the switch pc shortcut
+         * on switch pc shortcut pushed
+         * 5 - off screen
+         */
+        public void NextAction() => currActionIndex++;
         private void Awake() => Instance = this;
         private void OnEnable() => EventHolder.OnFadingInToPCStarted += Die;
         private void OnDisable() => EventHolder.OnFadingInToPCStarted -= Die;
@@ -51,52 +66,73 @@ namespace ZevWaxGames.CursorHero
 
             System.Array.Copy(allSprites, 0, blinkSprites, 0, 8);
             System.Array.Copy(allSprites, 8, walkSprites, 0, 8);
+            
+            StartCoroutine(PlayAnimation());
         }
-
-        public void PlayAnimation()
+        public IEnumerator PlayAnimation()
         {
-            StartCoroutine(CPlayAnimation());
-        }
-
-        private IEnumerator CPlayAnimation()
-        {
+            yield return new WaitUntil(() => currActionIndex == 1);
+            
             yield return new WaitForSeconds(1f);
             
-            transform.position = offScreenPosition;
-            uiImage.transform.localRotation = Quaternion.Euler(0, 0, 0);
-
-            StartCoroutine(LoopWalkAnimation(true));
-            WalkIn();
-            yield return new WaitForSeconds(walkDuration);
-
-            StartCoroutine(LoopWalkAnimation(false));
-            yield return StartCoroutine(CBlink());
+            yield return StartCoroutine(WalkIn());
             
-            yield return StartCoroutine(MessageScaleUp(195f));
+            /*yield return StartCoroutine(Say(
+                string.Format(
+                    "Hey there!! I’m Tabby, your personal assistant.\n\n" +
+                    "Let me onboard you..\n\n" +
+                    "Look at the clipboard <color=#FF00FF>at the bottom of the screen</color>. " +
+                    "Your glyph is your projectile. Let's improve its stats!!\n\n" +
+                    "Try <color=#FF00FF>holding down the Left Mouse Button " +
+                    "to select the glyph drawn on the keyboard key you found in the recycle bin</color>.."),
+                195f));*/
             
-            yield return new WaitUntil(() => hasToGo);
+            yield return StartCoroutine(Say(
+                string.Format(
+                    "Hey there!! I’m Tabby, your personal assistant. Let me onboard you..\n\n" +
+                    "Uugh.. It seems we don't have a lot of time.. Agents want to skin you"),
+                195f));
+            
+            yield return new WaitUntil(() => currActionIndex == 2);
+            
+            var ra = Spawner.NewRedArrow(new Vector2(3, -1), Vector2.down);
+            yield return StartCoroutine(Say(
+                string.Format(
+                    "They'll retreat in a minute..\n\n" +
+                    "Please, don't get hurt.."),
+                195f));
+            
+            yield return new WaitUntil(() => currActionIndex == 3);
+            
+            Destroy(ra);
+            yield return StartCoroutine(Say(
+                string.Format(
+                    "They'll retreat in a minute..\n\n" +
+                    "Please, don't get hurt.."),
+                195f));
+            
+            yield return new WaitUntil(() => currActionIndex == 2);
             
             yield return StartCoroutine(MessageScaleDown());
             
+            yield return StartCoroutine(WalkOut());
+        }
+        private IEnumerator WalkIn()
+        {
+            uiImage.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            StartCoroutine(LoopWalkAnimation(true));
+            yield return transform.DOMove(inScreenPosition, walkDuration).SetEase(Ease.Linear).WaitForCompletion();
+            StartCoroutine(LoopWalkAnimation(false));
+            yield return StartCoroutine(Blink());
+        }
+        private IEnumerator WalkOut()
+        {
             uiImage.transform.localRotation = Quaternion.Euler(0, 180, 0);
             StartCoroutine(LoopWalkAnimation(true));
-            WalkOut();
-            yield return new WaitForSeconds(walkDuration);
-
+            yield return transform.DOMove(offScreenPosition, walkDuration).SetEase(Ease.Linear).WaitForCompletion();
             StartCoroutine(LoopWalkAnimation(false));
         }
-
-        private void WalkIn()
-        {
-            transform.DOMove(inScreenPosition, walkDuration).SetEase(Ease.Linear);
-        }
-
-        private void WalkOut()
-        {
-            transform.DOMove(offScreenPosition, walkDuration).SetEase(Ease.Linear);
-        }
-
-        private IEnumerator CBlink()
+        private IEnumerator Blink()
         {
             for (int i = 0; i < blinkSprites.Length; i++)
             {
@@ -117,13 +153,15 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(frameRate);
             }
         }
-        private IEnumerator MessageScaleUp(float height)
+        private IEnumerator Say(string words, float textboxHeight)
         {
             transform.GetChild(1).gameObject.SetActive(true);
-            var msg1 = transform.GetChild(1).GetComponent<RectTransform>();
+            var messageBox = transform.GetChild(1).GetComponent<RectTransform>();
+            var messageText = transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
             var duration = 0.3f;
-            yield return msg1.DOSizeDelta(new Vector2(130f, height), duration).SetEase(Ease.OutBack).WaitForCompletion();
-            transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            yield return messageBox.DOSizeDelta(new Vector2(130f, textboxHeight), duration).SetEase(Ease.OutBack).WaitForCompletion();
+            messageText.text = words;
+            messageText.gameObject.SetActive(true);
         }
         private IEnumerator MessageScaleDown()
         {
@@ -138,10 +176,13 @@ namespace ZevWaxGames.CursorHero
             if (messageIsUpdated) yield break;
             yield return StartCoroutine(MessageScaleDown());
             var msg1 = transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
-            msg1.text =
-                "Good job, boss!!\n\n" +
-                "<color=#FF00FF>Hit the 'Switch PC' shortcut</color> when you're done looting, okay??";
-            yield return StartCoroutine(MessageScaleUp(65f));
+            //msg1.text = ;
+            yield return StartCoroutine(Say(
+                string.Format(
+                    "Good job, boss!!\n\n" +
+                    "<color=#FF00FF>Hit the 'Switch PC' shortcut</color> when you're done looting, okay??"),
+                65f)
+            );
             yield return new WaitForSeconds(2f);
             G.Instance.net.EnableButton();
             messageIsUpdated = true;

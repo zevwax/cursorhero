@@ -103,7 +103,7 @@ namespace ZevWaxGames.CursorHero
             {
                 forThe1stTime = false;
                 var tabby = Spawner.NewTabby();
-                tabby.GetComponent<Tabby>().PlayAnimation();
+                tabby.GetComponent<Tabby>().NextAction();
                 
                 Spawner.NewApple(pos1);
                 Spawner.NewKey(pos2);
@@ -251,7 +251,7 @@ namespace ZevWaxGames.CursorHero
         public void SwitchPC() => StartCoroutine(CSwitchPC());
         private IEnumerator CSwitchPC()
         {
-            Tabby.Instance.hasToGo = true;
+            Tabby.Instance.NextAction();
             yield return FastFadeOut();
             EventHolder.OnFadingInToPCStarted?.Invoke();
             RefreshWallpapers();

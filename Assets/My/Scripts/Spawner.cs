@@ -23,32 +23,32 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
             obj.AddComponent<Soul>();
         }
-        public static GameObject NewWhite(Vector2 pos) => NewEntity<White>(
+        public static GameObject NewWhite(Vector2 pos) => NewEntity<EnemyHand>(
             pos, "White Enemy", "pointer_1", "Enemies", true, "Enemy", false);
-        public static GameObject NewYellow(Vector2 pos) => NewEntity<Yellow>(
+        public static GameObject NewYellow(Vector2 pos) => NewEntity<EnemyBlackGlove>(
             pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy", false);
-        public static GameObject NewCyan(Vector2 pos) => NewEntity<Cyan>(
+        public static GameObject NewCyan(Vector2 pos) => NewEntity<EnemyGoat>(
             pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy", false);
 
-        public static void NewYellowP(Vector2 pos, Vector2 direction, Gun g)
+        public static void NewProjectileBlue(Vector2 pos, Vector2 direction, Gun g)
         {
-            var obj = CreateBaseProjectile<YellowP>(pos, direction, "Yellow Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
+            var obj = CreateBaseProjectile<ProjectileBlue>(pos, direction, "Blue Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
             obj.GetComponent<Projectile>().SetTeam(true);
             obj.GetComponent<Projectile>().SetWeight(g.Weight);
             obj.GetComponent<Projectile>().SetSize(g.Size);
         }
 
-        public static void NewRedP(Vector2 pos, Vector2 direction, Gun g)
+        public static void NewProjectileRedRegular(Vector2 pos, Vector2 direction, Gun g)
         {
-            var obj = CreateBaseProjectile<RedP>(pos, direction, "Red Projectile", "EnemyProjectile", "EnemyProjectiles");
+            var obj = CreateBaseProjectile<ProjectileRedRegular>(pos, direction, "Red Projectile", "EnemyProjectile", "EnemyProjectiles");
             obj.GetComponent<Projectile>().SetTeam(false);
             obj.GetComponent<Projectile>().SetWeight(g.Weight);
             obj.GetComponent<Projectile>().SetSize(g.Size);
         }
 
-        public static void NewRingP(Vector2 pos, Vector2 direction, Gun g)
+        public static void NewProjectileRedLarge(Vector2 pos, Vector2 direction, Gun g)
         {
-            var obj = CreateBaseProjectile<RingP>(pos, direction, "Ring Projectile", "EnemyProjectile", "EnemyProjectiles");
+            var obj = CreateBaseProjectile<ProjectileRedLarge>(pos, direction, "Ring Projectile", "EnemyProjectile", "EnemyProjectiles");
             obj.GetComponent<Projectile>().SetTeam(false);
             obj.GetComponent<Projectile>().SetWeight(g.Weight);
             obj.GetComponent<Projectile>().SetSize(g.Size);
@@ -178,10 +178,12 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewDisk(Vector2 pos)
         {
-            var obj = NewEntity<Disk>(pos, "Disk", "disc15", "RealDisks", true, "Disk", false);
+            var obj = NewEntity<Disc>(pos, "Disk", "disc15", "RealDisks", true, "Disk", false);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
+        public static GameObject NewRedArrow(Vector2 pos, Vector2 direction) => NewEntity<RedArrow>(
+            pos, "Red Arrow", "red_arrow", "RedArrow", false, "GUI", false);
         public static GameObject NewFallingDisk(Vector2 pos)
         {
             var isLarge = (bool)default;
@@ -487,20 +489,20 @@ namespace ZevWaxGames.CursorHero
 
             return obj;
         }
-        public static GameObject NewPlayButton(Vector2 pos) => CreateBaseButton<Play>(pos, "PlayButton", "btn_play");
-        public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<RecycleBinButton>(pos, "BinButton", "bin");
-        public static GameObject NewNetButton(Vector2 pos) => CreateBaseButton<BtnNet>(pos, "NetButton", "btn_net");
-        public static GameObject NewEndlessModeButton(Vector2 pos) => CreateBaseButton<EndlessMode>(pos, "EndlessModeButton", "btn_endless_mode");
+        public static GameObject NewPlayButton(Vector2 pos) => CreateBaseButton<ButtonPlay>(pos, "PlayButton", "btn_play");
+        public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<ButtonRecycleBin>(pos, "BinButton", "bin");
+        public static GameObject NewNetButton(Vector2 pos) => CreateBaseButton<ButtonSwitchPC>(pos, "NetButton", "btn_net");
+        public static GameObject NewEndlessModeButton(Vector2 pos) => CreateBaseButton<ButtonEndlessMode>(pos, "EndlessModeButton", "btn_endless_mode");
         public static GameObject NewUpgradeButton(string upgradeName, Vector2 pos)
         {
             GameObject obj;
             switch (upgradeName)
             {
                 case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage", "btn_upgrade_dmg"); break;
-                case "FireRate": obj = CreateBaseButton<Firerate>(pos, "UpgradeFireRate", "btn_upgrade_cdn"); break;
-                case "Speed": obj = CreateBaseButton<ProjectileSpeed>(pos, "UpgradeSpeed", "btn_upgrade_spd"); break;
-                case "Sensitivity": obj = CreateBaseButton<Sensitivity>(pos, "UpgradeSensitivity", "btn_upgrade_sen"); break;
-                case "Heart": obj = CreateBaseButton<Heart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
+                case "FireRate": obj = CreateBaseButton<UpgradeFirerate>(pos, "UpgradeFireRate", "btn_upgrade_cdn"); break;
+                case "Speed": obj = CreateBaseButton<UpgradeProjectileSpeed>(pos, "UpgradeSpeed", "btn_upgrade_spd"); break;
+                case "Sensitivity": obj = CreateBaseButton<UpgradeSensitivity>(pos, "UpgradeSensitivity", "btn_upgrade_sen"); break;
+                case "Heart": obj = CreateBaseButton<UpgradeHeart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
                 default: throw new System.NotImplementedException();
             }
             return obj;
@@ -527,7 +529,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewBottle(Vector2 pos)
         {
             var bottleFullness = 0.25f;
-            var obj = NewEntity<Bottle>(pos, "Bottle", "bottle", "Bottles", true, "Default", false);
+            var obj = NewEntity<ItemBottle>(pos, "Bottle", "bottle", "Bottles", true, "Default", false);
 
             var maskObj = obj.transform.GetChild(0).gameObject;
             maskObj.AddComponent<Mask>().showMaskGraphic = false;
@@ -560,12 +562,12 @@ namespace ZevWaxGames.CursorHero
             glassImage.color = new Color(1f, 1f, 1f, 0.75f);
             
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
-            var bottleScript = obj.GetComponent<Bottle>();
+            var bottleScript = obj.GetComponent<ItemBottle>();
             bottleScript.waterRect = waterImageRt;
             
             var tooltipHolder = obj.AddComponent<TooltipHolder>();
             var dragable = obj.AddComponent<Dragable>();
-            var bottle = obj.GetComponent<Bottle>();
+            var bottle = obj.GetComponent<ItemBottle>();
             tooltipHolder.Init();
             dragable.Init();
             bottle.Init();
@@ -574,7 +576,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewLayingPieceOfGlass(Vector2 pos)
         {
-            var obj = NewEntity<LayingPieceOfGlass>(pos, "LayingPieceOfGlass", "glass", "Bottles", true, "Default", false);
+            var obj = NewEntity<ItemLayingPieceOfGlass>(pos, "LayingPieceOfGlass", "glass", "Bottles", true, "Default", false);
             obj.GetComponent<CanvasGroup>().alpha = 0.75f;
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
@@ -616,13 +618,7 @@ namespace ZevWaxGames.CursorHero
             //
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
             textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
-            textTxt.text =
-                "Hey there!! I’m Tabby, your personal assistant.\n\n" +
-                "Let me onboard you..\n\n" +
-                "Look at the clipboard <color=#FF00FF>at the bottom of the screen</color>. " +
-                "Your glyph is your projectile. Let's improve its stats!!\n\n" +
-                "Try <color=#FF00FF>holding down the Left Mouse Button " +
-                "to select the glyph drawn on the keyboard key you found in the recycle bin</color>..";
+            textTxt.text = "Default text";
             textTxt.alignment = TextAlignmentOptions.Left;
             textTxt.color = Color.black;
             textTxt.enableAutoSizing = true;
@@ -636,10 +632,10 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewKey(Vector2 pos)
         {
-            var obj = NewEntity<Key>(pos, "Key", "key", "Bottles", true, "Default", false);
+            var obj = NewEntity<ItemKey>(pos, "Key", "key", "Bottles", true, "Default", false);
             var tooltipHolder = obj.AddComponent<TooltipHolder>();
             var dragable = obj.AddComponent<Dragable>();
-            var key = obj.GetComponent<Key>();
+            var key = obj.GetComponent<ItemKey>();
             tooltipHolder.Init();
             dragable.Init();
             key.Init();
@@ -648,10 +644,10 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewApple(Vector2 pos)
         {
-            var obj = NewEntity<Apple>(pos, "Apple", "apple", "Bottles", true, "Default", false);
+            var obj = NewEntity<ItemApple>(pos, "Apple", "apple", "Bottles", true, "Default", false);
             var tooltipHolder = obj.AddComponent<TooltipHolder>();
             var dragable = obj.AddComponent<Dragable>();
-            var apple = obj.GetComponent<Apple>();
+            var apple = obj.GetComponent<ItemApple>();
             tooltipHolder.Init();
             dragable.Init();
             apple.Init();
