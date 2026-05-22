@@ -80,7 +80,7 @@ namespace ZevWaxGames.CursorHero
                     Spawner.NewDamageNumbers(transform.position, "+3 HP");
                     Destroy(o);
                 }
-                StartCoroutine(Tabby.Instance.UpdateMessage());
+                Tabby.Instance.SwitchActionTo(9);
             }
             isActive = false;
             _rectTransform.sizeDelta = Vector2.zero;

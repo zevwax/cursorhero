@@ -24,6 +24,9 @@ namespace ZevWaxGames.CursorHero
         
         private bool messageIsUpdated = false;
         private int currActionIndex = 0;
+        
+        private GameObject messageBox;
+        private GameObject messageText;
         /*
          * Actions:
          * 0 - off screen
@@ -38,7 +41,11 @@ namespace ZevWaxGames.CursorHero
          * on switch pc shortcut pushed
          * 5 - off screen
          */
-        public void NextAction() => currActionIndex++;
+        public void SwitchActionTo(int index)
+        {
+            if (currActionIndex == index - 1)
+                currActionIndex = index;
+        }
         private void Awake() => Instance = this;
         private void OnEnable() => EventHolder.OnFadingInToPCStarted += Die;
         private void OnDisable() => EventHolder.OnFadingInToPCStarted -= Die;
@@ -67,54 +74,84 @@ namespace ZevWaxGames.CursorHero
             System.Array.Copy(allSprites, 0, blinkSprites, 0, 8);
             System.Array.Copy(allSprites, 8, walkSprites, 0, 8);
             
+            messageBox = transform.GetChild(1).gameObject;
+            messageText = messageBox.transform.GetChild(0).gameObject;
+            
             StartCoroutine(PlayAnimation());
         }
+        /*yield return StartCoroutine(Say(
+            string.Format(
+                "Hey there!! I’m Tabby, your personal assistant.\n\n" +
+                "Let me onboard you..\n\n" +
+                "Look at the clipboard <color=#FF00FF>at the bottom of the screen</color>. " +
+                "Your glyph is your projectile. Let's improve its stats!!\n\n" +
+                "Try <color=#FF00FF>holding down the Left Mouse Button " +
+                "to select the glyph drawn on the keyboard key you found in the recycle bin</color>.."),
+            195f));*/
         public IEnumerator PlayAnimation()
         {
             yield return new WaitUntil(() => currActionIndex == 1);
-            
             yield return new WaitForSeconds(1f);
-            
             yield return StartCoroutine(WalkIn());
-            
-            /*yield return StartCoroutine(Say(
-                string.Format(
-                    "Hey there!! I’m Tabby, your personal assistant.\n\n" +
-                    "Let me onboard you..\n\n" +
-                    "Look at the clipboard <color=#FF00FF>at the bottom of the screen</color>. " +
-                    "Your glyph is your projectile. Let's improve its stats!!\n\n" +
-                    "Try <color=#FF00FF>holding down the Left Mouse Button " +
-                    "to select the glyph drawn on the keyboard key you found in the recycle bin</color>.."),
-                195f));*/
-            
             yield return StartCoroutine(Say(
-                string.Format(
-                    "Hey there!! I’m Tabby, your personal assistant. Let me onboard you..\n\n" +
-                    "Uugh.. It seems we don't have a lot of time.. Agents want to skin you"),
-                195f));
+                "Hey there!! I’m Tabby, your personal assistant..",
+                65f));
             
-            yield return new WaitUntil(() => currActionIndex == 2);
-            
-            var ra = Spawner.NewRedArrow(new Vector2(3, -1), Vector2.down);
+            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
+            SwitchActionTo(2);
             yield return StartCoroutine(Say(
-                string.Format(
-                    "They'll retreat in a minute..\n\n" +
-                    "Please, don't get hurt.."),
-                195f));
+                "Let me..",
+                65f));
             
-            yield return new WaitUntil(() => currActionIndex == 3);
-            
-            Destroy(ra);
+            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
+            SwitchActionTo(3);
             yield return StartCoroutine(Say(
-                string.Format(
-                    "They'll retreat in a minute..\n\n" +
-                    "Please, don't get hurt.."),
-                195f));
+                "Uugh.. It seems we don't have a lot of time.. Agents want to kill you",
+                65f));
             
-            yield return new WaitUntil(() => currActionIndex == 2);
+            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
+            SwitchActionTo(4);
+            yield return StartCoroutine(Say(
+                "They'll retreat when the timer runs out",
+                65f)); var ra = Spawner.NewRedArrow(new Vector2(6.51f, -3.45f), Vector2.down);
             
-            yield return StartCoroutine(MessageScaleDown());
+            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
+            SwitchActionTo(5);
+            yield return StartCoroutine(Say(
+                "Please, don't get hurt..",
+                65f)); Destroy(ra);
             
+            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
+            SwitchActionTo(6);
+            yield return StartCoroutine(WalkOut());
+            BlueFace.Instance.StartAnim();
+            
+            yield return new WaitUntil(() => currActionIndex == 7);
+            yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(WalkIn());
+            yield return StartCoroutine(Say(
+                "Whew, you did this, and it's time to loot!!",
+                65f));
+            
+            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
+            SwitchActionTo(8);
+            var keyPos = Object.FindAnyObjectByType<ItemKey>().transform.position;
+            var arrow2Pos = new Vector3(keyPos.x, keyPos.y + 1f, 0f);
+            yield return StartCoroutine(Say(
+                "Try holding down the Left Mouse Button to select the glyph you found in the recycle bin",
+                65f)); var ra2 = Spawner.NewRedArrow(arrow2Pos, Vector2.down);
+            
+            yield return new WaitUntil(() => currActionIndex == 9);
+            var shortcutPos = Object.FindAnyObjectByType<ButtonSwitchPC>().transform.position;
+            var arrow3Pos = new Vector3(shortcutPos.x, shortcutPos.y + 1f, 0f);
+            yield return StartCoroutine(Say(
+                "Good job, boss!! Push the shortcut when you'll finish looting, okay??",
+                65f)); Destroy(ra2); var ra3 = Spawner.NewRedArrow(arrow3Pos, Vector2.down);
+            yield return new WaitForSeconds(1f);
+            G.Instance.net.GetComponent<Button>().EnableButton();
+            
+            yield return new WaitUntil(() => currActionIndex == 10);
+            Destroy(ra3);
             yield return StartCoroutine(WalkOut());
         }
         private IEnumerator WalkIn()
@@ -127,6 +164,7 @@ namespace ZevWaxGames.CursorHero
         }
         private IEnumerator WalkOut()
         {
+            yield return StartCoroutine(MessageScaleDown());
             uiImage.transform.localRotation = Quaternion.Euler(0, 180, 0);
             StartCoroutine(LoopWalkAnimation(true));
             yield return transform.DOMove(offScreenPosition, walkDuration).SetEase(Ease.Linear).WaitForCompletion();
@@ -155,21 +193,29 @@ namespace ZevWaxGames.CursorHero
         }
         private IEnumerator Say(string words, float textboxHeight)
         {
-            transform.GetChild(1).gameObject.SetActive(true);
-            var messageBox = transform.GetChild(1).GetComponent<RectTransform>();
-            var messageText = transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
-            var duration = 0.3f;
-            yield return messageBox.DOSizeDelta(new Vector2(130f, textboxHeight), duration).SetEase(Ease.OutBack).WaitForCompletion();
-            messageText.text = words;
-            messageText.gameObject.SetActive(true);
+            if (!messageBox.activeInHierarchy)
+            {
+                messageBox.SetActive(true);
+                var messageBoxRt = messageBox.GetComponent<RectTransform>();
+                var messageTextComp = messageText.GetComponent<TextMeshProUGUI>();
+                var duration = 0.3f;
+                yield return messageBoxRt.DOSizeDelta(new Vector2(130f, textboxHeight), duration).SetEase(Ease.OutBack).WaitForCompletion();
+                messageTextComp.text = words;
+                messageText.SetActive(true);
+            }
+            else
+            {
+                yield return StartCoroutine(MessageScaleDown());
+                yield return StartCoroutine(Say(words, textboxHeight));
+            }
         }
         private IEnumerator MessageScaleDown()
         {
-            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-            var msg1 = transform.GetChild(1).GetComponent<RectTransform>();
+            messageText.SetActive(false);
+            var messageBoxRt = messageBox.GetComponent<RectTransform>();
             var duration = 0.3f;
-            yield return msg1.DOSizeDelta(new Vector2(130f, 21f), duration).SetEase(Ease.OutBack).WaitForCompletion();
-            transform.GetChild(1).gameObject.SetActive(false);
+            yield return messageBoxRt.DOSizeDelta(new Vector2(130f, 21f), duration).SetEase(Ease.OutBack).WaitForCompletion();
+            messageBox.SetActive(false);
         }
         public IEnumerator UpdateMessage()
         {

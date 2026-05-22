@@ -20,7 +20,7 @@ namespace ZevWaxGames.CursorHero
                 EventHolder.OnPCStarted?.Invoke();
             else
             {
-                BlueFace.Instance.StartAnim();
+                Tabby.Instance.SwitchActionTo(1);
                 UIManager.Instance.HideStartGameNTryAgainWindows();
             }
         }

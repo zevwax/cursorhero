@@ -182,8 +182,14 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
-        public static GameObject NewRedArrow(Vector2 pos, Vector2 direction) => NewEntity<RedArrow>(
-            pos, "Red Arrow", "red_arrow", "RedArrow", false, "GUI", false);
+
+        public static GameObject NewRedArrow(Vector2 pos, Vector2 direction)
+        {
+            var obj = NewEntity<RedArrow>(
+                pos, "Red Arrow", "red_arrow", "RedArrow", false, "GUI", false);
+            obj.GetComponent<RedArrow>().direction = direction;
+            return obj;
+        }
         public static GameObject NewFallingDisk(Vector2 pos)
         {
             var isLarge = (bool)default;

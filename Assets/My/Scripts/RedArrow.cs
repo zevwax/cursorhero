@@ -12,7 +12,8 @@ namespace ZevWaxGames.CursorHero
         private void Start()
         {
             imageHolder = transform.GetChild(0).GetComponent<RectTransform>();
-            transform.localRotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90f;
+            transform.localRotation = Quaternion.Euler(0, 0, angle);
             StartFlexAnimation();
         }
 
