@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 namespace ZevWaxGames.CursorHero
 {
     public class Clock : MonoBehaviour
@@ -21,20 +22,22 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnEnable()
         {
-            /*EventHolder.OnRunStarted += Refresh;*/
+            EventHolder.OnRunStarted += Refresh;
+            EventHolder.OnFadingInToPCStarted += HandleOnFadingInToPCStarted;
             EventHolder.OnPCStarted += Resume;
             EventHolder.OnChoosingStarted += Stop;
             EventHolder.OnChoosingFinished += ResumeIfNeeded;
-            EventHolder.OnPCFinished += Stop;
+            EventHolder.OnPCFinished += HandleOnPCFinished;
             EventHolder.OnRunFinished += Stop;
         }
         private void OnDisable()
         {
-            /*EventHolder.OnRunStarted -= Refresh;*/
+            EventHolder.OnRunStarted -= Refresh;
+            EventHolder.OnFadingInToPCStarted -= HandleOnFadingInToPCStarted;
             EventHolder.OnPCStarted -= Resume;
             EventHolder.OnChoosingStarted -= Stop;
             EventHolder.OnChoosingFinished -= ResumeIfNeeded;
-            EventHolder.OnPCFinished -= Stop;
+            EventHolder.OnPCFinished -= HandleOnPCFinished;
             EventHolder.OnRunFinished -= Stop;
         }
         private void Update()
@@ -57,10 +60,23 @@ namespace ZevWaxGames.CursorHero
             UpdateClockDisplay();
 
             if (!theEndScreenIsShown && elapsedTime > gameDuration)
-            {
-                EventHolder.OnChoosingStarted?.Invoke();
-                theEndScreenIsShown = true;
-            }
+                StartCoroutine(HandleWinWhenReady());
+        }
+        private IEnumerator HandleWinWhenReady()
+        {
+            yield return new WaitUntil(() => ConditionManager.Instance.currCondition == ConditionManager.Condition.AfterFightChilling);
+            EventHolder.OnChoosingStarted?.Invoke();
+            theEndScreenIsShown = true;
+        }
+        private void HandleOnPCFinished()
+        {
+            Stop();
+            if (elapsedTime < gameDuration + 0.5f)
+                MakeClockBeEmpty();
+        }
+        private void HandleOnFadingInToPCStarted()
+        {
+            MakeClockBeFull();
         }
         public void Stop()
         {
@@ -79,26 +95,35 @@ namespace ZevWaxGames.CursorHero
         {
             elapsedTime = 0f;
             nextStamp = initNextStamp;
-            UpdateClockDisplay();
+            MakeClockBeFull();
         }
+        private void MakeClockBeFull()
+        {
+            if (gameDuration - 0.5f < elapsedTime && elapsedTime < gameDuration + 0.5f)
+                clockText.text = "5:00";
+            else if (elapsedTime < gameDuration)
+                clockText.text = "1:00";
+        }
+        private void MakeClockBeEmpty() => clockText.text = "0:00";
         private void UpdateClockDisplay()
         {
-            if (elapsedTime < gameDuration+1f)
+            int totalSeconds = Mathf.FloorToInt(elapsedTime);
+            
+            if (elapsedTime < gameDuration + 0.5f && totalSeconds % 60 == 0) return;
+
+            if (totalSeconds <= gameDuration)
             {
-                var remainingTime = gameDuration - elapsedTime;
-                int minutes = Mathf.FloorToInt(remainingTime / 60f);
-                int seconds = Mathf.FloorToInt(remainingTime % 60f);
-                clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-            }
-            else if (61f <= elapsedTime && elapsedTime <= gameDuration+4f)
-            {
-                clockText.text = "0:00";
+                int secondsInMinute = totalSeconds % 60;
+                int displaySeconds = (secondsInMinute == 0) ? 0 : (60 - secondsInMinute);
+
+                clockText.text = string.Format("0:{0:00}", displaySeconds);
             }
             else
             {
-                int minutes = Mathf.FloorToInt(elapsedTime / 60f);
-                int seconds = Mathf.FloorToInt(elapsedTime % 60f);
-                clockText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+                int minutes = totalSeconds / 60;
+                int displaySeconds = totalSeconds % 60;
+
+                clockText.text = string.Format("{0}:{1:00}", minutes, displaySeconds);
             }
         }
     }

@@ -333,13 +333,7 @@ namespace ZevWaxGames.CursorHero
                 cyanLimit = 999
             });
         }
-
-        private void StartManager()
-        {
-            Clock.Instance.Refresh();
-            currentWaveIndex = 0;
-        }
-
+        private void StartManager() => currentWaveIndex = 0;
         private void Update()
         {
             if (waves.Count == 0 || Clock.Instance == null) return;
