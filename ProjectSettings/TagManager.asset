@@ -84,6 +84,15 @@ TagManager:
   - name: Bottles
     uniqueID: 1413295005
     locked: 0
+  - name: MapLine
+    uniqueID: 4079448479
+    locked: 0
+  - name: MapNode
+    uniqueID: 69400185
+    locked: 0
+  - name: MapChar
+    uniqueID: 2809869657
+    locked: 0
   - name: YellowCirc
     uniqueID: 1085615039
     locked: 0

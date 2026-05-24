@@ -148,7 +148,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 111
+        y: 9
         width: 16
         height: 16
       alignment: 0
@@ -169,8 +169,8 @@ TextureImporter:
       name: mineswapper_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 94
+        x: 18
+        y: 9
         width: 16
         height: 16
       alignment: 0
@@ -191,8 +191,8 @@ TextureImporter:
       name: mineswapper_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 77
+        x: 35
+        y: 9
         width: 16
         height: 16
       alignment: 0
@@ -213,8 +213,8 @@ TextureImporter:
       name: mineswapper_3
       rect:
         serializedVersion: 2
-        x: 1
-        y: 60
+        x: 52
+        y: 9
         width: 16
         height: 16
       alignment: 0
@@ -235,8 +235,8 @@ TextureImporter:
       name: mineswapper_4
       rect:
         serializedVersion: 2
-        x: 1
-        y: 43
+        x: 69
+        y: 9
         width: 16
         height: 16
       alignment: 0
@@ -257,8 +257,8 @@ TextureImporter:
       name: mineswapper_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 26
+        x: 86
+        y: 9
         width: 16
         height: 16
       alignment: 0
@@ -279,7 +279,7 @@ TextureImporter:
       name: mineswapper_6
       rect:
         serializedVersion: 2
-        x: 1
+        x: 103
         y: 1
         width: 24
         height: 24
@@ -293,6 +293,28 @@ TextureImporter:
       bones: []
       spriteID: 9688566d9f01020d0800000000000000
       internalID: -3449738649335920535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mineswapper_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 1
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b4c354d4895c42479be8d232570f902
+      internalID: -326596091
       vertices: []
       indices: 
       edges: []
@@ -320,6 +342,7 @@ TextureImporter:
       mineswapper_4: -1496252052822006882
       mineswapper_5: -8230067821317403636
       mineswapper_6: -3449738649335920535
+      mineswapper_7: -326596091
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -14,6 +14,26 @@ namespace ZevWaxGames.CursorHero
             ice.friction = 0f;
             return ice;
         }
+        public static void NewMapLine(Vector2 pos, Sprite sprite)
+        {
+            var obj = NewEntity<MapLine>(
+                pos, "Map Line", sprite, "MapLine", false, "GUI", false);
+            obj.GetComponent<MapLine>().Init();
+        }
+        public static void NewMapNode(Vector2 pos, Sprite sprite)
+        {
+            var obj = NewEntity<MapNode>(
+                pos, "Map Node", sprite, "MapNode", true, "GUI", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            obj.GetComponent<MapNode>().Init();
+        }
+        public static void NewMapChar(Vector2 pos, Sprite sprite)
+        {
+            var obj = NewEntity<MapChar>(
+                pos, "Map Char", sprite, "MapChar", true, "GUI", false);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            obj.GetComponent<MapChar>().Init();
+        }
         public static void NewSoul(Vector2 pos)
         {
             GameObject obj = new GameObject("Soul");
@@ -121,6 +141,60 @@ namespace ZevWaxGames.CursorHero
             return obj;
         }*/
         
+        public static GameObject NewEntity<T>(Vector2 pos, string name, Sprite sprite, string sortingLayerName, bool collider, string objectLayer, bool isStatic) where T : MonoBehaviour
+        {
+            var obj = new GameObject(name);
+            obj.layer = LayerMask.NameToLayer(objectLayer);
+            var canvas = obj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            if (sortingLayerName != null)
+                canvas.sortingLayerName = sortingLayerName;
+            var rectTransform = obj.GetComponent<RectTransform>();
+            rectTransform.position = new Vector3(pos.x, pos.y, 0);
+            var size = new Vector2(sprite.rect.width, sprite.rect.height);
+            rectTransform.sizeDelta = size;
+            rectTransform.localScale = new Vector3(0, 0, 1);
+            var canvasScaler = obj.AddComponent<CanvasScaler>();
+            canvasScaler.dynamicPixelsPerUnit = 30f;
+            var ppu = sprite.pixelsPerUnit;
+            canvasScaler.referencePixelsPerUnit = ppu;
+            var raycaster = obj.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+            raycaster.blockingMask = -1;
+            var WSCScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
+            obj.AddComponent<T>();
+            obj.AddComponent<CanvasGroup>();
+            
+            var imageObj = new GameObject("Image");
+            imageObj.transform.SetParent(obj.transform, false);
+            var imageRt = imageObj.AddComponent<RectTransform>();
+            imageRt.anchorMin = Vector2.zero;
+            imageRt.anchorMax = Vector2.one;
+            imageRt.offsetMin = Vector2.zero;
+            imageRt.offsetMax = Vector2.zero;
+            var image = imageObj.AddComponent<Image>();
+            image.sprite = sprite;
+            if (imageObj.GetComponent<CanvasRenderer>() == null)
+                imageObj.AddComponent<CanvasRenderer>();
+            
+            if (collider)
+            {
+                var rb = obj.AddComponent<Rigidbody2D>();
+                rb.sharedMaterial = CreateIceMaterial();
+                rb.gravityScale = 0;
+                rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                if (isStatic)
+                    rb.bodyType = RigidbodyType2D.Static;
+                var box = obj.AddComponent<BoxCollider2D>();
+                box.size = size;
+                box.offset = Vector2.zero;
+            }
+            
+            return obj;
+        }
         public static GameObject NewEntity<T>(Vector2 pos, string name, string spriteName, string sortingLayerName, bool collider, string objectLayer, bool isStatic) where T : MonoBehaviour
         {
             var obj = new GameObject(name);
