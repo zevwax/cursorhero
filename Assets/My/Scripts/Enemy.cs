@@ -1,6 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
+using System.Collections;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -61,6 +61,11 @@ namespace ZevWaxGames.CursorHero
         {
             targetObj = mainCharacter.gameObject;
             col.enabled = true;
+            StartCoroutine(CStartShooting());
+        }
+        private IEnumerator CStartShooting()
+        {
+            yield return new WaitForSeconds(1.25f);
             StartShooting();
         }
         private void Disable()

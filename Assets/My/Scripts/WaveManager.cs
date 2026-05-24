@@ -33,7 +33,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 2,
-                spawnRate = 1.2f*2f,
+                spawnRate = 1f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 1,
@@ -43,7 +43,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 3,
-                spawnRate = 1.1f,
+                spawnRate = .9f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 2,
@@ -53,7 +53,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 1,
-                spawnRate = 1f*2f,
+                spawnRate = .8f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 3,
@@ -63,7 +63,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 3,
-                spawnRate = 1.1f*1.5f,
+                spawnRate = .9f*1.5f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 4,
@@ -73,7 +73,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 4,
-                spawnRate = 1f,
+                spawnRate = .8f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 5,
@@ -83,7 +83,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 2,
-                spawnRate = 0.9f*2f,
+                spawnRate = .7f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 8,
                 maxEnemiesPerSpawn = 6,
@@ -93,7 +93,7 @@ namespace ZevWaxGames.CursorHero
             
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 4,
-                spawnRate = 1f*1.5f,
+                spawnRate = .8f*1.5f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 7,
@@ -103,7 +103,7 @@ namespace ZevWaxGames.CursorHero
             
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 5,
-                spawnRate = 0.9f,
+                spawnRate = .7f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 8,
@@ -113,7 +113,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 3,
-                spawnRate = 0.8f*2f,
+                spawnRate = .6f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 12,
                 maxEnemiesPerSpawn = 9,
@@ -123,7 +123,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 5,
-                spawnRate = 0.9f*1.5f,
+                spawnRate = .7f*1.5f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 10,
@@ -133,7 +133,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 6,
-                spawnRate = 0.8f,
+                spawnRate = .6f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 11,
@@ -143,7 +143,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 4,
-                spawnRate = 0.7f*2f,
+                spawnRate = .5f*2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 16,
                 maxEnemiesPerSpawn = 12,
@@ -153,7 +153,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 6,
-                spawnRate = 0.8f*1.5f,
+                spawnRate = .6f*1.5f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 13,
@@ -163,7 +163,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 7,
-                spawnRate = 0.7f,
+                spawnRate = .5f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 14,
@@ -173,7 +173,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 5,
-                spawnRate = 0.6f,
+                spawnRate = .4f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 20,
                 maxEnemiesPerSpawn = 15,
@@ -185,7 +185,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 2*4,
-                spawnRate = 1.2f*2f,
+                spawnRate = 1f*2f/2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 1,
@@ -195,7 +195,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 3*4,
-                spawnRate = 1.1f,
+                spawnRate = .9f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 2,
@@ -205,7 +205,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 1*4,
-                spawnRate = 1f*2f,
+                spawnRate = .8f*2f/2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 3,
@@ -215,7 +215,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 3*4,
-                spawnRate = 1.1f*1.5f,
+                spawnRate = .9f*1.5f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 4,
@@ -225,7 +225,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 4*4,
-                spawnRate = 1f,
+                spawnRate = .8f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 5,
@@ -235,7 +235,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 2*4,
-                spawnRate = 0.9f*2f,
+                spawnRate = .7f*2f/2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 8,
                 maxEnemiesPerSpawn = 6,
@@ -245,7 +245,7 @@ namespace ZevWaxGames.CursorHero
             
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 4*4,
-                spawnRate = 1f*1.5f,
+                spawnRate = .8f*1.5f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 7,
@@ -255,7 +255,7 @@ namespace ZevWaxGames.CursorHero
             
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 5*4,
-                spawnRate = 0.9f,
+                spawnRate = .7f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 8,
@@ -265,7 +265,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 3*4,
-                spawnRate = 0.8f*2f,
+                spawnRate = .6f*2f/2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 12,
                 maxEnemiesPerSpawn = 9,
@@ -275,7 +275,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 5*4,
-                spawnRate = 0.9f*1.5f,
+                spawnRate = .7f*1.5f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 10,
@@ -285,7 +285,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 6*4,
-                spawnRate = 0.8f,
+                spawnRate = .6f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 11,
@@ -295,7 +295,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 4*4,
-                spawnRate = 0.7f*2f,
+                spawnRate = .5f*2f/2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 16,
                 maxEnemiesPerSpawn = 12,
@@ -305,7 +305,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 6*4,
-                spawnRate = 0.8f*1.5f,
+                spawnRate = .6f*1.5f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 13,
@@ -315,7 +315,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 7*4,
-                spawnRate = 0.7f,
+                spawnRate = .5f/2f,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 14,
@@ -325,7 +325,7 @@ namespace ZevWaxGames.CursorHero
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 5*4,
-                spawnRate = 0.6f,
+                spawnRate = .4f/2f,
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 20,
                 maxEnemiesPerSpawn = 15,
@@ -402,7 +402,7 @@ namespace ZevWaxGames.CursorHero
         public Vector2 GetRandomPos()
         {
             if (aspectHandler == null) return Vector2.zero;
-            int side = Random.Range(0, 4);
+            int side = 0;//Random.Range(0, 4);
             float buffer = 1f;
             switch (side)
             {

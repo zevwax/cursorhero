@@ -38,9 +38,10 @@ namespace ZevWaxGames.CursorHero
             else if (transform.position.y < 2.4f)
             {
                 SetFlag();
-                offScreenPosition = new Vector2(offScreenPosition.x, offScreenPosition.y + 1.25f);
-                inScreenPosition = new Vector2(inScreenPosition.x, inScreenPosition.y + 1.25f);
-                transform.DOMove(new Vector3(0, transform.position.y + 1.25f, 0), 0).SetEase(Ease.Linear).WaitForCompletion();
+                var diff = 1.25f;
+                offScreenPosition = new Vector2(offScreenPosition.x, offScreenPosition.y + diff);
+                inScreenPosition = new Vector2(inScreenPosition.x, inScreenPosition.y + diff);
+                transform.position = new Vector3(transform.position.x, transform.position.y + diff, 0);
             }
         }
         private void SetFlag()

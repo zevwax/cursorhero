@@ -14,11 +14,12 @@ namespace ZevWaxGames.CursorHero
         public bool is_trackable = true;
         public float WeightBuff = 0f;
         public float ProjectileSpeed = 6f;
-        public float Sensitivity = 0.3f;
+        public float Sensitivity = 0.25f;
         public float MaxHP = 10f;
         public GameObject SkinSetter => skinSetter;
         private GameObject skinSetter = null;
         private GameObject currentShield;
+        private Coroutine currentShieldRoutine;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -111,13 +112,14 @@ namespace ZevWaxGames.CursorHero
             HP = 10f;
             WeightBuff = 0f;
             ProjectileSpeed = 6f;
-            Sensitivity = 0.3f;
+            Sensitivity = 0.25f;
             Guns.Library[GunName.Yellow].Cooldown = 2f;
             Guns.Library[GunName.Yellow].Weight = 1f;
             Guns.Library[GunName.Yellow].Size = 1f;
             Enable();
             Projectile.RefreshWallpapers1();
             Projectile.RefreshWallpapers2();
+            SummonShield();
         }
         protected override void Die()
         {
@@ -134,6 +136,7 @@ namespace ZevWaxGames.CursorHero
             is_trackable = true;
             SetGlove();
             StartShooting();
+            SummonShield();
         }
         private void Disable()
         {
@@ -187,7 +190,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (currentShield != null) return;
             DJ.Instance.HandleGettingDamage();
-            StartCoroutine(CastShield());
+            SummonShield();
             StartCoroutine(DoGlitch());
             base.GetDamage(damage);
             Spawner.NewDamageNumbers(transform.position, false, damage);
@@ -198,13 +201,23 @@ namespace ZevWaxGames.CursorHero
             DJ.PlayShoot();
             base.Shoot();
         }
-        private IEnumerator DoGlitch()
+        public IEnumerator DoGlitch()
         {
             for (var i = 0; i < 15; i++)
             {
                 Spawner.NewGlitch();
                 yield return new WaitForSeconds(0.033f);
             }
+        }
+
+        private void SummonShield()
+        {
+            if (currentShieldRoutine != null)
+            {
+                StopCoroutine(currentShieldRoutine);
+                Destroy(currentShield.gameObject);
+            }
+            currentShieldRoutine = StartCoroutine(CastShield());
         }
         private IEnumerator CastShield()
         {

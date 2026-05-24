@@ -98,28 +98,33 @@ namespace ZevWaxGames.CursorHero
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
-            SwitchActionTo(2);
+            SwitchActionTo(2); SwitchActionTo(3);
             yield return StartCoroutine(Say(
                 "Let me..",
-                65f));
-            
-            yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
-            SwitchActionTo(3);
+                46f));
+            yield return new WaitForSeconds(0.33f);
+            yield return StartCoroutine(MainCharacter.Instance.DoGlitch());
+            yield return new WaitForSeconds(0.75f);
             yield return StartCoroutine(Say(
-                "Uugh.. It seems we don't have a lot of time.. Agents want to kill you",
+                "Uugh..",
+                46f));
+            yield return new WaitForSeconds(0.75f);
+            yield return StartCoroutine(Say(
+                "It seems we don't have much time.. Agents are trying to kill you!!",
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(4);
             yield return StartCoroutine(Say(
-                "They'll retreat when the timer runs out",
+                "They'll retreat once the timer runs out.",
                 65f)); var ra = Spawner.NewRedArrow(new Vector2(6.51f, -3.45f), Vector2.down);
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(5);
+            Destroy(ra);
             yield return StartCoroutine(Say(
                 "Please, don't get hurt..",
-                65f)); Destroy(ra);
+                65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(6);
@@ -130,7 +135,7 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(WalkIn());
             yield return StartCoroutine(Say(
-                "Whew, you did this, and it's time to loot!!",
+                "Whew, you did it! Now, time for loot!",
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
@@ -142,11 +147,12 @@ namespace ZevWaxGames.CursorHero
                 65f)); var ra2 = Spawner.NewRedArrow(arrow2Pos, Vector2.down);
             
             yield return new WaitUntil(() => currActionIndex == 9);
+            Destroy(ra2);
             var shortcutPos = Object.FindAnyObjectByType<ButtonSwitchPC>().transform.position;
             var arrow3Pos = new Vector3(shortcutPos.x, shortcutPos.y + 1f, 0f);
             yield return StartCoroutine(Say(
-                "Good job, boss!! Push the shortcut when you'll finish looting, okay??",
-                65f)); Destroy(ra2); var ra3 = Spawner.NewRedArrow(arrow3Pos, Vector2.down);
+                "Good job, boss!! Hit the shortcut when you finish looting, okay??",
+                65f)); var ra3 = Spawner.NewRedArrow(arrow3Pos, Vector2.down);
             yield return new WaitForSeconds(1f);
             G.Instance.net.GetComponent<Button>().EnableButton();
             

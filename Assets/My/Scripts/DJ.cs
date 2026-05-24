@@ -72,10 +72,10 @@ namespace ZevWaxGames.CursorHero
         {
             blueFaceVoiceAS = SetupAudioSource("My/My/Clips/BlueFaceVoice", false);
             shootAS = SetupAudioSource("My/My/Clips/key_clack", false);
-            diskAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Pop-up Blocked", false);
-            lmbAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Menu Command", false);
-            completeAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Print complete", false);
-            deathAS = SetupAudioSource("My/WinXp/Sounds/Windows XP Critical Stop", false);
+            diskAS = SetupAudioSource("My/My/Clips/Windows XP Pop-up Blocked", false);
+            lmbAS = SetupAudioSource("My/My/Clips/Windows XP Menu Command", false);
+            completeAS = SetupAudioSource("My/My/Clips/Windows XP Print complete", false);
+            deathAS = SetupAudioSource("My/My/Clips/Windows XP Critical Stop", false);
             clubRGAS = SetupAudioSource("My/My/Clips/808_VIP_Wizard_Club_RG", true);
             clubBCAS = SetupAudioSource("My/My/Clips/808_VIP_Wizard_Club_BC", true);
             dreamAS = SetupAudioSource("My/My/Clips/Ancient_Dream", true);

@@ -43,7 +43,6 @@ namespace ZevWaxGames.CursorHero
         }
         protected IEnumerator ShootingRoutine()
         {
-            yield return new WaitForSeconds(1);
             while (mainCharacter.is_trackable)
             {
                 if (targetObj != null && gun != null)
