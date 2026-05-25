@@ -2,41 +2,52 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.InputSystem;
+
 namespace ZevWaxGames.CursorHero
 {
-    public class Selection : MonoBehaviour
+    public abstract class Selection : MonoBehaviour
     {
-        public static Selection Instance { get; private set; }
-        private RectTransform _rectTransform;
+        protected RectTransform _rectTransform;
         private Image _image;
-        private Vector3 _startPos;
+        protected Vector3 _startPos;
         private Sprite[] _sprites;
-        private const float PixelsPerUnit = 30f;
-        private bool isActive = false;
+        protected const float PixelsPerUnit = 30f;
+        protected bool isActive = false;
 
-        private void Awake() => Instance = this;
-        private void Start()
+        protected abstract bool CanStartSelection();
+        protected abstract Vector3 GetPointerPos();
+        protected abstract void OnStartSelecting();
+        protected abstract void OnFinishSelecting();
+
+        protected virtual void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
             _rectTransform.sizeDelta = Vector2.zero;
             _image = transform.GetChild(0).GetComponent<Image>();
             _startPos = GetPointerPos();
+            
             _sprites = new Sprite[3];
             _sprites[0] = Resources.Load<Sprite>("My/My/Sprites/s1");
             _sprites[1] = Resources.Load<Sprite>("My/My/Sprites/s2");
             _sprites[2] = Resources.Load<Sprite>("My/My/Sprites/s3");
+            
             StartCoroutine(AnimateSprites());
         }
-        private void Update()
+
+        protected virtual void Update()
         {
-            if (!MainCharacter.Instance.IsAbleForReskinBy(gameObject)) return;
+            if (!CanStartSelection()) return;
+
             if (Mouse.current.leftButton.wasPressedThisFrame)
                 StartSelecting();
+
             if (isActive)
                 UpdateLayout();
+
             if (Mouse.current.leftButton.wasReleasedThisFrame)
                 FinishSelecting();
         }
+
         private void UpdateLayout()
         {
             var currPos = GetPointerPos();
@@ -45,6 +56,7 @@ namespace ZevWaxGames.CursorHero
             float heightUnits = Mathf.Abs(currPos.y - _startPos.y);
             _rectTransform.sizeDelta = new Vector2(widthUnits * PixelsPerUnit, heightUnits * PixelsPerUnit);
         }
+
         private IEnumerator AnimateSprites()
         {
             int currentIndex = 0;
@@ -58,89 +70,56 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(0.5f);
             }
         }
-        public void FinishSelecting()
-        {
-            var o = GetSelectedObject();
-            if (o != null)
-            {
-                if (o.GetComponent<ItemKey>() != null)
-                {
-                    var w = o.GetComponent<ItemKey>().Weight;
-                    var s = o.GetComponent<ItemKey>().Size;
-                    MainCharacter.Instance.edge = w;
-                    MainCharacter.Instance.size = s;
-                    Guns.Library[GunName.Yellow].Weight = w;
-                    Guns.Library[GunName.Yellow].Size = s;
-                    ClipboardTextbox.Instance.UpdateContents();
-                    Spawner.NewDamageNumbers(transform.position, "Copied A.glyph");
-                }
-                else if (o.GetComponent<ItemApple>() != null)
-                {
-                    MainCharacter.Instance.HP += 3;
-                    Spawner.NewDamageNumbers(transform.position, "+3 HP");
-                    Destroy(o);
-                }
-                Tabby.Instance.SwitchActionTo(9);
-            }
-            isActive = false;
-            _rectTransform.sizeDelta = Vector2.zero;
-            MainCharacter.Instance.SetGlove(gameObject);
-        }
+
         public void StartSelecting()
         {
             isActive = true;
             _startPos = GetPointerPos();
-            MainCharacter.Instance.SetCross(gameObject);
+            OnStartSelecting();
         }
-        private Vector3 GetPointerPos() => MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
-        private GameObject GetSelectedObject()
+
+        public void FinishSelecting()
         {
+            OnFinishSelecting();
+            isActive = false;
+            _rectTransform.sizeDelta = Vector2.zero;
+        }
+
+        protected GameObject GetSelectedObject()
+        {
+            var halfOfW = (_rectTransform.sizeDelta.x / PixelsPerUnit) * 0.5f;
+            var halfOfH = (_rectTransform.sizeDelta.y / PixelsPerUnit) * 0.5f;
+
+            var posXOfLeftSideOfTheSelection = transform.position.x - halfOfW;
+            var posXOfRightSideOfTheSelection = transform.position.x + halfOfW;
+            var posYOfBottomSideOfTheSelection = transform.position.y - halfOfH;
+            var posYOfTopSideOfTheSelection = transform.position.y + halfOfH;
+
             var allScripts = Object.FindObjectsByType<ItemKey>(FindObjectsSortMode.None);
-            var ppu = 30;
-            var halfOfW = (_rectTransform.sizeDelta.x / ppu) * 0.5f;
-            var halfOfH = (_rectTransform.sizeDelta.y / ppu) * 0.5f;
             foreach (var piece in allScripts)
             {
-                var posXOfLeftSideOfThePiece = piece.transform.position.x - piece.transform.lossyScale.x / 2;
-                var posXOfRightSideOfThePiece = piece.transform.position.x + piece.transform.lossyScale.x / 2;
-                var posYOfBottomSideOfThePiece = piece.transform.position.y - piece.transform.lossyScale.y / 2;
-                var posYOfTopSideOfThePiece = piece.transform.position.y + piece.transform.lossyScale.y / 2;
-                var posXOfLeftSideOfTheSelection = transform.position.x - halfOfW;
-                var posXOfRightSideOfTheSelection = transform.position.x + halfOfW;
-                var posYOfBottomSideOfTheSelection = transform.position.y - halfOfH;
-                var posYOfTopSideOfTheSelection = transform.position.y + halfOfH;
-                if
-                (
-                    posXOfLeftSideOfTheSelection < posXOfLeftSideOfThePiece &&
-                    posXOfRightSideOfThePiece < posXOfRightSideOfTheSelection &&
-                    posYOfBottomSideOfTheSelection < posYOfBottomSideOfThePiece &&
-                    posYOfTopSideOfThePiece < posYOfTopSideOfTheSelection
-                )
+                if (IsInsideSelection(piece.transform, posXOfLeftSideOfTheSelection, posXOfRightSideOfTheSelection, posYOfBottomSideOfTheSelection, posYOfTopSideOfTheSelection))
                     return piece.gameObject;
             }
             
             var allApples = Object.FindObjectsByType<ItemApple>(FindObjectsSortMode.None);
             foreach (var apple in allApples)
             {
-                var posXOfLeftSideOfThePiece = apple.transform.position.x - apple.transform.lossyScale.x / 2;
-                var posXOfRightSideOfThePiece = apple.transform.position.x + apple.transform.lossyScale.x / 2;
-                var posYOfBottomSideOfThePiece = apple.transform.position.y - apple.transform.lossyScale.y / 2;
-                var posYOfTopSideOfThePiece = apple.transform.position.y + apple.transform.lossyScale.y / 2;
-                var posXOfLeftSideOfTheSelection = transform.position.x - halfOfW;
-                var posXOfRightSideOfTheSelection = transform.position.x + halfOfW;
-                var posYOfBottomSideOfTheSelection = transform.position.y - halfOfH;
-                var posYOfTopSideOfTheSelection = transform.position.y + halfOfH;
-                if
-                (
-                    posXOfLeftSideOfTheSelection < posXOfLeftSideOfThePiece &&
-                    posXOfRightSideOfThePiece < posXOfRightSideOfTheSelection &&
-                    posYOfBottomSideOfTheSelection < posYOfBottomSideOfThePiece &&
-                    posYOfTopSideOfThePiece < posYOfTopSideOfTheSelection
-                )
+                if (IsInsideSelection(apple.transform, posXOfLeftSideOfTheSelection, posXOfRightSideOfTheSelection, posYOfBottomSideOfTheSelection, posYOfTopSideOfTheSelection))
                     return apple.gameObject;
             }
             
             return null;
+        }
+
+        private bool IsInsideSelection(Transform target, float left, float right, float bottom, float top)
+        {
+            var targetLeft = target.position.x - target.lossyScale.x / 2;
+            var targetRight = target.position.x + target.lossyScale.x / 2;
+            var targetBottom = target.position.y - target.lossyScale.y / 2;
+            var targetTop = target.position.y + target.lossyScale.y / 2;
+
+            return left < targetLeft && targetRight < right && bottom < targetBottom && targetTop < top;
         }
     }
 }

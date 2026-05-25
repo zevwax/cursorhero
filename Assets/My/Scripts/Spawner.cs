@@ -14,6 +14,23 @@ namespace ZevWaxGames.CursorHero
             ice.friction = 0f;
             return ice;
         }
+
+        public static GameObject NewTabbyPointer(Vector2 pos)
+        {
+            var obj = NewEntity<TabbyPointer>(
+                Vector2.zero, "Tabby Pointer", "tabby_idle", "Selection", false,
+                "Default", false);
+            obj.GetComponent<TabbyPointer>().Init(new Vector3(pos.x, pos.y, 0));
+            return obj;
+        }
+        public static GameObject NewTabbySelection()
+        {
+            var obj = NewEntity<TabbySelection>(Vector2.zero, "Tabby Selection", "s1", "Selection", false, "Default", false);
+            var image = obj.transform.GetChild(0).GetComponent<Image>();
+            image.type = Image.Type.Sliced;
+            image.color = new Color(1f, 0.8f, 0.8f, 1f);
+            return obj;
+        }
         public static void NewMapLine(Vector2 pos, Sprite sprite)
         {
             var obj = NewEntity<MapLine>(
@@ -526,7 +543,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewSelection()
         {
-            var obj = NewEntity<Selection>(Vector2.zero, "Selection", "s1", "Selection", false, "Default", false);
+            var obj = NewEntity<MainCharacterSelection>(Vector2.zero, "Selection", "s1", "Selection", false, "Default", false);
             obj.transform.GetChild(0).GetComponent<Image>().type = Image.Type.Sliced;
             return obj;
         }

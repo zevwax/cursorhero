@@ -141,23 +141,24 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(8);
             var keyPos = Object.FindAnyObjectByType<ItemKey>().transform.position;
-            var arrow2Pos = new Vector3(keyPos.x, keyPos.y + 1f, 0f);
+            var selectionPos = new Vector3(keyPos.x, keyPos.y, 0f);
             yield return StartCoroutine(Say(
                 "Try holding down the Left Mouse Button to select the glyph you found in the recycle bin",
-                65f)); var ra2 = Spawner.NewRedArrow(arrow2Pos, Vector2.down);
+                65f));
+            var selection = Spawner.NewTabbyPointer(selectionPos);
             
             yield return new WaitUntil(() => currActionIndex == 9);
-            Destroy(ra2);
+            Destroy(selection);
             var shortcutPos = Object.FindAnyObjectByType<ButtonSwitchPC>().transform.position;
-            var arrow3Pos = new Vector3(shortcutPos.x, shortcutPos.y + 1f, 0f);
+            var arrow2Pos = new Vector3(shortcutPos.x, shortcutPos.y + 1f, 0f);
             yield return StartCoroutine(Say(
                 "Good job, boss!! Hit the shortcut when you finish looting, okay??",
-                65f)); var ra3 = Spawner.NewRedArrow(arrow3Pos, Vector2.down);
+                65f)); var ra2 = Spawner.NewRedArrow(arrow2Pos, Vector2.down);
             yield return new WaitForSeconds(1f);
             G.Instance.net.GetComponent<Button>().EnableButton();
             
             yield return new WaitUntil(() => currActionIndex == 10);
-            Destroy(ra3);
+            Destroy(ra2);
             yield return StartCoroutine(WalkOut());
         }
         private IEnumerator WalkIn()
