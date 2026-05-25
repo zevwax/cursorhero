@@ -22,6 +22,11 @@ namespace ZevWaxGames.CursorHero
         private Coroutine currentShieldRoutine;
         
         private HeartKeeper hk;
+
+        // === NEW ===
+        public Vector2 BackDirection { get; private set; } = Vector2.left;
+        // ===========
+
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -57,6 +62,13 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewSelection();
             hk = Spawner.NewHeartKeeper(Vector2.zero).GetComponent<HeartKeeper>();
             
+            // === NEW ===
+            if (hk != null && hk.GetComponent<Follower>() != null)
+            {
+                hk.GetComponent<Follower>().UpdateQueueIndex(0, 1);
+            }
+            // ===========
+            
             base.Start();
         }
         protected override void Update()
@@ -71,6 +83,13 @@ namespace ZevWaxGames.CursorHero
             Vector2 currentMousePos = GetMousePos();
             Vector2 delta = currentMousePos - lastMousePos;
             lastMousePos = currentMousePos;
+
+            // === NEW ===
+            if (delta.sqrMagnitude > 0.001f)
+            {
+                BackDirection = -delta.normalized;
+            }
+            // ===========
 
             virtualPos += delta;
             rb.MovePosition(virtualPos);
@@ -236,5 +255,18 @@ namespace ZevWaxGames.CursorHero
             WeightBuff += diff;
             ClipboardTextbox.Instance.UpdateContents();
         }
+
+        // === NEW ===
+        public void AddHeartKeeper()
+        {
+            Spawner.NewHeartKeeper(transform.position);
+            
+            Follower[] followers = Object.FindObjectsByType<Follower>(FindObjectsSortMode.None);
+            for (int i = 0; i < followers.Length; i++)
+            {
+                followers[i].UpdateQueueIndex(i, followers.Length);
+            }
+        }
+        // ===========
     }
 }

@@ -649,6 +649,7 @@ namespace ZevWaxGames.CursorHero
                 case "Speed": obj = CreateBaseButton<UpgradeProjectileSpeed>(pos, "UpgradeSpeed", "btn_upgrade_spd"); break;
                 case "Sensitivity": obj = CreateBaseButton<UpgradeSensitivity>(pos, "UpgradeSensitivity", "btn_upgrade_sen"); break;
                 case "Heart": obj = CreateBaseButton<UpgradeHeart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
+                case "HeartKeeper": obj = CreateBaseButton<UpgradeHeartKeeper>(pos, "UpgradeHeartKeeper", "btn_upgrade_mxh"); break;
                 default: throw new System.NotImplementedException();
             }
             return obj;

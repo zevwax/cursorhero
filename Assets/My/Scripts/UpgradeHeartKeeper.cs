@@ -1,14 +1,15 @@
 namespace ZevWaxGames.CursorHero
 {
-    public class UpgradeHeart : Upgrade
+    public class UpgradeHeartKeeper : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Restore Full HP";
+            tooltipText = "Add an empty Heart Keeper";
             base.Start();
         }
         public override void ButtonAction()
         {
-            MainCharacter.Instance.HP = MainCharacter.Instance.MaxHP;
+            MainCharacter.Instance.MaxHP += 5;
+            MainCharacter.Instance.AddHeartKeeper();
             base.ButtonAction();
         }
     }
