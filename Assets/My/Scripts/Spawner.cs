@@ -15,6 +15,55 @@ namespace ZevWaxGames.CursorHero
             return ice;
         }
 
+        public static GameObject NewHeartKeeper(Vector2 pos)
+        {
+            var obj = NewEntity<HeartKeeper>(
+                Vector2.zero, "Heart Keeper", "idle", "Selection", false,
+                "Default", false);
+
+            obj.AddComponent<Follower>();
+            
+            var imageObj2 = new GameObject("Layer 2");
+            imageObj2.transform.SetParent(obj.transform, false);
+            var imageRt2 = imageObj2.AddComponent<RectTransform>();
+            imageRt2.anchorMin = Vector2.zero;
+            imageRt2.anchorMax = Vector2.one;
+            imageRt2.offsetMin = Vector2.zero;
+            imageRt2.offsetMax = Vector2.zero;
+            var image2 = imageObj2.AddComponent<Image>();
+            image2.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
+            if (imageObj2.GetComponent<CanvasRenderer>() == null)
+                imageObj2.AddComponent<CanvasRenderer>();
+            
+            var imageObj3 = new GameObject("Layer 3");
+            imageObj3.transform.SetParent(obj.transform, false);
+            var imageRt3 = imageObj3.AddComponent<RectTransform>();
+            imageRt3.anchorMin = Vector2.zero;
+            imageRt3.anchorMax = Vector2.one;
+            imageRt3.offsetMin = Vector2.zero;
+            imageRt3.offsetMax = Vector2.zero;
+            var image3 = imageObj3.AddComponent<Image>();
+            image3.sprite = Resources.Load<Sprite>("My/My/Sprites/heart");
+            if (imageObj3.GetComponent<CanvasRenderer>() == null)
+                imageObj3.AddComponent<CanvasRenderer>();
+
+            imageObj3.AddComponent<BeatingHeart>();
+            
+            var imageObj4 = new GameObject("Layer 4");
+            imageObj4.transform.SetParent(obj.transform, false);
+            var imageRt4 = imageObj4.AddComponent<RectTransform>();
+            imageRt4.anchorMin = Vector2.zero;
+            imageRt4.anchorMax = Vector2.one;
+            imageRt4.offsetMin = Vector2.zero;
+            imageRt4.offsetMax = Vector2.zero;
+            var image4 = imageObj4.AddComponent<Image>();
+            image4.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
+            if (imageObj4.GetComponent<CanvasRenderer>() == null)
+                imageObj4.AddComponent<CanvasRenderer>();
+            
+            obj.GetComponent<HeartKeeper>().Init();
+            return obj;
+        }
         public static GameObject NewTabbyPointer(Vector2 pos)
         {
             var obj = NewEntity<TabbyPointer>(
@@ -556,7 +605,7 @@ namespace ZevWaxGames.CursorHero
             canvas.sortingLayerName = "Pointer";
 
             var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(11, 1);
+            rectTransform.sizeDelta = new Vector2(17, 3);
             rectTransform.localScale = new Vector3(0, 0, 1); 
 
             obj.AddComponent<CanvasScaler>();

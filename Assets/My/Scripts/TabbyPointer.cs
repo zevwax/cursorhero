@@ -63,15 +63,17 @@ namespace ZevWaxGames.CursorHero
                 
                 SetSelectionAlpha(0f);
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.9f);
 
-                if (pointerImage != null) pointerImage.sprite = copySprite;
+                pointerImage.sprite = copySprite;
                 
                 if (currentSelection != null)
                 {
                     SetSelectionAlpha(alpha);
                     currentSelection.StartSelectionFromPointer(initPos);
                 }
+                
+                yield return new WaitForSeconds(0.9f);
 
                 Vector3 targetPos = initPos + new Vector3(selectionSquareSide, -selectionSquareSide, 0f);
                 bool tweenCompleted = false;

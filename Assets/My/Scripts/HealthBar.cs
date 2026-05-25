@@ -18,7 +18,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (MainCharacter.Instance != null && foregroundRT != null)
             {
-                transform.position = MainCharacter.Instance.transform.position + new Vector3(0, -0.5f, 0);
+                transform.position = MainCharacter.Instance.transform.position + new Vector3(0, -0.45f, 0);
                 
                 float healthRatio = Mathf.Clamp01(MainCharacter.Instance.HP / MainCharacter.Instance.MaxHP);
                 float rightMargin = (1f - healthRatio) * -fullWidth;

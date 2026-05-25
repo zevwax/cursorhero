@@ -15,11 +15,13 @@ namespace ZevWaxGames.CursorHero
         public float WeightBuff = 0f;
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.25f;
-        public float MaxHP = 10f;
+        public float MaxHP = 5f;
         public GameObject SkinSetter => skinSetter;
         private GameObject skinSetter = null;
         private GameObject currentShield;
         private Coroutine currentShieldRoutine;
+        
+        private HeartKeeper hk;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -36,7 +38,7 @@ namespace ZevWaxGames.CursorHero
         {
             Instance = this;
             
-            HP = 10f;
+            HP = 5f;
             
             gun = Guns.Library[GunName.Yellow];
             gameObject.layer = LayerMask.NameToLayer("MainCharacter");
@@ -50,9 +52,10 @@ namespace ZevWaxGames.CursorHero
             lastMousePos = GetMousePos();
             virtualPos = rb.position;
 
-            Spawner.NewHealthBar();
+            //Spawner.NewHealthBar();
             Spawner.NewYellowCirc();
             Spawner.NewSelection();
+            hk = Spawner.NewHeartKeeper(Vector2.zero).GetComponent<HeartKeeper>();
             
             base.Start();
         }
@@ -108,8 +111,8 @@ namespace ZevWaxGames.CursorHero
         {
             edge = 1f;
             size = 1f;
-            MaxHP = 10f;
-            HP = 10f;
+            MaxHP = 5f;
+            HP = 5f;
             WeightBuff = 0f;
             ProjectileSpeed = 6f;
             Sensitivity = 0.25f;
@@ -193,6 +196,7 @@ namespace ZevWaxGames.CursorHero
             SummonShield();
             StartCoroutine(DoGlitch());
             base.GetDamage(damage);
+            hk.ShowFingers((int)System.Math.Round(HP));
             Spawner.NewDamageNumbers(transform.position, false, damage);
             ImpulseSource.Instance.Invoke();
         }

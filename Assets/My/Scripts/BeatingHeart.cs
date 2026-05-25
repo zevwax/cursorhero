@@ -1,0 +1,40 @@
+using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+
+namespace ZevWaxGames.CursorHero
+{
+    [RequireComponent(typeof(Image))]
+    public class BeatingHeart : MonoBehaviour
+    {
+        [Header("Animation Settings")]
+        [SerializeField] private float targetScale = 1.2f;
+        [SerializeField] private float beatDuration = 0.4f;
+        [SerializeField] private Ease pulseEase = Ease.InOutQuad;
+
+        private Image heartImage;
+        private Tweener pulseTweener;
+
+        private void Awake()
+        {
+            heartImage = GetComponent<Image>();
+        }
+
+        private void Start()
+        {
+            StartBeating();
+        }
+
+        private void StartBeating()
+        {
+            pulseTweener = transform.DOScale(Vector3.one * targetScale, beatDuration)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetEase(pulseEase);
+        }
+
+        private void OnDestroy()
+        {
+            pulseTweener?.Kill();
+        }
+    }
+}
