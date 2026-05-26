@@ -20,7 +20,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewHeartKeeper(Vector2 pos)
         {
             var obj = NewEntity<HeartKeeper>(
-                Vector2.zero, "Heart Keeper", "idle", "HeartKeeper", true,
+                pos, "Heart Keeper", "idle", "HeartKeeper", true,
                 "HeartKeeper");
             var follower = obj.AddComponent<Follower>();
             NewImage(obj.transform, "idle");
@@ -666,7 +666,12 @@ namespace ZevWaxGames.CursorHero
             bottleWalls[3].GetComponent<PositionFollower>().offset = new Vector2(0, -(0.5f/ppu));
             
             var hkPos = new Vector2(pos.x, pos.y - (26f/ppu));
-            Spawner.NewHeartKeeper(hkPos);
+            var prisoner = NewHeartKeeper(hkPos);
+            var bpComp = prisoner.AddComponent<BottlePrisoner>();
+            bpComp.leftWall = bottleWalls[0].transform;
+            bpComp.rightWall = bottleWalls[1].transform;
+            bpComp.bottomWall = bottleWalls[2].transform;
+            bpComp.topWall = bottleWalls[3].transform;
             
             return obj;
         }
