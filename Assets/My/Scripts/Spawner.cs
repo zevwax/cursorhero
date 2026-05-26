@@ -608,11 +608,27 @@ namespace ZevWaxGames.CursorHero
             var targetName3 = "bottle_stroke";
             var targetSprite3 = allSprites.FirstOrDefault(s => s.name == targetName3);
             
-            var bottleFullness = 0.25f;
+            var bottleFullness = Random.Range(0.1f, 0.25f);
             var obj = NewEntity<ItemBottle>(pos, "Bottle", targetSprite1, "Bottles", true, "Default");
             
             var maskObj = obj.transform.GetChild(0).gameObject;
             maskObj.AddComponent<Mask>().showMaskGraphic = false;
+            
+            var liquidColors = new List<Color>()
+            {
+                new Color(0.4f, 0.2f, 0.05f, 0.75f),
+                new Color(0.76f, 0.11f, 0.22f, 0.8f),
+                new Color(0.5f, 0.8f, 0.9f, 0.5f)
+            };
+            for (var i = 0; i < liquidColors.Count; i++)
+            {
+                var c = liquidColors[i];
+                c.r *= 0.666f;
+                c.g *= 0.666f;
+                c.b *= 0.666f;
+                liquidColors[i] = c;
+            }
+            var liquidColor = GetRandomElement(liquidColors);
             
             var waterImageObj = new GameObject("Water");
             waterImageObj.transform.SetParent(maskObj.transform, false);
@@ -625,13 +641,35 @@ namespace ZevWaxGames.CursorHero
             var waterImage = waterImageObj.AddComponent<Image>();
             if (waterImageObj.GetComponent<CanvasRenderer>() == null)
                 waterImageObj.AddComponent<CanvasRenderer>();
-            waterImage.color = new Color(0.5f, 0.25f, 0f, 0.8f);
+            waterImage.color = liquidColor;
+            
+            var glassColors = new List<Color>()
+            {
+                new Color(0.9f, 0.95f, 1f, 0.75f),
+                new Color(0.45f, 0.25f, 0.05f, 0.75f),
+                new Color(0.2f, 0.4f, 0.15f, 0.75f),
+                new Color(0.05f, 0.35f, 0.15f, 0.75f),
+                new Color(0.1f, 0.3f, 0.6f, 0.75f)
+            };
+            for (var i = 0; i < glassColors.Count; i++)
+            {
+                var c = glassColors[i];
+                c.r *= 0.666f;
+                c.g *= 0.666f;
+                c.b *= 0.666f;
+                glassColors[i] = c;
+            }
+            var fillColor = GetRandomElement(glassColors);
             
             NewImage(obj.transform, targetSprite0);
             var fill = NewImage(obj.transform, targetSprite1);
-            fill.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.75f);
+            fill.GetComponent<Image>().color = fillColor;
             NewImage(obj.transform, targetSprite2);
-            NewImage(obj.transform, targetSprite3);
+            var stroke = NewImage(obj.transform, targetSprite3);
+            stroke.GetComponent<Image>().color = fillColor;
+            
+            obj.GetComponent<ItemBottle>().glassColor = fillColor;
+            obj.GetComponent<ItemBottle>().liquidColor = liquidColor;
             
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             var bottleScript = obj.GetComponent<ItemBottle>();
@@ -666,19 +704,32 @@ namespace ZevWaxGames.CursorHero
             bottleWalls[3].GetComponent<PositionFollower>().offset = new Vector2(0, -(0.5f/ppu));
             
             var hkPos = new Vector2(pos.x, pos.y - (26f/ppu));
-            var prisoner = NewHeartKeeper(hkPos);
-            var bpComp = prisoner.AddComponent<BottlePrisoner>();
-            bpComp.leftWall = bottleWalls[0].transform;
-            bpComp.rightWall = bottleWalls[1].transform;
-            bpComp.bottomWall = bottleWalls[2].transform;
-            bpComp.topWall = bottleWalls[3].transform;
-            
+            if (Random.Range(0, 2) == 0)
+            {
+                var prisoner = NewHeartKeeper(hkPos);
+                obj.GetComponent<ItemBottle>().prisoner = prisoner.GetComponent<HeartKeeper>();
+                var bpComp = prisoner.AddComponent<BottlePrisoner>();
+                bpComp.leftWall = bottleWalls[0].transform;
+                bpComp.rightWall = bottleWalls[1].transform;
+                bpComp.bottomWall = bottleWalls[2].transform;
+                bpComp.topWall = bottleWalls[3].transform;
+            }
             return obj;
         }
-        public static GameObject NewLayingPieceOfGlass(Vector2 pos)
+        public static T GetRandomElement<T>(List<T> list)
+        {
+            if (list == null || list.Count == 0)
+            {
+                return default(T);
+            }
+
+            int randomIndex = UnityEngine.Random.Range(0, list.Count);
+            return list[randomIndex];
+        }
+        public static GameObject NewLayingPieceOfGlass(Vector2 pos, Color color)
         {
             var obj = NewEntity<ItemLayingPieceOfGlass>(pos, "LayingPieceOfGlass", "glass", "Bottles", true, "Default");
-            obj.GetComponent<CanvasGroup>().alpha = 0.75f;
+            obj.transform.GetChild(0).GetComponent<Image>().color = color;
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -217,27 +218,11 @@ namespace ZevWaxGames.CursorHero
         }
         public void IncreaseCurrHPByValue(int value)
         {
+            Debug.Log("IncreaseCurrHPByValue " + value);
             currHP = Math.Clamp(currHP + value, 0, maxHP);
             UpdateHeartKeepers();
             if (currHP == 0)
                 Die();
-        }
-        private void UpdateHeartKeepers()
-        {
-            var fingersToShow = CurrHP;
-            foreach (var hk in heartKeepers)
-            {
-                if (fingersToShow > 5)
-                {
-                    hk.ShowFingers(5);
-                    fingersToShow -= 5;
-                }
-                else
-                {
-                    hk.ShowFingers(fingersToShow);
-                    fingersToShow = 0;
-                }
-            }
         }
         protected override void Shoot()
         {
@@ -290,22 +275,43 @@ namespace ZevWaxGames.CursorHero
                 }
             if (number > 0)
                 for (var i = 0; i < number; i++)
-                {
-                    maxHP += 5;
-                    heartKeepers.Add(NewHeartKeeper());
-                }
+                    NewTamedHeartKeeper();
         }
-        private HeartKeeper NewHeartKeeper()
+        private HeartKeeper NewTamedHeartKeeper()
         {
             var hk = Spawner.NewHeartKeeper(transform.position).GetComponent<HeartKeeper>();
-            
-            Follower[] followers = Object.FindObjectsByType<Follower>(FindObjectsSortMode.None);
-            for (int i = 0; i < followers.Length; i++)
-            {
-                followers[i].UpdateQueueIndex(i, followers.Length);
-            }
-            
+            TameAHeartKeeper(hk);
             return hk;
+        }
+        public void TameAHeartKeeper(HeartKeeper hk)
+        {
+            heartKeepers.Add(hk);
+            hk.isOwned = true;
+            maxHP += 5;
+            UpdateQueueIndexes();
+        }
+        private void UpdateQueueIndexes()
+        {
+            for (var i = 0; i < heartKeepers.Count; i++)
+                heartKeepers[i].GetComponent<Follower>().UpdateQueueIndex(i, heartKeepers.Count);
+        }
+        private void UpdateHeartKeepers()
+        {
+            Debug.Log("UpdateHeartKeepers " + heartKeepers.Count);
+            var fingersToShow = CurrHP;
+            foreach (var hk in heartKeepers)
+            {
+                if (fingersToShow > 5)
+                {
+                    hk.ShowFingers(5);
+                    fingersToShow -= 5;
+                }
+                else
+                {
+                    hk.ShowFingers(fingersToShow);
+                    fingersToShow = 0;
+                }
+            }
         }
         private void MaxHPInit()
         {

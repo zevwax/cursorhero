@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -5,8 +6,12 @@ namespace ZevWaxGames.CursorHero
 {
     public class HeartKeeper : MonoBehaviour
     {
+        public bool isOwned = false;
         private Image[] layers;
         private static Sprite[][] sprites;
+
+        private void OnEnable() => EventHolder.OnFadingInToPCStarted += DieIfNeeded;
+        private void OnDisable() => EventHolder.OnFadingInToPCStarted -= DieIfNeeded;
         private void Awake()
         {
             if (sprites == null)
@@ -49,6 +54,12 @@ namespace ZevWaxGames.CursorHero
                 else
                     layers[i].color = new Color(0, 0, 0, 0);
             }
+        }
+
+        private void DieIfNeeded()
+        {
+            if (!isOwned)
+                Destroy(gameObject);
         }
     }
 }

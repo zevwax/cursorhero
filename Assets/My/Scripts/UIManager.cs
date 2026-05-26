@@ -88,8 +88,8 @@ namespace ZevWaxGames.CursorHero
                 "FireRate",
                 "Speed",
                 "Sensitivity",
-                "Heart",
-                "HeartKeeper"
+                "Heart"/*,
+                "HeartKeeper"*/
             );
             btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2.75f, 0f));
             btns[1] = Spawner.NewUpgradeButton(buttons[1], Vector2.zero);

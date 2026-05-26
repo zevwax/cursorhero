@@ -55,7 +55,21 @@ namespace ZevWaxGames.CursorHero
             
             Spawner.NewTabby();
             
-            Spawner.NewBottle(Vector2.zero);//TEMP
+            Spawner.NewBottle(new Vector2(-6f, 2.5f));//TEMP
+            Spawner.NewBottle(new Vector2(-4f, 2f));//TEMP
+            Spawner.NewBottle(new Vector2(-2f, 2.5f));//TEMP
+            Spawner.NewBottle(new Vector2(0f, 2f));//TEMP
+            Spawner.NewBottle(new Vector2(2f, 2.5f));//TEMP
+            Spawner.NewBottle(new Vector2(4f, 2f));//TEMP
+            Spawner.NewBottle(new Vector2(6f, 2.5f));//TEMP
+            
+            Spawner.NewBottle(new Vector2(-6f, -2.5f));//TEMP
+            Spawner.NewBottle(new Vector2(-4f, -2f));//TEMP
+            Spawner.NewBottle(new Vector2(-2f, -2.5f));//TEMP
+            Spawner.NewBottle(new Vector2(0f, -2f));//TEMP
+            Spawner.NewBottle(new Vector2(2f, -2.5f));//TEMP
+            Spawner.NewBottle(new Vector2(4f, -2f));//TEMP
+            Spawner.NewBottle(new Vector2(6f, -2.5f));//TEMP
             
             var path00 = "My/My/Sprites/map_line";
             var allSprites00 = Resources.LoadAll<Sprite>(path00);

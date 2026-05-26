@@ -5,9 +5,12 @@ namespace ZevWaxGames.CursorHero
 {
     public class ItemBottle : MonoBehaviour
     {
-        private static Transform psholder;
-        private static GameObject beerSplash;
+        private Transform psholder;
+        private GameObject beerSplash;
         public RectTransform waterRect;
+        public HeartKeeper prisoner;
+        public Color glassColor;
+        public Color liquidColor;
 
         [Header("Spring Physics")]
         [Tooltip("Force pulling water back to center. Higher = faster splashes.")]
@@ -122,14 +125,23 @@ namespace ZevWaxGames.CursorHero
                 Vector2 awayFromWall = (Vector2)transform.position - collisionPoint;
                 float angle = Mathf.Atan2(awayFromWall.y, awayFromWall.x) * Mathf.Rad2Deg;
                 
-                Instantiate(beerSplash, transform.position, Quaternion.Euler(0, 0, angle - 90), psholder);
+                var newParticleObject = Instantiate(beerSplash, transform.position, Quaternion.Euler(0, 0, angle - 90), psholder);
+                var ps = newParticleObject.transform.GetChild(0).GetComponent<ParticleSystem>();
+                if (ps != null)
+                {
+                    var mainModule = ps.main;
+                    mainModule.startColor = liquidColor;
+                }
                 
                 var piecesToDrop = UnityEngine.Random.Range(2, 3+1);
                 for (int i = 0; i < piecesToDrop; i++)
-                    Spawner.NewLayingPieceOfGlass(transform.position);
+                    Spawner.NewLayingPieceOfGlass(transform.position, glassColor);
                 
-                MainCharacter.Instance.SetGlove(gameObject);
-
+                var mainChar = MainCharacter.Instance;
+                mainChar.SetGlove(gameObject);
+                if (prisoner != null)
+                    mainChar.TameAHeartKeeper(prisoner);
+                
                 Die();
             }
         }
