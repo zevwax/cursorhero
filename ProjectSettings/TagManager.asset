@@ -25,8 +25,8 @@ TagManager:
   - BlueFace
   - Shield
   - ProjectileWall
-  - 
-  - 
+  - BottleWall
+  - HeartKeeper
   - 
   - 
   - 
@@ -80,6 +80,9 @@ TagManager:
     locked: 0
   - name: ButtonsFG
     uniqueID: 1832763641
+    locked: 0
+  - name: HeartKeeper
+    uniqueID: 2547352381
     locked: 0
   - name: Bottles
     uniqueID: 1413295005

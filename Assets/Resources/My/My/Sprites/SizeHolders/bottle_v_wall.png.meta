@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cffc4f99d99b0144ab0b9121264504da
+guid: eff4b597eae3f944ba64e7cb80466442
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2174827668884051896
-    second: bottle_0
+      213: 1980499428166490570
+    second: bottle_v_wall_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,89 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bottle_cork
+      name: bottle_v_wall_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 30
-        height: 60
+        width: 1
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 848a97402c571d1e0800000000000000
-      internalID: -2174827668884051896
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bottle_fill
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 0
-        width: 30
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 206e7614275c14e4687a3565aa0c9b98
-      internalID: -629982756
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bottle_glare
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 0
-        width: 30
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f632880112db274099e2871ae15cc41
-      internalID: 195664854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bottle_stroke
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 0
-        width: 30
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 422b056875bc1f64c938545116417265
-      internalID: 1397949342
+      spriteID: ac95abd9cb52c7b10800000000000000
+      internalID: 1980499428166490570
       vertices: []
       indices: 
       edges: []
@@ -225,14 +159,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":30.0,"y":60.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      bottle_cork: -2174827668884051896
-      bottle_fill: -629982756
-      bottle_glare: 195664854
-      bottle_stroke: 1397949342
+      bottle_v_wall_0: 1980499428166490570
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

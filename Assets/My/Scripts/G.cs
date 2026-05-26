@@ -26,34 +26,36 @@ namespace ZevWaxGames.CursorHero
             
             Spawner.NewEntity<Wall>(
                 new Vector2(-9.5f, 0), "Left Projectile Wall", "SizeHolders/projectile_vertical_wall",
-                null, true, "ProjectileWall", true);
+                null, true, "ProjectileWall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(9.5f, 0), "Right Projectile Wall", "SizeHolders/projectile_vertical_wall",
-                null, true, "ProjectileWall", true);
+                null, true, "ProjectileWall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(0, -6f), "Bottom Projectile Wall", "SizeHolders/projectile_horizontal_wall",
-                null, true, "ProjectileWall", true);
+                null, true, "ProjectileWall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(0, 6f), "Top Projectile Wall", "SizeHolders/projectile_horizontal_wall",
-                null, true, "ProjectileWall", true);
+                null, true, "ProjectileWall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(-8.5f, 0), "Left Wall", "SizeHolders/vertical_wall",
-                null, true, "Wall", true);
+                null, true, "Wall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(8.5f, 0), "Right Wall", "SizeHolders/vertical_wall",
-                null, true, "Wall", true);
+                null, true, "Wall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(0, -5f), "Bottom Wall", "SizeHolders/horizontal_wall",
-                null, true, "Wall", true);
+                null, true, "Wall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
                 new Vector2(0, 5f), "Top Wall", "SizeHolders/horizontal_wall",
-                null, true, "Wall", true);
+                null, true, "Wall", RigidbodyType2D.Static);
             var mainChar = Spawner.NewEntity<MainCharacter>(
                 new Vector2(1.6f, -0.9f), "MainCharacter", "idle",
-                "Pointer", true, "MainCharacter", false);
+                "Pointer", true, "MainCharacter");
             mainChar.GetComponent<MainCharacter>().Init();
             
             Spawner.NewTabby();
+            
+            Spawner.NewBottle(Vector2.zero);//TEMP
             
             var path00 = "My/My/Sprites/map_line";
             var allSprites00 = Resources.LoadAll<Sprite>(path00);
