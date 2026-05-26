@@ -8,8 +8,7 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
-            MainCharacter.Instance.MaxHP += 5;
-            MainCharacter.Instance.AddHeartKeeper();
+            MainCharacter.Instance.AddHeartKeepers(1);
             base.ButtonAction();
         }
     }

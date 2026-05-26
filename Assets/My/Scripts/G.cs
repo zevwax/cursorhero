@@ -24,15 +24,35 @@ namespace ZevWaxGames.CursorHero
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             
-            Spawner.NewEntity<Wall>(new Vector2(-9.5f, 0), "Left Projectile Wall", "SizeHolders/projectile_vertical_wall", null, true, "ProjectileWall", true);
-            Spawner.NewEntity<Wall>(new Vector2(9.5f, 0), "Right Projectile Wall", "SizeHolders/projectile_vertical_wall", null, true, "ProjectileWall", true);
-            Spawner.NewEntity<Wall>(new Vector2(0, -6f), "Bottom Projectile Wall", "SizeHolders/projectile_horizontal_wall", null, true, "ProjectileWall", true);
-            Spawner.NewEntity<Wall>(new Vector2(0, 6f), "Top Projectile Wall", "SizeHolders/projectile_horizontal_wall", null, true, "ProjectileWall", true);
-            Spawner.NewEntity<Wall>(new Vector2(-8.5f, 0), "Left Wall", "SizeHolders/vertical_wall", null, true, "Wall", true);
-            Spawner.NewEntity<Wall>(new Vector2(8.5f, 0), "Right Wall", "SizeHolders/vertical_wall", null, true, "Wall", true);
-            Spawner.NewEntity<Wall>(new Vector2(0, -5f), "Bottom Wall", "SizeHolders/horizontal_wall", null, true, "Wall", true);
-            Spawner.NewEntity<Wall>(new Vector2(0, 5f), "Top Wall", "SizeHolders/horizontal_wall", null, true, "Wall", true);
-            Spawner.NewEntity<MainCharacter>(new Vector2(1.6f, -0.9f), "MainCharacter", "idle", "Pointer", true, "MainCharacter", false);
+            Spawner.NewEntity<Wall>(
+                new Vector2(-9.5f, 0), "Left Projectile Wall", "SizeHolders/projectile_vertical_wall",
+                null, true, "ProjectileWall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(9.5f, 0), "Right Projectile Wall", "SizeHolders/projectile_vertical_wall",
+                null, true, "ProjectileWall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(0, -6f), "Bottom Projectile Wall", "SizeHolders/projectile_horizontal_wall",
+                null, true, "ProjectileWall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(0, 6f), "Top Projectile Wall", "SizeHolders/projectile_horizontal_wall",
+                null, true, "ProjectileWall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(-8.5f, 0), "Left Wall", "SizeHolders/vertical_wall",
+                null, true, "Wall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(8.5f, 0), "Right Wall", "SizeHolders/vertical_wall",
+                null, true, "Wall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(0, -5f), "Bottom Wall", "SizeHolders/horizontal_wall",
+                null, true, "Wall", true);
+            Spawner.NewEntity<Wall>(
+                new Vector2(0, 5f), "Top Wall", "SizeHolders/horizontal_wall",
+                null, true, "Wall", true);
+            var mainChar = Spawner.NewEntity<MainCharacter>(
+                new Vector2(1.6f, -0.9f), "MainCharacter", "idle",
+                "Pointer", true, "MainCharacter", false);
+            mainChar.GetComponent<MainCharacter>().Init();
+            
             Spawner.NewTabby();
             
             var path00 = "My/My/Sprites/map_line";

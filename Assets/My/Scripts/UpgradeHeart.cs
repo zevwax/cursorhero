@@ -8,7 +8,7 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
-            MainCharacter.Instance.HP = MainCharacter.Instance.MaxHP;
+            MainCharacter.Instance.RestoreFullHP();
             base.ButtonAction();
         }
     }

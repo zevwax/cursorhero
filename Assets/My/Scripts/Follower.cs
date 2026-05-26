@@ -7,15 +7,14 @@ namespace ZevWaxGames.CursorHero
     {
         private float minDistance = 1f;
         private float speedMultiplier = 3f;
-
-        // === NEW ===
+        
         private float stepAngle = 40f;
+        public int MyIndex => myIndex;
         private int myIndex = 0;
         private int totalCount = 1;
         
         private Vector2 smoothBackDirection = Vector2.left;
-        private float rotationSmoothSpeed = 5f; 
-        // ===========
+        private float rotationSmoothSpeed = 5f;
 
         public void UpdateQueueIndex(int index, int total)
         {

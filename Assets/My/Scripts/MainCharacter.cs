@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -15,18 +18,18 @@ namespace ZevWaxGames.CursorHero
         public float WeightBuff = 0f;
         public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.25f;
-        public float MaxHP = 5f;
+        private const int InitNumOfHeartKeepers = 1;
+        private int maxHP;
+        private int CurrHP => currHP;
+        private int currHP;
         public GameObject SkinSetter => skinSetter;
         private GameObject skinSetter = null;
         private GameObject currentShield;
         private Coroutine currentShieldRoutine;
+        /*private bool initialized = false;*/
         
-        private HeartKeeper hk;
-
-        // === NEW ===
         public Vector2 BackDirection { get; private set; } = Vector2.left;
-        // ===========
-
+        private List<HeartKeeper> heartKeepers;
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
@@ -39,12 +42,9 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnChoosingStarted -= Disable;
             EventHolder.OnChoosingFinished -= Enable;
         }
-        private void Start()
+        private void Awake() => Instance = this;
+        public void Init()
         {
-            Instance = this;
-            
-            HP = 5f;
-            
             gun = Guns.Library[GunName.Yellow];
             gameObject.layer = LayerMask.NameToLayer("MainCharacter");
             
@@ -56,23 +56,17 @@ namespace ZevWaxGames.CursorHero
             
             lastMousePos = GetMousePos();
             virtualPos = rb.position;
-
-            //Spawner.NewHealthBar();
+            
             Spawner.NewYellowCirc();
             Spawner.NewSelection();
-            hk = Spawner.NewHeartKeeper(Vector2.zero).GetComponent<HeartKeeper>();
-            
-            // === NEW ===
-            if (hk != null && hk.GetComponent<Follower>() != null)
-            {
-                hk.GetComponent<Follower>().UpdateQueueIndex(0, 1);
-            }
-            // ===========
+            MaxHPInit();
+            RestoreFullHP();
             
             base.Start();
         }
         protected override void Update()
         {
+            /*if (!initialized) return;*/
             base.Update();
             var closest = GetClosestEnemy();
             if (closest != null)
@@ -80,17 +74,14 @@ namespace ZevWaxGames.CursorHero
         }
         private void FixedUpdate()
         {
-            Vector2 currentMousePos = GetMousePos();
-            Vector2 delta = currentMousePos - lastMousePos;
+            /*if (!initialized) return;*/
+            var currentMousePos = GetMousePos();
+            var delta = currentMousePos - lastMousePos;
             lastMousePos = currentMousePos;
-
-            // === NEW ===
+            
             if (delta.sqrMagnitude > 0.001f)
-            {
                 BackDirection = -delta.normalized;
-            }
-            // ===========
-
+            
             virtualPos += delta;
             rb.MovePosition(virtualPos);
         }
@@ -128,10 +119,15 @@ namespace ZevWaxGames.CursorHero
         }
         public void Born()
         {
+            /*if (!initialized)
+            {
+                Init();
+                initialized = true;
+            }*/
             edge = 1f;
             size = 1f;
-            MaxHP = 5f;
-            HP = 5f;
+            ResetMaxHP();
+            RestoreFullHP();
             WeightBuff = 0f;
             ProjectileSpeed = 6f;
             Sensitivity = 0.25f;
@@ -211,13 +207,37 @@ namespace ZevWaxGames.CursorHero
         public override void GetDamage(float damage)
         {
             if (currentShield != null) return;
+            var dmg = (int)Math.Round(damage);
             DJ.Instance.HandleGettingDamage();
             SummonShield();
             StartCoroutine(DoGlitch());
-            base.GetDamage(damage);
-            hk.ShowFingers((int)System.Math.Round(HP));
-            Spawner.NewDamageNumbers(transform.position, false, damage);
+            IncreaseCurrHPByValue(-dmg);
+            Spawner.NewDamageNumbers(transform.position, false, dmg);
             ImpulseSource.Instance.Invoke();
+        }
+        public void IncreaseCurrHPByValue(int value)
+        {
+            currHP = Math.Clamp(currHP + value, 0, maxHP);
+            UpdateHeartKeepers();
+            if (currHP == 0)
+                Die();
+        }
+        private void UpdateHeartKeepers()
+        {
+            var fingersToShow = CurrHP;
+            foreach (var hk in heartKeepers)
+            {
+                if (fingersToShow > 5)
+                {
+                    hk.ShowFingers(5);
+                    fingersToShow -= 5;
+                }
+                else
+                {
+                    hk.ShowFingers(fingersToShow);
+                    fingersToShow = 0;
+                }
+            }
         }
         protected override void Shoot()
         {
@@ -232,7 +252,6 @@ namespace ZevWaxGames.CursorHero
                 yield return new WaitForSeconds(0.033f);
             }
         }
-
         private void SummonShield()
         {
             if (currentShieldRoutine != null)
@@ -255,18 +274,51 @@ namespace ZevWaxGames.CursorHero
             WeightBuff += diff;
             ClipboardTextbox.Instance.UpdateContents();
         }
-
-        // === NEW ===
-        public void AddHeartKeeper()
+        public void AddHeartKeepers(int number)
         {
-            Spawner.NewHeartKeeper(transform.position);
+            if (number == 0) return;
+            if (number < 0)
+                for (var i = 0; i < -number; i++)
+                {
+                    maxHP -= 5;
+                    if (CurrHP > maxHP)
+                        RestoreFullHP();
+                    var index = heartKeepers.Count - 1;
+                    var hk = heartKeepers[index];
+                    heartKeepers.RemoveAt(index);
+                    Destroy(hk.gameObject);
+                }
+            if (number > 0)
+                for (var i = 0; i < number; i++)
+                {
+                    maxHP += 5;
+                    heartKeepers.Add(NewHeartKeeper());
+                }
+        }
+        private HeartKeeper NewHeartKeeper()
+        {
+            var hk = Spawner.NewHeartKeeper(transform.position).GetComponent<HeartKeeper>();
             
             Follower[] followers = Object.FindObjectsByType<Follower>(FindObjectsSortMode.None);
             for (int i = 0; i < followers.Length; i++)
             {
                 followers[i].UpdateQueueIndex(i, followers.Length);
             }
+            
+            return hk;
         }
-        // ===========
+        private void MaxHPInit()
+        {
+            heartKeepers = new List<HeartKeeper>();
+            AddHeartKeepers(InitNumOfHeartKeepers);
+        }
+        private void ResetMaxHP()
+        {
+            AddHeartKeepers(-heartKeepers.Count+InitNumOfHeartKeepers);
+        }
+        public void RestoreFullHP()
+        {
+            IncreaseCurrHPByValue(-CurrHP+maxHP);
+        }
     }
 }

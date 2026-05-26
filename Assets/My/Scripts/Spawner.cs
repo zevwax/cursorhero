@@ -596,7 +596,7 @@ namespace ZevWaxGames.CursorHero
             obj.transform.GetChild(0).GetComponent<Image>().type = Image.Type.Sliced;
             return obj;
         }
-        public static GameObject NewHealthBar()
+        /*public static GameObject NewHealthBar()
         {
             var obj = new GameObject("HealthBar");
             var canvas = obj.AddComponent<Canvas>();
@@ -634,7 +634,7 @@ namespace ZevWaxGames.CursorHero
             healthBar.Setup(fgRt);
 
             return obj;
-        }
+        }*/
         public static GameObject NewPlayButton(Vector2 pos) => CreateBaseButton<ButtonPlay>(pos, "PlayButton", "btn_play");
         public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<ButtonRecycleBin>(pos, "BinButton", "bin");
         public static GameObject NewNetButton(Vector2 pos) => CreateBaseButton<ButtonSwitchPC>(pos, "NetButton", "btn_net");

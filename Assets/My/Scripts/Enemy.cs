@@ -6,6 +6,7 @@ namespace ZevWaxGames.CursorHero
 {
     public abstract class Enemy : Cursor
     {
+        public float HP;
         [SerializeField] protected float speed = 3f;
         [SerializeField] protected int2 dropRange;
         private BoxCollider2D col;
@@ -85,7 +86,9 @@ namespace ZevWaxGames.CursorHero
         }
         public override void GetDamage(float damage)
         {
-            base.GetDamage(damage);
+            HP -= damage;
+            if (HP <= 0)
+                Die();
             Spawner.NewDamageNumbers(transform.position, true, damage);
         }
     }

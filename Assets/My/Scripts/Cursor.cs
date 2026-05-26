@@ -1,12 +1,10 @@
 using UnityEngine;
-using System;
 using System.Collections;
 
 namespace ZevWaxGames.CursorHero
 {
     public class Cursor : MonoBehaviour
     {
-        public float HP;
         protected GameObject targetObj;
         protected Gun gun;
         protected Vector2 virtualMousePixels; 
@@ -23,9 +21,6 @@ namespace ZevWaxGames.CursorHero
         }
         protected virtual void Update()
         {
-            if (mainCharacter.is_trackable && HP <= 0)
-                Die();
-            
             RotateTowardsTarget();
         }
         protected void RotateTowardsTarget()
@@ -70,9 +65,6 @@ namespace ZevWaxGames.CursorHero
                 StopCoroutine(shootingRoutine);
             shootingRoutine = StartCoroutine(ShootingRoutine());
         }
-        public virtual void GetDamage(float damage)
-        {
-            HP -= damage;
-        }
+        public virtual void GetDamage(float damage) { }
     }
 }

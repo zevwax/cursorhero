@@ -37,8 +37,8 @@ namespace ZevWaxGames.CursorHero
                 }
                 else if (o.GetComponent<ItemApple>() != null)
                 {
-                    MainCharacter.Instance.HP += 3;
-                    Spawner.NewDamageNumbers(transform.position, "+3 HP");
+                    MainCharacter.Instance.IncreaseCurrHPByValue(2);
+                    Spawner.NewDamageNumbers(transform.position, "+2 HP");
                     Destroy(o);
                 }
                 Tabby.Instance.SwitchActionTo(9);

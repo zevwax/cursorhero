@@ -5,7 +5,7 @@ namespace ZevWaxGames.CursorHero
 {
     public class HeartKeeper : MonoBehaviour
     {
-        private static Image[] layers;
+        private Image[] layers;
         private static Sprite[][] sprites;
         private void Awake()
         {
@@ -33,7 +33,7 @@ namespace ZevWaxGames.CursorHero
             layers[1] = transform.GetChild(1).GetComponent<Image>();
             // 2 - heart
             layers[2] = transform.GetChild(3).GetComponent<Image>();
-            ShowFingers(5);
+            ShowFingers(0);
         }
         public void ShowFingers(int number)
         {
