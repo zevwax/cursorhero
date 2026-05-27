@@ -16,6 +16,6 @@ public class ClipboardTextbox : MonoBehaviour
         GetComponent<TextMeshProUGUI>().text =
             string.Format(
                 "A.glyph\nWeight: {0:F1} + {1:F1} / Size: {2:F1}",
-                mainChar.edge, MainCharacter.Instance.WeightBuff, mainChar.size);
+                mainChar.weight, MainCharacter.Instance.WeightBuff, mainChar.size);
     }
 }

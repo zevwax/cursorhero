@@ -1,4 +1,4 @@
-namespace ZevWaxGames.CursorHero
+/*namespace ZevWaxGames.CursorHero
 {
     using UnityEngine;
 
@@ -11,4 +11,4 @@ namespace ZevWaxGames.CursorHero
             gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
         }
     }
-}
+}*/

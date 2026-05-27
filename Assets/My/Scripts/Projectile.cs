@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace ZevWaxGames.CursorHero
 {
-    public abstract class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour
     {
         private static Transform psholder;
         private static GameObject bloodSplash;
@@ -20,6 +20,18 @@ namespace ZevWaxGames.CursorHero
         public float speed;
         public Vector3 direction;
         private BoxCollider2D col;
+        public void Init(Glyph glyph)
+        {
+            col = GetComponent<BoxCollider2D>();
+            psholder = GameObject.Find("PSHolder").transform;
+            bloodSplash = Resources.Load<GameObject>("My/My/Prefabs/BloodSplash");
+            SetTeam(glyph.IsAlly);
+            SetWeight(glyph.Weight);
+            SetSize(glyph.Size);
+            IsBouncy(glyph.IsBouncy);
+            IsPiercing(glyph.IsPiercing);
+            speed = glyph.Speed;
+        }
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Clean;
@@ -38,14 +50,6 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnBinFinished -= Die;
             EventHolder.OnRunFinished -= Disable;
         }
-        protected virtual void Start()
-        {
-            col = GetComponent<BoxCollider2D>();
-            psholder = GameObject.Find("PSHolder").transform;
-            bloodSplash = Resources.Load<GameObject>("My/My/Prefabs/BloodSplash");
-            Setup();
-        }
-        protected abstract void Setup();
         public void Launch(Vector3 launchDirection)
         {
             direction = launchDirection.normalized;
@@ -319,7 +323,7 @@ namespace ZevWaxGames.CursorHero
             if (isAlly)
             {
                 objLayer = "MainCharacterProjectile";
-                color = new Color(0f, 0f, 1f, 1f);
+                color = MainCharacter.Yellow;
             }
             else
             {
@@ -362,5 +366,7 @@ namespace ZevWaxGames.CursorHero
             size = s;
             GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s;
         }
+        public void IsBouncy (bool bouncy) => isBouncy = bouncy;
+        public void IsPiercing (bool piercing) => isPiercing = piercing;
     }
 }

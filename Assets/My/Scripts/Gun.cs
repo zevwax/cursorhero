@@ -5,9 +5,13 @@ namespace ZevWaxGames.CursorHero
 {
     public class Gun
     {
-        public Action<Vector2, Vector2, Gun> ProjectileSpawner;
-        public float Cooldown;
-        public float Weight;
-        public float Size;
+        public int BurstSize;
+        public float BurstInterval;
+        public float ShotInterval;
+        public Glyph Glyph;
+        public void Shoot(Vector2 pos, Vector2 dir)
+        {
+            Spawner.NewProjectile(pos, dir, Glyph);
+        }
     }
 }

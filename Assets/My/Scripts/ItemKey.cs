@@ -3,10 +3,7 @@ namespace ZevWaxGames.CursorHero
 {
     public class ItemKey : MonoBehaviour
     {
-        public float Weight => weight;
-        public float Size => size;
-        private float weight;
-        private float size;
+        public Glyph Glyph;
         
         [Header("Settings")]
         [SerializeField] private float drag = 5f;
@@ -16,9 +13,9 @@ namespace ZevWaxGames.CursorHero
         private void OnDisable() => EventHolder.OnFadingInToPCStarted -= Die;
         public void Init()
         {
-            weight = Random.Range(1f, 3f);
-            SetSize(Random.Range(1f, 3f));/*key.png\ncontains a glyph\n\n*/
-            var tooltip = string.Format("A.glyph\nWeight: {0:F1} / Size: {1:F1}", weight, size);
+            Glyph = new Glyph(true, Random.Range(1f, 3f), Random.Range(1f, 3f), false, false, Guns.Library[GunName.Yellow].Glyph.Speed);
+            SetSize(Glyph.Size);
+            var tooltip = string.Format("A.glyph\nWeight: {0:F1} / Size: {1:F1}", Glyph.Weight, Glyph.Size);
             GetComponent<TooltipHolder>().SetText(tooltip);
             
             rb = GetComponent<Rigidbody2D>();
@@ -27,10 +24,6 @@ namespace ZevWaxGames.CursorHero
             rb.constraints = RigidbodyConstraints2D.None;
         }
         private void Die() => Destroy(gameObject);
-        public void SetSize(float s)
-        {
-            size = s;
-            GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s/3f;
-        }
+        public void SetSize(float s) => GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s/3f;
     }
 }

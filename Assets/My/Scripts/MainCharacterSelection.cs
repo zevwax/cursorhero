@@ -26,12 +26,10 @@ namespace ZevWaxGames.CursorHero
             {
                 if (o.GetComponent<ItemKey>() != null)
                 {
-                    var w = o.GetComponent<ItemKey>().Weight;
-                    var s = o.GetComponent<ItemKey>().Size;
-                    MainCharacter.Instance.edge = w;
-                    MainCharacter.Instance.size = s;
-                    Guns.Library[GunName.Yellow].Weight = w;
-                    Guns.Library[GunName.Yellow].Size = s;
+                    var glyph = o.GetComponent<ItemKey>().Glyph;
+                    MainCharacter.Instance.weight = glyph.Weight;
+                    MainCharacter.Instance.size = glyph.Size;
+                    Guns.Library[GunName.Yellow].Glyph = glyph;
                     ClipboardTextbox.Instance.UpdateContents();
                     Spawner.NewDamageNumbers(transform.position, "Copied A.glyph");
                 }

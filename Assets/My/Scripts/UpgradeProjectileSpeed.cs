@@ -9,7 +9,8 @@ namespace ZevWaxGames.CursorHero
 
         public override void ButtonAction()
         {
-            MainCharacter.Instance.ProjectileSpeed += 3f;
+            Guns.Library[GunName.Yellow].Glyph.Speed += 3f;
+            Guns.Library[GunName.Yellow].ShotInterval *= 0.9f;
             base.ButtonAction();
         }
     }

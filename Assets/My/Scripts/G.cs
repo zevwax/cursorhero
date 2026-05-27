@@ -1,18 +1,13 @@
 using UnityEngine;
-using System.Collections;
 using System.Linq;
-
 namespace ZevWaxGames.CursorHero
 {
-    public class G : MonoBehaviour
+    public class G : MonoBehaviour // reminder: implement a game sequencer w/ async/await
     {
         public static G Instance { get; private set; }
         public Button bin;
         public Button net;
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private void Awake() => Instance = this;
         private void Start()
         {
             //Screen.SetResolution(300, 900, FullScreenMode.Windowed);
@@ -54,22 +49,6 @@ namespace ZevWaxGames.CursorHero
             mainChar.GetComponent<MainCharacter>().Init();
             
             Spawner.NewTabby();
-            
-            Spawner.NewBottle(new Vector2(-6f, 2.5f));//TEMP
-            Spawner.NewBottle(new Vector2(-4f, 2f));//TEMP
-            Spawner.NewBottle(new Vector2(-2f, 2.5f));//TEMP
-            Spawner.NewBottle(new Vector2(0f, 2f));//TEMP
-            Spawner.NewBottle(new Vector2(2f, 2.5f));//TEMP
-            Spawner.NewBottle(new Vector2(4f, 2f));//TEMP
-            Spawner.NewBottle(new Vector2(6f, 2.5f));//TEMP
-            
-            Spawner.NewBottle(new Vector2(-6f, -2.5f));//TEMP
-            Spawner.NewBottle(new Vector2(-4f, -2f));//TEMP
-            Spawner.NewBottle(new Vector2(-2f, -2.5f));//TEMP
-            Spawner.NewBottle(new Vector2(0f, -2f));//TEMP
-            Spawner.NewBottle(new Vector2(2f, -2.5f));//TEMP
-            Spawner.NewBottle(new Vector2(4f, -2f));//TEMP
-            Spawner.NewBottle(new Vector2(6f, -2.5f));//TEMP
             
             var path00 = "My/My/Sprites/map_line";
             var allSprites00 = Resources.LoadAll<Sprite>(path00);

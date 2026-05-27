@@ -11,13 +11,14 @@ namespace ZevWaxGames.CursorHero
 {
     public class MainCharacter : Cursor
     {
+        public static readonly Color Yellow = new Color(0, 0.33f, 0.66f, 1f);
+        
         public static MainCharacter Instance { get; private set; }
-        public float edge = 1f;
+        public float weight = 1f;
         public float size = 1f;
         
         public bool is_trackable = true;
         public float WeightBuff = 0f;
-        public float ProjectileSpeed = 6f;
         public float Sensitivity = 0.25f;
         private const int InitNumOfHeartKeepers = 1;
         private int maxHP;
@@ -125,16 +126,19 @@ namespace ZevWaxGames.CursorHero
                 Init();
                 initialized = true;
             }*/
-            edge = 1f;
+            weight = 1f;
             size = 1f;
             ResetMaxHP();
             RestoreFullHP();
             WeightBuff = 0f;
-            ProjectileSpeed = 6f;
             Sensitivity = 0.25f;
-            Guns.Library[GunName.Yellow].Cooldown = 2f;
-            Guns.Library[GunName.Yellow].Weight = 1f;
-            Guns.Library[GunName.Yellow].Size = 1f;
+            
+            var gun = Guns.Library[GunName.Yellow];
+            gun.BurstSize = 1;
+            gun.BurstInterval = 2f;
+            gun.ShotInterval = 0.2f;
+            gun.Glyph = new Glyph(true, 1, 1, false, false, 6);
+            
             Enable();
             Projectile.RefreshWallpapers1();
             Projectile.RefreshWallpapers2();

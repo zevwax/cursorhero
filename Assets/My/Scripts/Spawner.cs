@@ -82,30 +82,32 @@ namespace ZevWaxGames.CursorHero
             pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy");
         public static GameObject NewCyan(Vector2 pos) => NewEntity<EnemyGoat>(
             pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy");
-
-        public static void NewProjectileBlue(Vector2 pos, Vector2 direction, Gun g)
+        public static void NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph)
+        {
+            var obj = CreateBaseProjectile<Projectile>(pos, direction, "Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
+            obj.GetComponent<Projectile>().Init(glyph);
+        }
+        /*public static void NewProjectileBlue(Vector2 pos, Vector2 direction, Gun g)
         {
             var obj = CreateBaseProjectile<ProjectileBlue>(pos, direction, "Blue Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
             obj.GetComponent<Projectile>().SetTeam(true);
-            obj.GetComponent<Projectile>().SetWeight(g.Weight);
-            obj.GetComponent<Projectile>().SetSize(g.Size);
+            obj.GetComponent<Projectile>().SetWeight(g.ProjectileWeight);
+            obj.GetComponent<Projectile>().SetSize(g.ProjectileSize);
         }
-
         public static void NewProjectileRedRegular(Vector2 pos, Vector2 direction, Gun g)
         {
             var obj = CreateBaseProjectile<ProjectileRedRegular>(pos, direction, "Red Projectile", "EnemyProjectile", "EnemyProjectiles");
             obj.GetComponent<Projectile>().SetTeam(false);
-            obj.GetComponent<Projectile>().SetWeight(g.Weight);
-            obj.GetComponent<Projectile>().SetSize(g.Size);
+            obj.GetComponent<Projectile>().SetWeight(g.ProjectileWeight);
+            obj.GetComponent<Projectile>().SetSize(g.ProjectileSize);
         }
-
         public static void NewProjectileRedLarge(Vector2 pos, Vector2 direction, Gun g)
         {
             var obj = CreateBaseProjectile<ProjectileRedLarge>(pos, direction, "Ring Projectile", "EnemyProjectile", "EnemyProjectiles");
             obj.GetComponent<Projectile>().SetTeam(false);
-            obj.GetComponent<Projectile>().SetWeight(g.Weight);
-            obj.GetComponent<Projectile>().SetSize(g.Size);
-        }
+            obj.GetComponent<Projectile>().SetWeight(g.ProjectileWeight);
+            obj.GetComponent<Projectile>().SetSize(g.ProjectileSize);
+        }*/
         private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer, string sortLayer) where T : Projectile
         {
             var obj = NewEntity<T>(pos, name, "SizeHolders/projectile", sortLayer, true, objLayer);
@@ -302,14 +304,14 @@ namespace ZevWaxGames.CursorHero
         {
             var obj = NewEntity<YellowCirc>(Vector2.zero, "Yellow Circle", "yellow_circ", "YellowCirc", false, "Default");
             obj.GetComponent<CanvasGroup>().alpha = 1/3f;
-            obj.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 0, 1);
+            obj.transform.GetChild(0).GetComponent<Image>().color = MainCharacter.Yellow;
             
             return obj;
         }
         public static GameObject NewShield()
         {
             var obj = NewEntity<YellowCirc>(Vector2.zero, "Shield", "shield32", "Shield", true, "Shield");
-            obj.transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 1, 1);
+            obj.transform.GetChild(0).GetComponent<Image>().color = MainCharacter.Yellow;
             
             var imageObj = new GameObject("Fill");
             imageObj.transform.SetParent(obj.transform, false);
@@ -567,7 +569,7 @@ namespace ZevWaxGames.CursorHero
             switch (upgradeName)
             {
                 case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage", "btn_upgrade_dmg"); break;
-                case "FireRate": obj = CreateBaseButton<UpgradeFirerate>(pos, "UpgradeFireRate", "btn_upgrade_cdn"); break;
+                case "FireRate": obj = CreateBaseButton<UpgradeBurstSize>(pos, "UpgradeFireRate", "btn_upgrade_cdn"); break;
                 case "Speed": obj = CreateBaseButton<UpgradeProjectileSpeed>(pos, "UpgradeSpeed", "btn_upgrade_spd"); break;
                 case "Sensitivity": obj = CreateBaseButton<UpgradeSensitivity>(pos, "UpgradeSensitivity", "btn_upgrade_sen"); break;
                 case "Heart": obj = CreateBaseButton<UpgradeHeart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
