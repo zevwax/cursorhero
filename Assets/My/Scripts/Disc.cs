@@ -100,5 +100,13 @@ namespace ZevWaxGames.CursorHero
         {
             currXP *= 0.75f;
         }
+        public static void Normalize()
+        {
+            currXP = 1f/20f;
+        }
+        public static void HyperInflate()
+        {
+            currXP = 0;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace ZevWaxGames.CursorHero
         {
             RotateTowardsTarget();
         }
-        protected void RotateTowardsTarget()
+        protected virtual void RotateTowardsTarget()
         {
             if (targetObj != null)
             {

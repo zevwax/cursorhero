@@ -76,12 +76,19 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
             obj.AddComponent<Soul>();
         }
-        public static GameObject NewWhite(Vector2 pos) => NewEntity<EnemyHand>(
-            pos, "White Enemy", "pointer_1", "Enemies", true, "Enemy");
-        public static GameObject NewYellow(Vector2 pos) => NewEntity<EnemyBlackGlove>(
-            pos, "Yellow Enemy", "pointer_2", "Enemies", true, "Enemy");
-        public static GameObject NewCyan(Vector2 pos) => NewEntity<EnemyGoat>(
-            pos, "Cyan Enemy", "pointer_3", "Enemies", true, "Enemy");
+        public static GameObject NewEnemyHand(Vector2 pos) => NewEntity<EnemyHand>(
+            pos, "Enemy", "pointer_1", "Enemies", true, "Enemy");
+        public static GameObject NewEnemyGlove(Vector2 pos) => NewEntity<EnemyBlackGlove>(
+            pos, "Enemy", "pointer_2", "Enemies", true, "Enemy");
+        public static GameObject NewEnemyGoat(Vector2 pos) => NewEntity<EnemyGoat>(
+            pos, "Enemy", "pointer_3", "Enemies", true, "Enemy");
+
+        public static GameObject NewEnemyFuck(Vector2 pos)
+        {
+            var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            return obj;
+        }
         public static void NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph)
         {
             var obj = CreateBaseProjectile<Projectile>(pos, direction, "Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");

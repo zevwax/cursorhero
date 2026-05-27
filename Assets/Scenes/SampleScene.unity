@@ -3482,7 +3482,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.8.9
+  m_text: 0.8.10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3509,7 +3509,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6.2
+  m_fontSize: 5.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6092,6 +6092,7 @@ GameObject:
   - component: {fileID: 2013518226}
   - component: {fileID: 2013518228}
   - component: {fileID: 2013518227}
+  - component: {fileID: 2013518229}
   m_Layer: 15
   m_Name: RawImage
   m_TagString: Untagged
@@ -6153,6 +6154,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013518225}
   m_CullTransparentMesh: 1
+--- !u!114 &2013518229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013518225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf5534bb89603940aef4cb5b8914026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HangTheScreenAtBoss
 --- !u!1 &2020849089
 GameObject:
   m_ObjectHideFlags: 0
@@ -6729,7 +6742,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c521dc6ed28bfb4428a14151af7833ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HueShifter
-  shiftSpeed: 5
 --- !u!1001 &2125078507
 PrefabInstance:
   m_ObjectHideFlags: 0

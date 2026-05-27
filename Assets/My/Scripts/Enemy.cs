@@ -44,7 +44,7 @@ namespace ZevWaxGames.CursorHero
             else
                 targetObj = gameObject;
         }
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (mainCharacter.is_trackable)
             {

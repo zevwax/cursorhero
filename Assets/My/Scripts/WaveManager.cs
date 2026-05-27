@@ -155,29 +155,29 @@ namespace ZevWaxGames.CursorHero
                 spawnRate = .6f*1.5f,
                 spawnWhiteMobAtStart = false,
                 
-                maxEnemiesPerSpawn = 13,
+                maxEnemiesPerSpawn = 10,
                 shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
+                goatSpawnProbability = 0
             });
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 7,
-                spawnRate = .5f,
+                spawnRate = .5f/2f,
                 spawnWhiteMobAtStart = false,
                 
-                maxEnemiesPerSpawn = 14,
-                shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
+                maxEnemiesPerSpawn = 11,
+                shooterSpawnProbability = 0,
+                goatSpawnProbability = 0
             });
 
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 5,
-                spawnRate = .4f,
-                spawnWhiteMobAtStart = true,
+                maxNumOfEnemiesOnScreen = 1,
+                spawnRate = 1.33f,
+                spawnWhiteMobAtStart = false,
                 whiteMobSize = 20,
                 maxEnemiesPerSpawn = 15,
-                shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
+                shooterSpawnProbability = 0,
+                goatSpawnProbability = 1
             });
             
             //=================
@@ -351,8 +351,13 @@ namespace ZevWaxGames.CursorHero
         }
         private void StartWave(int index)
         {
+            if (index == 12)
+            {
+                BlueFace.Instance.FadeIn();
+                Spawner.NewEnemyFuck(new Vector2(-11f, 0));//-10 мало
+            }
             waveStartTime = Clock.Instance.ElapsedTime;
-            WaveConfig config = waves[index];
+            var config = waves[index];
             
             if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
             spawnCoroutine = StartCoroutine(SpawnRoutine(config));
@@ -360,7 +365,7 @@ namespace ZevWaxGames.CursorHero
             if (config.spawnWhiteMobAtStart)
             {
                 for (int i = 0; i < config.whiteMobSize; i++)
-                    Spawner.NewWhite(GetRandomPos());
+                    Spawner.NewEnemyHand(GetRandomPos());
             }
         }
         private IEnumerator SpawnRoutine(WaveConfig config)
@@ -394,11 +399,11 @@ namespace ZevWaxGames.CursorHero
                 );
             
             if (choice == config.goatSpawnProbability)
-                Spawner.NewCyan(GetRandomPos());
+                Spawner.NewEnemyGoat(GetRandomPos());
             if (choice == config.shooterSpawnProbability)
-                Spawner.NewYellow(GetRandomPos());
+                Spawner.NewEnemyGlove(GetRandomPos());
             else
-                Spawner.NewWhite(GetRandomPos());
+                Spawner.NewEnemyHand(GetRandomPos());
         }
         public static float GetWeightedRandom(float[] probabilities)
         {

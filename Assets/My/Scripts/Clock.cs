@@ -65,6 +65,10 @@ namespace ZevWaxGames.CursorHero
         private IEnumerator HandleWinWhenReady()
         {
             yield return new WaitUntil(() => ConditionManager.Instance.currCondition == ConditionManager.Condition.AfterFightChilling);
+            yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(MainCharacter.Instance.DoGlitch());
+            BlueFace.Instance.InstantFadeOut();
+            yield return new WaitForSeconds(2f);
             EventHolder.OnChoosingStarted?.Invoke();
             theEndScreenIsShown = true;
         }

@@ -35,7 +35,7 @@ namespace ZevWaxGames.CursorHero
         public void StartAnim()
         {
             // Записываем корутину в переменную при старте
-            _animCoroutine = StartCoroutine(EmptyRoutine());
+            _animCoroutine = StartCoroutine(FaceAnim());
         }
 
         // Метод для мгновенного пропуска анимации
@@ -64,7 +64,7 @@ namespace ZevWaxGames.CursorHero
             _image.sprite = Resources.Load<Sprite>("My/My/Sprites/face" + number);
         }
 
-        private IEnumerator EmptyRoutine()
+        private IEnumerator FaceAnim()
         {
             yield return new WaitForSeconds(2);
             yield return StartCoroutine(FadeInRoutine());
@@ -117,12 +117,18 @@ namespace ZevWaxGames.CursorHero
         {
             _image.DOFade(1f, 2f).SetEase(Ease.Linear);
         }
-
+        public void InstantFadeOut()
+        {
+            SetAlpha(0);
+        }
         private void SmoothFadeOut()
         {
             _image.DOFade(0f, 2f).SetEase(Ease.Linear);
         }
-
+        public void FadeIn()
+        {
+            StartCoroutine(FadeInRoutine());
+        }
         private IEnumerator FadeInRoutine()
         {
             for (float alpha = 0f; alpha <= 1.15f; alpha += 0.15f)

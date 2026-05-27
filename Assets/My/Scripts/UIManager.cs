@@ -55,10 +55,10 @@ namespace ZevWaxGames.CursorHero
         {
             yield return new WaitForSeconds(2f);
             BSOD.SetActive(true);
-            EventHolder.OnBSODStarted?.Invoke();
             yield return new WaitForSeconds(1.25f);
             InstantFadeOut();
             
+            EventHolder.OnBSODStarted?.Invoke();
             BSOD.SetActive(false);
             tryAgainWindow.SetActive(true);
             btns[0] = Spawner.NewPlayButton(Vector2.zero);

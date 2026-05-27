@@ -11,7 +11,7 @@ namespace ZevWaxGames.CursorHero
     public class DJ : MonoBehaviour
     {
         public static DJ Instance { get; private set; }
-        private int setIndex = 0;
+        private int setIndex = 1;
         private float VoiceVolume = 0.15f;
         private float MusicVolume = 0.25f;
         private AudioSource blueFaceVoiceAS;
@@ -99,6 +99,13 @@ namespace ZevWaxGames.CursorHero
             PreloadClip(Resources.Load<AudioClip>("My/My/Clips/When_The_Sun_Hits_BC"));
             PreloadClip(Resources.Load<AudioClip>("My/My/Clips/When_The_Sun_Hits_FK"));
             
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/Showdown_RG"));
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/Showdown_BC"));
+            
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/Sleep_RG"));
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/Sleep_BC"));
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/Sleep_FK"));
+            
             blueFaceVoiceAS.volume = VoiceVolume;
         }
         private void PreloadClip(AudioClip clip)
@@ -144,7 +151,7 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleBSOD()
         {
-            setIndex = 2;
+            setIndex = 666;
             HandleFadingInToPCStarted();
         }
         private void HandleFadingInToPCStarted()
@@ -156,7 +163,7 @@ namespace ZevWaxGames.CursorHero
             var realBCName = "";
             switch (setIndex)
             {
-                case 0:
+                case 1:
                     if (Clock.Instance.ElapsedTime > 2*60 - 5)
                     {
                         HueShifter.Instance.StartShifting();
@@ -165,21 +172,64 @@ namespace ZevWaxGames.CursorHero
                         dreamName = "When_The_Sun_Hits_FK";
                         realRGName = "When_The_Sun_Hits_FK";
                         realBCName = "When_The_Sun_Hits_BC";
-                        setIndex = 1;
+                        setIndex = 2;
                     }
                     else
                         return;
                     break;
-                case 1:
-                    return;
                 case 2:
+                    if (Clock.Instance.ElapsedTime > 4*60 - 5)
+                    {
+                        HueShifter.Instance.StopShifting();
+                        clubRGAS.loop = false;
+                        clubBCAS.loop = false;
+                        dreamAS.loop = false;
+                        realRGAS.loop = false;
+                        realBCAS.loop = false;
+                        clubRGName = "Showdown_RG";
+                        clubBCName = "Showdown_BC";
+                        dreamName = "Showdown_RG";
+                        realRGName = "Showdown_RG";
+                        realBCName = "Showdown_BC";
+                        setIndex = 3;
+                    }
+                    else
+                        return;
+                    break;
+                case 3:
+                    if (Clock.Instance.ElapsedTime > 4*60 - 5)
+                    {
+                        HueShifter.Instance.StopShifting();
+                        clubRGAS.loop = true;
+                        clubBCAS.loop = true;
+                        dreamAS.loop = true;
+                        realRGAS.loop = true;
+                        realBCAS.loop = true;
+                        clubRGName = "Sleep_RG";
+                        clubBCName = "Sleep_BC";
+                        dreamName = "Sleep_FK";
+                        realRGName = "Sleep_FK";
+                        realBCName = "Sleep_BC";
+                        setIndex = 4;
+                    }
+                    else
+                        return;
+                    break;
+                case 4:
+                    return;
+                case 666:
                     HueShifter.Instance.StopShifting();
+                    clubRGAS.loop = true;
+                    clubBCAS.loop = true;
+                    dreamAS.loop = true;
+                    realRGAS.loop = true;
+                    realBCAS.loop = true;
                     clubRGName = "808_VIP_Wizard_Club_RG";
                     clubBCName = "808_VIP_Wizard_Club_BC";
                     dreamName = "Ancient_Dream";
                     realRGName = "Was_It_Real_RG";
                     realBCName = "Was_It_Real_BC";
-                    setIndex = 0;
+                    setIndex = 1;
                     break;
             }
             
