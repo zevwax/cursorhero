@@ -12,5 +12,6 @@ namespace ZevWaxGames.CursorHero
         public static Action OnBinStarted;
         public static Action OnBinFinished;
         public static Action OnRunFinished;
+        public static Action OnBSODStarted;
     }
 }

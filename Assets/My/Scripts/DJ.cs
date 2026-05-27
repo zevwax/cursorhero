@@ -10,9 +10,10 @@ namespace ZevWaxGames.CursorHero
 {
     public class DJ : MonoBehaviour
     {
+        public static DJ Instance { get; private set; }
+        private int setIndex = 0;
         private float VoiceVolume = 0.15f;
         private float MusicVolume = 0.25f;
-        public static DJ Instance { get; private set; }
         private AudioSource blueFaceVoiceAS;
         private AudioSource shootAS;
         private AudioSource diskAS;
@@ -94,6 +95,10 @@ namespace ZevWaxGames.CursorHero
             PreloadClip(realRGAS.clip);
             PreloadClip(realBCAS.clip);
             
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/When_The_Sun_Hits_RG"));
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/When_The_Sun_Hits_BC"));
+            PreloadClip(Resources.Load<AudioClip>("My/My/Clips/When_The_Sun_Hits_FK"));
+            
             blueFaceVoiceAS.volume = VoiceVolume;
         }
         private void PreloadClip(AudioClip clip)
@@ -117,23 +122,76 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += HandleRunStarted;
+            EventHolder.OnFadingInToPCStarted += HandleFadingInToPCStarted;
+            EventHolder.OnRunStarted += Reset;
             EventHolder.OnPCStarted += HandlePCStarted;
             EventHolder.OnChoosingStarted += HandleChoosingStarted;
             EventHolder.OnChoosingFinished += HandleChoosingFinished;
             EventHolder.OnPCFinished += HandlePCFinished;
             EventHolder.OnRunFinished += HandleRunFinished;
+            EventHolder.OnBSODStarted += HandleBSOD;
         }
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= HandleRunStarted;
+            EventHolder.OnFadingInToPCStarted -= HandleFadingInToPCStarted;
+            EventHolder.OnRunStarted -= Reset;
             EventHolder.OnPCStarted -= HandlePCStarted;
             EventHolder.OnChoosingStarted -= HandleChoosingStarted;
             EventHolder.OnChoosingFinished -= HandleChoosingFinished;
             EventHolder.OnPCFinished -= HandlePCFinished;
             EventHolder.OnRunFinished -= HandleRunFinished;
+            EventHolder.OnBSODStarted -= HandleBSOD;
         }
-        private void HandleRunStarted()
+        private void HandleBSOD()
+        {
+            setIndex = 2;
+            HandleFadingInToPCStarted();
+        }
+        private void HandleFadingInToPCStarted()
+        {
+            var clubRGName = "";
+            var clubBCName = "";
+            var dreamName = "";
+            var realRGName = "";
+            var realBCName = "";
+            switch (setIndex)
+            {
+                case 0:
+                    if (Clock.Instance.ElapsedTime > 2*60 - 5)
+                    {
+                        HueShifter.Instance.StartShifting();
+                        clubRGName = "When_The_Sun_Hits_RG";
+                        clubBCName = "When_The_Sun_Hits_BC";
+                        dreamName = "When_The_Sun_Hits_FK";
+                        realRGName = "When_The_Sun_Hits_FK";
+                        realBCName = "When_The_Sun_Hits_BC";
+                        setIndex = 1;
+                    }
+                    else
+                        return;
+                    break;
+                case 1:
+                    return;
+                case 2:
+                    HueShifter.Instance.StopShifting();
+                    clubRGName = "808_VIP_Wizard_Club_RG";
+                    clubBCName = "808_VIP_Wizard_Club_BC";
+                    dreamName = "Ancient_Dream";
+                    realRGName = "Was_It_Real_RG";
+                    realBCName = "Was_It_Real_BC";
+                    setIndex = 0;
+                    break;
+            }
+            
+            clubRGAS.clip = Resources.Load<AudioClip>(string.Format("My/My/Clips/{0}", clubRGName));
+            clubBCAS.clip = Resources.Load<AudioClip>(string.Format("My/My/Clips/{0}", clubBCName));
+            dreamAS.clip = Resources.Load<AudioClip>(string.Format("My/My/Clips/{0}", dreamName));
+            realRGAS.clip = Resources.Load<AudioClip>(string.Format("My/My/Clips/{0}", realRGName));
+            realBCAS.clip = Resources.Load<AudioClip>(string.Format("My/My/Clips/{0}", realBCName));
+            
+            Reset();
+        }
+        private void Reset()
         {
             if (clubRGFadeCoroutine != null) StopCoroutine(clubRGFadeCoroutine);
             Reset(clubRGAS);
@@ -221,6 +279,7 @@ namespace ZevWaxGames.CursorHero
         {
             aSource.Play();
             aSource.DORestart();
+            aSource.time = 0f;
             aSource.volume = 0f;
         }
         private void ClubRGFadeIn() => ExecuteFade(ref clubRGFadeCoroutine, clubRGAS, MusicVolume, true);

@@ -55,6 +55,7 @@ namespace ZevWaxGames.CursorHero
         {
             yield return new WaitForSeconds(2f);
             BSOD.SetActive(true);
+            EventHolder.OnBSODStarted?.Invoke();
             yield return new WaitForSeconds(1.25f);
             InstantFadeOut();
             
