@@ -117,6 +117,14 @@ namespace ZevWaxGames.CursorHero
         {
             _image.DOFade(1f, 2f).SetEase(Ease.Linear);
         }
+        private void OnEnable()
+        {
+            EventHolder.OnBSODStarted += InstantFadeOut;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnBSODStarted -= InstantFadeOut;
+        }
         public void InstantFadeOut()
         {
             SetAlpha(0);

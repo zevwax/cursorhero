@@ -145,6 +145,11 @@ namespace ZevWaxGames.CursorHero
             Projectile.RefreshWallpapers1();
             Projectile.RefreshWallpapers2();
             SummonShield();
+            
+            if (ClipboardGlyph != null)
+                Destroy(ClipboardGlyph);
+            ClipboardGlyph = Spawner.NewClipboardGlyph(new Vector2(-2f, -4f));
+            ClipboardTextbox.Instance.UpdateContents();
         }
         protected override void Die()
         {

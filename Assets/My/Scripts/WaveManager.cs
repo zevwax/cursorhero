@@ -31,153 +31,174 @@ namespace ZevWaxGames.CursorHero
             waves.Clear();
 
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 2,
-                spawnRate = 1f*2f,
+                maxNumOfEnemiesOnScreen = 10,
+                spawnRate = 1f/(1*0.75f),
                 spawnWhiteMobAtStart = true,
-                whiteMobSize = 4,
-                maxEnemiesPerSpawn = 1,
-                shooterSpawnProbability = 0,
-                goatSpawnProbability = 0
-            });
-
-            waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 3,
-                spawnRate = .9f,
-                spawnWhiteMobAtStart = false,
-                
+                whiteMobSize = 3,
                 maxEnemiesPerSpawn = 2,
-                shooterSpawnProbability = 0.1f,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0,
                 goatSpawnProbability = 0
             });
 
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 1,
-                spawnRate = .8f*2f,
-                spawnWhiteMobAtStart = true,
-                whiteMobSize = 4,
-                maxEnemiesPerSpawn = 3,
-                shooterSpawnProbability = 0.2f,
-                goatSpawnProbability = 0
-            });
-
-            waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 3,
-                spawnRate = .9f*1.5f,
+                maxNumOfEnemiesOnScreen = 15,
+                spawnRate = 1f/2,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 4,
-                shooterSpawnProbability = 0,
-                goatSpawnProbability = 0.1f
+                pointerSpawnProbability = 0.15f,
+                gloveSpawnProbability = 0,
+                goatSpawnProbability = 0
             });
 
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 4,
-                spawnRate = .8f,
-                spawnWhiteMobAtStart = false,
-                
-                maxEnemiesPerSpawn = 5,
-                shooterSpawnProbability = 0.2f,
-                goatSpawnProbability = 0.2f
-            });
-
-            waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 2,
-                spawnRate = .7f*2f,
+                maxNumOfEnemiesOnScreen = 20,
+                spawnRate = 1f/3,
                 spawnWhiteMobAtStart = true,
-                whiteMobSize = 8,
+                whiteMobSize = 10,
                 maxEnemiesPerSpawn = 6,
-                shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0.15f,
+                goatSpawnProbability = 0
             });
-            
+
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 4,
-                spawnRate = .8f*1.5f,
+                maxNumOfEnemiesOnScreen = 15,
+                spawnRate = 1f/(3*0.75f),
                 spawnWhiteMobAtStart = false,
                 
-                maxEnemiesPerSpawn = 7,
-                shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
+                maxEnemiesPerSpawn = 6,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0,
+                goatSpawnProbability = 0.15f
             });
-            
+
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 5,
-                spawnRate = .7f,
+                maxNumOfEnemiesOnScreen = 20/4,
+                spawnRate = 1f/4,
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 8,
-                shooterSpawnProbability = 1,
-                goatSpawnProbability = 0
+                pointerSpawnProbability = 0.25f,
+                gloveSpawnProbability = 0.25f,
+                goatSpawnProbability = 0.25f
             });
 
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 3,
-                spawnRate = .6f*2f,
+                maxNumOfEnemiesOnScreen = 25,
+                spawnRate = 1f/5,
                 spawnWhiteMobAtStart = true,
-                whiteMobSize = 12,
-                maxEnemiesPerSpawn = 9,
-                shooterSpawnProbability = 0,
+                whiteMobSize = 15,
+                maxEnemiesPerSpawn = 10,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0,
                 goatSpawnProbability = 0
             });
-
+            
+            //====
+            
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 5,
-                spawnRate = .7f*1.5f,
+                maxNumOfEnemiesOnScreen = 12,
+                spawnRate = 1f/(5*0.5f),
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 10,
-                shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
-            });
-
-            waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 6,
-                spawnRate = .6f,
-                spawnWhiteMobAtStart = false,
-                
-                maxEnemiesPerSpawn = 11,
-                shooterSpawnProbability = 0,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0,
                 goatSpawnProbability = 1
             });
-
+            
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 4,
-                spawnRate = .5f*2f,
-                spawnWhiteMobAtStart = true,
-                whiteMobSize = 16,
-                maxEnemiesPerSpawn = 12,
-                shooterSpawnProbability = 0.33f,
-                goatSpawnProbability = 0.33f
-            });
-
-            waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 6,
-                spawnRate = .6f*1.5f,
+                maxNumOfEnemiesOnScreen = 25,
+                spawnRate = 1f/6,
                 spawnWhiteMobAtStart = false,
                 
-                maxEnemiesPerSpawn = 10,
-                shooterSpawnProbability = 0.33f,
+                maxEnemiesPerSpawn = 12,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 1,
                 goatSpawnProbability = 0
             });
 
             waves.Add(new WaveConfig {
-                maxNumOfEnemiesOnScreen = 7,
-                spawnRate = .5f/2f,
+                maxNumOfEnemiesOnScreen = 30,
+                spawnRate = 1f/7,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 20,
+                maxEnemiesPerSpawn = 14,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0,
+                goatSpawnProbability = 0
+            });
+            
+            //====
+            
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 15,
+                spawnRate = 1f/(7*0.5f),
                 spawnWhiteMobAtStart = false,
                 
-                maxEnemiesPerSpawn = 11,
-                shooterSpawnProbability = 0,
+                maxEnemiesPerSpawn = 14,
+                pointerSpawnProbability = 0.08f,
+                gloveSpawnProbability = 0.08f,
+                goatSpawnProbability = 0
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 30,
+                spawnRate = 1f/8,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 16,
+                pointerSpawnProbability = 0.08f,
+                gloveSpawnProbability = 0.08f,
+                goatSpawnProbability = 0
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 35,
+                spawnRate = 1f/9,
+                spawnWhiteMobAtStart = true,
+                whiteMobSize = 25,
+                maxEnemiesPerSpawn = 18,
+                pointerSpawnProbability = 0.08f,
+                gloveSpawnProbability = 0.08f,
+                goatSpawnProbability = 0
+            });
+            
+            //====
+            
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 30,
+                spawnRate = 1f/(9*0.75f),
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 18,
+                pointerSpawnProbability = 0.08f,
+                gloveSpawnProbability = 0.08f,
+                goatSpawnProbability = 0
+            });
+
+            waves.Add(new WaveConfig {
+                maxNumOfEnemiesOnScreen = 35,
+                spawnRate = 1f/10,
+                spawnWhiteMobAtStart = false,
+                
+                maxEnemiesPerSpawn = 20,
+                pointerSpawnProbability = 0.08f,
+                gloveSpawnProbability = 0.08f,
                 goatSpawnProbability = 0
             });
 
             waves.Add(new WaveConfig {
                 maxNumOfEnemiesOnScreen = 1,
-                spawnRate = 1.33f,
+                spawnRate = 999,
                 spawnWhiteMobAtStart = false,
-                whiteMobSize = 20,
-                maxEnemiesPerSpawn = 15,
-                shooterSpawnProbability = 0,
-                goatSpawnProbability = 1
+                
+                maxEnemiesPerSpawn = 0,
+                pointerSpawnProbability = 0,
+                gloveSpawnProbability = 0,
+                goatSpawnProbability = 0
             });
             
             //=================
@@ -188,7 +209,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 1,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -198,7 +219,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 2,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -208,7 +229,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 4,
                 maxEnemiesPerSpawn = 3,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -218,7 +239,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 4,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -228,7 +249,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 5,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -238,7 +259,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 8,
                 maxEnemiesPerSpawn = 6,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
             
@@ -248,7 +269,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 7,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
             
@@ -258,7 +279,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 8,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -268,7 +289,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 12,
                 maxEnemiesPerSpawn = 9,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -278,7 +299,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 10,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -288,7 +309,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 11,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -298,7 +319,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 16,
                 maxEnemiesPerSpawn = 12,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -308,7 +329,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 13,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -318,7 +339,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = false,
                 
                 maxEnemiesPerSpawn = 14,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
 
@@ -328,7 +349,7 @@ namespace ZevWaxGames.CursorHero
                 spawnWhiteMobAtStart = true,
                 whiteMobSize = 20,
                 maxEnemiesPerSpawn = 15,
-                shooterSpawnProbability = 0.5f,
+                gloveSpawnProbability = 0.5f,
                 goatSpawnProbability = 0.5f
             });
         }
@@ -365,7 +386,7 @@ namespace ZevWaxGames.CursorHero
             if (config.spawnWhiteMobAtStart)
             {
                 for (int i = 0; i < config.whiteMobSize; i++)
-                    Spawner.NewEnemyHand(GetRandomPos());
+                    Spawner.NewEnemyGrabber(GetRandomPos());
             }
         }
         private IEnumerator SpawnRoutine(WaveConfig config)
@@ -393,17 +414,20 @@ namespace ZevWaxGames.CursorHero
             var choice = GetWeightedRandom(
                 new float[]
                     {
-                        config.shooterSpawnProbability,
+                        config.pointerSpawnProbability,
+                        config.gloveSpawnProbability,
                         config.goatSpawnProbability
                     }
                 );
             
             if (choice == config.goatSpawnProbability)
                 Spawner.NewEnemyGoat(GetRandomPos());
-            if (choice == config.shooterSpawnProbability)
+            else if (choice == config.gloveSpawnProbability)
                 Spawner.NewEnemyGlove(GetRandomPos());
+            else if (choice == config.pointerSpawnProbability)
+                Spawner.NewEnemyPointer(GetRandomPos());
             else
-                Spawner.NewEnemyHand(GetRandomPos());
+                Spawner.NewEnemyGrabber(GetRandomPos());
         }
         public static float GetWeightedRandom(float[] probabilities)
         {

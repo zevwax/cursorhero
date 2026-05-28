@@ -76,13 +76,14 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
             obj.AddComponent<Soul>();
         }
-        public static GameObject NewEnemyHand(Vector2 pos) => NewEntity<EnemyHand>(
+        public static GameObject NewEnemyGrabber(Vector2 pos) => NewEntity<EnemyGrabber>(
+            pos, "Enemy", "pointer_0", "Enemies", true, "Enemy");
+        public static GameObject NewEnemyPointer(Vector2 pos) => NewEntity<EnemyPointer>(
             pos, "Enemy", "pointer_1", "Enemies", true, "Enemy");
         public static GameObject NewEnemyGlove(Vector2 pos) => NewEntity<EnemyBlackGlove>(
             pos, "Enemy", "pointer_2", "Enemies", true, "Enemy");
         public static GameObject NewEnemyGoat(Vector2 pos) => NewEntity<EnemyGoat>(
             pos, "Enemy", "pointer_3", "Enemies", true, "Enemy");
-
         public static GameObject NewEnemyFuck(Vector2 pos)
         {
             var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
@@ -751,7 +752,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewTabby()
         {
-            var obj = NewEntity<Tabby>(Vector2.zero, "Tabby", "tabby", "Bottles", false, "Default");
+            var obj = NewEntity<Tabby>(Vector2.zero, "Tabby", "tabby", "Tabby", false, "Default");
             
             var imageObj = new GameObject("Tabby Textbox");
             imageObj.transform.SetParent(obj.transform, false);

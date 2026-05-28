@@ -49,7 +49,6 @@ namespace ZevWaxGames.CursorHero
                 new Vector2(1.6f, -0.9f), "MainCharacter", "idle",
                 "Pointer", true, "MainCharacter");
             mainChar.GetComponent<MainCharacter>().Init();
-            StartCoroutine(CreateWDelay());
             
             Spawner.NewTabby();
             
@@ -79,13 +78,13 @@ namespace ZevWaxGames.CursorHero
             var targetName6 = "mineswapper_6";
             var targetSprite6 = allSprites.FirstOrDefault(s => s.name == targetName6);
             
-            Spawner.NewMapLine(new Vector2(8.5f, 0), targetSprite00);
-            Spawner.NewMapNode(new Vector2(8.5f, 2.5f), targetSprite5);
-            Spawner.NewMapNode(new Vector2(8.5f, 2.5f/2f), targetSprite4);
-            Spawner.NewMapNode(new Vector2(8.5f, 0), targetSprite3);
-            Spawner.NewMapNode(new Vector2(8.5f, -2.5f/2f), targetSprite2);
-            Spawner.NewMapNode(new Vector2(8.5f, -2.5f), targetSprite1);
-            Spawner.NewMapChar(new Vector2(8.5f, -2.5f), targetSprite6);
+            Spawner.NewMapLine(new Vector2(7.35f, 0), targetSprite00);
+            Spawner.NewMapNode(new Vector2(7.35f, 2.5f), targetSprite5);
+            Spawner.NewMapNode(new Vector2(7.35f, 2.5f/2f), targetSprite4);
+            Spawner.NewMapNode(new Vector2(7.35f, 0), targetSprite3);
+            Spawner.NewMapNode(new Vector2(7.35f, -2.5f/2f), targetSprite2);
+            Spawner.NewMapNode(new Vector2(7.35f, -2.5f), targetSprite1);
+            Spawner.NewMapChar(new Vector2(7.35f, -2.5f), targetSprite6);
             
             UIManager.Instance.ShowStartGameWindow();
             var b1 = Spawner.NewBinButton(new Vector2(-(8f-1f), 4.5f-1f-1f));
@@ -94,13 +93,6 @@ namespace ZevWaxGames.CursorHero
             net = b2.GetComponent<Button>();
             bin.DisableButton();
             net.DisableButton();
-        }
-
-        private IEnumerator CreateWDelay()
-        {
-            yield return new WaitForSeconds(2f);
-            var cg = Spawner.NewClipboardGlyph(new Vector2(-2f, -4f));
-            MainCharacter.Instance.ClipboardGlyph = cg;
         }
     }
 }

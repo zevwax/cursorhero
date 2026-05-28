@@ -4,6 +4,7 @@ namespace ZevWaxGames.CursorHero
     public static class EventHolder
     {
         public static Action OnRunStarted;
+        public static Action OnFadingOutFromPCStarted;
         public static Action OnFadingInToPCStarted;
         public static Action OnPCStarted;
         public static Action OnChoosingStarted;

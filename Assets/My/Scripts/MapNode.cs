@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -6,10 +7,13 @@ namespace ZevWaxGames.CursorHero
     public class MapNode : MapItem
     {
         private Image image;
+        private Sprite initSprite;
         private Sprite flag;
-        protected override void Start()
+        public void Init()
         {
-            base.Start();
+            image = transform.GetChild(0).GetComponent<Image>();
+            
+            initSprite = image.sprite;
             
             var path = "My/My/Sprites/mineswapper";
             var allSprites = Resources.LoadAll<Sprite>(path);
@@ -19,7 +23,15 @@ namespace ZevWaxGames.CursorHero
             
             StartCoroutine(HangingRoutine());
         }
-        public void Init() => image = transform.GetChild(0).GetComponent<Image>();
+        private void OnEnable()
+        {
+            EventHolder.OnBSODStarted += ResetSprite;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnBSODStarted -= ResetSprite;
+        }
         public void SetFlag() => image.sprite = flag;
+        public void ResetSprite() => image.sprite = initSprite;
     }
 }

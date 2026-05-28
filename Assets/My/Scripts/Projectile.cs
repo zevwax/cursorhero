@@ -55,7 +55,7 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Clean;
+            EventHolder.OnBSODStarted += Clean;
             EventHolder.OnChoosingStarted += HandleChoosingStarted;
             EventHolder.OnChoosingFinished += HandleChoosingFinished;
             EventHolder.OnBinStarted += Disable;
@@ -64,7 +64,7 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Clean;
+            EventHolder.OnBSODStarted -= Clean;
             EventHolder.OnChoosingStarted -= HandleChoosingStarted;
             EventHolder.OnChoosingFinished -= HandleChoosingFinished;
             EventHolder.OnBinStarted -= Disable;

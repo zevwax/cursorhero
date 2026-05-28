@@ -24,10 +24,10 @@ namespace ZevWaxGames.CursorHero
             } },
             { GunName.Ring, new Gun
             {
-                BurstSize = 1,
-                BurstInterval = 1f,
-                ShotInterval = 0.2f,
-                Glyph = new Glyph(false, 1, 2, false, false, 1)
+                BurstSize = 3,
+                BurstInterval = 6f,
+                ShotInterval = 0.15f,
+                Glyph = new Glyph(false, 1, 1.5f, false, false, 1.5f)
             } }
         };
     }

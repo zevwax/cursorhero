@@ -96,6 +96,9 @@ TagManager:
   - name: MapChar
     uniqueID: 2809869657
     locked: 0
+  - name: Tabby
+    uniqueID: 2985127899
+    locked: 0
   - name: YellowCirc
     uniqueID: 1085615039
     locked: 0

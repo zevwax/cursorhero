@@ -8,7 +8,7 @@ namespace ZevWaxGames.CursorHero
     {
         protected Vector2 offScreenPosition;
         protected Vector2 inScreenPosition;
-        private void OnEnable()
+        /*private void OnEnable()
         {
             EventHolder.OnFadingInToPCStarted += Hide;
             EventHolder.OnChoosingStarted += ShowMapNode;
@@ -23,7 +23,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnChoosingFinished -= HideMapNode;
             EventHolder.OnPCFinished -= ShowMapNode;
             EventHolder.OnPCStarted -= HideMapNode;
-        }
+        }*/
         protected virtual void Start()
         {
             offScreenPosition = new Vector2(8.5f, transform.position.y);

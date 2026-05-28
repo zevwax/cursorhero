@@ -8,28 +8,30 @@ namespace ZevWaxGames.CursorHero
     {
         private bool isGlasses = false;
         private Image image;
+        private Sprite initSprite;
         private Sprite glasses;
         private Collider2D myCollider;
         private Collider2D[] results = new Collider2D[20];
         private void OnEnable()
         {
-            EventHolder.OnFadingInToPCStarted += Move;
-            EventHolder.OnChoosingStarted += ShowMapNode;
+            EventHolder.OnFadingOutFromPCStarted += Move;
+            EventHolder.OnBSODStarted += Reset;
+            /*EventHolder.OnChoosingStarted += ShowMapNode;
             EventHolder.OnChoosingFinished += HideMapNode;
             EventHolder.OnPCFinished += ShowMapNode;
-            EventHolder.OnPCStarted += HideMapNode;
+            EventHolder.OnPCStarted += HideMapNode;*/
         }
         private void OnDisable()
         {
-            EventHolder.OnFadingInToPCStarted -= Move;
-            EventHolder.OnChoosingStarted -= ShowMapNode;
+            EventHolder.OnFadingOutFromPCStarted -= Move;
+            EventHolder.OnBSODStarted -= Reset;
+            /*EventHolder.OnChoosingStarted -= ShowMapNode;
             EventHolder.OnChoosingFinished -= HideMapNode;
             EventHolder.OnPCFinished -= ShowMapNode;
-            EventHolder.OnPCStarted -= HideMapNode;
+            EventHolder.OnPCStarted -= HideMapNode;*/
         }
         private void Move()
         {
-            Hide();
             if (transform.position.y > 2.4f && !isGlasses)
             {
                 isGlasses = true;
@@ -41,7 +43,7 @@ namespace ZevWaxGames.CursorHero
                 var diff = 1.25f;
                 offScreenPosition = new Vector2(offScreenPosition.x, offScreenPosition.y + diff);
                 inScreenPosition = new Vector2(inScreenPosition.x, inScreenPosition.y + diff);
-                transform.position = new Vector3(transform.position.x, transform.position.y + diff, 0);
+                transform.DOMove(inScreenPosition, 3);
             }
         }
         private void SetFlag()
@@ -59,9 +61,19 @@ namespace ZevWaxGames.CursorHero
             }
         }
         private void SetGlasses() => image.sprite = glasses;
-        protected override void Start()
+        private void Reset()
         {
-            base.Start();
+            image.sprite = initSprite;
+            offScreenPosition = new Vector2(offScreenPosition.x, -2.5f);
+            inScreenPosition = new Vector2(inScreenPosition.x, -2.5f);
+            transform.position = inScreenPosition;
+        }
+        public void Init()
+        {
+            myCollider = GetComponent<Collider2D>();
+            image = transform.GetChild(0).GetComponent<Image>();
+
+            initSprite = image.sprite;
             
             var path = "My/My/Sprites/mineswapper";
             var allSprites = Resources.LoadAll<Sprite>(path);
@@ -70,11 +82,6 @@ namespace ZevWaxGames.CursorHero
             glasses = targetSprite;
             
             StartCoroutine(HangingRoutine());
-        }
-        public void Init()
-        {
-            myCollider = GetComponent<Collider2D>();
-            image = transform.GetChild(0).GetComponent<Image>();
         }
     }
 }

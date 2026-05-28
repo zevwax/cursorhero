@@ -31,6 +31,7 @@ namespace ZevWaxGames.CursorHero
         {
             base.ButtonAction();
             UIManager.Instance.SwitchPC();
+            EventHolder.OnFadingOutFromPCStarted?.Invoke();
         }
     }
 }

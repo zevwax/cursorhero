@@ -6,6 +6,7 @@ public class WaveConfig
     public bool spawnWhiteMobAtStart;
     public int whiteMobSize;
     public int maxEnemiesPerSpawn;
-    public float shooterSpawnProbability;
+    public float pointerSpawnProbability;
+    public float gloveSpawnProbability;
     public float goatSpawnProbability;
 }
