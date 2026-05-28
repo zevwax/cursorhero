@@ -8,15 +8,28 @@ namespace ZevWaxGames.CursorHero
 {
     public class Projectile : MonoBehaviour
     {
+        public enum ProjectileType
+        {
+            Projectile,
+            RecycleBinKey,
+            ClipboardGlyph
+        }
+        private ProjectileType pType = ProjectileType.Projectile;
+        public bool TeamIsAlly => teamIsAlly;
+        public float Weight => weight;
+        public float Size => size;
+        public bool IsBouncyV => isBouncy;
+        public bool IsPiercingV => isPiercing;
+        public float Speed => speed;
         private static Transform psholder;
         private static GameObject bloodSplash;
         private static Texture2D _editableTexture1;
         private static Texture2D _editableTexture2;
-        protected bool isBouncy = false;
-        protected bool isPiercing = false;
         protected bool teamIsAlly;
         protected float weight;
         protected float size;
+        protected bool isBouncy = false;
+        protected bool isPiercing = false;
         public float speed;
         public Vector3 direction;
         private BoxCollider2D col;
@@ -31,23 +44,31 @@ namespace ZevWaxGames.CursorHero
             IsBouncy(glyph.IsBouncy);
             IsPiercing(glyph.IsPiercing);
             speed = glyph.Speed;
+            
+            var tooltip = string.Format("A.glyph\nWeight: {0:F1} / Size: {1:F1}", Weight, Size);
+            GetComponent<TooltipHolder>().SetText(tooltip);
+            var rb = GetComponent<Rigidbody2D>();
+            var drag = 5f;
+            rb.linearDamping = drag;
+            rb.angularDamping = drag;
+            rb.constraints = RigidbodyConstraints2D.None;
         }
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Clean;
-            EventHolder.OnChoosingStarted += Disable;
-            EventHolder.OnChoosingFinished += Die;
+            EventHolder.OnChoosingStarted += HandleChoosingStarted;
+            EventHolder.OnChoosingFinished += HandleChoosingFinished;
             EventHolder.OnBinStarted += Disable;
-            EventHolder.OnBinFinished += Die;
+            EventHolder.OnFadingInToPCStarted += HandleFadingInToPCStarted;
             EventHolder.OnRunFinished += Disable;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Clean;
-            EventHolder.OnChoosingStarted -= Disable;
-            EventHolder.OnChoosingFinished -= Die;
+            EventHolder.OnChoosingStarted -= HandleChoosingStarted;
+            EventHolder.OnChoosingFinished -= HandleChoosingFinished;
             EventHolder.OnBinStarted -= Disable;
-            EventHolder.OnBinFinished -= Die;
+            EventHolder.OnFadingInToPCStarted -= HandleFadingInToPCStarted;
             EventHolder.OnRunFinished -= Disable;
         }
         public void Launch(Vector3 launchDirection)
@@ -67,41 +88,44 @@ namespace ZevWaxGames.CursorHero
         }
         protected void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.GetComponent("Wall") != null)
+            if (pType == ProjectileType.Projectile)
             {
-                if (isBouncy)
+                if (other.gameObject.GetComponent("Wall") != null)
                 {
-                    Vector2 closestPoint = other.ClosestPoint(transform.position);
-                    Vector2 normal = ((Vector2)transform.position - closestPoint).normalized;
-                    direction = Vector2.Reflect(direction, normal).normalized;
-                    if (Random.Range(0, 4) == 0)
-                        isBouncy = false;
-                    return;
+                    if (isBouncy)
+                    {
+                        Vector2 closestPoint = other.ClosestPoint(transform.position);
+                        Vector2 normal = ((Vector2)transform.position - closestPoint).normalized;
+                        direction = Vector2.Reflect(direction, normal).normalized;
+                        if (Random.Range(0, 4) == 0)
+                            isBouncy = false;
+                        return;
+                    }
+                    else
+                    {
+                        Die();
+                        return;
+                    }
                 }
-                else
+                if (other.gameObject.GetComponent<Cursor>() != null)
                 {
-                    Die();
-                    return;
-                }
-            }
-            if (other.gameObject.GetComponent<Cursor>() != null)
-            {
-                var dmg = (float)default;
-                if (teamIsAlly)
-                    dmg = weight + MainCharacter.Instance.WeightBuff;
-                else
-                    dmg = weight;
-                other.gameObject.GetComponent<Cursor>().GetDamage(dmg);
+                    var dmg = (float)default;
+                    if (teamIsAlly)
+                        dmg = weight + MainCharacter.Instance.WeightBuff;
+                    else
+                        dmg = weight;
+                    other.gameObject.GetComponent<Cursor>().GetDamage(dmg);
 
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                var rotation = Quaternion.Euler(0, 0, angle - 90f);
-                Instantiate(bloodSplash, other.transform.position, rotation, psholder);
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    var rotation = Quaternion.Euler(0, 0, angle - 90f);
+                    Instantiate(bloodSplash, other.transform.position, rotation, psholder);
                 
-                DrawBloodOnWallpaper1(other.transform.position);
-                DrawBloodOnWallpaper2(other.transform.position);
+                    DrawBloodOnWallpaper1(other.transform.position);
+                    DrawBloodOnWallpaper2(other.transform.position);
                 
-                if (!isPiercing)
-                    Die();
+                    if (!isPiercing)
+                        Die();
+                }
             }
         }
         private void DrawBloodOnWallpaper1(Vector3 hitPosition)
@@ -302,17 +326,45 @@ namespace ZevWaxGames.CursorHero
             );
             Debug.Log("RefreshWallpapers2");
         }
+        private void HandleChoosingStarted()
+        {
+            if (pType == ProjectileType.Projectile)
+                col.enabled = false;
+            
+            if (pType == ProjectileType.RecycleBinKey)
+                GetComponent<Canvas>().sortingLayerName = "MainCharacterProjectiles";
+        }
+        private void HandleChoosingFinished()
+        {
+            if (pType == ProjectileType.Projectile)
+                Destroy(gameObject);
+            
+            if (pType == ProjectileType.RecycleBinKey)
+                GetComponent<Canvas>().sortingLayerName = "Bottles";
+        }
         private void Disable()
         {
-            col.enabled = false;
+            if (pType == ProjectileType.Projectile)
+                col.enabled = false;
         }
         private void Clean()
         {
-            Die();
+            if (pType != ProjectileType.ClipboardGlyph)
+                Die();
         }
         private void Die()
         {
             Destroy(gameObject);
+        }
+        private void Clear()
+        {
+            if (pType == ProjectileType.Projectile)
+                Destroy(gameObject);
+        }
+        private void HandleFadingInToPCStarted()
+        {
+            if (pType != ProjectileType.ClipboardGlyph)
+                Destroy(gameObject);
         }
         public void SetTeam(bool isAlly)
         {
@@ -368,5 +420,27 @@ namespace ZevWaxGames.CursorHero
         }
         public void IsBouncy (bool bouncy) => isBouncy = bouncy;
         public void IsPiercing (bool piercing) => isPiercing = piercing;
+
+        public void MakeItBeAKey()
+        {
+            SetTeam(true);
+            pType = ProjectileType.RecycleBinKey;
+            GetComponent<TooltipHolder>().enabled = true;
+            GetComponent<Dragable>().enabled = true;
+            direction = Vector2.zero;
+            GetComponent<Canvas>().sortingLayerName = "Bottles";
+            gameObject.layer = LayerMask.NameToLayer("Default");
+        }
+        public void MakeItBeAClipboardItem()
+        {
+            SetTeam(true);
+            pType = ProjectileType.ClipboardGlyph;
+            GetComponent<TooltipHolder>().enabled = true;
+            GetComponent<Dragable>().enabled = false;
+            direction = Vector2.zero;
+            GetComponent<Canvas>().sortingLayerName = "Bottles";
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            MainCharacter.Instance.ClipboardGlyph = gameObject;
+        }
     }
 }

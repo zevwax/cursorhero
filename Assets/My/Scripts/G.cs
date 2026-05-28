@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 namespace ZevWaxGames.CursorHero
 {
     public class G : MonoBehaviour // reminder: implement a game sequencer w/ async/await
@@ -43,10 +44,12 @@ namespace ZevWaxGames.CursorHero
             Spawner.NewEntity<Wall>(
                 new Vector2(0, 5f), "Top Wall", "SizeHolders/horizontal_wall",
                 null, true, "Wall", RigidbodyType2D.Static);
+            
             var mainChar = Spawner.NewEntity<MainCharacter>(
                 new Vector2(1.6f, -0.9f), "MainCharacter", "idle",
                 "Pointer", true, "MainCharacter");
             mainChar.GetComponent<MainCharacter>().Init();
+            StartCoroutine(CreateWDelay());
             
             Spawner.NewTabby();
             
@@ -91,6 +94,13 @@ namespace ZevWaxGames.CursorHero
             net = b2.GetComponent<Button>();
             bin.DisableButton();
             net.DisableButton();
+        }
+
+        private IEnumerator CreateWDelay()
+        {
+            yield return new WaitForSeconds(2f);
+            var cg = Spawner.NewClipboardGlyph(new Vector2(-2f, -4f));
+            MainCharacter.Instance.ClipboardGlyph = cg;
         }
     }
 }

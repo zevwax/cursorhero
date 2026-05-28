@@ -28,6 +28,8 @@ namespace ZevWaxGames.CursorHero
         private GameObject skinSetter = null;
         private GameObject currentShield;
         private Coroutine currentShieldRoutine;
+        
+        public GameObject ClipboardGlyph;
         /*private bool initialized = false;*/
         
         public Vector2 BackDirection { get; private set; } = Vector2.left;

@@ -95,11 +95,11 @@ namespace ZevWaxGames.CursorHero
             var posYOfBottomSideOfTheSelection = transform.position.y - halfOfH;
             var posYOfTopSideOfTheSelection = transform.position.y + halfOfH;
 
-            var allScripts = Object.FindObjectsByType<ItemKey>(FindObjectsSortMode.None);
-            foreach (var piece in allScripts)
+            var allScripts = Object.FindObjectsByType<Projectile>(FindObjectsSortMode.None);
+            foreach (var proj in allScripts)
             {
-                if (IsInsideSelection(piece.transform, posXOfLeftSideOfTheSelection, posXOfRightSideOfTheSelection, posYOfBottomSideOfTheSelection, posYOfTopSideOfTheSelection))
-                    return piece.gameObject;
+                if (IsInsideSelection(proj.transform, posXOfLeftSideOfTheSelection, posXOfRightSideOfTheSelection, posYOfBottomSideOfTheSelection, posYOfTopSideOfTheSelection))
+                    return proj.gameObject;
             }
             
             var allApples = Object.FindObjectsByType<ItemApple>(FindObjectsSortMode.None);

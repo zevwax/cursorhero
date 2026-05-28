@@ -4,9 +4,7 @@ namespace ZevWaxGames.CursorHero
     public class ItemKey : MonoBehaviour
     {
         public Glyph Glyph;
-        
-        [Header("Settings")]
-        [SerializeField] private float drag = 5f;
+        private float drag = 5f;
         private Rigidbody2D rb;
 
         private void OnEnable() => EventHolder.OnFadingInToPCStarted += Die;

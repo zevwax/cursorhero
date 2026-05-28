@@ -140,7 +140,7 @@ namespace ZevWaxGames.CursorHero
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(8);
-            var keyPos = Object.FindAnyObjectByType<ItemKey>().transform.position;
+            var keyPos = new Vector2(-2, -1);//Object.FindAnyObjectByType<Projectile>().transform.position;
             var selectionPos = new Vector3(keyPos.x, keyPos.y, 0f);
             yield return StartCoroutine(Say(
                 "Try holding down the Left Mouse Button to select the glyph you found in the recycle bin",

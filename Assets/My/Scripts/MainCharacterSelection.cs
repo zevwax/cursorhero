@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace ZevWaxGames.CursorHero
@@ -24,14 +25,35 @@ namespace ZevWaxGames.CursorHero
             var o = GetSelectedObject();
             if (o != null)
             {
-                if (o.GetComponent<ItemKey>() != null)
+                if (o.GetComponent<Projectile>() != null)
                 {
-                    var glyph = o.GetComponent<ItemKey>().Glyph;
-                    MainCharacter.Instance.weight = glyph.Weight;
-                    MainCharacter.Instance.size = glyph.Size;
-                    Guns.Library[GunName.Yellow].Glyph = glyph;
-                    ClipboardTextbox.Instance.UpdateContents();
-                    Spawner.NewDamageNumbers(transform.position, "Copied A.glyph");
+                    if (o != MainCharacter.Instance.ClipboardGlyph)
+                    {
+                        var glyph = o.GetComponent<Projectile>();
+                        MainCharacter.Instance.weight = glyph.Weight;
+                        MainCharacter.Instance.size = glyph.Size;
+                        Guns.Library[GunName.Yellow].Glyph = new Glyph
+                        (
+                            true,
+                            glyph.Weight,
+                            glyph.Size,
+                            glyph.IsBouncyV,
+                            glyph.IsPiercingV,
+                            glyph.Speed
+                        );
+                        ClipboardTextbox.Instance.UpdateContents();
+                        Spawner.NewDamageNumbers(transform.position, "Copied A.glyph");
+
+                        var clipboardObj = MainCharacter.Instance.ClipboardGlyph;
+                        var keyObj = o;
+                        var clipboardPos = new Vector2(-2f, -4f);
+                        var keyPos = keyObj.transform.position;
+                        clipboardObj.GetComponent<Projectile>().MakeItBeAKey();
+                        keyObj.GetComponent<Projectile>().MakeItBeAClipboardItem();
+                        clipboardObj.transform.DOMove(keyPos, 1);
+                        keyObj.transform.DOMove(clipboardPos, 1);
+                        keyObj.transform.DORotate(Vector3.zero, 1);
+                    }
                 }
                 else if (o.GetComponent<ItemApple>() != null)
                 {

@@ -89,10 +89,17 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
-        public static void NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph)
+        public static GameObject NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph)
         {
             var obj = CreateBaseProjectile<Projectile>(pos, direction, "Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
+            var tooltipHolder = obj.AddComponent<TooltipHolder>();
+            var dragable = obj.AddComponent<Dragable>();
+            tooltipHolder.Init();
+            dragable.Init();
+            tooltipHolder.enabled = false;
+            dragable.enabled = false;
             obj.GetComponent<Projectile>().Init(glyph);
+            return obj;
         }
         /*public static void NewProjectileBlue(Vector2 pos, Vector2 direction, Gun g)
         {
@@ -793,14 +800,30 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewKey(Vector2 pos)
         {
-            var obj = NewEntity<ItemKey>(pos, "Key", "key", "Bottles", true, "Default");
-            var tooltipHolder = obj.AddComponent<TooltipHolder>();
-            var dragable = obj.AddComponent<Dragable>();
-            var key = obj.GetComponent<ItemKey>();
-            tooltipHolder.Init();
-            dragable.Init();
-            key.Init();
-            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            var glyph = new Glyph(
+                true,
+                Random.Range(1f, 3f),
+                Random.Range(1f, 3f),
+                false,
+                false,
+                Guns.Library[GunName.Yellow].Glyph.Speed
+            );
+            var obj = NewProjectile(pos, Vector2.zero, glyph);
+            obj.GetComponent<Projectile>().MakeItBeAKey();
+            return obj;
+        }
+        public static GameObject NewClipboardGlyph(Vector2 pos)
+        {
+            var glyph = new Glyph(
+                true,
+                1,
+                1,
+                false,
+                false,
+                Guns.Library[GunName.Yellow].Glyph.Speed
+            );
+            var obj = NewProjectile(pos, Vector2.zero, glyph);
+            obj.GetComponent<Projectile>().MakeItBeAClipboardItem();
             return obj;
         }
         public static GameObject NewApple(Vector2 pos)
