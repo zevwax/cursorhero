@@ -763,6 +763,7 @@ GameObject:
   - component: {fileID: 441337731}
   - component: {fileID: 441337732}
   - component: {fileID: 441337733}
+  - component: {fileID: 441337734}
   m_Layer: 0
   m_Name: TheHolder
   m_TagString: Untagged
@@ -837,6 +838,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConditionManager
   prevCondition: 0
   currCondition: 0
+--- !u!114 &441337734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441337728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c610d9756c26448a96729484b0fc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZevWaxGames.CursorHero.Translator
 --- !u!1 &511259928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,8 +1965,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 255e5e7d20d54f64fb9820e52990e5d7, type: 2}
-  m_sharedMaterial: {fileID: 7623864388153787670, guid: 255e5e7d20d54f64fb9820e52990e5d7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
+  m_sharedMaterial: {fileID: 8378293665681271254, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1977,7 +1990,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.5
+  m_fontSize: 19.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3256,6 +3269,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
     - target: {fileID: 1073800272998456711, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3483,7 +3500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.9.0
+  m_text: 0.9.1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3510,7 +3527,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.75
+  m_fontSize: 8.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3656,6 +3673,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Notification: You Win!'
       objectReference: {fileID: 0}
+    - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
     - target: {fileID: 1073800272998456711, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4036,6 +4057,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Disc ready: Choose an Upgrade'
       objectReference: {fileID: 0}
+    - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
     - target: {fileID: 1073800272998456711, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5529,6 +5554,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Recycle Bin
       objectReference: {fileID: 0}
+    - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
     - target: {fileID: 1073800272998456711, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5683,8 +5712,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Droste Screencasting Software
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e13898cae2c00db4daae47b36897f748, type: 2}
-  m_sharedMaterial: {fileID: 8888337733141448400, guid: e13898cae2c00db4daae47b36897f748, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
+  m_sharedMaterial: {fileID: 8378293665681271254, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5708,7 +5737,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.35
+  m_fontSize: 25.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6513,8 +6542,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Clipboard >
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 255e5e7d20d54f64fb9820e52990e5d7, type: 2}
-  m_sharedMaterial: {fileID: 7623864388153787670, guid: 255e5e7d20d54f64fb9820e52990e5d7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
+  m_sharedMaterial: {fileID: 8378293665681271254, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6538,7 +6567,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.95
+  m_fontSize: 18.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6665,8 +6694,8 @@ MonoBehaviour:
 
     Weight: 1.0 + 0.0 / Size: 1.0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 255e5e7d20d54f64fb9820e52990e5d7, type: 2}
-  m_sharedMaterial: {fileID: 7623864388153787670, guid: 255e5e7d20d54f64fb9820e52990e5d7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
+  m_sharedMaterial: {fileID: 8378293665681271254, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6690,7 +6719,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9.7
+  m_fontSize: 14.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6834,6 +6863,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'HP is out of range: Try Again'
       objectReference: {fileID: 0}
+    - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
     - target: {fileID: 1073800272998456711, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

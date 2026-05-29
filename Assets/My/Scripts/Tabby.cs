@@ -94,36 +94,36 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(WalkIn());
             yield return StartCoroutine(Say(
-                "Hey there!! I’m Tabby, your personal assistant..",
+                Translator.Instance.Get(Token.Greetings),
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(2); SwitchActionTo(3);
             yield return StartCoroutine(Say(
-                "Let me..",
+                Translator.Instance.Get(Token.LetMe),
                 46f));
             yield return new WaitForSeconds(0.33f);
             yield return StartCoroutine(MainCharacter.Instance.DoGlitch());
             yield return new WaitForSeconds(0.75f);
             yield return StartCoroutine(Say(
-                "Uugh..",
+                Translator.Instance.Get(Token.Uurgh),
                 46f));
             yield return new WaitForSeconds(0.75f);
             yield return StartCoroutine(Say(
-                "It seems we don't have much time.. Agents are trying to kill you!!",
+                Translator.Instance.Get(Token.WeDontHaveTime),
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(4);
             yield return StartCoroutine(Say(
-                "They'll retreat once the timer runs out.",
+                Translator.Instance.Get(Token.TheyllRetreat),
                 65f)); var ra = Spawner.NewRedArrow(new Vector2(6.51f, -3.45f), Vector2.down);
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(5);
             Destroy(ra);
             yield return StartCoroutine(Say(
-                "Please, don't get hurt..",
+                Translator.Instance.Get(Token.DontGetHurt),
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
@@ -135,7 +135,7 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(WalkIn());
             yield return StartCoroutine(Say(
-                "Whew, you did it! Now, time for loot!",
+                Translator.Instance.Get(Token.YouDidIt),
                 65f));
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
@@ -143,7 +143,7 @@ namespace ZevWaxGames.CursorHero
             var keyPos = new Vector2(-2, -1);//Object.FindAnyObjectByType<Projectile>().transform.position;
             var selectionPos = new Vector3(keyPos.x, keyPos.y, 0f);
             yield return StartCoroutine(Say(
-                "Try holding down the Left Mouse Button to select the glyph you found in the recycle bin",
+                Translator.Instance.Get(Token.Select),
                 65f));
             var selection = Spawner.NewTabbyPointer(selectionPos);
             
@@ -152,7 +152,7 @@ namespace ZevWaxGames.CursorHero
             var shortcutPos = Object.FindAnyObjectByType<ButtonSwitchPC>().transform.position;
             var arrow2Pos = new Vector3(shortcutPos.x, shortcutPos.y + 1f, 0f);
             yield return StartCoroutine(Say(
-                "Good job, boss!! Hit the shortcut when you finish looting, okay??",
+                Translator.Instance.Get(Token.PushThePCShortcut),
                 65f)); var ra2 = Spawner.NewRedArrow(arrow2Pos, Vector2.down);
             yield return new WaitForSeconds(1f);
             G.Instance.net.GetComponent<Button>().EnableButton();

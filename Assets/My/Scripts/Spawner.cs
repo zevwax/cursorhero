@@ -423,7 +423,7 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMin = new Vector2(4, 4);
             textRt.offsetMax = new Vector2(-4, -4);
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
             textTxt.text = text;
             textTxt.alignment = TextAlignmentOptions.Center;
             textTxt.color = Color.black;
@@ -466,7 +466,7 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMin = Vector2.zero;
             textRt.offsetMax = Vector2.zero;
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
             textTxt.alignment = TextAlignmentOptions.Center;
             if (isGood)
             {
@@ -518,7 +518,7 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMin = Vector2.zero;
             textRt.offsetMax = Vector2.zero;
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
             textTxt.alignment = TextAlignmentOptions.Center;
             textTxt.color = new Color32(0, 170, 0, 255);
             textTxt.text = text;
@@ -786,7 +786,7 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMax = new Vector2(-8, -8);
             //
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma08pt_raster_hinted");
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
             textTxt.text = "Default text";
             textTxt.alignment = TextAlignmentOptions.Left;
             textTxt.color = Color.black;
