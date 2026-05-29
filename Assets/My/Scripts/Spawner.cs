@@ -799,14 +799,14 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
-        public static GameObject NewKey(Vector2 pos)
+        public static GameObject NewStaticGlyph(Vector2 pos)
         {
             var glyph = new Glyph(
                 true,
                 Random.Range(1f, 3f),
                 Random.Range(1f, 3f),
-                false,
-                false,
+                Random.value < 0.33f,
+                Random.value < 0.33f,
                 Guns.Library[GunName.Yellow].Glyph.Speed
             );
             var obj = NewProjectile(pos, Vector2.zero, glyph);

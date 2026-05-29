@@ -107,7 +107,7 @@ namespace ZevWaxGames.CursorHero
                 Tabby.Instance.SwitchActionTo(7);
                 
                 Spawner.NewApple(pos1);
-                Spawner.NewKey(pos2);
+                Spawner.NewStaticGlyph(pos2);
             }
             else
             {
@@ -117,7 +117,7 @@ namespace ZevWaxGames.CursorHero
                         Spawner.NewApple(pos1);
                         break;
                     case 1:
-                        Spawner.NewKey(pos1);
+                        Spawner.NewStaticGlyph(pos1);
                         break;
                     case 2:
                         Spawner.NewBottle(pos1);
@@ -132,7 +132,7 @@ namespace ZevWaxGames.CursorHero
                         Spawner.NewApple(pos2);
                         break;
                     case 1:
-                        Spawner.NewKey(pos2);
+                        Spawner.NewStaticGlyph(pos2);
                         break;
                     case 2:
                         Spawner.NewBottle(pos2);
@@ -147,7 +147,7 @@ namespace ZevWaxGames.CursorHero
                         Spawner.NewApple(pos3);
                         break;
                     case 1:
-                        Spawner.NewKey(pos3);
+                        Spawner.NewStaticGlyph(pos3);
                         break;
                     case 2:
                         Spawner.NewBottle(pos3);

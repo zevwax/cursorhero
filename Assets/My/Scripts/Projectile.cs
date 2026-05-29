@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -14,6 +15,7 @@ namespace ZevWaxGames.CursorHero
             RecycleBinKey,
             ClipboardGlyph
         }
+        public ProjectileType PType => pType;
         private ProjectileType pType = ProjectileType.Projectile;
         public bool TeamIsAlly => teamIsAlly;
         public float Weight => weight;
@@ -44,14 +46,16 @@ namespace ZevWaxGames.CursorHero
             IsBouncy(glyph.IsBouncy);
             IsPiercing(glyph.IsPiercing);
             speed = glyph.Speed;
-            
-            var tooltip = string.Format("A.glyph\nWeight: {0:F1} / Size: {1:F1}", Weight, Size);
-            GetComponent<TooltipHolder>().SetText(tooltip);
             var rb = GetComponent<Rigidbody2D>();
             var drag = 5f;
             rb.linearDamping = drag;
             rb.angularDamping = drag;
             rb.constraints = RigidbodyConstraints2D.None;
+        }
+
+        private void SetTooltip(string text)
+        {
+            GetComponent<TooltipHolder>().SetText(text);
         }
         private void OnEnable()
         {
@@ -90,7 +94,24 @@ namespace ZevWaxGames.CursorHero
         {
             if (pType == ProjectileType.Projectile)
             {
-                if (other.gameObject.GetComponent("Wall") != null)
+                if (other.gameObject.GetComponent<Wall>() != null && teamIsAlly)
+                {
+                    if (isBouncy)
+                    {
+                        Vector2 closestPoint = other.ClosestPoint(transform.position);
+                        Vector2 normal = ((Vector2)transform.position - closestPoint).normalized;
+                        direction = Vector2.Reflect(direction, normal).normalized;
+                        if (Random.Range(0, 4) == 0)
+                            isBouncy = false;
+                        return;
+                    }
+                }
+                else if (other.gameObject.GetComponent<ProjectileWall>() != null && teamIsAlly)
+                {
+                    Die();
+                    return;
+                }
+                else if (other.gameObject.GetComponent<Wall>() != null && !teamIsAlly)
                 {
                     if (isBouncy)
                     {
@@ -107,7 +128,7 @@ namespace ZevWaxGames.CursorHero
                         return;
                     }
                 }
-                if (other.gameObject.GetComponent<Cursor>() != null)
+                else if (other.gameObject.GetComponent<Cursor>() != null)
                 {
                     var dmg = (float)default;
                     if (teamIsAlly)
@@ -125,6 +146,41 @@ namespace ZevWaxGames.CursorHero
                 
                     if (!isPiercing)
                         Die();
+                }
+            }
+            else if (pType == ProjectileType.RecycleBinKey)
+            {
+                var skinSetter = MainCharacter.Instance.SkinSetter;
+                var they = other.gameObject;
+                var theirGlyph = they.GetComponent<Projectile>();
+                if
+                    (
+                        (theirGlyph != null) &&
+                        (theirGlyph.PType == ProjectileType.RecycleBinKey) &&
+                        (gameObject != skinSetter) &&
+                        (they != skinSetter) &&
+                        (!DOTween.IsTweening(transform)) &&
+                        (!DOTween.IsTweening(they.transform))
+                    )
+                {
+                    if
+                    (
+                        (IsBouncyV != IsPiercingV) &&
+                        (IsBouncyV != theirGlyph.IsBouncyV) &&
+                        (IsPiercingV != theirGlyph.IsPiercingV)
+                    )
+                    {
+                        if (theirGlyph.IsBouncyV)
+                            IsBouncy(true);
+                        if (theirGlyph.IsPiercingV)
+                            IsPiercing(true);
+                        Destroy(they);
+                        Spawner.NewDamageNumbers(transform.position, "Merged!");
+                    }
+                    else
+                    {
+                        Spawner.NewDamageNumbers(transform.position, "Only glyphs with different perks can be merged");
+                    }
                 }
             }
         }
@@ -363,6 +419,7 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleFadingInToPCStarted()
         {
+            if (gameObject == MainCharacter.Instance.ClipboardGlyph) return;
             if (pType != ProjectileType.ClipboardGlyph)
                 Destroy(gameObject);
         }
@@ -418,9 +475,55 @@ namespace ZevWaxGames.CursorHero
             size = s;
             GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = s;
         }
-        public void IsBouncy (bool bouncy) => isBouncy = bouncy;
-        public void IsPiercing (bool piercing) => isPiercing = piercing;
+        public void IsBouncy(bool bouncy)
+        {
+            isBouncy = bouncy;
+            
+            UpdateChar();
 
+            UpdateTooltip();
+        }
+        public void IsPiercing(bool piercing)
+        {
+            isPiercing = piercing;
+            
+            UpdateChar();
+
+            UpdateTooltip();
+        }
+        private void UpdateChar() => SetChar(CurrChar());
+        private void UpdateTooltip()
+        {
+            var perksDesc = "";
+            var character = CurrChar();
+            if (character == "A")
+                perksDesc = "None";
+            else if (character == "M")
+                perksDesc = "<color=#00EE00>Bouncy</color>";
+            else if (character == "H")
+                perksDesc = "<color=#0000EE>Piercing</color>";
+            else if (character == "X")
+                perksDesc = "<color=#00EE00>Bouncy</color>, <color=#0000EE>Piercing</color>";
+            var tooltip = string.Format("{0}.glyph\nWeight: {1:F1} / Size: {2:F1}\nPerks: {3}", CurrChar(), Weight, Size, perksDesc);
+            SetTooltip(tooltip);
+        }
+        public string CurrChar()
+        {
+            if (!isBouncy && !isPiercing)
+                return "A";
+            if (!isBouncy && isPiercing)
+                return "H";
+            if (isBouncy && !isPiercing)
+                return "M";
+            if (isBouncy && isPiercing)
+                return "X";
+            throw new System.Exception();
+        }
+        private void SetChar(string character)
+        {
+            for (var i = 1; i <= 9; i++)
+                transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = character;
+        }
         public void MakeItBeAKey()
         {
             SetTeam(true);

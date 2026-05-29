@@ -25,7 +25,6 @@ namespace ZevWaxGames.CursorHero
         {
             yield return new WaitForSeconds(96f - 4f);//96f - 2.6f - too late
             HP = 1;
-            Disc.Normalize();
         }
         protected override void Shoot() { } 
         

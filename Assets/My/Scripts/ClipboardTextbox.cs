@@ -13,9 +13,10 @@ public class ClipboardTextbox : MonoBehaviour
     public void UpdateContents()
     {
         var mainChar = MainCharacter.Instance;
+        var currChar = MainCharacter.Instance.ClipboardGlyph.GetComponent<Projectile>().CurrChar();
         GetComponent<TextMeshProUGUI>().text =
             string.Format(
-                "A.glyph\nWeight: {0:F1} + {1:F1} / Size: {2:F1}",
-                mainChar.weight, MainCharacter.Instance.WeightBuff, mainChar.size);
+                "{0}.glyph\nWeight: {1:F1} + {2:F1} / Size: {3:F1}",
+                currChar, mainChar.weight, MainCharacter.Instance.WeightBuff, mainChar.size);
     }
 }
