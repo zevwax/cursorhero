@@ -59,9 +59,9 @@ namespace ZevWaxGames.CursorHero
                 transform.rotation = Quaternion.Euler(0, 0, angle);
             }
         }
-        protected void OnTriggerEnter2D(Collider2D other)
+        protected void OnCollisionEnter2D(Collision2D collision)
         {
-            if (other.gameObject.GetComponent<MainCharacter>() != null)
+            if (collision.gameObject.GetComponent<MainCharacter>() != null)
             {
                 MainCharacter.Instance.GetDamage(1);
             }

@@ -84,10 +84,9 @@ namespace ZevWaxGames.CursorHero
             pos, "Enemy", "pointer_2", "Enemies", true, "Enemy");
         public static GameObject NewEnemyGoat(Vector2 pos) => NewEntity<EnemyGoat>(
             pos, "Enemy", "pointer_3", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyFuck(Vector2 pos)
+        public static GameObject NewEnemyBoss(Vector2 pos)
         {
             var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
-            obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
         public static GameObject NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph)

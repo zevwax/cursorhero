@@ -375,7 +375,7 @@ namespace ZevWaxGames.CursorHero
             if (index == 12)
             {
                 BlueFace.Instance.FadeIn();
-                Spawner.NewEnemyFuck(new Vector2(-11f, 0));//-10 мало
+                Spawner.NewEnemyBoss(new Vector2(-11f, 0));//-10 мало
             }
             waveStartTime = Clock.Instance.ElapsedTime;
             var config = waves[index];
