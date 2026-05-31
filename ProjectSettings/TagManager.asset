@@ -75,6 +75,15 @@ TagManager:
   - name: ProgressBarFG
     uniqueID: 1420179229
     locked: 0
+  - name: MapLine
+    uniqueID: 4079448479
+    locked: 0
+  - name: MapNode
+    uniqueID: 69400185
+    locked: 0
+  - name: MapChar
+    uniqueID: 2809869657
+    locked: 0
   - name: Windows
     uniqueID: 4063274577
     locked: 0
@@ -87,14 +96,8 @@ TagManager:
   - name: Bottles
     uniqueID: 1413295005
     locked: 0
-  - name: MapLine
-    uniqueID: 4079448479
-    locked: 0
-  - name: MapNode
-    uniqueID: 69400185
-    locked: 0
-  - name: MapChar
-    uniqueID: 2809869657
+  - name: RedArrow
+    uniqueID: 309428201
     locked: 0
   - name: Tabby
     uniqueID: 2985127899
@@ -116,9 +119,6 @@ TagManager:
     locked: 0
   - name: DamageNumbers
     uniqueID: 380735913
-    locked: 0
-  - name: RedArrow
-    uniqueID: 309428201
     locked: 0
   - name: TheEndScreen
     uniqueID: 3855164161

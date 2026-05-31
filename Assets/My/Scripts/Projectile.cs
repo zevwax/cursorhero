@@ -529,7 +529,9 @@ namespace ZevWaxGames.CursorHero
             SetTeam(true);
             pType = ProjectileType.RecycleBinKey;
             GetComponent<TooltipHolder>().enabled = true;
-            GetComponent<Dragable>().enabled = true;
+            var dragable = GetComponent<Dragable>();
+            if (dragable != null)
+                dragable.enabled = true;
             direction = Vector2.zero;
             GetComponent<Canvas>().sortingLayerName = "Bottles";
             gameObject.layer = LayerMask.NameToLayer("Default");
@@ -539,7 +541,10 @@ namespace ZevWaxGames.CursorHero
             SetTeam(true);
             pType = ProjectileType.ClipboardGlyph;
             GetComponent<TooltipHolder>().enabled = true;
-            GetComponent<Dragable>().enabled = false;
+            var dragable = GetComponent<Dragable>();
+            if (dragable == null)
+                dragable = gameObject.AddComponent<Dragable>();
+            dragable.enabled = false;
             direction = Vector2.zero;
             GetComponent<Canvas>().sortingLayerName = "Bottles";
             gameObject.layer = LayerMask.NameToLayer("Default");

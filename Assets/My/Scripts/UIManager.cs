@@ -106,8 +106,8 @@ namespace ZevWaxGames.CursorHero
                 forThe1stTime = false;
                 Tabby.Instance.SwitchActionTo(7);
                 
-                Spawner.NewApple(pos1);
-                Spawner.NewStaticGlyph(pos2);
+                Spawner.NewTutorialApple(pos1);
+                Spawner.NewTutorialStaticGlyph(pos2);
             }
             else
             {

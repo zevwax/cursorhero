@@ -89,15 +89,19 @@ namespace ZevWaxGames.CursorHero
             var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
             return obj;
         }
-        public static GameObject NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph)
+        public static GameObject NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph, bool isDragable = true)
         {
             var obj = CreateBaseProjectile<Projectile>(pos, direction, "Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
             var tooltipHolder = obj.AddComponent<TooltipHolder>();
-            var dragable = obj.AddComponent<Dragable>();
+            var dragable = (Dragable)default;
+            if (isDragable)
+                dragable = obj.AddComponent<Dragable>();
             tooltipHolder.Init();
-            dragable.Init();
+            if (isDragable)
+                dragable.Init();
             tooltipHolder.enabled = false;
-            dragable.enabled = false;
+            if (isDragable)
+                dragable.enabled = false;
             obj.GetComponent<Projectile>().Init(glyph);
             return obj;
         }
@@ -798,7 +802,8 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
-        public static GameObject NewStaticGlyph(Vector2 pos)
+        public static GameObject NewTutorialStaticGlyph(Vector2 pos) => NewStaticGlyph(pos, false);
+        public static GameObject NewStaticGlyph(Vector2 pos, bool IsDragable = true)
         {
             var glyph = new Glyph(
                 true,
@@ -808,7 +813,7 @@ namespace ZevWaxGames.CursorHero
                 Random.value < 0.33f,
                 Guns.Library[GunName.Yellow].Glyph.Speed
             );
-            var obj = NewProjectile(pos, Vector2.zero, glyph);
+            var obj = NewProjectile(pos, Vector2.zero, glyph, IsDragable);
             obj.GetComponent<Projectile>().MakeItBeAKey();
             return obj;
         }
@@ -826,14 +831,18 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<Projectile>().MakeItBeAClipboardItem();
             return obj;
         }
-        public static GameObject NewApple(Vector2 pos)
+        public static GameObject NewTutorialApple(Vector2 pos) => NewApple(pos, false);
+        public static GameObject NewApple(Vector2 pos, bool isDragable = true)
         {
             var obj = NewEntity<ItemApple>(pos, "Apple", "apple", "Bottles", true, "Default");
             var tooltipHolder = obj.AddComponent<TooltipHolder>();
-            var dragable = obj.AddComponent<Dragable>();
+            var dragable = (Dragable)default;
+            if (isDragable)
+                dragable = obj.AddComponent<Dragable>();
             var apple = obj.GetComponent<ItemApple>();
             tooltipHolder.Init();
-            dragable.Init();
+            if (isDragable)
+                dragable.Init();
             apple.Init();
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
