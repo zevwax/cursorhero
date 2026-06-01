@@ -150,13 +150,14 @@ namespace ZevWaxGames.CursorHero
             }
             else if (pType == ProjectileType.RecycleBinKey)
             {
+                if (other == null || other.gameObject.GetComponent<Projectile>() == null) return;
+                
                 var skinSetter = MainCharacter.Instance.SkinSetter;
                 var they = other.gameObject;
                 var theirGlyph = they.GetComponent<Projectile>();
                 if
                     (
                         (theirGlyph != null) &&
-                        (theirGlyph.PType == ProjectileType.RecycleBinKey) &&
                         (gameObject != skinSetter) &&
                         (they != skinSetter) &&
                         (!DOTween.IsTweening(transform)) &&
@@ -165,21 +166,32 @@ namespace ZevWaxGames.CursorHero
                 {
                     if
                     (
-                        (IsBouncyV != IsPiercingV) &&
-                        (IsBouncyV != theirGlyph.IsBouncyV) &&
-                        (IsPiercingV != theirGlyph.IsPiercingV)
+                        theirGlyph.PType == ProjectileType.ClipboardGlyph ||
+                        (
+                            theirGlyph.PType == ProjectileType.RecycleBinKey &&
+                            gameObject.GetInstanceID() > theirGlyph.gameObject.GetInstanceID()
+                        )
                     )
                     {
-                        if (theirGlyph.IsBouncyV)
-                            IsBouncy(true);
-                        if (theirGlyph.IsPiercingV)
-                            IsPiercing(true);
-                        Destroy(they);
-                        Spawner.NewDamageNumbers(transform.position, "Merged!");
-                    }
-                    else
-                    {
-                        Spawner.NewDamageNumbers(transform.position, "Only glyphs with different perks can be merged");
+                        if
+                        (
+                            (IsBouncyV != IsPiercingV) &&
+                            (IsBouncyV != theirGlyph.IsBouncyV) &&
+                            (IsPiercingV != theirGlyph.IsPiercingV)
+                        )
+                        {
+                            if (theirGlyph.IsBouncyV)
+                                IsBouncy(true);
+                            if (theirGlyph.IsPiercingV)
+                                IsPiercing(true);
+                            Destroy(they);
+                            Spawner.NewPopUpText(transform.position, "Merged!", new Color(0, 1, 0, 1), 1f);
+                            var savedGlyph = MainCharacter.Instance.ClipboardGlyph;
+                            if (savedGlyph == null)
+                                savedGlyph = gameObject;
+                        }
+                        else
+                            Spawner.NewPopUpText(transform.position, "Only glyphs with different perks can be merged", new Color(1, 0, 0, 1), 2.66f);
                     }
                 }
             }

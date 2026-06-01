@@ -48,7 +48,7 @@ namespace ZevWaxGames.CursorHero
                         );
                         ClipboardTextbox.Instance.UpdateContents();
                         var currChar = glyph.CurrChar();
-                        Spawner.NewDamageNumbers(transform.position, string.Format("Copied {0}.glyph", currChar));
+                        Spawner.NewPopUpText(transform.position, string.Format("Copied {0}.glyph", currChar), new Color(0, 1, 0, 1), 1f);
 
                         var clipboardObj = MainCharacter.Instance.ClipboardGlyph;
                         var keyObj = o;
@@ -64,7 +64,7 @@ namespace ZevWaxGames.CursorHero
                 else if (o.GetComponent<ItemApple>() != null)
                 {
                     MainCharacter.Instance.IncreaseCurrHPByValue(2);
-                    Spawner.NewDamageNumbers(transform.position, "+2 HP");
+                    Spawner.NewPopUpText(transform.position, "+2 HP", new Color(0, 1, 0, 1), 1f);
                     Destroy(o);
                 }
                 Tabby.Instance.SwitchActionTo(9);
@@ -78,7 +78,7 @@ namespace ZevWaxGames.CursorHero
                     var targetPos = transform.position;
                     clipboardObj.GetComponent<Projectile>().MakeItBeAKey();
                     clipboardObj.transform.DOMove(targetPos, 1);
-                    Spawner.NewDamageNumbers(transform.position, "Pasted");
+                    Spawner.NewPopUpText(transform.position, "Pasted", new Color(0, 1, 0, 1), 1f);
                 }
             }
             MainCharacter.Instance.SetGlove(gameObject);

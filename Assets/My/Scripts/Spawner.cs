@@ -442,57 +442,27 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewDamageNumbers(Vector2 pos, bool isGood, float damageAmount)
         {
-            var obj = new GameObject("DamageNumbers");
-            obj.layer = LayerMask.NameToLayer("GUI");
-            var canvas = obj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.WorldSpace;
-            canvas.worldCamera = Camera.main;
-            canvas.sortingLayerName = "DamageNumbers";
-            var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.position = pos;
-            rectTransform.sizeDelta = new Vector2(30, 15);
-            rectTransform.localScale = new Vector3(0, 0, 1);
-            var canvasScaler = obj.AddComponent<CanvasScaler>();
-            canvasScaler.dynamicPixelsPerUnit = 30f;
-            canvasScaler.referencePixelsPerUnit = 30f;
-            var raycaster = obj.AddComponent<GraphicRaycaster>();
-            raycaster.ignoreReversedGraphics = true;
-            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
-            raycaster.blockingMask = -1;
-            obj.AddComponent<CanvasGroup>();
-            var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-            var tooltip = obj.AddComponent<DamageNumbers>();
+            var text = "";
+            var color = (Color)default;
             
-            var textObj = new GameObject("Text");
-            textObj.layer = LayerMask.NameToLayer("GUI");
-            textObj.transform.SetParent(obj.transform, false);
-            var textRt = textObj.AddComponent<RectTransform>();
-            textRt.anchorMin = Vector2.zero;
-            textRt.anchorMax = Vector2.one;
-            textRt.offsetMin = Vector2.zero;
-            textRt.offsetMax = Vector2.zero;
-            var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
-            textTxt.alignment = TextAlignmentOptions.Center;
             if (isGood)
             {
-                textTxt.text = "";
-                textTxt.color = Color.white;
+                text = "";
+                color = Color.white;
             }
             else
             {
-                textTxt.text = "-";
-                textTxt.color = Color.red;
+                text = "-";
+                color = Color.red;
             }
-            textTxt.text += string.Format("{0:F1}", damageAmount);
-            textTxt.enableAutoSizing = true;
-            textTxt.fontSizeMin = ushort.MinValue;
-            textTxt.fontSizeMax = ushort.MaxValue;
-            textTxt.raycastTarget = false;
+            text += string.Format("{0:F1}", damageAmount);
+
+            var obj = NewPopUpText(pos, text, color, .8f);
             
             return obj;
         }
-        public static GameObject NewDamageNumbers(Vector2 pos, string text)
+        //public static GameObject NewDamageNumbers(Vector2 pos, string text) => NewPopUpText(pos, text, Color.white);
+        public static GameObject NewPopUpText(Vector2 pos, string text, Color color, float duration)
         {
             var obj = new GameObject("DamageNumbers");
             obj.layer = LayerMask.NameToLayer("GUI");
@@ -511,9 +481,10 @@ namespace ZevWaxGames.CursorHero
             raycaster.ignoreReversedGraphics = true;
             raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
             raycaster.blockingMask = -1;
-            obj.AddComponent<CanvasGroup>();
+            var cg = obj.AddComponent<CanvasGroup>();
+            cg.alpha = 0;
             var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
-            var tooltip = obj.AddComponent<DamageNumbers>();
+            var tooltip = obj.AddComponent<PopupText>();
             
             var textObj = new GameObject("Text");
             textObj.layer = LayerMask.NameToLayer("GUI");
@@ -526,12 +497,14 @@ namespace ZevWaxGames.CursorHero
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
             textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
             textTxt.alignment = TextAlignmentOptions.Center;
-            textTxt.color = new Color32(0, 170, 0, 255);
+            textTxt.color = color;
             textTxt.text = text;
             textTxt.enableAutoSizing = true;
             textTxt.fontSizeMin = ushort.MinValue;
             textTxt.fontSizeMax = ushort.MaxValue;
             textTxt.raycastTarget = false;
+            
+            tooltip.Init(duration);
             
             return obj;
         }
