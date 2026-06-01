@@ -269,7 +269,10 @@ namespace ZevWaxGames.CursorHero
         {
             var obj = NewEntity<RedArrow>(
                 pos, "Red Arrow", "red_arrow", "RedArrow", false, "GUI");
-            obj.GetComponent<RedArrow>().direction = direction;
+            var ra = obj.GetComponent<RedArrow>();
+            ra.position = pos;
+            ra.direction = direction;
+            ra.Init();
             return obj;
         }
         public static GameObject NewFallingDisk(Vector2 pos)
