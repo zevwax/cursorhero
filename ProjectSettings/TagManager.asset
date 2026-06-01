@@ -90,7 +90,7 @@ TagManager:
   - name: ButtonsFG
     uniqueID: 1832763641
     locked: 0
-  - name: HeartKeeper
+  - name: HeartKeeperBG
     uniqueID: 2547352381
     locked: 0
   - name: Bottles
@@ -119,6 +119,9 @@ TagManager:
     locked: 0
   - name: DamageNumbers
     uniqueID: 380735913
+    locked: 0
+  - name: HeartKeeperFG
+    uniqueID: 1711996711
     locked: 0
   - name: TheEndScreen
     uniqueID: 3855164161
