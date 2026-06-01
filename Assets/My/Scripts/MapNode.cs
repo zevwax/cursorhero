@@ -23,12 +23,14 @@ namespace ZevWaxGames.CursorHero
             
             StartCoroutine(HangingRoutine());
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             EventHolder.OnBSODStarted += ResetSprite;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             EventHolder.OnBSODStarted -= ResetSprite;
         }
         public void SetFlag() => image.sprite = flag;

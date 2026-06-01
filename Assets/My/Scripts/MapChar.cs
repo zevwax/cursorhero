@@ -12,23 +12,17 @@ namespace ZevWaxGames.CursorHero
         private Sprite glasses;
         private Collider2D myCollider;
         private Collider2D[] results = new Collider2D[20];
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             EventHolder.OnFadingOutFromPCStarted += Move;
             EventHolder.OnBSODStarted += Reset;
-            /*EventHolder.OnChoosingStarted += ShowMapNode;
-            EventHolder.OnChoosingFinished += HideMapNode;
-            EventHolder.OnPCFinished += ShowMapNode;
-            EventHolder.OnPCStarted += HideMapNode;*/
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             EventHolder.OnFadingOutFromPCStarted -= Move;
             EventHolder.OnBSODStarted -= Reset;
-            /*EventHolder.OnChoosingStarted -= ShowMapNode;
-            EventHolder.OnChoosingFinished -= HideMapNode;
-            EventHolder.OnPCFinished -= ShowMapNode;
-            EventHolder.OnPCStarted -= HideMapNode;*/
         }
         private void Move()
         {

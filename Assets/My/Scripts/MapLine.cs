@@ -9,6 +9,9 @@ namespace ZevWaxGames.CursorHero
         private Sprite[] frames;
         private Image image;
         private int currFrameIndex = 0;
+        private const float FastAnimDuration = 1f;
+        private const float SlowAnimDuration = 2f;
+        private float currAnimDuration = FastAnimDuration;
         private int numOfFrames = 16;
         public void Init()
         {
@@ -32,7 +35,7 @@ namespace ZevWaxGames.CursorHero
             while (true)
             {
                 NextFrame();
-                yield return new WaitForSeconds(1f/numOfFrames);
+                yield return new WaitForSeconds(currAnimDuration/numOfFrames);
             }
         }
         private void NextFrame()
@@ -42,6 +45,21 @@ namespace ZevWaxGames.CursorHero
             else
                 currFrameIndex++;
             image.sprite = frames[currFrameIndex];
+        }
+        protected override void ShowMapNode()
+        {
+            base.ShowMapNode();
+            currAnimDuration = FastAnimDuration;
+        }
+        protected override void HideMapNode()
+        {
+            base.HideMapNode();
+            currAnimDuration = SlowAnimDuration;
+        }
+        protected override void HideInstantly()
+        {
+            base.HideInstantly();
+            currAnimDuration = SlowAnimDuration;
         }
     }
 }
