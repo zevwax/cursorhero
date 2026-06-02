@@ -3270,6 +3270,10 @@ PrefabInstance:
       value: StartWindow
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
+      propertyPath: m_text
+      value: '<sprite=0> Initialization Complete: Push the Play Button'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
@@ -3500,7 +3504,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.10.5
+  m_text: 0.10.6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3527,7 +3531,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
+  m_fontSize: 9.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3671,7 +3675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_text
-      value: 'Notification: You Win!'
+      value: '<sprite=4> Notification: You Win!'
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_fontAsset
@@ -4055,7 +4059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_text
-      value: 'v.2 Ready: Select Driver'
+      value: '<sprite=1> v.2 Ready: Select Driver'
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_fontAsset
@@ -5552,7 +5556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_text
-      value: Recycle Bin
+      value: <sprite=2> Recycle Bin
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_fontAsset
@@ -6861,7 +6865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_text
-      value: 'HP is out of range: Try Again'
+      value: '<sprite=3> HP is out of range: Try Again'
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_fontAsset

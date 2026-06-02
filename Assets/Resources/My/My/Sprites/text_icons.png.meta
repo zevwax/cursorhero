@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 8cf7a6f7716729c44ba6d0b98e8274e4
+guid: 85db4b98a66e970498508b554d67ebd9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4798615780669805026
-    second: btn_upgrade_mxh_0
+      213: -5058613650659001291
+    second: text_icons_0
+  - first:
+      213: 2981514604645282515
+    second: text_icons_1
+  - first:
+      213: -2018190396553381328
+    second: text_icons_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,23 +132,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: btn_upgrade_mxh_0
+      name: text_icons_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 9
-        width: 46
-        height: 30
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e1ea7932f54e76db0800000000000000
-      internalID: -4798615780669805026
+      spriteID: 53c3788bfa13cc9b0800000000000000
+      internalID: -5058613650659001291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: text_icons_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d275867cb7706920800000000000000
+      internalID: 2981514604645282515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: text_icons_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03ab454f682fdf3e0800000000000000
+      internalID: -2018190396553381328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: text_icons_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7d733e7ba8ef249a7caadb48ad3e2f
+      internalID: 12192661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: text_icons_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7999351f39c6e14abd421c0e9a8a283
+      internalID: -820432023
       vertices: []
       indices: 
       edges: []
@@ -151,7 +245,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 9ffb424a55d58f04185d1388ca4c498a
     internalID: 0
     vertices: []
     indices: 
@@ -159,9 +253,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      btn_upgrade_mxh_0: -4798615780669805026
+      text_icons_0: -5058613650659001291
+      text_icons_1: 2981514604645282515
+      text_icons_2: -2018190396553381328
+      text_icons_3: 12192661
+      text_icons_4: -820432023
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
