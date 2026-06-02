@@ -16,7 +16,7 @@ namespace ZevWaxGames.CursorHero
         {
             base.ButtonAction();
             EventHolder.OnChoosingFinished?.Invoke();
-            Disc.Normalize();
+            FloppyDisk.Normalize();
         }
     }
 }

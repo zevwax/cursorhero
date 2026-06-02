@@ -3500,7 +3500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.10.4
+  m_text: 0.10.5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4055,7 +4055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_text
-      value: 'Disc ready: Choose an Upgrade'
+      value: 'v.2 Ready: Select Driver'
       objectReference: {fileID: 0}
     - target: {fileID: 1023964996900997247, guid: 38d597eb911898c42ad8f89fe4543e12, type: 3}
       propertyPath: m_fontAsset
@@ -6038,7 +6038,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 137398
+    m_Bits: 133302
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 4bef515f3e89584408f244a408e85ca8, type: 2}
   m_TargetDisplay: 0

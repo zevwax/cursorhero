@@ -12,7 +12,7 @@ namespace ZevWaxGames.CursorHero
             base.Start();
             speed = 0f;
             GetComponent<WorldSpaceCanvasRealtimeScaler>().mult *= 6;
-            Disc.HyperInflate();
+            FloppyDisk.HyperInflate();
             StartCoroutine(Wait1());
             StartCoroutine(Wait2());
         }

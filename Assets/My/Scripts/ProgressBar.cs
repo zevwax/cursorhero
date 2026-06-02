@@ -158,7 +158,7 @@ namespace ZevWaxGames.CursorHero
         }
         public void ResetValue()
         {
-            Disc.Inflate();
+            FloppyDisk.Inflate();
             SetValue(0f);
         }
         public void Refresh()

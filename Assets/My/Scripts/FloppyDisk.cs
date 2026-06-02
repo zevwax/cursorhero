@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace ZevWaxGames.CursorHero
 {
-    public class Disc : MonoBehaviour
+    public class FloppyDisk : MonoBehaviour
     {
         [SerializeField] private float attractionRadius = 3f;
         [SerializeField] private float acceleration = 15f;

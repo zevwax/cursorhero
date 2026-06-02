@@ -259,10 +259,12 @@ namespace ZevWaxGames.CursorHero
             Vector2 pos, string name, string spriteName, string sortingLayerName,
             bool collider, string objectLayer
             ) where T : MonoBehaviour => NewEntity<T>(pos, name, spriteName, sortingLayerName, collider, objectLayer, RbTypeByDefault);
-        public static GameObject NewDisk(Vector2 pos)
+        public static GameObject NewFloppyDisk(Vector2 pos)
         {
-            var obj = NewEntity<Disc>(pos, "Disk", "disc15", "RealDisks", true, "Disk");
+            var obj = NewEntity<FloppyDisk>(pos, "Disk", "SizeHolders/16x16", "RealDisks", true, "Disk");
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            var anim = obj.AddComponent<Animator>();
+            anim.Init("spinning_floppy_disk", 2f);
             return obj;
         }
         public static GameObject NewRedArrow(Vector2 pos, Vector2 direction)
