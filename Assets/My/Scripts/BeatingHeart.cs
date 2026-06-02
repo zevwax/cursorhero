@@ -7,10 +7,9 @@ namespace ZevWaxGames.CursorHero
     [RequireComponent(typeof(Image))]
     public class BeatingHeart : MonoBehaviour
     {
-        [Header("Animation Settings")]
-        [SerializeField] private float targetScale = 1.2f;
-        [SerializeField] private float beatDuration = 0.4f;
-        [SerializeField] private Ease pulseEase = Ease.InOutQuad;
+        private float targetScale = 0.8f;
+        private float beatDuration = 0.5f;
+        private Ease pulseEase = Ease.InOutQuad;
 
         private Image heartImage;
         private Tweener pulseTweener;

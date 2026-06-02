@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: a9c52a99e94992343840a3a5e64b0d33
+guid: 9c04d0c0bbb531a49b51c4781d5b718b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -205270267638800340
-    second: heart_0
+      213: -4716017203375190761
+    second: zipporah_0
+  - first:
+      213: 5078154931226851105
+    second: zipporah_1
+  - first:
+      213: -1284017941038147229
+    second: zipporah_2
+  - first:
+      213: 6824693869135128819
+    second: zipporah_3
+  - first:
+      213: 8514544033359854796
+    second: zipporah_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +49,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,9 +84,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -126,89 +138,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heart_0
+      name: zipporah_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 17
-        height: 22
+        x: 299
+        y: 1079
+        width: 173
+        height: 209
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c20a07677cbb62df0800000000000000
-      internalID: -205270267638800340
+      spriteID: 71dc03e07575d8eb0800000000000000
+      internalID: -4716017203375190761
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: heart_1
+      name: zipporah_1
       rect:
         serializedVersion: 2
-        x: 17
-        y: 0
-        width: 17
-        height: 22
+        x: 317
+        y: 809
+        width: 137
+        height: 211
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 577b5692109322a4e9cbc57a211f31e6
-      internalID: -1756468156
+      spriteID: 127bc26310b397640800000000000000
+      internalID: 5078154931226851105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: heart_2
+      name: zipporah_2
       rect:
         serializedVersion: 2
-        x: 34
-        y: 0
-        width: 17
-        height: 22
+        x: 317
+        y: 539
+        width: 137
+        height: 211
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a6c8862bc778a694e89596ea702ddadf
-      internalID: 980487791
+      spriteID: 36951335c704e2ee0800000000000000
+      internalID: -1284017941038147229
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: heart_3
+      name: zipporah_3
       rect:
         serializedVersion: 2
-        x: 51
-        y: 0
-        width: 17
-        height: 22
+        x: 299
+        y: 269
+        width: 155
+        height: 211
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 02578980e4f5c3c46a93d663f69a0a1e
-      internalID: 1667780255
+      spriteID: 3f8e59a4aee26be50800000000000000
+      internalID: 6824693869135128819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zipporah_4
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 0
+        width: 155
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cccf5d4bfacb92670800000000000000
+      internalID: 8514544033359854796
       vertices: []
       indices: 
       edges: []
@@ -217,7 +251,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -225,14 +259,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":17.0,"y":22.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      heart_0: -205270267638800340
-      heart_1: -1756468156
-      heart_2: 980487791
-      heart_3: 1667780255
+      zipporah_0: -4716017203375190761
+      zipporah_1: 5078154931226851105
+      zipporah_2: -1284017941038147229
+      zipporah_3: 6824693869135128819
+      zipporah_4: 8514544033359854796
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

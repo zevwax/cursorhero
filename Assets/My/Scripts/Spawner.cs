@@ -24,8 +24,10 @@ namespace ZevWaxGames.CursorHero
                 "HeartKeeper");
             var follower = obj.AddComponent<Follower>();
             NewImage(obj.transform, "idle");
-            var imageObj3 = NewImage(obj.transform, "heart");
+            var imageObj3 = NewImage(obj.transform, "SizeHolders/17x22");
             imageObj3.AddComponent<BeatingHeart>();
+            var anim = imageObj3.AddComponent<Animator>();
+            anim.Init("heart", 1f);
             NewImage(obj.transform, "idle");
             obj.GetComponent<HeartKeeper>().Init();
             follower.Init();
@@ -263,7 +265,7 @@ namespace ZevWaxGames.CursorHero
         {
             var obj = NewEntity<FloppyDisk>(pos, "Disk", "SizeHolders/16x16", "RealDisks", true, "Disk");
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
-            var anim = obj.AddComponent<Animator>();
+            var anim = obj.transform.GetChild(0).gameObject.AddComponent<Animator>();
             anim.Init("spinning_floppy_disk", 2f);
             return obj;
         }

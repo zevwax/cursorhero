@@ -24,7 +24,7 @@ namespace ZevWaxGames.CursorHero
             
             this.cycleDuration = cycleDuration;
             
-            img = transform.GetChild(0).GetComponent<Image>();
+            img = GetComponent<Image>();
             
             StartCoroutine(Animation());
         }
