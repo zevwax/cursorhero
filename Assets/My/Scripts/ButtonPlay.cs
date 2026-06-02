@@ -20,7 +20,7 @@ namespace ZevWaxGames.CursorHero
                 EventHolder.OnPCStarted?.Invoke();
             else
             {
-                Tabby.Instance.SwitchActionTo(1);
+                Zipporah.Instance.SwitchActionTo(1);
                 UIManager.Instance.HideStartGameNTryAgainWindows();
             }
         }

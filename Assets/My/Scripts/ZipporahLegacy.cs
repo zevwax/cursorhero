@@ -7,9 +7,9 @@ using TMPro;
 
 namespace ZevWaxGames.CursorHero
 {
-    public class Tabby : MonoBehaviour
+    public class ZipporahLegacy : MonoBehaviour
     {
-        public static Tabby Instance { get; private set; }
+        public static ZipporahLegacy Instance { get; private set; }
         private Sprite[] blinkSprites;
         private Sprite[] walkSprites;
         private float frameRate = 1/8f;

@@ -733,25 +733,23 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
-        public static GameObject NewTabby()
+        public static GameObject NewZipporah()
         {
-            var obj = NewEntity<Tabby>(Vector2.zero, "Tabby", "tabby", "Tabby", false, "Default");
+            var obj = NewEntity<Zipporah>(Vector2.zero, "Zipporah", "SizeHolders/480x270", "Tabby", false, "Default");
             
-            var imageObj = new GameObject("Tabby Textbox");
+            var imageObj = new GameObject("Zipporah Textbox");
             imageObj.transform.SetParent(obj.transform, false);
             //
             var imageRt = imageObj.AddComponent<RectTransform>();
-            imageRt.anchorMin = new Vector2(0.5f, 1f);
-            imageRt.anchorMax = new Vector2(0.5f, 1f);
-            imageRt.pivot = new Vector2(0.5f, 0f);
-            imageRt.anchoredPosition3D = new Vector3(-60f, 0f, 0f);
-            imageRt.sizeDelta = new Vector2(130f, 21f);
+            imageRt.anchorMin = new Vector2(1, 0);
+            imageRt.anchorMax = new Vector2(1, 0);
+            imageRt.pivot = new Vector2(1, 0);
+            imageRt.anchoredPosition3D = new Vector3(-60f, 15f, 0);
+            imageRt.sizeDelta = new Vector2(130f, 32f);
             imageRt.localScale = Vector3.one;
-            imageRt.offsetMin = Vector2.zero;
-            imageRt.offsetMax = Vector2.zero;
             //
             var image = imageObj.AddComponent<Image>();
-            image.sprite = Resources.Load<Sprite>("My/My/Sprites/tabby_textbox");
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/zipporah_textbox");
             image.type = Image.Type.Sliced;
             if (imageObj.GetComponent<CanvasRenderer>() == null)
                 imageObj.AddComponent<CanvasRenderer>();
@@ -765,8 +763,8 @@ namespace ZevWaxGames.CursorHero
             var textRt = textObj.AddComponent<RectTransform>();
             textRt.anchorMin = Vector2.zero;
             textRt.anchorMax = Vector2.one;
-            textRt.offsetMin = new Vector2(8, 24);
-            textRt.offsetMax = new Vector2(-8, -8);
+            textRt.offsetMin = new Vector2(8, 8);
+            textRt.offsetMax = new Vector2(-8, -23);
             //
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
             textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
@@ -778,7 +776,7 @@ namespace ZevWaxGames.CursorHero
             textTxt.fontSizeMax = ushort.MaxValue;
             textTxt.raycastTarget = false;
             
-            obj.GetComponent<Tabby>().Init();
+            obj.GetComponent<Zipporah>().Init();
             
             return obj;
         }

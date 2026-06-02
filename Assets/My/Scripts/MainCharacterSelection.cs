@@ -67,7 +67,7 @@ namespace ZevWaxGames.CursorHero
                     Spawner.NewPopUpText(transform.position, "+2 HP", new Color(0, 1, 0, 1), 1f);
                     Destroy(o);
                 }
-                Tabby.Instance.SwitchActionTo(9);
+                Zipporah.Instance.SwitchActionTo(9);
             }
             else
             {

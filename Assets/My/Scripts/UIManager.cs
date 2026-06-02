@@ -104,7 +104,7 @@ namespace ZevWaxGames.CursorHero
             if (forThe1stTime)
             {
                 forThe1stTime = false;
-                Tabby.Instance.SwitchActionTo(7);
+                Zipporah.Instance.SwitchActionTo(7);
                 
                 Spawner.NewTutorialApple(pos1);
                 Spawner.NewTutorialStaticGlyph(pos2);
@@ -252,7 +252,7 @@ namespace ZevWaxGames.CursorHero
         public void SwitchPC() => StartCoroutine(CSwitchPC());
         private IEnumerator CSwitchPC()
         {
-            Tabby.Instance.SwitchActionTo(10);
+            Zipporah.Instance.SwitchActionTo(10);
             yield return FastFadeOut();
             EventHolder.OnFadingInToPCStarted?.Invoke();
             RefreshWallpapers();
