@@ -51,6 +51,7 @@ namespace ZevWaxGames.CursorHero
             mainChar.GetComponent<MainCharacter>().Init();
             
             Spawner.NewZipporah();
+            Spawner.NewHumBar();
             
             var path00 = "My/My/Sprites/map_line";
             var allSprites00 = Resources.LoadAll<Sprite>(path00);

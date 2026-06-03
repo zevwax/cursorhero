@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -38,6 +39,19 @@ namespace ZevWaxGames.CursorHero
                 Vector2.zero, "Tabby Pointer", "tabby_idle", "Selection", false,
                 "Default");
             obj.GetComponent<TabbyPointer>().Init(new Vector3(pos.x, pos.y, 0));
+            return obj;
+        }
+        public static GameObject NewHumBar()
+        {
+            var objLayer = "DitheringCameraOutput";
+            var obj = NewEntity<HumBar>(
+                new Vector2(0f, 4.5f + (1f / 6f)), "Hum Bar", "SizeHolders/480x10", "HumBar", false,
+                objLayer, true);
+            var child0 = NewImage(obj.transform, "480x10");
+            child0.transform.SetAsFirstSibling();
+            var child1 = obj.transform.GetChild(1);
+            child1.AddComponent<SkewEffect>();
+            obj.GetComponent<HumBar>().Init();
             return obj;
         }
         public static GameObject NewVersionIndicator()
@@ -205,7 +219,7 @@ namespace ZevWaxGames.CursorHero
         private const RigidbodyType2D RbTypeByDefault = RigidbodyType2D.Dynamic;
         public static GameObject NewEntity<T>(
             Vector2 pos, string name, Sprite sprite, string sortingLayerName,
-            bool collider, string objectLayer, RigidbodyType2D rbType
+            bool collider, string objectLayer, RigidbodyType2D rbType, bool isRaw = false
             ) where T : MonoBehaviour
         {
             var obj = new GameObject(name);
@@ -238,8 +252,13 @@ namespace ZevWaxGames.CursorHero
             imageRt.anchorMax = Vector2.one;
             imageRt.offsetMin = Vector2.zero;
             imageRt.offsetMax = Vector2.zero;
-            var image = imageObj.AddComponent<Image>();
-            image.sprite = sprite;
+            if (isRaw)
+                imageObj.AddComponent<RawImage>();
+            else
+            {
+                var image = imageObj.AddComponent<Image>();
+                image.sprite = sprite;
+            }
             if (imageObj.GetComponent<CanvasRenderer>() == null)
                 imageObj.AddComponent<CanvasRenderer>();
             
@@ -261,20 +280,20 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewEntity<T>(
             Vector2 pos, string name, Sprite sprite, string sortingLayerName,
-            bool collider, string objectLayer
-            ) where T : MonoBehaviour => NewEntity<T>(pos, name, sprite, sortingLayerName, collider, objectLayer, RbTypeByDefault);
+            bool collider, string objectLayer, bool isRaw = false
+            ) where T : MonoBehaviour => NewEntity<T>(pos, name, sprite, sortingLayerName, collider, objectLayer, RbTypeByDefault, isRaw);
         public static GameObject NewEntity<T>(
             Vector2 pos, string name, string spriteName, string sortingLayerName,
-            bool collider, string objectLayer, RigidbodyType2D rbType
+            bool collider, string objectLayer, RigidbodyType2D rbType, bool isRaw = false
         ) where T : MonoBehaviour
         {
             var sprite = Resources.Load<Sprite>($"My/My/Sprites/{spriteName}");
-            return NewEntity<T>(pos, name, sprite, sortingLayerName, collider, objectLayer, rbType);
+            return NewEntity<T>(pos, name, sprite, sortingLayerName, collider, objectLayer, rbType, isRaw);
         }
         public static GameObject NewEntity<T>(
             Vector2 pos, string name, string spriteName, string sortingLayerName,
-            bool collider, string objectLayer
-            ) where T : MonoBehaviour => NewEntity<T>(pos, name, spriteName, sortingLayerName, collider, objectLayer, RbTypeByDefault);
+            bool collider, string objectLayer, bool isRaw = false
+            ) where T : MonoBehaviour => NewEntity<T>(pos, name, spriteName, sortingLayerName, collider, objectLayer, RbTypeByDefault, isRaw);
         public static GameObject NewFloppyDisk(Vector2 pos)
         {
             var obj = NewEntity<FloppyDisk>(pos, "Disk", "SizeHolders/16x16", "RealDisks", true, "Disk");

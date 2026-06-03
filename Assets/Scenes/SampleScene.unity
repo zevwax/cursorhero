@@ -1392,7 +1392,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000db009aacf9647fd60ff5c90b51a630f2f9c03d6de94821e1efb0c11c6bbcf8aa054b861fedf5b1951d37a654f3e7bcd10123c9e59d2b3d545518ee09a991b1166f50499113f0ec8cd1c983bff52b570293bc8baae97f711279f6220459357ba79f7127f33d83d597db6fedb127ff0a660dc8f86861cad373
+  m_ApplyToSortingLayers: 00000000db009aacf9647fd60ff5c90b51a630f2f9c03d6de94821e1efb0c11c6bbcf8aa054b861fedf5b1951d37a654f3e7bcd10123c9e59d2b3d545518ee09a991b1166f50499113f0ec8cd1c983bff52b570293bc8baae97f711279f6220459357ba79f7127f33d83d597db6fedb127ff0a660dc8f86861cad373252487f0
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -3621,7 +3621,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.10.11
+  m_text: 0.10.12
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3648,7 +3648,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.65
+  m_fontSize: 4.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6471,7 +6471,7 @@ GameObject:
   - component: {fileID: 2013518227}
   - component: {fileID: 2013518229}
   m_Layer: 15
-  m_Name: RawImage
+  m_Name: DitheringRawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
