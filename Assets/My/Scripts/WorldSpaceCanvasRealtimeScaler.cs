@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ZevWaxGames.CursorHero
 {
@@ -12,6 +13,12 @@ namespace ZevWaxGames.CursorHero
 
         private void Start()
         {
+            try
+            {
+                ppu = transform.GetChild(0).GetComponent<Image>().sprite.pixelsPerUnit;
+            }
+            catch { }
+            
             rectTransform = GetComponent<RectTransform>();
             
             if (ratioHandler == null)

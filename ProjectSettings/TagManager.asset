@@ -129,5 +129,11 @@ TagManager:
   - name: Glitch
     uniqueID: 39267317
     locked: 0
+  - name: Dithering
+    uniqueID: 1761134605
+    locked: 0
+  - name: CRT
+    uniqueID: 1943259745
+    locked: 0
   m_RenderingLayers:
   - Default
