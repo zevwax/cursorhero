@@ -33,16 +33,16 @@ namespace ZevWaxGames.CursorHero
                 new Vector2(0, 6f), "Top Projectile Wall", "SizeHolders/projectile_horizontal_wall",
                 null, true, "ProjectileWall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
-                new Vector2(-8.5f, 0), "Left Wall", "SizeHolders/vertical_wall",
+                new Vector2(-8.5f, 0), "Left Wall", "SizeHolders/30x480",
                 null, true, "Wall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
-                new Vector2(8.5f, 0), "Right Wall", "SizeHolders/vertical_wall",
+                new Vector2(8.5f, 0), "Right Wall", "SizeHolders/30x480",
                 null, true, "Wall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
-                new Vector2(0, -5f), "Bottom Wall", "SizeHolders/horizontal_wall",
+                new Vector2(0, -5f), "Bottom Wall", "SizeHolders/480x30",
                 null, true, "Wall", RigidbodyType2D.Static);
             Spawner.NewEntity<Wall>(
-                new Vector2(0, 5f), "Top Wall", "SizeHolders/horizontal_wall",
+                new Vector2(0, 5f), "Top Wall", "SizeHolders/480x30",
                 null, true, "Wall", RigidbodyType2D.Static);
             
             var mainChar = Spawner.NewEntity<MainCharacter>(

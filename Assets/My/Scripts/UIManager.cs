@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine.UI;
 
 namespace ZevWaxGames.CursorHero
@@ -82,6 +83,10 @@ namespace ZevWaxGames.CursorHero
         }
         private void ShowChooseAnUpgradeWindow()
         {
+            var chooseAnUpgradeWindowName =
+                chooseAnUpgradeWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+            MainCharacter.Instance.UpdateVersion();
+            chooseAnUpgradeWindowName.text = string.Format("<sprite=1> v.{0} Ready: Select Driver", MainCharacter.Instance.Version);
             chooseAnUpgradeWindow.SetActive(true);
             var buttons = GetThreeRandom
             (

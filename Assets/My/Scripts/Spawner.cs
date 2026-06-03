@@ -16,7 +16,6 @@ namespace ZevWaxGames.CursorHero
             ice.friction = 0f;
             return ice;
         }
-
         public static GameObject NewHeartKeeper(Vector2 pos)
         {
             var obj = NewEntity<HeartKeeper>(
@@ -39,6 +38,17 @@ namespace ZevWaxGames.CursorHero
                 Vector2.zero, "Tabby Pointer", "tabby_idle", "Selection", false,
                 "Default");
             obj.GetComponent<TabbyPointer>().Init(new Vector3(pos.x, pos.y, 0));
+            return obj;
+        }
+        public static GameObject NewVersionIndicator()
+        {
+            var objLayer = "GUI";
+            var obj = NewEntity<Plug>(
+                new Vector2(0, 4), "Version Indicator", "SizeHolders/480x30", "Selection", false,
+                objLayer);
+            var txt = NewText(obj.transform, objLayer, TextAlignmentOptions.Right, new Color(.5f, .5f, .5f, 1f),
+                "tahoma_8px_raster_hinted", "v.1");
+            txt.AddComponent<VersionIndicator>().Init();
             return obj;
         }
         public static GameObject NewTabbySelection()
@@ -134,15 +144,15 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             obj.GetComponent<Projectile>().direction = direction;
             
-            NewText(obj.transform, objLayer, TextAlignmentOptions.BottomLeft, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.MidlineLeft, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.TopLeft, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.Bottom, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.Top, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.BottomRight, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.MidlineRight, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.TopRight, new Color(1f, 0.25f, 0.25f, 1f));
-            NewText(obj.transform, objLayer, TextAlignmentOptions.Center, new Color(1f, 1f, 1f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.BottomLeft, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.MidlineLeft, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.TopLeft, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.Bottom, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.Top, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.BottomRight, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.MidlineRight, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.TopRight, new Color(1f, 0.25f, 0.25f, 1f));
+            NewGlyphText(obj.transform, objLayer, TextAlignmentOptions.Center, new Color(1f, 1f, 1f, 1f));
             
             return obj;
         }
@@ -166,7 +176,11 @@ namespace ZevWaxGames.CursorHero
                 obj.AddComponent<CanvasRenderer>();
             return obj;
         }
-        private static GameObject NewText(Transform parent, string objLayer, TextAlignmentOptions alignment, Color color)
+        private static GameObject NewGlyphText(Transform parent, string objLayer, TextAlignmentOptions alignment, Color color)
+        {
+            return NewText(parent, objLayer, alignment, color, "pxp_glyphs_raster_hinted", "A");
+        }
+        private static GameObject NewText(Transform parent, string objLayer, TextAlignmentOptions alignment, Color color, string fontName, string contents)
         {
             var textObj = new GameObject("Text");
             textObj.layer = LayerMask.NameToLayer(objLayer);
@@ -177,9 +191,9 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMin = Vector2.zero;
             textRt.offsetMax = Vector2.zero;
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            var fontAsset = Resources.Load<TMP_FontAsset>("My/My/Fonts/pxp_glyphs_raster_hinted");
+            var fontAsset = Resources.Load<TMP_FontAsset>("My/My/Fonts/" + fontName);
             textTxt.font = fontAsset;
-            textTxt.text = "A";
+            textTxt.text = contents;
             textTxt.alignment = alignment;
             textTxt.color = color;
             textTxt.enableAutoSizing = true;

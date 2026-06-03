@@ -11,9 +11,20 @@ namespace ZevWaxGames.CursorHero
 {
     public class MainCharacter : Cursor
     {
-        public static readonly Color Yellow = new Color(0, 0.33f, 0.66f, 1f);
-        
         public static MainCharacter Instance { get; private set; }
+        public static readonly Color Yellow = new Color(0, 0.33f, 0.66f, 1f);
+        public int Version => version;
+        private int version = 1;
+        public void ResetVersion()
+        {
+            version = 1;
+            VersionIndicator.Instance.Reset();
+        }
+        public void UpdateVersion()
+        {
+            version++;
+            VersionIndicator.Instance.UpdateContents();
+        }
         public float weight = 1f;
         public float size = 1f;
         
@@ -63,6 +74,7 @@ namespace ZevWaxGames.CursorHero
             
             Spawner.NewYellowCirc();
             Spawner.NewSelection();
+            Spawner.NewVersionIndicator();
             MaxHPInit();
             RestoreFullHP();
             
@@ -128,6 +140,7 @@ namespace ZevWaxGames.CursorHero
                 Init();
                 initialized = true;
             }*/
+            ResetVersion();
             weight = 1f;
             size = 1f;
             ResetMaxHP();
