@@ -7,7 +7,7 @@ namespace ZevWaxGames.CursorHero
 {
     public abstract class Button : MonoBehaviour
     {
-        protected string boxPath = "My/My/Sprites/btn";
+        //protected string boxPath = "My/My/Sprites/btn";
         public string iconPath;
         public string tooltipText = "Default Tooltip";
         
@@ -28,7 +28,7 @@ namespace ZevWaxGames.CursorHero
             
             canvasGroup = GetComponent<CanvasGroup>();
             
-            transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(boxPath);
+            //transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(boxPath);
             
             myCollider = GetComponent<BoxCollider2D>();
             //here add something that will let me find the instance in hierarchy

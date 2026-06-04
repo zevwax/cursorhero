@@ -84,6 +84,9 @@ TagManager:
   - name: MapChar
     uniqueID: 2809869657
     locked: 0
+  - name: BIOS
+    uniqueID: 722101193
+    locked: 0
   - name: Windows
     uniqueID: 4063274577
     locked: 0

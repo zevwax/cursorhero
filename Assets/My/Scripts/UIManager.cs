@@ -16,14 +16,17 @@ namespace ZevWaxGames.CursorHero
         [SerializeField] private GameObject chooseAnUpgradeWindow;
         [SerializeField] private GameObject recycleBinWindow;
         [SerializeField] private GameObject youWinWindow;
+        [SerializeField] private GameObject BIOS;
         public bool forThe1stTime = true;
         private GameObject[] btns;
+        private GameObject[] biosBtns;
         private void Awake()
         {
             Instance = this;
             if (tryAgainWindow != null)
                 tryAgainWindow.SetActive(false);
             btns = new GameObject[3];
+            biosBtns = new GameObject[4];
         }
         private void Start()
         {
@@ -35,6 +38,8 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnChoosingStarted += HandleChoosingStarted;
             EventHolder.OnChoosingFinished += HideYouWinNChooseAnUpgradeWindows;
             EventHolder.OnRunFinished += ShowTryAgainWindow;
+            EventHolder.OnBIOSStarted += HandleBIOSStarted;
+            EventHolder.OnBIOSFinished += HandleBIOSFinished;
         }
         private void OnDisable()
         {
@@ -42,6 +47,8 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnChoosingStarted -= HandleChoosingStarted;
             EventHolder.OnChoosingFinished -= HideYouWinNChooseAnUpgradeWindows;
             EventHolder.OnRunFinished -= ShowTryAgainWindow;
+            EventHolder.OnBIOSStarted -= HandleBIOSStarted;
+            EventHolder.OnBIOSFinished -= HandleBIOSFinished;
         }
         public void ShowStartGameWindow()
         {
@@ -52,6 +59,64 @@ namespace ZevWaxGames.CursorHero
         {
             StartCoroutine(StartBSOD());
         }
+        private void HandleBIOSStarted()
+        {
+            BIOS.SetActive(true);
+            var index = 0;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewDriversButton(new Vector2(-4f, 3f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewSkillTreeButton(new Vector2(0, 3f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewInventoryButton(new Vector2(4f, 3f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewFightButton(new Vector2(4f, -3f));
+            
+            StartCoroutine(FastFadeIn());
+        }
+        private void HandleBIOSFinished()
+        {
+            StartCoroutine(FromBIOSToOS());
+        }
+        private IEnumerator FromBIOSToOS()
+        {
+            yield return StartCoroutine(FastFadeOut());
+            
+            BIOS.SetActive(false);
+            var index = 0;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            
+            tryAgainWindow.SetActive(true);
+            btns[0] = Spawner.NewPlayButton(Vector2.zero);
+            
+            yield return new WaitForSeconds(0.75f);
+            StartCoroutine(FadeIn());
+        }
         private IEnumerator StartBSOD()
         {
             yield return new WaitForSeconds(2f);
@@ -61,11 +126,8 @@ namespace ZevWaxGames.CursorHero
             
             EventHolder.OnBSODStarted?.Invoke();
             BSOD.SetActive(false);
-            tryAgainWindow.SetActive(true);
-            btns[0] = Spawner.NewPlayButton(Vector2.zero);
             
-            yield return new WaitForSeconds(0.75f);
-            StartCoroutine(FadeIn());
+            EventHolder.OnBIOSStarted?.Invoke();
         }
         public void ShowYouWinWindow()
         {

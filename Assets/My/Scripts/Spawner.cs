@@ -590,6 +590,10 @@ namespace ZevWaxGames.CursorHero
 
             return obj;
         }*/
+        public static GameObject NewDriversButton(Vector2 pos) => CreateBaseButton<ButtonDrivers>(pos, "PlayButton", "bios_btns", "bios_btns_0");
+        public static GameObject NewSkillTreeButton(Vector2 pos) => CreateBaseButton<ButtonSkillTree>(pos, "PlayButton", "bios_btns", "bios_btns_2");
+        public static GameObject NewInventoryButton(Vector2 pos) => CreateBaseButton<ButtonInventory>(pos, "PlayButton", "bios_btns", "bios_btns_4");
+        public static GameObject NewFightButton(Vector2 pos) => CreateBaseButton<ButtonFight>(pos, "PlayButton", "bios_btns", "bios_btns_6");
         public static GameObject NewPlayButton(Vector2 pos) => CreateBaseButton<ButtonPlay>(pos, "PlayButton", "btn_play");
         public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<ButtonRecycleBin>(pos, "BinButton", "bin");
         public static GameObject NewNetButton(Vector2 pos) => CreateBaseButton<ButtonSwitchPC>(pos, "NetButton", "btn_net");
@@ -609,23 +613,24 @@ namespace ZevWaxGames.CursorHero
             }
             return obj;
         }
+        private static GameObject CreateBaseButton<T>(Vector2 pos, string name, Sprite sprite) where T : Button
+        {
+            var obj = NewEntity<T>(pos, name, sprite, "ButtonsFG", true, "Button");
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            return obj;
+        }
         private static GameObject CreateBaseButton<T>(Vector2 pos, string name, string spriteName) where T : Button
         {
-            var obj = NewEntity<T>(pos, name, "btn", "ButtonsFG", true, "Button");
-            obj.GetComponent<BoxCollider2D>().isTrigger = true;
-            
-            var imageObj = new GameObject("Icon Image");
-            imageObj.transform.SetParent(obj.transform, false);
-            var imageRt = imageObj.AddComponent<RectTransform>();
-            imageRt.anchorMin = Vector2.zero;
-            imageRt.anchorMax = Vector2.one;
-            imageRt.offsetMin = Vector2.zero;
-            imageRt.offsetMax = Vector2.zero;
-            var image = imageObj.AddComponent<Image>();
-            image.sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
-            if (imageObj.GetComponent<CanvasRenderer>() == null)
-                imageObj.AddComponent<CanvasRenderer>();
-            
+            var sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
+            var obj = CreateBaseButton<T>(pos, name, sprite);
+            return obj;
+        }
+        private static GameObject CreateBaseButton<T>(Vector2 pos, string name, string spriteSheetName, string spriteName) where T : Button
+        {
+            var path = "My/My/Sprites/" + spriteSheetName;
+            var allSprites = Resources.LoadAll<Sprite>(path);
+            var sprite = allSprites.FirstOrDefault(s => s.name == spriteName);
+            var obj = CreateBaseButton<T>(pos, name, sprite);
             return obj;
         }
         public static GameObject NewBottle(Vector2 pos)

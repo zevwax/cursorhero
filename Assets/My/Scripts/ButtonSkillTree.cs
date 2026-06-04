@@ -1,20 +1,15 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace ZevWaxGames.CursorHero
 {
-    public class ButtonEndlessMode : Button
+    public class ButtonSkillTree : Button
     {
         protected override void Start()
         {
-            tooltipText = "Endless Mode";
+            tooltipText = "Skill Tree";
             base.Start();
         }
         public override void ButtonAction()
         {
             base.ButtonAction();
-            EventHolder.OnChoosingFinished?.Invoke();
-            FloppyDisk.Normalize();
         }
     }
 }
