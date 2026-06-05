@@ -7,6 +7,7 @@ namespace ZevWaxGames.CursorHero
         public override void ButtonAction()
         {
             base.ButtonAction();
+            MainCharacter.Instance.SpendDriver();
             UIManager.Instance.HideYouWinNChooseAnUpgradeWindows();
             if (MainCharacter.Instance.Drivers > 0)
                 UIManager.Instance.ShowChooseAnUpgradeWindow();

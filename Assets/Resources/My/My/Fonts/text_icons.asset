@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-1749526289610795280
+--- !u!21 &-2484053851961784785
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
     m_StrikethroughOffset: 0
     m_StrikethroughThickness: 0
     m_TabWidth: 0
-  m_Material: {fileID: -1749526289610795280}
+  m_Material: {fileID: -2484053851961784785}
   spriteSheet: {fileID: 2800000, guid: 85db4b98a66e970498508b554d67ebd9, type: 3}
   m_SpriteCharacterTable:
   - m_ElementType: 2
@@ -105,13 +105,18 @@ MonoBehaviour:
     m_GlyphIndex: 4
     m_Scale: 1
     m_Name: text_icons_4
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 5
+    m_Scale: 1
+    m_Name: text_icons_5
   m_GlyphTable:
   - m_Index: 0
     m_Metrics:
       m_Width: 16
       m_Height: 16
-      m_HorizontalBearingX: 2
-      m_HorizontalBearingY: 13
+      m_HorizontalBearingX: 1.95
+      m_HorizontalBearingY: 14.67
       m_HorizontalAdvance: 16
     m_GlyphRect:
       m_X: 0
@@ -126,8 +131,8 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 16
       m_Height: 16
-      m_HorizontalBearingX: 2
-      m_HorizontalBearingY: 13
+      m_HorizontalBearingX: 1.95
+      m_HorizontalBearingY: 14.67
       m_HorizontalAdvance: 16
     m_GlyphRect:
       m_X: 16
@@ -142,8 +147,8 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 16
       m_Height: 16
-      m_HorizontalBearingX: 2
-      m_HorizontalBearingY: 13
+      m_HorizontalBearingX: 1.95
+      m_HorizontalBearingY: 14.67
       m_HorizontalAdvance: 16
     m_GlyphRect:
       m_X: 32
@@ -158,8 +163,8 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 16
       m_Height: 16
-      m_HorizontalBearingX: 2
-      m_HorizontalBearingY: 13
+      m_HorizontalBearingX: 1.95
+      m_HorizontalBearingY: 14.67
       m_HorizontalAdvance: 16
     m_GlyphRect:
       m_X: 48
@@ -174,8 +179,8 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 16
       m_Height: 16
-      m_HorizontalBearingX: 2
-      m_HorizontalBearingY: 13
+      m_HorizontalBearingX: 1.95
+      m_HorizontalBearingY: 14.67
       m_HorizontalAdvance: 16
     m_GlyphRect:
       m_X: 64
@@ -186,5 +191,21 @@ MonoBehaviour:
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: -820432023, guid: 85db4b98a66e970498508b554d67ebd9, type: 3}
+  - m_Index: 5
+    m_Metrics:
+      m_Width: 16
+      m_Height: 16
+      m_HorizontalBearingX: 1.95
+      m_HorizontalBearingY: 14.67
+      m_HorizontalAdvance: 16
+    m_GlyphRect:
+      m_X: 80
+      m_Y: 0
+      m_Width: 16
+      m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1571572769, guid: 85db4b98a66e970498508b554d67ebd9, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

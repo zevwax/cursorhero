@@ -67,7 +67,7 @@ namespace ZevWaxGames.CursorHero
             if (MainCharacter.Instance.Drivers > 0)
                 ShowChooseAnUpgradeWindow();
             
-            if (biosBtns[index] != null)
+            /*if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
             biosBtns[index] = Spawner.NewDriversButton(new Vector2(-4f, 4f));
             index++;
@@ -80,7 +80,7 @@ namespace ZevWaxGames.CursorHero
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
             biosBtns[index] = Spawner.NewInventoryButton(new Vector2(4f, 4f));
-            index++;
+            index++;*/ //TEMP
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
@@ -99,7 +99,7 @@ namespace ZevWaxGames.CursorHero
             BIOS.GetComponent<CanvasGroup>().alpha = 0;
             var index = 0;
             
-            if (biosBtns[index] != null)
+            /*if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
             index++;
             
@@ -109,7 +109,7 @@ namespace ZevWaxGames.CursorHero
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
-            index++;
+            index++;*/ // TEMP
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
@@ -143,10 +143,9 @@ namespace ZevWaxGames.CursorHero
         }
         public void ShowChooseAnUpgradeWindow()
         {
-            MainCharacter.Instance.SpendDriver();
             var chooseAnUpgradeWindowName =
                 chooseAnUpgradeWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-            chooseAnUpgradeWindowName.text = string.Format("<sprite=1> Select Driver");
+            chooseAnUpgradeWindowName.text = string.Format("<sprite=5> Select Driver");
             chooseAnUpgradeWindow.SetActive(true);
             var buttons = GetThreeRandom
             (
