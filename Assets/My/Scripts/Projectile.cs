@@ -422,15 +422,8 @@ namespace ZevWaxGames.CursorHero
             if (pType == ProjectileType.Projectile)
                 col.enabled = false;
         }
-        private void Clean()
-        {
-            if (pType != ProjectileType.ClipboardGlyph)
-                Die();
-        }
-        private void Die()
-        {
-            Destroy(gameObject);
-        }
+        private void Clean() => Die();
+        private void Die() => Destroy(gameObject);
         private void Clear()
         {
             if (pType == ProjectileType.Projectile)

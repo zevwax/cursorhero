@@ -67,10 +67,10 @@ namespace ZevWaxGames.CursorHero
             }
             else
             {
+                var clipboardObj = MainCharacter.Instance.ClipboardGlyph;
                 var rt = GetComponent<RectTransform>();
-                if (rt.sizeDelta.x > 30 && rt.sizeDelta.y > 30)
+                if (clipboardObj != null && rt.sizeDelta.x > 30 && rt.sizeDelta.y > 30)
                 {
-                    var clipboardObj = MainCharacter.Instance.ClipboardGlyph;
                     var targetPos = transform.position;
                     clipboardObj.GetComponent<Projectile>().MakeItBeAKey();
                     clipboardObj.transform.DOMove(targetPos, 1);

@@ -15,8 +15,15 @@ namespace ZevWaxGames.CursorHero
         private WorldSpaceCanvasRealtimeScaler scaler;
         private Coroutine zoom;
 
-        private void OnEnable() => EventHolder.OnFadingInToPCStarted += DieIfNeeded;
-        private void OnDisable() => EventHolder.OnFadingInToPCStarted -= DieIfNeeded;
+        private void OnEnable()
+        {
+            EventHolder.OnFadingInToPCStarted += DieIfNeeded;
+        }
+
+        private void OnDisable()
+        {
+            EventHolder.OnFadingInToPCStarted -= DieIfNeeded;
+        }
         private void Awake()
         {
             if (sprites == null)
@@ -101,7 +108,8 @@ namespace ZevWaxGames.CursorHero
         private void DieIfNeeded()
         {
             if (!isOwned)
-                Destroy(gameObject);
+                Die();
         }
+        private void Die() => Destroy(gameObject);
     }
 }

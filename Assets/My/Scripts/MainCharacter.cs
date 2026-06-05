@@ -60,13 +60,16 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted += Born;
             EventHolder.OnYouWinStarted += Disable;
             EventHolder.OnYouWinFinished += Enable;
+            EventHolder.OnBSODStarted += KillHeartKeepers;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Born;
             EventHolder.OnYouWinStarted -= Disable;
             EventHolder.OnYouWinFinished -= Enable;
+            EventHolder.OnBSODStarted -= KillHeartKeepers;
         }
+        private void KillHeartKeepers() => AddHeartKeepers(-heartKeepers.Count);
         private void Awake() => Instance = this;
         public void Init()
         {
