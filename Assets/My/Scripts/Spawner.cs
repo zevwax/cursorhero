@@ -603,12 +603,12 @@ namespace ZevWaxGames.CursorHero
             GameObject obj;
             switch (upgradeName)
             {
-                case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage", "btn_upgrade_dmg"); break;
-                case "FireRate": obj = CreateBaseButton<UpgradeBurstSize>(pos, "UpgradeFireRate", "btn_upgrade_cdn"); break;
-                case "Speed": obj = CreateBaseButton<UpgradeProjectileSpeed>(pos, "UpgradeSpeed", "btn_upgrade_spd"); break;
-                case "Sensitivity": obj = CreateBaseButton<UpgradeSensitivity>(pos, "UpgradeSensitivity", "btn_upgrade_sen"); break;
-                case "Heart": obj = CreateBaseButton<UpgradeHeart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
-                case "HeartKeeper": obj = CreateBaseButton<UpgradeHeartKeeper>(pos, "UpgradeHeartKeeper", "btn_upgrade_mxh"); break;
+                case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage", "drivers", "drivers_2"); break;
+                case "FireRate": obj = CreateBaseButton<UpgradeBurstSize>(pos, "UpgradeFireRate", "drivers", "drivers_1"); break;
+                case "Speed": obj = CreateBaseButton<UpgradeProjectileSpeed>(pos, "UpgradeSpeed", "drivers", "drivers_3"); break;
+                case "Sensitivity": obj = CreateBaseButton<UpgradeSensitivity>(pos, "UpgradeSensitivity", "drivers", "drivers_5"); break;
+                /*case "Heart": obj = CreateBaseButton<UpgradeHeart>(pos, "UpgradeHeart", "btn_upgrade_hrt"); break;
+                case "HeartKeeper": obj = CreateBaseButton<UpgradeHeartKeeper>(pos, "UpgradeHeartKeeper", "btn_upgrade_mxh"); break;*/
                 default: throw new System.NotImplementedException();
             }
             return obj;

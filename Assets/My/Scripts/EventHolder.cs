@@ -9,8 +9,8 @@ namespace ZevWaxGames.CursorHero
         public static Action OnFadingInToPCStarted;
         public static Action OnPCStarted;
         public static Action OnPCFinished;
-        public static Action OnChoosingStarted;
-        public static Action OnChoosingFinished;
+        public static Action OnYouWinStarted;
+        public static Action OnYouWinFinished;
         public static Action OnBinStarted;
         public static Action OnBinFinished;
         public static Action OnBSODStarted;

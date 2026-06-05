@@ -7,7 +7,9 @@ namespace ZevWaxGames.CursorHero
         public override void ButtonAction()
         {
             base.ButtonAction();
-            EventHolder.OnChoosingFinished?.Invoke();
+            UIManager.Instance.HideYouWinNChooseAnUpgradeWindows();
+            if (MainCharacter.Instance.Drivers > 0)
+                UIManager.Instance.ShowChooseAnUpgradeWindow();
         }
     }
 }

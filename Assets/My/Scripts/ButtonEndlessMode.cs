@@ -13,7 +13,7 @@ namespace ZevWaxGames.CursorHero
         public override void ButtonAction()
         {
             base.ButtonAction();
-            EventHolder.OnChoosingFinished?.Invoke();
+            EventHolder.OnYouWinFinished?.Invoke();
             FloppyDisk.Normalize();
         }
     }

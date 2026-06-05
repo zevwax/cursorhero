@@ -36,18 +36,7 @@ namespace ZevWaxGames.CursorHero
         
         private float visualValue = 0f;
         private float visualVelocity;
-        public float visualSmoothTime = 0.33f;
-        
-        private void OnEnable()
-        {
-            //EventHolder.OnRunStarted += Refresh;
-            //EventHolder.OnChoosingFinished += ResetValue;
-        }
-        private void OnDisable()
-        {
-            //EventHolder.OnRunStarted -= Refresh;
-            //EventHolder.OnChoosingFinished -= ResetValue;
-        }
+        private float visualSmoothTime = 0.33f;
         
         private void Awake()
         {
@@ -140,7 +129,7 @@ namespace ZevWaxGames.CursorHero
             transform.parent.GetComponent<Canvas>().sortingLayerName = "ProgressBarFG";
             Discfall.Instance.SetActive(true);
             
-            EventHolder.OnChoosingStarted?.Invoke();
+            EventHolder.OnYouWinStarted?.Invoke();
             
             rainbowColor = deepBlue;
             rainbowSequence = DOTween.Sequence();

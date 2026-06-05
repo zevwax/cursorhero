@@ -29,6 +29,11 @@ namespace ZevWaxGames.CursorHero
             VersionIndicator.Instance.UpdateContents();
             DriversIndicator.Instance.UpdateContents();
         }
+        public void SpendDriver()
+        {
+            drivers--;
+            DriversIndicator.Instance.UpdateContents();
+        }
         public float weight = 1f;
         public float size = 1f;
         
@@ -52,14 +57,14 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             EventHolder.OnRunStarted += Born;
-            EventHolder.OnChoosingStarted += Disable;
-            EventHolder.OnChoosingFinished += Enable;
+            EventHolder.OnYouWinStarted += Disable;
+            EventHolder.OnYouWinFinished += Enable;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Born;
-            EventHolder.OnChoosingStarted -= Disable;
-            EventHolder.OnChoosingFinished -= Enable;
+            EventHolder.OnYouWinStarted -= Disable;
+            EventHolder.OnYouWinFinished -= Enable;
         }
         private void Awake() => Instance = this;
         public void Init()

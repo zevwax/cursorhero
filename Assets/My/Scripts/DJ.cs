@@ -132,8 +132,8 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnFadingInToPCStarted += HandleFadingInToPCStarted;
             EventHolder.OnRunStarted += Reset;
             EventHolder.OnPCStarted += HandlePCStarted;
-            EventHolder.OnChoosingStarted += HandleChoosingStarted;
-            EventHolder.OnChoosingFinished += HandleChoosingFinished;
+            EventHolder.OnYouWinStarted += HandleChoosingStarted;
+            EventHolder.OnYouWinFinished += HandleChoosingFinished;
             EventHolder.OnPCFinished += HandlePCFinished;
             EventHolder.OnRunFinished += HandleRunFinished;
             EventHolder.OnBSODStarted += HandleBSOD;
@@ -143,8 +143,8 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnFadingInToPCStarted -= HandleFadingInToPCStarted;
             EventHolder.OnRunStarted -= Reset;
             EventHolder.OnPCStarted -= HandlePCStarted;
-            EventHolder.OnChoosingStarted -= HandleChoosingStarted;
-            EventHolder.OnChoosingFinished -= HandleChoosingFinished;
+            EventHolder.OnYouWinStarted -= HandleChoosingStarted;
+            EventHolder.OnYouWinFinished -= HandleChoosingFinished;
             EventHolder.OnPCFinished -= HandlePCFinished;
             EventHolder.OnRunFinished -= HandleRunFinished;
             EventHolder.OnBSODStarted -= HandleBSOD;

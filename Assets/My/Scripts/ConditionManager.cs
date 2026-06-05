@@ -17,16 +17,16 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             EventHolder.OnPCStarted += HandleOnPCStarted;
-            EventHolder.OnChoosingStarted += HandleOnChoosingStarted;
-            EventHolder.OnChoosingFinished += HandleOnChoosingFinished;
+            EventHolder.OnYouWinStarted += HandleOnChoosingStarted;
+            EventHolder.OnYouWinFinished += HandleOnChoosingFinished;
             EventHolder.OnPCFinished += HandleOnPCFinished;
             EventHolder.OnBinStarted += HandleOnBinStarted;
         }
         private void OnDisable()
         {
             EventHolder.OnPCStarted -= HandleOnPCStarted;
-            EventHolder.OnChoosingStarted -= HandleOnChoosingStarted;
-            EventHolder.OnChoosingFinished -= HandleOnChoosingFinished;
+            EventHolder.OnYouWinStarted -= HandleOnChoosingStarted;
+            EventHolder.OnYouWinFinished -= HandleOnChoosingFinished;
             EventHolder.OnPCFinished -= HandleOnPCFinished;
             EventHolder.OnBinStarted -= HandleOnBinStarted;
         }

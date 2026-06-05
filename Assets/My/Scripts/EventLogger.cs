@@ -9,8 +9,8 @@ namespace ZevWaxGames.CursorHero
         {
             EventHolder.OnRunStarted += LogRunStarted;
             EventHolder.OnPCStarted += LogPCStarted;
-            EventHolder.OnChoosingStarted += LogChoosingStarted;
-            EventHolder.OnChoosingFinished += LogChoosingFinished;
+            EventHolder.OnYouWinStarted += LogChoosingStarted;
+            EventHolder.OnYouWinFinished += LogChoosingFinished;
             EventHolder.OnPCFinished += LogPCFinished;
             EventHolder.OnRunFinished += LogRunFinished;
         }
@@ -19,16 +19,16 @@ namespace ZevWaxGames.CursorHero
         {
             EventHolder.OnRunStarted -= LogRunStarted;
             EventHolder.OnPCStarted -= LogPCStarted;
-            EventHolder.OnChoosingStarted -= LogChoosingStarted;
-            EventHolder.OnChoosingFinished -= LogChoosingFinished;
+            EventHolder.OnYouWinStarted -= LogChoosingStarted;
+            EventHolder.OnYouWinFinished -= LogChoosingFinished;
             EventHolder.OnPCFinished -= LogPCFinished;
             EventHolder.OnRunFinished -= LogRunFinished;
         }
 
         private void LogRunStarted() => Log(nameof(EventHolder.OnRunStarted));
         private void LogPCStarted() => Log(nameof(EventHolder.OnPCStarted));
-        private void LogChoosingStarted() => Log(nameof(EventHolder.OnChoosingStarted));
-        private void LogChoosingFinished() => Log(nameof(EventHolder.OnChoosingFinished));
+        private void LogChoosingStarted() => Log(nameof(EventHolder.OnYouWinStarted));
+        private void LogChoosingFinished() => Log(nameof(EventHolder.OnYouWinFinished));
         private void LogPCFinished() => Log(nameof(EventHolder.OnPCFinished));
         private void LogRunFinished() => Log(nameof(EventHolder.OnRunFinished));
 

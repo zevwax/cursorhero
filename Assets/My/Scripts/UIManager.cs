@@ -35,8 +35,8 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             EventHolder.OnRunStarted += HideStartGameNTryAgainWindows;
-            EventHolder.OnChoosingStarted += HandleChoosingStarted;
-            EventHolder.OnChoosingFinished += HideYouWinNChooseAnUpgradeWindows;
+            EventHolder.OnYouWinStarted += HandleChoosingStarted;
+            EventHolder.OnYouWinFinished += HideYouWinNChooseAnUpgradeWindows;
             EventHolder.OnRunFinished += ShowTryAgainWindow;
             EventHolder.OnBIOSStarted += HandleBIOSStarted;
             EventHolder.OnBIOSFinished += HandleBIOSFinished;
@@ -44,8 +44,8 @@ namespace ZevWaxGames.CursorHero
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= HideStartGameNTryAgainWindows;
-            EventHolder.OnChoosingStarted -= HandleChoosingStarted;
-            EventHolder.OnChoosingFinished -= HideYouWinNChooseAnUpgradeWindows;
+            EventHolder.OnYouWinStarted -= HandleChoosingStarted;
+            EventHolder.OnYouWinFinished -= HideYouWinNChooseAnUpgradeWindows;
             EventHolder.OnRunFinished -= ShowTryAgainWindow;
             EventHolder.OnBIOSStarted -= HandleBIOSStarted;
             EventHolder.OnBIOSFinished -= HandleBIOSFinished;
@@ -63,25 +63,28 @@ namespace ZevWaxGames.CursorHero
         {
             BIOS.GetComponent<CanvasGroup>().alpha = 1f;
             var index = 0;
+
+            if (MainCharacter.Instance.Drivers > 0)
+                ShowChooseAnUpgradeWindow();
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDriversButton(new Vector2(-4f, 3f));
+            biosBtns[index] = Spawner.NewDriversButton(new Vector2(-4f, 4f));
             index++;
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewSkillTreeButton(new Vector2(0, 3f));
+            biosBtns[index] = Spawner.NewSkillTreeButton(new Vector2(0, 4f));
             index++;
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewInventoryButton(new Vector2(4f, 3f));
+            biosBtns[index] = Spawner.NewInventoryButton(new Vector2(4f, 4f));
             index++;
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewFightButton(new Vector2(4f, -3f));
+            biosBtns[index] = Spawner.NewFightButton(new Vector2(4f, -4f));
             
             StartCoroutine(FastFadeIn());
         }
@@ -135,28 +138,23 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleChoosingStarted()
         {
-            if (ProgressBar.Instance.Value >= 1f)
-                ShowChooseAnUpgradeWindow();
-            else
-            {
-                ShowYouWinWindow();
-                StartCoroutine(ShowTheEnd());
-            }
+            ShowYouWinWindow();
+            StartCoroutine(ShowTheEnd());
         }
-        private void ShowChooseAnUpgradeWindow()
+        public void ShowChooseAnUpgradeWindow()
         {
+            MainCharacter.Instance.SpendDriver();
             var chooseAnUpgradeWindowName =
                 chooseAnUpgradeWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-            //MainCharacter.Instance.UpdateVersion();
-            chooseAnUpgradeWindowName.text = string.Format("<sprite=1> v.{0} Ready: Select Driver", MainCharacter.Instance.Version);
+            chooseAnUpgradeWindowName.text = string.Format("<sprite=1> Select Driver");
             chooseAnUpgradeWindow.SetActive(true);
             var buttons = GetThreeRandom
             (
                 "Damage",
                 "FireRate",
                 "Speed",
-                "Sensitivity",
-                "Heart"/*,
+                "Sensitivity"/*,
+                "Heart",
                 "HeartKeeper"*/
             );
             btns[0] = Spawner.NewUpgradeButton(buttons[0], new Vector2(-2.75f, 0f));
@@ -231,7 +229,7 @@ namespace ZevWaxGames.CursorHero
         {
             recycleBinWindow.SetActive(false);
         }
-        private void HideYouWinNChooseAnUpgradeWindows()
+        public void HideYouWinNChooseAnUpgradeWindows()
         {
             youWinWindow.SetActive(false);
             chooseAnUpgradeWindow.SetActive(false);

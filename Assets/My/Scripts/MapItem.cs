@@ -12,16 +12,16 @@ namespace ZevWaxGames.CursorHero
         protected virtual void OnEnable()
         {
             EventHolder.OnFadingInToPCStarted += HideInstantly;
-            EventHolder.OnChoosingStarted += ShowMapNode;
-            EventHolder.OnChoosingFinished += HideMapNode;
+            EventHolder.OnYouWinStarted += ShowMapNode;
+            EventHolder.OnYouWinFinished += HideMapNode;
             EventHolder.OnPCFinished += ShowMapNode;
             EventHolder.OnPCStarted += HideMapNode;
         }
         protected virtual void OnDisable()
         {
             EventHolder.OnFadingInToPCStarted -= HideInstantly;
-            EventHolder.OnChoosingStarted -= ShowMapNode;
-            EventHolder.OnChoosingFinished -= HideMapNode;
+            EventHolder.OnYouWinStarted -= ShowMapNode;
+            EventHolder.OnYouWinFinished -= HideMapNode;
             EventHolder.OnPCFinished -= ShowMapNode;
             EventHolder.OnPCStarted -= HideMapNode;
         }

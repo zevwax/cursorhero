@@ -25,8 +25,8 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted += Refresh;
             EventHolder.OnFadingInToPCStarted += HandleOnFadingInToPCStarted;
             EventHolder.OnPCStarted += Resume;
-            EventHolder.OnChoosingStarted += Stop;
-            EventHolder.OnChoosingFinished += ResumeIfNeeded;
+            EventHolder.OnYouWinStarted += Stop;
+            EventHolder.OnYouWinFinished += ResumeIfNeeded;
             EventHolder.OnPCFinished += HandleOnPCFinished;
             EventHolder.OnRunFinished += Stop;
         }
@@ -35,8 +35,8 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted -= Refresh;
             EventHolder.OnFadingInToPCStarted -= HandleOnFadingInToPCStarted;
             EventHolder.OnPCStarted -= Resume;
-            EventHolder.OnChoosingStarted -= Stop;
-            EventHolder.OnChoosingFinished -= ResumeIfNeeded;
+            EventHolder.OnYouWinStarted -= Stop;
+            EventHolder.OnYouWinFinished -= ResumeIfNeeded;
             EventHolder.OnPCFinished -= HandleOnPCFinished;
             EventHolder.OnRunFinished -= Stop;
         }
@@ -69,7 +69,7 @@ namespace ZevWaxGames.CursorHero
             yield return StartCoroutine(MainCharacter.Instance.DoGlitch());
             BlueFace.Instance.InstantFadeOut();
             yield return new WaitForSeconds(2f);
-            EventHolder.OnChoosingStarted?.Invoke();
+            EventHolder.OnYouWinStarted?.Invoke();
             theEndScreenIsShown = true;
         }
         private void HandleOnPCFinished()
