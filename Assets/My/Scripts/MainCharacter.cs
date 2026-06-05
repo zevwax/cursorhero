@@ -29,13 +29,14 @@ namespace ZevWaxGames.CursorHero
             VersionIndicator.Instance.UpdateContents();
             DriversIndicator.Instance.UpdateContents();
         }
+        public void SetGlyph(Glyph glyph) => Guns.Library[GunName.Yellow].Glyph = glyph;
         public void SpendDriver()
         {
             drivers--;
             DriversIndicator.Instance.UpdateContents();
         }
-        public float weight = 1f;
-        public float size = 1f;
+        public float Weight => Guns.Library[GunName.Yellow].Glyph.Weight;
+        public float Size => Guns.Library[GunName.Yellow].Glyph.Size;
         
         public bool is_trackable = true;
         public float WeightBuff = 0f;
@@ -149,9 +150,6 @@ namespace ZevWaxGames.CursorHero
                 Init();
                 initialized = true;
             }*/
-            //ResetVersion();
-            weight = 1f;
-            size = 1f;
             ResetMaxHP();
             RestoreFullHP();
             //WeightBuff = 0f;

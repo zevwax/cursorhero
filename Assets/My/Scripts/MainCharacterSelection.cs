@@ -35,17 +35,13 @@ namespace ZevWaxGames.CursorHero
                     if (o != MainCharacter.Instance.ClipboardGlyph)
                     {
                         var glyph = o.GetComponent<Projectile>();
-                        MainCharacter.Instance.weight = glyph.Weight;
-                        MainCharacter.Instance.size = glyph.Size;
-                        Guns.Library[GunName.Yellow].Glyph = new Glyph
-                        (
+                        MainCharacter.Instance.SetGlyph(new Glyph(
                             true,
                             glyph.Weight,
                             glyph.Size,
                             glyph.IsBouncyV,
                             glyph.IsPiercingV,
-                            glyph.Speed
-                        );
+                            glyph.Speed));
                         ClipboardTextbox.Instance.UpdateContents();
                         var currChar = glyph.CurrChar();
                         Spawner.NewPopUpText(transform.position, string.Format("Copied {0}.glyph", currChar), new Color(0, 1, 0, 1), 1f);

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Linq;
+using Unity.VisualScripting;
+
 namespace ZevWaxGames.CursorHero
 {
     public class Zipporah : MonoBehaviour
@@ -156,6 +158,7 @@ namespace ZevWaxGames.CursorHero
         }
         private IEnumerator WalkOut()
         {
+            yield return StartCoroutine(MessageScaleDown());
             yield return transform.DOMove(offScreenPosition, transitionDuration).SetEase(Ease.OutQuad).WaitForCompletion();
         }
         private IEnumerator Say(string words, float textboxHeight)

@@ -189,6 +189,13 @@ namespace ZevWaxGames.CursorHero
                             var savedGlyph = MainCharacter.Instance.ClipboardGlyph;
                             if (savedGlyph == null)
                                 savedGlyph = gameObject;
+                            MainCharacter.Instance.SetGlyph(new Glyph(
+                                true,
+                                Weight,
+                                Size,
+                                IsBouncyV,
+                                IsPiercingV,
+                                Speed));
                         }
                         else
                             Spawner.NewPopUpText(transform.position, "Only glyphs with different perks can be merged", new Color(1, 0, 0, 1), 2.66f);
@@ -555,7 +562,10 @@ namespace ZevWaxGames.CursorHero
             GetComponent<TooltipHolder>().enabled = true;
             var dragable = GetComponent<Dragable>();
             if (dragable == null)
+            {
                 dragable = gameObject.AddComponent<Dragable>();
+                dragable.Init();
+            }
             dragable.enabled = false;
             direction = Vector2.zero;
             GetComponent<Canvas>().sortingLayerName = "Bottles";
