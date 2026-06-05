@@ -15,15 +15,19 @@ namespace ZevWaxGames.CursorHero
         public static readonly Color Yellow = new Color(0, 0.33f, 0.66f, 1f);
         public int Version => version;
         private int version = 1;
-        public void ResetVersion()
+        public int Drivers => drivers;
+        private int drivers = 0;
+        /*public void ResetVersion()
         {
             version = 1;
             VersionIndicator.Instance.Reset();
-        }
+        }*/
         public void UpdateVersion()
         {
             version++;
+            drivers++;
             VersionIndicator.Instance.UpdateContents();
+            DriversIndicator.Instance.UpdateContents();
         }
         public float weight = 1f;
         public float size = 1f;
@@ -140,18 +144,18 @@ namespace ZevWaxGames.CursorHero
                 Init();
                 initialized = true;
             }*/
-            ResetVersion();
+            //ResetVersion();
             weight = 1f;
             size = 1f;
             ResetMaxHP();
             RestoreFullHP();
-            WeightBuff = 0f;
-            Sensitivity = 0.25f;
+            //WeightBuff = 0f;
+            //Sensitivity = 0.25f;
             
             var gun = Guns.Library[GunName.Yellow];
-            gun.BurstSize = 1;
+            /*gun.BurstSize = 1;
             gun.BurstInterval = 2f;
-            gun.ShotInterval = 0.2f;
+            gun.ShotInterval = 0.2f;*/
             gun.Glyph = new Glyph(true, 1, 1, false, false, 6);
             
             Enable();

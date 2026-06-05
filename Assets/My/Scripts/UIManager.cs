@@ -61,7 +61,7 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleBIOSStarted()
         {
-            BIOS.SetActive(true);
+            BIOS.GetComponent<CanvasGroup>().alpha = 1f;
             var index = 0;
             
             if (biosBtns[index] != null)
@@ -93,7 +93,7 @@ namespace ZevWaxGames.CursorHero
         {
             yield return StartCoroutine(FastFadeOut());
             
-            BIOS.SetActive(false);
+            BIOS.GetComponent<CanvasGroup>().alpha = 0;
             var index = 0;
             
             if (biosBtns[index] != null)
@@ -147,7 +147,7 @@ namespace ZevWaxGames.CursorHero
         {
             var chooseAnUpgradeWindowName =
                 chooseAnUpgradeWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-            MainCharacter.Instance.UpdateVersion();
+            //MainCharacter.Instance.UpdateVersion();
             chooseAnUpgradeWindowName.text = string.Format("<sprite=1> v.{0} Ready: Select Driver", MainCharacter.Instance.Version);
             chooseAnUpgradeWindow.SetActive(true);
             var buttons = GetThreeRandom

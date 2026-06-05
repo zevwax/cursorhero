@@ -40,13 +40,13 @@ namespace ZevWaxGames.CursorHero
         
         private void OnEnable()
         {
-            EventHolder.OnRunStarted += Refresh;
-            EventHolder.OnChoosingFinished += ResetValue;
+            //EventHolder.OnRunStarted += Refresh;
+            //EventHolder.OnChoosingFinished += ResetValue;
         }
         private void OnDisable()
         {
-            EventHolder.OnRunStarted -= Refresh;
-            EventHolder.OnChoosingFinished -= ResetValue;
+            //EventHolder.OnRunStarted -= Refresh;
+            //EventHolder.OnChoosingFinished -= ResetValue;
         }
         
         private void Awake()
@@ -109,13 +109,15 @@ namespace ZevWaxGames.CursorHero
         {
             if (visualValue >= 0.99f && value >= 1f)
             {
-                visualValue = 1f;
+                /*visualValue = 1f;
                 if (rainbowSequence == null)
                 {
                     StartRainbowAnimation();
                 }
                 
-                displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 10f);
+                displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 10f);*/
+                MainCharacter.Instance.UpdateVersion();
+                ResetValue();
             }
             else
             {
