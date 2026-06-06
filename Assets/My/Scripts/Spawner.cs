@@ -134,7 +134,16 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<TweenEntity>().Init(new Vector2(0, 4), 1.2f);
             return obj;
         }
-        private static Sprite GetSprite(string spriteSheetName, string spriteName)
+        public static GameObject NewRover()
+        {
+            var pos = Vector3.zero;
+            var sprite = GetSprite("rover", "rover_l0");
+            var obj = NewEntity<Rover>(
+                pos, "Entity", sprite, "Enemies", true, "Rover");
+            obj.GetComponent<Rover>().Init();
+            return obj;
+        }
+        public static Sprite GetSprite(string spriteSheetName, string spriteName)
         {
             var path = "My/My/Sprites/" + spriteSheetName;
             var allSprites = Resources.LoadAll<Sprite>(path);
