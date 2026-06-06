@@ -26,7 +26,7 @@ namespace ZevWaxGames.CursorHero
             if (tryAgainWindow != null)
                 tryAgainWindow.SetActive(false);
             btns = new GameObject[3];
-            biosBtns = new GameObject[4];
+            biosBtns = new GameObject[9];
         }
         private void Start()
         {
@@ -67,9 +67,9 @@ namespace ZevWaxGames.CursorHero
             if (MainCharacter.Instance.Drivers > 0)
                 ShowChooseAnUpgradeWindow();
             
-            /*if (biosBtns[index] != null)
+            if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDriversButton(new Vector2(-4f, 4f));
+            biosBtns[index] = Spawner.NewDriverButton(new Vector2(-4f, 4f));
             index++;
             
             if (biosBtns[index] != null)
@@ -77,7 +77,7 @@ namespace ZevWaxGames.CursorHero
             biosBtns[index] = Spawner.NewSkillTreeButton(new Vector2(0, 4f));
             index++;
             
-            if (biosBtns[index] != null)
+            /*if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
             biosBtns[index] = Spawner.NewInventoryButton(new Vector2(4f, 4f));
             index++;*/ //TEMP
@@ -85,6 +85,7 @@ namespace ZevWaxGames.CursorHero
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
             biosBtns[index] = Spawner.NewFightButton(new Vector2(4f, -4f));
+            index++;
             
             StartCoroutine(FastFadeIn());
         }
@@ -98,21 +99,10 @@ namespace ZevWaxGames.CursorHero
             
             BIOS.GetComponent<CanvasGroup>().alpha = 0;
             var index = 0;
-            
-            /*if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            index++;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            index++;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            index++;*/ // TEMP
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
+
+            for (var i = 0; i < biosBtns.Length; i++)
+                if (biosBtns[i] != null)
+                    Destroy(biosBtns[i]);
             
             tryAgainWindow.SetActive(true);
             btns[0] = Spawner.NewPlayButton(Vector2.zero);
@@ -227,6 +217,40 @@ namespace ZevWaxGames.CursorHero
         public void HideRecycleBinWindow()
         {
             recycleBinWindow.SetActive(false);
+        }
+        public void ShowSkillTreeTab()
+        {
+            var index = 4;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewDirPetQuantity(new Vector2(-2.75f, 0f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewDirPetHealth(new Vector2(0f, 1f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewDirPetDamage(new Vector2(0, -1f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewDirPetMovementSpeed(new Vector2(2.75f, 1f));
+            index++;
+            
+            if (biosBtns[index] != null)
+                Destroy(biosBtns[index]);
+            biosBtns[index] = Spawner.NewDirPetAttackInterval(new Vector2(2.75f, -1f));
+        }
+        public void HideSkillTreeTab()
+        {
+            for (var i = 0; i < 5; i++)
+                if (biosBtns[i+4] != null)
+                    Destroy(biosBtns[i+4]);
         }
         public void HideYouWinNChooseAnUpgradeWindows()
         {

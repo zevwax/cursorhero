@@ -149,15 +149,22 @@ namespace ZevWaxGames.CursorHero
             idleTween?.Pause();
             transform.DORotate(Vector3.zero, 0.3f).SetEase(Ease.OutQuad);
             AnimateMult(1f, 0.3f);
+            DisableAnimation();
+        }
+        protected virtual void DisableAnimation()
+        {
             AnimateAlpha(0.5f, 0.3f);
         }
-
         public void EnableButton()
         {
             if (IsEnabled) return;
             IsEnabled = true;
             SetStateIdle();
             idleTween?.Play();
+            EnableAnimation();
+        }
+        protected virtual void EnableAnimation()
+        {
             AnimateAlpha(1f, 0.3f);
         }
     }
