@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -114,6 +115,31 @@ namespace ZevWaxGames.CursorHero
         {
             var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
             return obj;
+        }
+        public static GameObject NewDriverTweenEntity()
+        {
+            var pos = MainCharacter.Instance.transform.position;
+            var sprite = GetSprite("text_icons", "text_icons_1");
+            var obj = NewEntity<TweenEntity>(
+                pos, "Entity", sprite, "Enemies", false, "GUI");
+            obj.GetComponent<TweenEntity>().Init(new Vector2(3.5f, -4), 2.5f);
+            return obj;
+        }
+        public static GameObject NewFloppyDiskTweenEntity()
+        {
+            var pos = MainCharacter.Instance.transform.position;
+            var sprite = GetSprite("spinning_floppy_disk", "spinning_floppy_disk_0");
+            var obj = NewEntity<TweenEntity>(
+                pos, "Entity", sprite, "HeartKeeperFG", false, "GUI");
+            obj.GetComponent<TweenEntity>().Init(new Vector2(0, 4), 1.2f);
+            return obj;
+        }
+        private static Sprite GetSprite(string spriteSheetName, string spriteName)
+        {
+            var path = "My/My/Sprites/" + spriteSheetName;
+            var allSprites = Resources.LoadAll<Sprite>(path);
+            var sprite = allSprites.FirstOrDefault(s => s.name == spriteName);
+            return sprite;
         }
         public static GameObject NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph, bool isDragable = true)
         {

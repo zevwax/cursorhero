@@ -106,6 +106,7 @@ namespace ZevWaxGames.CursorHero
                 
                 displayColor = Color.Lerp(displayColor, rainbowColor, Time.deltaTime * 10f);*/
                 MainCharacter.Instance.UpdateVersion();
+                Spawner.NewDriverTweenEntity();
                 ResetValue();
             }
             else

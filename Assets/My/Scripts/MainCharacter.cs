@@ -27,13 +27,16 @@ namespace ZevWaxGames.CursorHero
             version++;
             drivers++;
             VersionIndicator.Instance.UpdateContents();
-            DriversIndicator.Instance.UpdateContents();
+            DriverIndicator.Instance.UpdateContents();
+            DriverIndicatorColor.Instance.UpdateContents();
+            Spawner.NewPopUpText(transform.position, string.Format("v.{0} achieved!", version), new Color(1, 1, 0, 1), 2);
         }
         public void SetGlyph(Glyph glyph) => Guns.Library[GunName.Yellow].Glyph = glyph;
         public void SpendDriver()
         {
             drivers--;
-            DriversIndicator.Instance.UpdateContents();
+            DriverIndicator.Instance.UpdateContents();
+            DriverIndicatorColor.Instance.UpdateContents();
         }
         public float Weight => Guns.Library[GunName.Yellow].Glyph.Weight;
         public float Size => Guns.Library[GunName.Yellow].Glyph.Size;

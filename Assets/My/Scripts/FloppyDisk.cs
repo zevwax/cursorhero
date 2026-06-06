@@ -94,6 +94,7 @@ namespace ZevWaxGames.CursorHero
         private float Collect()
         {
             DJ.PlayDisk();
+            Spawner.NewFloppyDiskTweenEntity();
             return currXP;
         }
         public static void Inflate()
