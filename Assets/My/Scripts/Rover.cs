@@ -8,9 +8,14 @@ namespace ZevWaxGames.CursorHero
 {
     public class Rover : MonoBehaviour
     {
+        public static int quantity = 0;
+        public static float health = 1f;
+        public static float damage = 1f;
+        public static float speed = 2f;
+        public static float attackInterval = 1f;
+        
         private bool isWaiting = false;
         
-        private float speed = 2f;
         private float minWanderTime = 1.5f;
         private float maxWanderTime = 3.5f;
         private float minIdleTime = 0.5f;
@@ -171,15 +176,18 @@ namespace ZevWaxGames.CursorHero
             var enemy = collision.gameObject.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.GetDamage(1);
+                enemy.GetDamage(damage);
                 StartCoroutine(Wait());
             }
         }
         private IEnumerator Wait()
         {
             isWaiting = true;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(attackInterval);
             isWaiting = false;
         }
+        private void OnEnable() => EventHolder.OnBSODStarted += Die;
+        private void OnDisable() => EventHolder.OnBSODStarted -= Die;
+        private void Die() => Destroy(gameObject);
     }
 }

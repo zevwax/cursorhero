@@ -52,7 +52,6 @@ namespace ZevWaxGames.CursorHero
             
             Spawner.NewZipporah();
             Spawner.NewHumBar();
-            Spawner.NewRover();
             
             var path00 = "My/My/Sprites/map_line";
             var allSprites00 = Resources.LoadAll<Sprite>(path00);

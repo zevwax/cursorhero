@@ -26,6 +26,12 @@ namespace ZevWaxGames.CursorHero
             MMIndicator.Instance.UpdateContents();
             MMIndicatorColor.Instance.UpdateContents();
         }
+        public void DeductMMs(int value)
+        {
+            mms -= value;
+            MMIndicator.Instance.UpdateContents();
+            MMIndicatorColor.Instance.UpdateContents();
+        }
         /*public void ResetVersion()
         {
             version = 1;
@@ -185,6 +191,9 @@ namespace ZevWaxGames.CursorHero
                 Destroy(ClipboardGlyph);
             ClipboardGlyph = Spawner.NewClipboardGlyph(new Vector2(-2f, -4f));
             ClipboardTextbox.Instance.UpdateContents();
+
+            for (var i = 0; i < Rover.quantity; i++)
+                Spawner.NewRover();
         }
         protected override void Die()
         {
