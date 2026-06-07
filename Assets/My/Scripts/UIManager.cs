@@ -221,30 +221,46 @@ namespace ZevWaxGames.CursorHero
         public void ShowSkillTreeTab()
         {
             var index = 4;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDirPetQuantity(new Vector2(-2.75f, 0f));
-            index++;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDirPetHealth(new Vector2(0f, 1f));
-            index++;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDirPetDamage(new Vector2(0, -1f));
-            index++;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDirPetMovementSpeed(new Vector2(2.75f, 1f));
-            index++;
-            
-            if (biosBtns[index] != null)
-                Destroy(biosBtns[index]);
-            biosBtns[index] = Spawner.NewDirPetAttackInterval(new Vector2(2.75f, -1f));
+
+            if (DirPetQuantity.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirPetQuantity(new Vector2(-2.75f, 0f));
+                index++;
+            }
+
+            if (DirPetHealth.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirPetHealth(new Vector2(0f, 1f));
+                index++;
+            }
+
+            if (DirPetDamage.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirPetDamage(new Vector2(0, -1f));
+                index++;
+            }
+
+            if (DirPetMovementSpeed.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirPetMovementSpeed(new Vector2(2.75f, 1f));
+                index++;
+            }
+
+            if (DirPetAttackInterval.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirPetAttackInterval(new Vector2(2.75f, -1f));
+                index++;
+            }
         }
         public void HideSkillTreeTab()
         {
