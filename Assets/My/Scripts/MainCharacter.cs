@@ -17,8 +17,15 @@ namespace ZevWaxGames.CursorHero
         private int version = 1;
         public int Drivers => drivers;
         private int drivers = 0;
-        public int Chips => chips;
-        private int chips = 0;
+        public int MMs => mms;
+        private int mms = 0;
+
+        public void GainMMs()
+        {
+            mms++;
+            MMIndicator.Instance.UpdateContents();
+            MMIndicatorColor.Instance.UpdateContents();
+        }
         /*public void ResetVersion()
         {
             version = 1;

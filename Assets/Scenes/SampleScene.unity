@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 192555137}
   - component: {fileID: 192555136}
   m_Layer: 5
-  m_Name: BIOS Chip Indicator
+  m_Name: BIOS MM Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3036,7 +3036,7 @@ GameObject:
   - component: {fileID: 883147184}
   - component: {fileID: 883147183}
   m_Layer: 5
-  m_Name: Chip Indicator
+  m_Name: MM Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4218,7 +4218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.11.4
+  m_text: 0.11.5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

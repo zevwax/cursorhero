@@ -122,7 +122,8 @@ namespace ZevWaxGames.CursorHero
             var sprite = GetSprite("text_icons", "text_icons_1");
             var obj = NewEntity<TweenEntity>(
                 pos, "Entity", sprite, "Enemies", false, "GUI");
-            obj.GetComponent<TweenEntity>().Init(new Vector2(3.5f, -4), 2.5f);
+            var targetPos = new Vector2(2.76f, -4f);
+            obj.GetComponent<TweenEntity>().Init(targetPos, 2.5f);
             return obj;
         }
         public static GameObject NewFloppyDiskTweenEntity()
@@ -131,7 +132,18 @@ namespace ZevWaxGames.CursorHero
             var sprite = GetSprite("spinning_floppy_disk", "spinning_floppy_disk_0");
             var obj = NewEntity<TweenEntity>(
                 pos, "Entity", sprite, "HeartKeeperFG", false, "GUI");
-            obj.GetComponent<TweenEntity>().Init(new Vector2(0, 4), 1.2f);
+            var targetPos = new Vector2(0, 4);
+            obj.GetComponent<TweenEntity>().Init(targetPos, 1.2f);
+            return obj;
+        }
+        public static GameObject NewMMTweenEntity()
+        {
+            var pos = MainCharacter.Instance.transform.position;
+            var sprite = GetSprite("text_icons", "text_icons_6");
+            var obj = NewEntity<TweenEntity>(
+                pos, "Entity", sprite, "HeartKeeperFG", false, "GUI");
+            var targetPos = new Vector2(3.98f, -4f);
+            obj.GetComponent<TweenEntity>().Init(targetPos, 1.2f);
             return obj;
         }
         public static GameObject NewRover()
@@ -335,6 +347,12 @@ namespace ZevWaxGames.CursorHero
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             var anim = obj.transform.GetChild(0).gameObject.AddComponent<Animator>();
             anim.Init("spinning_floppy_disk", 2f);
+            return obj;
+        }
+        public static GameObject NewMM(Vector2 pos)
+        {
+            var obj = NewEntity<MM>(pos, "Entity", GetSprite("text_icons", "text_icons_6"), "RealDisks", true, "Disk");
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
         public static GameObject NewRedArrow(Vector2 pos, Vector2 direction)

@@ -77,7 +77,10 @@ namespace ZevWaxGames.CursorHero
         {
             var disksToDrop = UnityEngine.Random.Range(dropRange.x, dropRange.y+1);
             for (int i = 0; i < disksToDrop; i++)
+            {
                 Spawner.NewFloppyDisk(transform.position);
+                Spawner.NewMM(transform.position);
+            }
             Destroy(gameObject);
         }
         private void CleanUp()
