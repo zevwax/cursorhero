@@ -1,16 +1,13 @@
+using TMPro;
 using UnityEngine;
-
-public class ChipIndicatroColor : MonoBehaviour
+namespace ZevWaxGames.CursorHero
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class ChipIndicatroColor : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public static ChipIndicatroColor Instance { get; private set; }
+        public void Init() => Reset();
+        public void Reset() => GetComponent<TextMeshProUGUI>().text = "<sprite=6> 0";
+        public void UpdateContents() => GetComponent<TextMeshProUGUI>().text = string.Format("<sprite=6> {0}", MainCharacter.Instance.Chips);
+        private void Awake() => Instance = this;
     }
 }

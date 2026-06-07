@@ -17,6 +17,7 @@ namespace ZevWaxGames.CursorHero
             UIManager.Instance.ShowSkillTreeTab();
             UIManager.Instance.HideYouWinNChooseAnUpgradeWindows();
             GameObject.Find("BIOS Driver Indicator").GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 0);
+            GameObject.Find("BIOS Chip Indicator").GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
         }
         protected override void EnableAnimation()
         {

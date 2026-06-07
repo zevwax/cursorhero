@@ -295,7 +295,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <sprite=5> 0
+  m_text: <sprite=7> 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40d2094e07e14af40853727f00b64868, type: 2}
   m_sharedMaterial: {fileID: -134896244156834717, guid: 40d2094e07e14af40853727f00b64868, type: 2}
@@ -304,8 +304,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 0
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3058,8 +3058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -119.3}
-  m_SizeDelta: {x: 200.20001, y: 23}
+  m_AnchoredPosition: {x: 207, y: -119.3}
+  m_SizeDelta: {x: 200.20001, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &883147183
 MonoBehaviour:
@@ -3105,7 +3105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <sprite=1> 0
+  m_text: <sprite=6> 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
   m_sharedMaterial: {fileID: 8378293665681271254, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
@@ -3132,7 +3132,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.3
+  m_fontSize: 19.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4218,7 +4218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.11.3
+  m_text: 0.11.4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4644,8 +4644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 183.85, y: -119.3}
-  m_SizeDelta: {x: 200.20001, y: 23}
+  m_AnchoredPosition: {x: 172.4, y: -119.3}
+  m_SizeDelta: {x: 200.20001, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392349931
 MonoBehaviour:
@@ -4706,7 +4706,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.3
+  m_fontSize: 19.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6864,7 +6864,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Droste Screencasting Software
+  m_text: <sprite=8> Droste Screencasting Software
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
   m_sharedMaterial: {fileID: 8378293665681271254, guid: 38d9a590459517349af0775f1a12cff9, type: 2}
@@ -6891,7 +6891,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.6
+  m_fontSize: 23.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

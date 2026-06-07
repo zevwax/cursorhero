@@ -17,6 +17,8 @@ namespace ZevWaxGames.CursorHero
         private int version = 1;
         public int Drivers => drivers;
         private int drivers = 0;
+        public int Chips => chips;
+        private int chips = 0;
         /*public void ResetVersion()
         {
             version = 1;
