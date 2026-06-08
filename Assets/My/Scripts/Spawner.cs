@@ -103,15 +103,28 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
             obj.AddComponent<Soul>();
         }
-        public static GameObject NewEnemyGrabber(Vector2 pos) => NewEntity<EnemyGrabber>(
+        public static GameObject NewEnemyMinor(Vector2 pos) => NewEntity<EnemyMinor>(
+            pos, "Enemy", GetSprite("enemies", "enemies_0"), "Enemies", true, "Enemy");
+        public static GameObject NewEnemyMajor(Vector2 pos) => NewEntity<EnemyMajor>(
+            pos, "Enemy", GetSprite("enemies", "enemies_1"), "Enemies", true, "Enemy");
+        public static GameObject NewEnemyStar(Vector2 pos) => NewEntity<EnemyStar>(
+            pos, "Enemy", GetSprite("enemies", "enemies_2"), "Enemies", true, "Enemy");
+        public static GameObject NewEnemyFlesh(Vector2 pos) => NewEntity<EnemyFlesh>(
+            pos, "Enemy", GetSprite("enemies", "enemies_3"), "Enemies", true, "Enemy");
+        public static GameObject NewEnemySkull(Vector2 pos)
+        {
+            var obj = NewEntity<EnemySkull>(pos, "Enemy", GetSprite("enemies", "enemies_4"), "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
+            return obj;
+        }
+        public static GameObject NewEnemyGrabberLegacy(Vector2 pos) => NewEntity<EnemyGrabber>(
             pos, "Enemy", "pointer_0", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyPointer(Vector2 pos) => NewEntity<EnemyPointer>(
+        public static GameObject NewEnemyPointerLegacy(Vector2 pos) => NewEntity<EnemyPointer>(
             pos, "Enemy", "pointer_1", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyGlove(Vector2 pos) => NewEntity<EnemyBlackGlove>(
+        public static GameObject NewEnemyGloveLegacy(Vector2 pos) => NewEntity<EnemyBlackGlove>(
             pos, "Enemy", "pointer_2", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyGoat(Vector2 pos) => NewEntity<EnemyGoat>(
+        public static GameObject NewEnemyGoatLegacy(Vector2 pos) => NewEntity<EnemyGoat>(
             pos, "Enemy", "pointer_3", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyBoss(Vector2 pos)
+        public static GameObject NewEnemyBossLegacy(Vector2 pos)
         {
             var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
             return obj;
