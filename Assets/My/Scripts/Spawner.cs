@@ -21,7 +21,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewHeartKeeper(Vector2 pos)
         {
             var obj = NewEntity<HeartKeeper>(
-                pos, "Heart Keeper", "idle", "HeartKeeperBG", true,
+                pos, "Heart Keeper", GetSprite("idle"), "HeartKeeperBG", true,
                 "HeartKeeper");
             var follower = obj.AddComponent<Follower>();
             NewImage(obj.transform, "idle");
@@ -37,7 +37,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewTabbyPointer(Vector2 pos)
         {
             var obj = NewEntity<TabbyPointer>(
-                Vector2.zero, "Tabby Pointer", "tabby_idle", "Selection", false,
+                Vector2.zero, "Tabby Pointer", GetSprite("tabby_idle"), "Selection", false,
                 "Default");
             obj.GetComponent<TabbyPointer>().Init(new Vector3(pos.x, pos.y, 0));
             return obj;
@@ -46,7 +46,7 @@ namespace ZevWaxGames.CursorHero
         {
             var objLayer = "DitheringCameraOutput";
             var obj = NewEntity<HumBar>(
-                new Vector2(0f, 4.5f + (1f / 6f)), "Hum Bar", "SizeHolders/480x10", "HumBar", false,
+                new Vector2(0f, 4.5f + (1f / 6f)), "Hum Bar", GetSprite("SizeHolders/480x10"), "HumBar", false,
                 objLayer, true);
             var child0 = NewImage(obj.transform, "480x10");
             child0.transform.SetAsFirstSibling();
@@ -59,7 +59,7 @@ namespace ZevWaxGames.CursorHero
         {
             var objLayer = "GUI";
             var obj = NewEntity<Plug>(
-                new Vector2(0, 4), "Version Indicator", "SizeHolders/480x30", "Selection", false,
+                new Vector2(0, 4), "Version Indicator", GetSprite("SizeHolders/480x30"), "Selection", false,
                 objLayer);
             var txt = NewText(obj.transform, objLayer, TextAlignmentOptions.Right, new Color(.5f, .5f, .5f, 1f),
                 "tahoma_8px_raster_hinted", "v.1");
@@ -68,7 +68,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewTabbySelection()
         {
-            var obj = NewEntity<TabbySelection>(Vector2.zero, "Tabby Selection", "s1", "Selection", false, "Default");
+            var obj = NewEntity<TabbySelection>(Vector2.zero, "Tabby Selection", GetSprite("s1"), "Selection", false, "Default");
             var image = obj.transform.GetChild(0).GetComponent<Image>();
             image.type = Image.Type.Sliced;
             image.color = new Color(1f, 0.8f, 0.8f, 1f);
@@ -104,29 +104,17 @@ namespace ZevWaxGames.CursorHero
             obj.AddComponent<Soul>();
         }
         public static GameObject NewEnemyMinor(Vector2 pos) => NewEntity<EnemyMinor>(
-            pos, "Enemy", GetSprite("enemies", "enemies_0"), "Enemies", true, "Enemy");
+            pos, "Enemy", GetSprite("enemies", "enemies_0"), "Enemies", GetSprite("enemy_minor_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewEnemyMajor(Vector2 pos) => NewEntity<EnemyMajor>(
-            pos, "Enemy", GetSprite("enemies", "enemies_1"), "Enemies", true, "Enemy");
+            pos, "Enemy", GetSprite("enemies", "enemies_1"), "Enemies", GetSprite("enemy_major_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewEnemyStar(Vector2 pos) => NewEntity<EnemyStar>(
-            pos, "Enemy", GetSprite("enemies", "enemies_2"), "Enemies", true, "Enemy");
+            pos, "Enemy", GetSprite("enemies", "enemies_2"), "Enemies", GetSprite("enemy_star_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewEnemyFlesh(Vector2 pos) => NewEntity<EnemyFlesh>(
-            pos, "Enemy", GetSprite("enemies", "enemies_3"), "Enemies", true, "Enemy");
+            pos, "Enemy", GetSprite("enemies", "enemies_3"), "Enemies", GetSprite("enemy_flesh_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewEnemySkull(Vector2 pos)
         {
-            var obj = NewEntity<EnemySkull>(pos, "Enemy", GetSprite("enemies", "enemies_4"), "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
-            return obj;
-        }
-        public static GameObject NewEnemyGrabberLegacy(Vector2 pos) => NewEntity<EnemyGrabber>(
-            pos, "Enemy", "pointer_0", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyPointerLegacy(Vector2 pos) => NewEntity<EnemyPointer>(
-            pos, "Enemy", "pointer_1", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyGloveLegacy(Vector2 pos) => NewEntity<EnemyBlackGlove>(
-            pos, "Enemy", "pointer_2", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyGoatLegacy(Vector2 pos) => NewEntity<EnemyGoat>(
-            pos, "Enemy", "pointer_3", "Enemies", true, "Enemy");
-        public static GameObject NewEnemyBossLegacy(Vector2 pos)
-        {
-            var obj = NewEntity<EnemyBoss>(pos, "Enemy", "enemy_fuck", "Enemies", true, "Enemy", RigidbodyType2D.Kinematic);
+            var entityImage = GetSprite("enemies", "enemies_4");
+            var obj = NewEntity<EnemySkull>(pos, "Enemy", entityImage, "Enemies", GetSprite("enemy_skull_collider"), "Enemy", RigidbodyType2D.Kinematic);
             return obj;
         }
         public static GameObject NewDriverTweenEntity()
@@ -175,6 +163,8 @@ namespace ZevWaxGames.CursorHero
             var sprite = allSprites.FirstOrDefault(s => s.name == spriteName);
             return sprite;
         }
+        public static Sprite GetSprite(string spriteName) =>
+            Resources.Load<Sprite>("My/My/Sprites/" + spriteName);
         public static GameObject NewProjectile(Vector2 pos, Vector2 direction, Glyph glyph, bool isDragable = true)
         {
             var obj = CreateBaseProjectile<Projectile>(pos, direction, "Projectile", "MainCharacterProjectile", "MainCharacterProjectiles");
@@ -214,7 +204,7 @@ namespace ZevWaxGames.CursorHero
         }*/
         private static GameObject CreateBaseProjectile<T>(Vector2 pos, Vector2 direction, string name, string objLayer, string sortLayer) where T : Projectile
         {
-            var obj = NewEntity<T>(pos, name, "SizeHolders/projectile", sortLayer, true, objLayer);
+            var obj = NewEntity<T>(pos, name, GetSprite("SizeHolders/projectile"), sortLayer, true, objLayer);
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             obj.GetComponent<Projectile>().direction = direction;
             
@@ -278,8 +268,14 @@ namespace ZevWaxGames.CursorHero
         }
         private const RigidbodyType2D RbTypeByDefault = RigidbodyType2D.Dynamic;
         public static GameObject NewEntity<T>(
-            Vector2 pos, string name, Sprite sprite, string sortingLayerName,
-            bool collider, string objectLayer, RigidbodyType2D rbType, bool isRaw = false
+            Vector2 pos,
+            string name,
+            Sprite entityImage,
+            string sortingLayerName,
+            Sprite entityCollider,
+            string objectLayer,
+            RigidbodyType2D rbType,
+            bool isRaw = false
             ) where T : MonoBehaviour
         {
             var obj = new GameObject(name);
@@ -290,12 +286,12 @@ namespace ZevWaxGames.CursorHero
                 canvas.sortingLayerName = sortingLayerName;
             var rectTransform = obj.GetComponent<RectTransform>();
             rectTransform.position = new Vector3(pos.x, pos.y, 0);
-            var size = new Vector2(sprite.rect.width, sprite.rect.height);
+            var size = new Vector2(entityImage.rect.width, entityImage.rect.height);
             rectTransform.sizeDelta = size;
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
             canvasScaler.dynamicPixelsPerUnit = 30f;
-            var ppu = sprite.pixelsPerUnit;
+            var ppu = entityImage.pixelsPerUnit;
             canvasScaler.referencePixelsPerUnit = ppu;
             var raycaster = obj.AddComponent<GraphicRaycaster>();
             raycaster.ignoreReversedGraphics = true;
@@ -317,12 +313,12 @@ namespace ZevWaxGames.CursorHero
             else
             {
                 var image = imageObj.AddComponent<Image>();
-                image.sprite = sprite;
+                image.sprite = entityImage;
             }
             if (imageObj.GetComponent<CanvasRenderer>() == null)
                 imageObj.AddComponent<CanvasRenderer>();
             
-            if (collider)
+            if (entityCollider != null)
             {
                 var rb = obj.AddComponent<Rigidbody2D>();
                 rb.sharedMaterial = CreateIceMaterial();
@@ -332,31 +328,100 @@ namespace ZevWaxGames.CursorHero
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 rb.bodyType = rbType;
                 var box = obj.AddComponent<BoxCollider2D>();
-                box.size = size;
-                box.offset = Vector2.zero;
+                var (colliderSize, colliderOffset) = CalculateColliderParams(entityCollider, size);
+                box.size = colliderSize;
+                box.offset = colliderOffset;
             }
             
             return obj;
         }
-        public static GameObject NewEntity<T>(
-            Vector2 pos, string name, Sprite sprite, string sortingLayerName,
-            bool collider, string objectLayer, bool isRaw = false
-            ) where T : MonoBehaviour => NewEntity<T>(pos, name, sprite, sortingLayerName, collider, objectLayer, RbTypeByDefault, isRaw);
-        public static GameObject NewEntity<T>(
-            Vector2 pos, string name, string spriteName, string sortingLayerName,
-            bool collider, string objectLayer, RigidbodyType2D rbType, bool isRaw = false
-        ) where T : MonoBehaviour
+        private static (Vector2 size, Vector2 offset) CalculateColliderParams(Sprite sprite, Vector2 defaultSize)
         {
-            var sprite = Resources.Load<Sprite>($"My/My/Sprites/{spriteName}");
-            return NewEntity<T>(pos, name, sprite, sortingLayerName, collider, objectLayer, rbType, isRaw);
+            if (sprite == null) 
+                return (defaultSize, Vector2.zero);
+
+            int shapeCount = sprite.GetPhysicsShapeCount();
+            if (shapeCount <= 0)
+                return (defaultSize, Vector2.zero);
+
+            var spritePoints = new List<Vector2>();
+            float minX = float.MaxValue, maxX = float.MinValue;
+            float minY = float.MaxValue, maxY = float.MinValue;
+            
+            for (int i = 0; i < shapeCount; i++)
+            {
+                spritePoints.Clear();
+                sprite.GetPhysicsShape(i, spritePoints);
+
+                for (int j = 0; j < spritePoints.Count; j++)
+                {
+                    Vector2 point = spritePoints[j];
+                    if (point.x < minX) minX = point.x;
+                    if (point.x > maxX) maxX = point.x;
+                    if (point.y < minY) minY = point.y;
+                    if (point.y > maxY) maxY = point.y;
+                }
+            }
+            
+            float ppu = sprite.pixelsPerUnit;
+            Vector2 localMin = new Vector2(minX, minY) * ppu;
+            Vector2 localMax = new Vector2(maxX, maxY) * ppu;
+
+            Vector2 calculatedSize = new Vector2(localMax.x - localMin.x, localMax.y - localMin.y);
+            Vector2 calculatedOffset = (localMin + localMax) / 2f;
+
+            return (calculatedSize, calculatedOffset);
         }
         public static GameObject NewEntity<T>(
-            Vector2 pos, string name, string spriteName, string sortingLayerName,
-            bool collider, string objectLayer, bool isRaw = false
-            ) where T : MonoBehaviour => NewEntity<T>(pos, name, spriteName, sortingLayerName, collider, objectLayer, RbTypeByDefault, isRaw);
+            Vector2 pos,
+            string name,
+            Sprite entityImage,
+            string sortingLayerName,
+            bool isThereDefaultCollider,
+            string objectLayer,
+            bool isRaw = false
+        ) where T : MonoBehaviour
+        {
+            var entityCollider = (Sprite)default;
+            if (isThereDefaultCollider)
+                entityCollider = entityImage;
+            else
+                entityCollider = null;
+            return NewEntity<T>(pos, name, entityImage, sortingLayerName, entityCollider, objectLayer, RbTypeByDefault, isRaw);
+        }
+        public static GameObject NewEntity<T>(
+            Vector2 pos, string name, Sprite entityImage, string sortingLayerName,
+            Sprite entityCollider, string objectLayer, bool isRaw = false
+            ) where T : MonoBehaviour => NewEntity<T>(pos, name, entityImage, sortingLayerName, entityCollider, objectLayer, RbTypeByDefault, isRaw);
+        public static GameObject NewEntity<T>(
+            Vector2 pos, string name, string entityImageName, string sortingLayerName,
+            Sprite entityCollider, string objectLayer, RigidbodyType2D rbType, bool isRaw = false
+        ) where T : MonoBehaviour
+        {
+            var sprite = Resources.Load<Sprite>($"My/My/Sprites/{entityImageName}");
+            return NewEntity<T>(pos, name, sprite, sortingLayerName, entityCollider, objectLayer, rbType, isRaw);
+        }
+        public static GameObject NewEntity<T>(
+            Vector2 pos, string name, string entityImageName, string sortingLayerName,
+            bool isThereDefaultCollider, string objectLayer, RigidbodyType2D rbType, bool isRaw = false
+        ) where T : MonoBehaviour
+        {
+            var entityImage = Resources.Load<Sprite>($"My/My/Sprites/{entityImageName}");
+            var entityCollider = (Sprite)default;
+            if (isThereDefaultCollider)
+                entityCollider = entityImage;
+            else
+                entityCollider = null;
+            return NewEntity<T>(pos, name, entityImage, sortingLayerName, entityCollider, objectLayer, rbType, isRaw);
+        }
+        public static GameObject NewEntity<T>(
+            Vector2 pos, string name, string entityImageName, string sortingLayerName,
+            Sprite entityCollider, string objectLayer, bool isRaw = false
+            ) where T : MonoBehaviour => NewEntity<T>(pos, name, entityImageName, sortingLayerName, entityCollider, objectLayer, RbTypeByDefault, isRaw);
         public static GameObject NewFloppyDisk(Vector2 pos)
         {
-            var obj = NewEntity<FloppyDisk>(pos, "Disk", "SizeHolders/16x16", "RealDisks", true, "Disk");
+            var entityImage = GetSprite("SizeHolders/16x16");
+            var obj = NewEntity<FloppyDisk>(pos, "Disk", entityImage, "RealDisks", true, "Disk");
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             var anim = obj.transform.GetChild(0).gameObject.AddComponent<Animator>();
             anim.Init("spinning_floppy_disk", 2f);
@@ -371,7 +436,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewRedArrow(Vector2 pos, Vector2 direction)
         {
             var obj = NewEntity<RedArrow>(
-                pos, "Red Arrow", "red_arrow", "RedArrow", false, "GUI");
+                pos, "Red Arrow", GetSprite("red_arrow"), "RedArrow", null, "GUI");
             var ra = obj.GetComponent<RedArrow>();
             ra.position = pos;
             ra.direction = direction;
@@ -426,7 +491,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewYellowCirc()
         {
-            var obj = NewEntity<YellowCirc>(Vector2.zero, "Yellow Circle", "yellow_circ", "YellowCirc", false, "Default");
+            var obj = NewEntity<YellowCirc>(Vector2.zero, "Yellow Circle", GetSprite("yellow_circ"), "YellowCirc", null, "Default");
             obj.GetComponent<CanvasGroup>().alpha = 1/3f;
             obj.transform.GetChild(0).GetComponent<Image>().color = MainCharacter.Yellow;
             
@@ -434,7 +499,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewShield()
         {
-            var obj = NewEntity<YellowCirc>(Vector2.zero, "Shield", "shield32", "Shield", true, "Shield");
+            var obj = NewEntity<YellowCirc>(Vector2.zero, "Shield", GetSprite("shield32"), "Shield", true, "Shield");
             obj.transform.GetChild(0).GetComponent<Image>().color = MainCharacter.Yellow;
             
             var imageObj = new GameObject("Fill");
@@ -483,7 +548,7 @@ namespace ZevWaxGames.CursorHero
                     break;
             }
             var spriteName = "g" + Convert.ToString(Random.Range(1, 3+1));
-            var obj = NewEntity<Glitch>(new Vector2(x, y), "Glitch", spriteName, "Glitch", false, "GUI");
+            var obj = NewEntity<Glitch>(new Vector2(x, y), "Glitch", GetSprite(spriteName), "Glitch", null, "GUI");
             obj.transform.GetChild(0).GetComponent<Image>().color = color;
             return obj;
         }
@@ -613,7 +678,7 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewSelection()
         {
-            var obj = NewEntity<MainCharacterSelection>(Vector2.zero, "Selection", "s1", "Selection", false, "Default");
+            var obj = NewEntity<MainCharacterSelection>(Vector2.zero, "Selection", GetSprite("s1"), "Selection", null, "Default");
             obj.transform.GetChild(0).GetComponent<Image>().type = Image.Type.Sliced;
             return obj;
         }
@@ -842,14 +907,14 @@ namespace ZevWaxGames.CursorHero
         }
         public static GameObject NewLayingPieceOfGlass(Vector2 pos, Color color)
         {
-            var obj = NewEntity<ItemLayingPieceOfGlass>(pos, "LayingPieceOfGlass", "glass", "Bottles", true, "Default");
+            var obj = NewEntity<ItemLayingPieceOfGlass>(pos, "LayingPieceOfGlass", GetSprite("glass"), "Bottles", true, "Default");
             obj.transform.GetChild(0).GetComponent<Image>().color = color;
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
             return obj;
         }
         public static GameObject NewZipporah()
         {
-            var obj = NewEntity<Zipporah>(Vector2.zero, "Zipporah", "SizeHolders/480x270", "Tabby", false, "Default");
+            var obj = NewEntity<Zipporah>(Vector2.zero, "Zipporah", GetSprite("SizeHolders/480x270"), "Tabby", null, "Default");
             
             var imageObj = new GameObject("Zipporah Textbox");
             imageObj.transform.SetParent(obj.transform, false);
@@ -926,7 +991,7 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewTutorialApple(Vector2 pos) => NewApple(pos, false);
         public static GameObject NewApple(Vector2 pos, bool isDragable = true)
         {
-            var obj = NewEntity<ItemApple>(pos, "Apple", "apple", "Bottles", true, "Default");
+            var obj = NewEntity<ItemApple>(pos, "Apple", GetSprite("apple"), "Bottles", true, "Default");
             var tooltipHolder = obj.AddComponent<TooltipHolder>();
             var dragable = (Dragable)default;
             if (isDragable)

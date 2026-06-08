@@ -46,7 +46,7 @@ namespace ZevWaxGames.CursorHero
                 null, true, "Wall", RigidbodyType2D.Static);
             
             var mainChar = Spawner.NewEntity<MainCharacter>(
-                new Vector2(1.6f, -0.9f), "MainCharacter", "idle",
+                new Vector2(1.6f, -0.9f), "MainCharacter", Spawner.GetSprite("idle"),
                 "Pointer", true, "MainCharacter");
             mainChar.GetComponent<MainCharacter>().Init();
             
