@@ -81,7 +81,7 @@ namespace ZevWaxGames.CursorHero
                 Spawner.NewFloppyDisk(transform.position);
                 Spawner.NewMM(transform.position);
             }
-            Destroy(gameObject);
+            StartCoroutine(DoGlitchNDie());
         }
         private void CleanUp()
         {
@@ -93,6 +93,22 @@ namespace ZevWaxGames.CursorHero
             if (HP <= 0)
                 Die();
             Spawner.NewDamageNumbers(transform.position, true, damage);
+        }
+        public IEnumerator DoGlitchNDie()
+        {
+            Destroy(GetComponent<BoxCollider2D>());
+            for (var i = 0; i < 8; i++)
+            {
+                Spawner.NewGlitch(transform.position, 1f, 1f, 0.2f);
+                yield return new WaitForSeconds(0.033f);
+            }
+            GetComponent<CanvasGroup>().alpha = 0;
+            for (var i = 0; i < 8; i++)
+            {
+                Spawner.NewGlitch(transform.position, 1f, 1f, 0.2f);
+                yield return new WaitForSeconds(0.033f);
+            }
+            Destroy(gameObject);
         }
     }
 }

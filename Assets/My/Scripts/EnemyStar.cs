@@ -10,26 +10,25 @@ namespace ZevWaxGames.CursorHero
         private float frequency = 2f;
         protected override void Start()
         {
-            HP = 3f;
+            HP = 4f;
             dropRange = new int2(2, 3);
             base.Start();
 
-            StartCoroutine(Wait());
-        }
-        private IEnumerator Wait()
-        {
-            var duration = frequency/4f;
-            var minSpeed = 4f;
-            var maxSpeed = 4f;
+            var averageSp = 2f;
+            var sp = UnityEngine.Random.Range(0.75f, 1.25f)*averageSp;
+            var minSpeed = sp;
+            var maxSpeed = sp;
+            var duration = (float)default;
+            
             speed = minSpeed;
-            yield return new WaitForSeconds(duration);
+            
             DOTween.To(() => speed, x => speed = x, maxSpeed, duration)
                 .SetEase(Ease.InOutSine)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetLink(gameObject);
         }
         protected override void Shoot() { }
-        private float amplitude = 40f;
+        private float amplitude = 35f;
         private float timeCounter = 0f;
         private Vector2 currentVirtualTarget;
         

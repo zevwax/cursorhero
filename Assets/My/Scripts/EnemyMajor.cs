@@ -12,8 +12,10 @@ namespace ZevWaxGames.CursorHero
             dropRange = new int2(1, 2);
             base.Start();
             
-            var minSpeed = 0f;
-            var maxSpeed = 5f;
+            var averageSp = 8f;
+            var sp = UnityEngine.Random.Range(0.75f, 1.25f)*averageSp;
+            var minSpeed = 0;
+            var maxSpeed = sp;
             var duration = 7f;
 
             speed = minSpeed;
@@ -28,7 +30,7 @@ namespace ZevWaxGames.CursorHero
         private float timeCounter = 0f;
         private Vector2 currentVirtualTarget;
         
-        private float rotationSpread = 15f;
+        private float rotationSpread = 7f;
         protected override void FixedUpdate()
         {
             GetComponent<Canvas>().sortingOrder = Mathf.RoundToInt(transform.position.y * -100f);

@@ -516,39 +516,40 @@ namespace ZevWaxGames.CursorHero
             
             return obj;
         }
-        public static GameObject NewGlitch()
+        public static GameObject NewGlitch() =>
+            NewGlitch
+            (
+                new Vector2(0, 0),
+                8f,
+                4.5f,
+                1f
+            );
+        public static GameObject NewGlitch(Vector2 pos, float xMax, float yMax, float size)
         {
-            var xMax = 8f;
-            var yMax = 4.5f;
-            var x = Random.Range(-xMax, xMax);
-            var y = Random.Range(-yMax, yMax);
+            var x = pos.x + Random.Range(-xMax, xMax);
+            var y = pos.y + Random.Range(-yMax, yMax);
             var color = (Color)default;
-            switch (Random.Range(0, 6+1))
+            switch (Random.Range(0, 4+1))
             {
                 case 0:
-                    color = Color.red;
+                    color = Color.black;
                     break;
                 case 1:
-                    color = Color.green;
+                    color = Color.red;
                     break;
                 case 2:
-                    color = Color.blue;
+                    color = Color.green;
                     break;
                 case 3:
-                    color = Color.magenta;
+                    color = Color.blue;
                     break;
                 case 4:
-                    color = Color.yellow;
-                    break;
-                case 5:
-                    color = Color.cyan;
-                    break;
-                case 6:
                     color = Color.white;
                     break;
             }
             var spriteName = "g" + Convert.ToString(Random.Range(1, 3+1));
             var obj = NewEntity<Glitch>(new Vector2(x, y), "Glitch", GetSprite(spriteName), "Glitch", null, "GUI");
+            obj.GetComponent<WorldSpaceCanvasRealtimeScaler>().mult = size;
             obj.transform.GetChild(0).GetComponent<Image>().color = color;
             return obj;
         }

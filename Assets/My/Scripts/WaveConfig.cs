@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 public class WaveConfig
 {
@@ -9,4 +10,5 @@ public class WaveConfig
     public float pointerSpawnProbability;
     public float gloveSpawnProbability;
     public float goatSpawnProbability;
+    public Action<Vector2> firstAppearance;
 }

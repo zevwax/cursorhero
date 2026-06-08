@@ -32,7 +32,7 @@ namespace ZevWaxGames.CursorHero
         private float timeCounter = 0f;
         private Vector2 currentVirtualTarget;
         
-        private float rotationSpread = 15f;
+        private float rotationSpread = 7f;
         protected override void FixedUpdate()
         {
             GetComponent<Canvas>().sortingOrder = Mathf.RoundToInt(transform.position.y * -100f);
