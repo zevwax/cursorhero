@@ -83,9 +83,7 @@ namespace ZevWaxGames.CursorHero
                     .OnUpdate(() =>
                     {
                         if (currentSelection != null)
-                        {
-                            currentSelection.UpdateSelectionArea();
-                        }
+                            currentSelection.UpdateLayout();
                     })
                     .OnComplete(() => tweenCompleted = true);
 

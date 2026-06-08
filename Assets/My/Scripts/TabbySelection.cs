@@ -11,7 +11,7 @@ namespace ZevWaxGames.CursorHero
 
         protected override Vector3 GetPointerPos()
         {
-            return TabbyPointer.Instance.transform.position + new Vector3(0, 0.1f, 0);
+            return TabbyPointer.Instance.transform.position; //+ new Vector3(0, 0.1f, 0);
         }
 
         protected override void OnStartSelecting()
@@ -31,21 +31,7 @@ namespace ZevWaxGames.CursorHero
             isActive = true;
             _startPos = startPos;
             OnStartSelecting();
-            UpdateSelectionArea();
-        }
-
-        public void UpdateSelectionArea()
-        {
-            if (_rectTransform == null) return;
-
-            Vector3 currentPointerPos = GetPointerPos();
-            
-            transform.position = (_startPos + currentPointerPos) / 2f;
-            
-            float widthUnits = Mathf.Abs(_startPos.x - currentPointerPos.x);
-            float heightUnits = Mathf.Abs(_startPos.y - currentPointerPos.y);
-
-            _rectTransform.sizeDelta = new Vector2(widthUnits * PixelsPerUnit, heightUnits * PixelsPerUnit);
+            UpdateLayout();
         }
 
         public void FinishSelectionFromPointer()

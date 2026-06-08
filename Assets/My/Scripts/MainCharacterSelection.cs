@@ -12,7 +12,7 @@ namespace ZevWaxGames.CursorHero
 
         protected override Vector3 GetPointerPos()
         {
-            return MainCharacter.Instance.transform.position + new Vector3(0, 0.1f, 0);
+            return MainCharacter.Instance.transform.position; //+ new Vector3(0, 0.1f, 0);
         }
 
         protected override void OnStartSelecting()
