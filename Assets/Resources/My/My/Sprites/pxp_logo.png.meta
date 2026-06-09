@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 50145c3da80b7aa46b4a0ba80de2c8aa
+guid: c49812eca0b0cbb4895fb308a4562aeb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7628825838070591699
-    second: projectile_xp_logo_0
+      213: 2180715197136863114
+    second: pxp_logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: projectile_xp_logo_0
+      name: pxp_logo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 9
-        height: 10
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d2f0b7cc157f02690800000000000000
-      internalID: -7628825838070591699
+      spriteID: a8f73a9fae4734e10800000000000000
+      internalID: 2180715197136863114
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      projectile_xp_logo_0: -7628825838070591699
+      pxp_logo_0: 2180715197136863114
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

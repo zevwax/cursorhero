@@ -166,7 +166,7 @@ namespace ZevWaxGames.CursorHero
                 case 1:
                     if (Clock.Instance.ElapsedTime > 2*60 - 5)
                     {
-                        HueShifter.Instance.StartShifting();
+                        HueShifter.Instance.SetPurple();
                         clubRGName = "When_The_Sun_Hits_RG";
                         clubBCName = "When_The_Sun_Hits_BC";
                         dreamName = "When_The_Sun_Hits_FK";
@@ -180,7 +180,7 @@ namespace ZevWaxGames.CursorHero
                 case 2:
                     if (Clock.Instance.ElapsedTime > 4*60 - 5)
                     {
-                        HueShifter.Instance.StopShifting();
+                        HueShifter.Instance.SetRed();
                         clubRGAS.loop = false;
                         clubBCAS.loop = false;
                         dreamAS.loop = false;
@@ -199,7 +199,7 @@ namespace ZevWaxGames.CursorHero
                 case 3:
                     if (Clock.Instance.ElapsedTime > 4*60 - 5)
                     {
-                        HueShifter.Instance.StopShifting();
+                        HueShifter.Instance.SetPurple();
                         clubRGAS.loop = true;
                         clubBCAS.loop = true;
                         dreamAS.loop = true;
@@ -218,7 +218,7 @@ namespace ZevWaxGames.CursorHero
                 case 4:
                     return;
                 case 666:
-                    HueShifter.Instance.StopShifting();
+                    HueShifter.Instance.SetBlue();
                     clubRGAS.loop = true;
                     clubBCAS.loop = true;
                     dreamAS.loop = true;

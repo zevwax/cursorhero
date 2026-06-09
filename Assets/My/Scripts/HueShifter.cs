@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Random = System.Random;
 
 [RequireComponent(typeof(Volume))]
 public class HueShifter : MonoBehaviour
@@ -14,7 +15,37 @@ public class HueShifter : MonoBehaviour
     private ColorAdjustments colorAdjustments;
     private Coroutine shiftCoroutine;
     private bool isShifting = false;
-
+    private const float BLUE = 0;
+    private const float PURPLE = 19.69747f;
+    private const float RED = 114.6797f;
+    public void SetRndHue()
+    {
+        switch (colorAdjustments.hueShift.value)
+        {
+            case BLUE:
+                if (UnityEngine.Random.value > 0.5f)
+                    SetPurple();
+                else
+                    SetRed();
+                break;
+            case PURPLE:
+                if (UnityEngine.Random.value > 0.5f)
+                    SetBlue();
+                else
+                    SetRed();
+                break;
+            case RED:
+                if (UnityEngine.Random.value > 0.5f)
+                    SetBlue();
+                else
+                    SetPurple();
+                break;
+        }
+    }
+    public void SetBlue() => SetHue(BLUE);
+    public void SetPurple() => SetHue(PURPLE);
+    public void SetRed() => SetHue(RED);
+    private void SetHue(float hue) => colorAdjustments.hueShift.value = hue;
     private void Awake()
     {
         Instance = this;
@@ -24,15 +55,13 @@ public class HueShifter : MonoBehaviour
             globalVolume.profile.TryGet(out colorAdjustments);
         }
     }
-
-    public void StartShifting()
+    /*public void StartShifting()
     {
         if (isShifting || colorAdjustments == null) return;
 
         isShifting = true;
         shiftCoroutine = StartCoroutine(ShiftHueRoutine());
     }
-
     public void StopShifting()
     {
         if (!isShifting) return;
@@ -45,7 +74,6 @@ public class HueShifter : MonoBehaviour
         
         colorAdjustments.hueShift.value = 0;
     }
-
     private IEnumerator ShiftHueRoutine()
     {
         colorAdjustments.hueShift.overrideState = true;
@@ -67,5 +95,5 @@ public class HueShifter : MonoBehaviour
             colorAdjustments.hueShift.value = currentHue;
             yield return null;
         }
-    }
+    }*/
 }
