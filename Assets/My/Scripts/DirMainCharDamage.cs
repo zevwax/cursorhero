@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ZevWaxGames.CursorHero
 {
-    public class DirPetQuantity : Dir
+    public class DirMainCharDamage : Dir
     {
         public static bool Unlocked => unlocked;
         private static bool unlocked = false;
@@ -15,20 +15,17 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = "Pet Quantity";
+            tooltipText = "Increase Damage";
             base.Start();
         }
         public override void ButtonAction()
         {
             if (MainCharacter.Instance.MMs >= price)
             {
-                DirPetHealth.Unlock();
-                DirPetDamage.Unlock();
-                
                 MainCharacter.Instance.DeductMMs(price);
                 price = (int)System.Math.Round(price*1.75f);
-
-                Rover.quantity++;
+                
+                MainCharacter.Instance.IncreaseWeightBuff(0.5f);
             }
             else
             {

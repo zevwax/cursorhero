@@ -750,11 +750,13 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewBinButton(Vector2 pos) => CreateBaseButton<ButtonRecycleBin>(pos, "BinButton", "bin");
         public static GameObject NewNetButton(Vector2 pos) => CreateBaseButton<ButtonSwitchPC>(pos, "NetButton", "btn_net");
         public static GameObject NewEndlessModeButton(Vector2 pos) => CreateBaseButton<ButtonEndlessMode>(pos, "EndlessModeButton", "btn_endless_mode");
-        public static GameObject NewDirPetQuantity(Vector2 pos) => CreateBaseButton<DirPetQuantity>(pos, "Entity", "directories", "directories_0");
-        public static GameObject NewDirPetHealth(Vector2 pos) => CreateBaseButton<DirPetHealth>(pos, "Entity", "directories", "directories_1");
-        public static GameObject NewDirPetMovementSpeed(Vector2 pos) => CreateBaseButton<DirPetMovementSpeed>(pos, "Entity", "directories", "directories_2");
-        public static GameObject NewDirPetDamage(Vector2 pos) => CreateBaseButton<DirPetDamage>(pos, "Entity", "directories", "directories_3");
-        public static GameObject NewDirPetAttackInterval(Vector2 pos) => CreateBaseButton<DirPetAttackInterval>(pos, "Entity", "directories", "directories_4");
+        public static GameObject NewDirPower(Vector2 pos) => CreateBaseButton<DirPower>(pos, "Entity", "directories", "directories_0");
+        public static GameObject NewDirMainCharDamage(Vector2 pos) => CreateBaseButton<DirMainCharDamage>(pos, "Entity", "directories", "directories_1");
+        public static GameObject NewDirPetQuantity(Vector2 pos) => CreateBaseButton<DirPetQuantity>(pos, "Entity", "directories", "directories_2");
+        public static GameObject NewDirPetHealth(Vector2 pos) => CreateBaseButton<DirPetHealth>(pos, "Entity", "directories", "directories_3");
+        public static GameObject NewDirPetMovementSpeed(Vector2 pos) => CreateBaseButton<DirPetMovementSpeed>(pos, "Entity", "directories", "directories_4");
+        public static GameObject NewDirPetDamage(Vector2 pos) => CreateBaseButton<DirPetDamage>(pos, "Entity", "directories", "directories_5");
+        public static GameObject NewDirPetAttackInterval(Vector2 pos) => CreateBaseButton<DirPetAttackInterval>(pos, "Entity", "directories", "directories_6");
         public static GameObject NewUpgradeButton(string upgradeName, Vector2 pos)
         {
             GameObject obj;

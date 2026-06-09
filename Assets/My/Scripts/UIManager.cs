@@ -26,7 +26,7 @@ namespace ZevWaxGames.CursorHero
             if (tryAgainWindow != null)
                 tryAgainWindow.SetActive(false);
             btns = new GameObject[3];
-            biosBtns = new GameObject[9];
+            biosBtns = new GameObject[3+7+1];
         }
         private void Start()
         {
@@ -222,6 +222,22 @@ namespace ZevWaxGames.CursorHero
         {
             var index = 4;
 
+            if (DirPower.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirPower(new Vector2(-2.75f-2.75f, 1f));
+                index++;
+            }
+
+            if (DirMainCharDamage.Unlocked)
+            {
+                if (biosBtns[index] != null)
+                    Destroy(biosBtns[index]);
+                biosBtns[index] = Spawner.NewDirMainCharDamage(new Vector2(-2.75f, 2f));
+                index++;
+            }
+
             if (DirPetQuantity.Unlocked)
             {
                 if (biosBtns[index] != null)
@@ -264,7 +280,7 @@ namespace ZevWaxGames.CursorHero
         }
         public void HideSkillTreeTab()
         {
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 7; i++)
                 if (biosBtns[i+4] != null)
                     Destroy(biosBtns[i+4]);
         }
