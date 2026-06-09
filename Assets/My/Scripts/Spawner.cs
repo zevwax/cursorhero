@@ -575,6 +575,22 @@ namespace ZevWaxGames.CursorHero
             var worldSpaceCanvasScaler = obj.AddComponent<WorldSpaceCanvasRealtimeScaler>();
             var tooltip = obj.AddComponent<Tooltip>();
             
+            var entityImageName = "";
+            var fontName = "";
+            var textColor = (Color)default;
+            if (!GameSequncer.Instance.IsBIOS)
+            {
+                entityImageName = "tooltip";
+                fontName = "tahoma_8px_raster_hinted";
+                textColor = Color.black;
+            }
+            else
+            {
+                entityImageName = "bios_tooltip";
+                fontName = "ibm-dos-vga-9x16";
+                textColor = Color.white;
+            }
+            
             var imageObj = new GameObject("Image");
             imageObj.layer = LayerMask.NameToLayer("GUI");
             imageObj.transform.SetParent(obj.transform, false);
@@ -584,7 +600,7 @@ namespace ZevWaxGames.CursorHero
             imageRt.offsetMin = Vector2.zero;
             imageRt.offsetMax = Vector2.zero;
             var image = imageObj.AddComponent<Image>();
-            image.sprite = Resources.Load<Sprite>("My/My/Sprites/tooltip");
+            image.sprite = Resources.Load<Sprite>("My/My/Sprites/" + entityImageName);
             image.type = Image.Type.Sliced;
             if (imageObj.GetComponent<CanvasRenderer>() == null)
                 imageObj.AddComponent<CanvasRenderer>();
@@ -598,10 +614,10 @@ namespace ZevWaxGames.CursorHero
             textRt.offsetMin = new Vector2(4, 4);
             textRt.offsetMax = new Vector2(-4, -4);
             var textTxt = textObj.AddComponent<TextMeshProUGUI>();
-            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/tahoma_8px_raster_hinted");
+            textTxt.font = Resources.Load<TMP_FontAsset>("My/My/Fonts/" + fontName);
             textTxt.text = text;
             textTxt.alignment = TextAlignmentOptions.Center;
-            textTxt.color = Color.black;
+            textTxt.color = textColor;
             textTxt.enableAutoSizing = true;
             textTxt.fontSizeMin = ushort.MinValue;
             textTxt.fontSizeMax = ushort.MaxValue;
