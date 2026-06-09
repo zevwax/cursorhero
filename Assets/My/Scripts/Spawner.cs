@@ -741,7 +741,6 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewDriverButton(Vector2 pos)
         {
             var obj = CreateBaseButton<ButtonDrivers>(pos, "PlayButton", "bios_btns", "bios_btns_0");
-            obj.GetComponent<ButtonDrivers>().DisableButton();
             return obj;
         }
         public static GameObject NewSkillTreeButton(Vector2 pos) => CreateBaseButton<ButtonSkillTree>(pos, "PlayButton", "bios_btns", "bios_btns_2");

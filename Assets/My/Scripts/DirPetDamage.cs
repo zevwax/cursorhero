@@ -20,10 +20,10 @@ namespace ZevWaxGames.CursorHero
         }
         public override void ButtonAction()
         {
-            DirPetAttackInterval.Unlock();
-            
             if (MainCharacter.Instance.MMs >= price)
             {
+                DirPetAttackInterval.Unlock();
+                
                 MainCharacter.Instance.DeductMMs(price);
                 price = (int)System.Math.Round(price*1.75f);
                 

@@ -52,7 +52,7 @@ namespace ZevWaxGames.CursorHero
         {
             var currPos = GetPointerPos();
             transform.position = (_startPos + currPos) / 2f;
-            var widthUnits = Mathf.Abs(currPos.x - _startPos.x)+0.19f;
+            var widthUnits = Mathf.Abs(currPos.x - _startPos.x)+0.28f;
             var heightUnits = Mathf.Abs(currPos.y - _startPos.y)+0.11f;
             _rectTransform.sizeDelta = new Vector2(widthUnits * PixelsPerUnit, heightUnits * PixelsPerUnit);
         }

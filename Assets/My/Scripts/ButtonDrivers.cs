@@ -9,6 +9,7 @@ namespace ZevWaxGames.CursorHero
         {
             tooltipText = "Drivers";
             base.Start();
+            DisableButton();
         }
         public override void ButtonAction()
         {
