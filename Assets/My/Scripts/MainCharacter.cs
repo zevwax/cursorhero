@@ -225,31 +225,31 @@ namespace ZevWaxGames.CursorHero
         public void SetCross(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("copy");
+            SetSkin("main_character_reg_ff", "main_character_bios_ff");
             this.skinSetter = skinSetter;
         }
         public void SetTake(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("drop");
+            SetSkin("main_character_reg_drop", "main_character_bios_drop");
             this.skinSetter = skinSetter;
         }
         public void SetGrab(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("drag");
+            SetSkin("main_character_reg_drag", "main_character_bios_drag");
             this.skinSetter = skinSetter;
         }
         public void SetButtonLink(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("link");
+            SetSkin("main_character_reg_link", "main_character_bios_link");
             this.skinSetter = skinSetter;
         }
         public void SetPush(GameObject skinSetter)
         {
             if (!IsAbleForReskinBy(skinSetter)) return;
-            SetSkin("push");
+            SetSkin("main_character_reg_push", "main_character_bios_push");
             this.skinSetter = skinSetter;
         }
         public void StopBeingSkinSetter(GameObject skinSetter)
@@ -257,9 +257,19 @@ namespace ZevWaxGames.CursorHero
             if (skinSetter == this.skinSetter)
                 this.skinSetter = null;
         }
-        public void SetSkin(string spriteName) => transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(string.Format("My/My/Sprites/{0}", spriteName));
+
+        public void SetSkin(string regName, string biosName)
+        {
+            var image = transform.GetChild(0).GetComponent<Image>();
+            var spriteSheetName = "main_character";
+            if (!GameSequncer.Instance.IsBIOS)
+                image.sprite = Spawner.GetSprite(spriteSheetName, regName);
+            else
+                image.sprite = Spawner.GetSprite(spriteSheetName, biosName);
+        }
         public bool IsAbleForReskinBy(GameObject skinSetter) => this.skinSetter == null || skinSetter == this.skinSetter;
-        private void SetGlove() => SetSkin("idle");
+
+        private void SetGlove() => SetSkin("main_character_reg_idle", "main_character_bios_idle");
         public override void GetDamage(float damage)
         {
             if (currentShield != null) return;

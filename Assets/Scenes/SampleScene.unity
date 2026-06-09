@@ -1196,6 +1196,7 @@ GameObject:
   - component: {fileID: 441337732}
   - component: {fileID: 441337733}
   - component: {fileID: 441337734}
+  - component: {fileID: 441337735}
   m_Layer: 0
   m_Name: TheHolder
   m_TagString: Untagged
@@ -1282,6 +1283,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c610d9756c26448a96729484b0fc24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZevWaxGames.CursorHero.Translator
+--- !u!114 &441337735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441337728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff8b0441ed02a46a6959a53882c0db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZevWaxGames.CursorHero.GameSequncer
 --- !u!1 &511259928
 GameObject:
   m_ObjectHideFlags: 0
@@ -4218,7 +4231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.11.11
+  m_text: 0.11.12
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4245,7 +4258,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 5.5
+  m_fontSize: 3.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

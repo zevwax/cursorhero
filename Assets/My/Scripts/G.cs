@@ -46,8 +46,8 @@ namespace ZevWaxGames.CursorHero
                 null, true, "Wall", RigidbodyType2D.Static);
             
             var mainChar = Spawner.NewEntity<MainCharacter>(
-                new Vector2(1.6f, -0.9f), "MainCharacter", Spawner.GetSprite("idle"),
-                "Pointer", true, "MainCharacter");
+                new Vector2(1.6f, -0.9f), "MainCharacter", Spawner.GetSprite("SizeHolders/35x30"),
+                "Pointer", Spawner.GetSprite("main_character_collider"), "MainCharacter");
             mainChar.GetComponent<MainCharacter>().Init();
             
             Spawner.NewZipporah();

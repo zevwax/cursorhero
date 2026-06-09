@@ -21,15 +21,15 @@ namespace ZevWaxGames.CursorHero
         public static GameObject NewHeartKeeper(Vector2 pos)
         {
             var obj = NewEntity<HeartKeeper>(
-                pos, "Heart Keeper", GetSprite("idle"), "HeartKeeperBG", true,
+                pos, "Heart Keeper", GetSprite("SizeHolders/17x22"), "HeartKeeperBG", true,
                 "HeartKeeper");
             var follower = obj.AddComponent<Follower>();
-            NewImage(obj.transform, "idle");
+            NewImage(obj.transform, "SizeHolders/17x22");
             var imageObj3 = NewImage(obj.transform, "SizeHolders/17x22");
             imageObj3.AddComponent<BeatingHeart>();
             var anim = imageObj3.AddComponent<Animator>();
             anim.Init("heart", 1f);
-            NewImage(obj.transform, "idle");
+            NewImage(obj.transform, "SizeHolders/17x22");
             obj.GetComponent<HeartKeeper>().Init();
             follower.Init();
             return obj;
