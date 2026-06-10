@@ -37,7 +37,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted += HideStartGameNTryAgainWindows;
             EventHolder.OnYouWinStarted += HandleChoosingStarted;
             EventHolder.OnYouWinFinished += HideYouWinNChooseAnUpgradeWindows;
-            EventHolder.OnRunFinished += ShowTryAgainWindow;
+            EventHolder.OnRunFinished += HandleRunFinished;
             EventHolder.OnBIOSStarted += HandleBIOSStarted;
             EventHolder.OnBIOSFinished += HandleBIOSFinished;
         }
@@ -46,7 +46,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted -= HideStartGameNTryAgainWindows;
             EventHolder.OnYouWinStarted -= HandleChoosingStarted;
             EventHolder.OnYouWinFinished -= HideYouWinNChooseAnUpgradeWindows;
-            EventHolder.OnRunFinished -= ShowTryAgainWindow;
+            EventHolder.OnRunFinished -= HandleRunFinished;
             EventHolder.OnBIOSStarted -= HandleBIOSStarted;
             EventHolder.OnBIOSFinished -= HandleBIOSFinished;
         }
@@ -55,9 +55,20 @@ namespace ZevWaxGames.CursorHero
             startGameWindow.SetActive(true);
             btns[0] = Spawner.NewPlayButton(Vector2.zero);
         }
-        private void ShowTryAgainWindow()
+        private void HandleRunFinished()
         {
-            StartCoroutine(StartBSOD());
+            StartCoroutine(CHandleRunFinished());
+        }
+        private IEnumerator CHandleRunFinished()
+        {
+            if (Power.Instance.CurrentLeftTime <= 0)
+            {
+                yield return StartCoroutine(PowerIsOut.Instance.StartFadeOutAnimation());
+                PowerIsOut.Instance.StartInstantFadeInAnimation();
+            }
+            else
+                yield return StartCoroutine(StartBSOD());
+            EventHolder.OnBIOSStarted?.Invoke();
         }
         private void HandleBIOSStarted()
         {
@@ -119,8 +130,6 @@ namespace ZevWaxGames.CursorHero
             
             EventHolder.OnBSODStarted?.Invoke();
             BSOD.SetActive(false);
-            
-            EventHolder.OnBIOSStarted?.Invoke();
         }
         public void ShowYouWinWindow()
         {

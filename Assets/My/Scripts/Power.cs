@@ -6,6 +6,7 @@ namespace ZevWaxGames.CursorHero
         public static Power Instance { get; private set; }
         private RectTransform rectTransform;
         private float maxDuration = 30f;
+        public float CurrentLeftTime => currentLeftTime;
         private float currentLeftTime;
         private bool isRunning;
         public void IncreaseMaxDuration(float amount)
