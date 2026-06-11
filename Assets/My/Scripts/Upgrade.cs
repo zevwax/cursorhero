@@ -9,8 +9,7 @@ namespace ZevWaxGames.CursorHero
             base.ButtonAction();
             MainCharacter.Instance.SpendDriver();
             UIManager.Instance.HideYouWinNChooseAnUpgradeWindows();
-            if (MainCharacter.Instance.Drivers > 0)
-                UIManager.Instance.ShowChooseAnUpgradeWindow();
+            UIManager.Instance.ShowChooseAnUpgradeWindow();
         }
     }
 }

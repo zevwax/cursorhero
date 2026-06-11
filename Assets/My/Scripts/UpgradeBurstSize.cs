@@ -3,7 +3,7 @@ namespace ZevWaxGames.CursorHero
     public class UpgradeBurstSize : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Xtra Shot";
+            tooltipText = string.Format("<b>MACHINE GUN</b>\n-~<=#O#=>~-\nGet Xtra Shot");
             base.Start();
         }
 

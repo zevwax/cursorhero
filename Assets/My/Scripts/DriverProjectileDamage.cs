@@ -1,12 +1,11 @@
 namespace ZevWaxGames.CursorHero
 {
-    public class ProjectileDamage : Upgrade
+    public class DriverProjectileDamage : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Increase Glyph Weight";
+            tooltipText = string.Format("<b>DEAD WEIGHT</b>\n-~<=#O#=>~-\nIncrease Projectile Damage");
             base.Start();
         }
-
         public override void ButtonAction()
         {
             MainCharacter.Instance.IncreaseWeightBuff(0.5f);

@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = "Pet Quantity";
+            tooltipText = string.Format("<b>WOOF!</b>\n-~<=#O#=>~-\nGet Xtra Pet\n[ Price: <sprite=7> {0} ]", price);
             base.Start();
         }
         public override void ButtonAction()

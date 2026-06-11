@@ -4,27 +4,26 @@ using Unity.Mathematics;
 using DG.Tweening;
 namespace ZevWaxGames.CursorHero
 {
-    public class EnemySkull : Enemy
+    public class EnemyFist : Enemy
     {
         protected override void Start()
         {
-            HP = 999999f;
-            dropRange = new int2(40, 50);
+            HP = 4f;
+            dropRange = new int2(1, 2);
             base.Start();
-            speed = 0f;
-            FloppyDisk.HyperInflate();
-            StartCoroutine(Wait1());
-            StartCoroutine(Wait2());
-        }
-        private IEnumerator Wait1()
-        {
-            yield return new WaitForSeconds(43f - 2.6f);//41.5f / 42.3f - too late
-            speed = 1.2f;
-        }
-        private IEnumerator Wait2()
-        {
-            yield return new WaitForSeconds(96f - 4f);//96f - 2.6f - too late
-            HP = 1;
+            
+            var averageSp = 2f;
+            var sp = UnityEngine.Random.Range(0.75f, 1.25f)*averageSp;
+            var minSpeed = 0;
+            var maxSpeed = sp;
+            var duration = 1.5f;
+
+            speed = minSpeed;
+
+            DOTween.To(() => speed, x => speed = x, maxSpeed, duration)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetLink(gameObject);
         }
         protected override void Shoot() { }
         private float frequency = 2f;
@@ -50,12 +49,8 @@ namespace ZevWaxGames.CursorHero
                 currentVirtualTarget = actualTargetPos + (perpendicular * wave);
                 Vector2 newPos = Vector2.MoveTowards(currentPos, currentVirtualTarget, speed * Time.fixedDeltaTime);
                 rb.MovePosition(newPos);
-                
-                float zRotation = Mathf.Sin(timeCounter * frequency) * rotationSpread;
-                rb.MoveRotation(zRotation);
             }
         }
-        protected override void RotateTowardsTarget() { }
         protected void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.GetComponent<MainCharacter>() != null)

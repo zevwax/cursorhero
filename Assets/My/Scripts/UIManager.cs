@@ -75,8 +75,7 @@ namespace ZevWaxGames.CursorHero
             BIOS.GetComponent<CanvasGroup>().alpha = 1f;
             var index = 0;
 
-            if (MainCharacter.Instance.Drivers > 0)
-                ShowChooseAnUpgradeWindow();
+            ShowChooseAnUpgradeWindow();
             
             if (biosBtns[index] != null)
                 Destroy(biosBtns[index]);
@@ -142,6 +141,8 @@ namespace ZevWaxGames.CursorHero
         }
         public void ShowChooseAnUpgradeWindow()
         {
+            if (MainCharacter.Instance.Drivers <= 0) return;
+            
             var chooseAnUpgradeWindowName =
                 chooseAnUpgradeWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
             chooseAnUpgradeWindowName.text = string.Format("<sprite=5> Select Driver");

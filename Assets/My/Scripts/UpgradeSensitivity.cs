@@ -3,7 +3,7 @@ namespace ZevWaxGames.CursorHero
     public class UpgradeSensitivity : Upgrade
     {
         protected override void Start() {
-            tooltipText = "Increase Sensitivity";
+            tooltipText = string.Format("<b>ZIPPY MOUSE</b>\n-~<=#O#=>~-\nIncrease Sensitivity");
             base.Start();
         }
         public override void ButtonAction()

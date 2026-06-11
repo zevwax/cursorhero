@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = "Pet Health";
+            tooltipText = string.Format("<b>MIGHTY BEAST</b>\n-~<=#O#=>~-\nIncrease Pet Health\n[ Price: <sprite=7> {0} ]", price);
             base.Start();
         }
         public override void ButtonAction()

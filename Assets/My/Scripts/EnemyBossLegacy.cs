@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using Unity.Mathematics;
-using DG.Tweening;
 namespace ZevWaxGames.CursorHero
 {
-    public class EnemyBoss : Enemy
+    public class EnemyBossLegacy : Enemy
     {
         protected override void Start()
         {
@@ -12,6 +11,7 @@ namespace ZevWaxGames.CursorHero
             dropRange = new int2(40, 50);
             base.Start();
             speed = 0f;
+            GetComponent<WorldSpaceCanvasRealtimeScaler>().mult *= 6;
             FloppyDisk.HyperInflate();
             StartCoroutine(Wait1());
             StartCoroutine(Wait2());
@@ -26,16 +26,14 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(96f - 4f);//96f - 2.6f - too late
             HP = 1;
         }
-        protected override void Shoot() { }
+        protected override void Shoot() { } 
+        
         private float frequency = 2f;
-        private float amplitude = 0f;
+        private float amplitude = 5f;
         private float timeCounter = 0f;
         private Vector2 currentVirtualTarget;
-        
-        private float rotationSpread = 7f;
         protected override void FixedUpdate()
         {
-            GetComponent<Canvas>().sortingOrder = Mathf.RoundToInt(transform.position.y * -100f);
             if (mainCharacter.is_trackable)
             {
                 Vector2 currentPos = rb.position;
@@ -50,16 +48,23 @@ namespace ZevWaxGames.CursorHero
                 currentVirtualTarget = actualTargetPos + (perpendicular * wave);
                 Vector2 newPos = Vector2.MoveTowards(currentPos, currentVirtualTarget, speed * Time.fixedDeltaTime);
                 rb.MovePosition(newPos);
-                
-                float zRotation = Mathf.Sin(timeCounter * frequency) * rotationSpread;
-                rb.MoveRotation(zRotation);
             }
         }
-        protected override void RotateTowardsTarget() { }
+        protected override void RotateTowardsTarget()
+        {
+            if (targetObj != null)
+            {
+                Vector2 direction = currentVirtualTarget - (Vector2)transform.position;
+                float angle = Vector2.SignedAngle(Vector2.up, direction);
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+        }
         protected void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.GetComponent<MainCharacter>() != null)
+            {
                 MainCharacter.Instance.GetDamage(1);
+            }
         }
     }
 }

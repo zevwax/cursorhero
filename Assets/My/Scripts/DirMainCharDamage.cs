@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = "Increase Damage";
+            tooltipText = string.Format("<b>DEAD WEIGHT</b>\n-~<=#O#=>~-\nIncrease Projectile Damage\n[ Price: <sprite=7> {0} ]", price);
             base.Start();
         }
         public override void ButtonAction()

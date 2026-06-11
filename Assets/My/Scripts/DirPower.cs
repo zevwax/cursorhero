@@ -6,7 +6,7 @@ namespace ZevWaxGames.CursorHero
     {
         public static bool Unlocked => unlocked;
         private static bool unlocked = true;
-        private static int price = 3;
+        private static int price = 2;
         public static void Unlock()
         {
             unlocked = true;
@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = "Increase Power";
+            tooltipText = string.Format("<b>POWER</b>\n-~<=#O#=>~-\nIncrease Battery Capacity\n[ Price: <sprite=7> {0} ]", price);
             base.Start();
         }
         public override void ButtonAction()

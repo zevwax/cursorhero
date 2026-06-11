@@ -142,9 +142,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 295
-        width: 105
-        height: 58
+        y: 336
+        width: 26
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,10 +163,10 @@ TextureImporter:
       name: enemies_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 235
-        width: 105
-        height: 59
+        x: 28
+        y: 336
+        width: 25
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,10 +185,10 @@ TextureImporter:
       name: enemies_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 165
-        width: 105
-        height: 69
+        x: 54
+        y: 336
+        width: 25
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,9 +208,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 78
-        width: 105
-        height: 86
+        y: 274
+        width: 104
+        height: 61
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,9 +230,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
-        width: 105
-        height: 76
+        y: 212
+        width: 104
+        height: 61
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -243,6 +243,50 @@ TextureImporter:
       bones: []
       spriteID: 31cfd30b7f65b71d0800000000000000
       internalID: -3351989875833439213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemies_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 150
+        width: 104
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2406b7dd0d1462a4fa8e9627e6fadbf4
+      internalID: -2085962201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemies_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 99
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5584e12efd4661c469fae6ff9970f3af
+      internalID: -1284216956
       vertices: []
       indices: 
       edges: []
@@ -268,6 +312,10 @@ TextureImporter:
       enemies_2: 876784968147787122
       enemies_3: 1961183383047197949
       enemies_4: -3351989875833439213
+      enemies_5: -2085962201
+      enemies_6: -1284216956
+      enemies_7: -1052540003
+      enemies_8: -402972363
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

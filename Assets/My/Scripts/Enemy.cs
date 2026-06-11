@@ -12,14 +12,14 @@ namespace ZevWaxGames.CursorHero
         private BoxCollider2D col;
         private void OnEnable()
         {
-            EventHolder.OnBSODStarted += CleanUp;
+            EventHolder.OnBIOSStarted += CleanUp;
             EventHolder.OnYouWinStarted += Disable;
             EventHolder.OnYouWinFinished += Enable;
             EventHolder.OnRunFinished += Disable;
         }
         private void OnDisable()
         {
-            EventHolder.OnBSODStarted -= CleanUp;
+            EventHolder.OnBIOSStarted -= CleanUp;
             EventHolder.OnYouWinStarted -= Disable;
             EventHolder.OnYouWinFinished -= Enable;
             EventHolder.OnRunFinished -= Disable;

@@ -5,7 +5,7 @@ namespace ZevWaxGames.CursorHero
     {
         public static Power Instance { get; private set; }
         private RectTransform rectTransform;
-        private float maxDuration = 30f;
+        private float maxDuration = 39f;
         public float CurrentLeftTime => currentLeftTime;
         private float currentLeftTime;
         private bool isRunning;
@@ -34,7 +34,8 @@ namespace ZevWaxGames.CursorHero
         private void Update()
         {
             if (!isRunning) return;
-
+            if (Object.FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length <= 0) return;
+            
             currentLeftTime -= Time.deltaTime;
 
             if (currentLeftTime <= 0f)

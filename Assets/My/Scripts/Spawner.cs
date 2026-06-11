@@ -103,20 +103,20 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
             obj.AddComponent<Soul>();
         }
-        public static GameObject NewEnemyMinor(Vector2 pos) => NewEntity<EnemyMinor>(
-            pos, "Enemy", GetSprite("enemies", "enemies_0"), "Enemies", GetSprite("enemy_minor_collider"), "Enemy", RigidbodyType2D.Kinematic);
-        public static GameObject NewEnemyMajor(Vector2 pos) => NewEntity<EnemyMajor>(
-            pos, "Enemy", GetSprite("enemies", "enemies_1"), "Enemies", GetSprite("enemy_major_collider"), "Enemy", RigidbodyType2D.Kinematic);
-        public static GameObject NewEnemyStar(Vector2 pos) => NewEntity<EnemyStar>(
-            pos, "Enemy", GetSprite("enemies", "enemies_2"), "Enemies", GetSprite("enemy_star_collider"), "Enemy", RigidbodyType2D.Kinematic);
-        public static GameObject NewEnemyFlesh(Vector2 pos) => NewEntity<EnemyFlesh>(
-            pos, "Enemy", GetSprite("enemies", "enemies_3"), "Enemies", GetSprite("enemy_flesh_collider"), "Enemy", RigidbodyType2D.Kinematic);
-        public static GameObject NewEnemySkull(Vector2 pos)
-        {
-            var entityImage = GetSprite("enemies", "enemies_4");
-            var obj = NewEntity<EnemySkull>(pos, "Enemy", entityImage, "Enemies", GetSprite("enemy_skull_collider"), "Enemy", RigidbodyType2D.Kinematic);
-            return obj;
-        }
+        public static GameObject NewEnemyGoat(Vector2 pos) => NewEntity<EnemyGoat>(
+            pos, "Enemy", GetSprite("enemies", "enemies_0"), "Enemies", GetSprite("goat_collider"), "Enemy", RigidbodyType2D.Dynamic);
+        public static GameObject NewEnemyPointer(Vector2 pos) => NewEntity<EnemyPointer>(
+            pos, "Enemy", GetSprite("enemies", "enemies_1"), "Enemies", GetSprite("pointer_collider"), "Enemy", RigidbodyType2D.Dynamic);
+        public static GameObject NewEnemyRedFace(Vector2 pos) => NewEntity<EnemyRedFace>(
+            pos, "Enemy", GetSprite("enemies", "enemies_4"), "Enemies", GetSprite("face_collider"), "Enemy", RigidbodyType2D.Kinematic);
+        public static GameObject NewEnemyFist(Vector2 pos) => NewEntity<EnemyFist>(
+            pos, "Enemy", GetSprite("enemies", "enemies_2"), "Enemies", GetSprite("fist_collider"), "Enemy", RigidbodyType2D.Dynamic);
+        public static GameObject NewEnemyBlueFace(Vector2 pos) => NewEntity<EnemyRedFace>(
+            pos, "Enemy", GetSprite("enemies", "enemies_3"), "Enemies", GetSprite("face_collider"), "Enemy", RigidbodyType2D.Kinematic);
+        public static GameObject NewEnemyGreenFace(Vector2 pos) => NewEntity<EnemyRedFace>(
+            pos, "Enemy", GetSprite("enemies", "enemies_5"), "Enemies", GetSprite("face_collider"), "Enemy", RigidbodyType2D.Kinematic);
+        public static GameObject NewEnemyBoss(Vector2 pos) => NewEntity<EnemyBoss>(
+            pos, "Enemy", GetSprite("enemies", "enemies_6"), "Enemies", GetSprite("boss_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewDriverTweenEntity()
         {
             var pos = MainCharacter.Instance.transform.position;
@@ -562,7 +562,7 @@ namespace ZevWaxGames.CursorHero
             canvas.worldCamera = Camera.main;
             canvas.sortingLayerName = "Tooltips";
             var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(90, 30);
+            rectTransform.sizeDelta = new Vector2(90, 90);
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
             canvasScaler.dynamicPixelsPerUnit = 30f;
@@ -620,7 +620,7 @@ namespace ZevWaxGames.CursorHero
             textTxt.color = textColor;
             textTxt.enableAutoSizing = true;
             textTxt.fontSizeMin = ushort.MinValue;
-            textTxt.fontSizeMax = ushort.MaxValue;
+            textTxt.fontSizeMax = 13;//ushort.MaxValue;
             textTxt.raycastTarget = false;
             
             return obj;
@@ -762,7 +762,7 @@ namespace ZevWaxGames.CursorHero
             GameObject obj;
             switch (upgradeName)
             {
-                case "Damage": obj = CreateBaseButton<ProjectileDamage>(pos, "UpgradeDamage", "drivers", "drivers_2"); break;
+                case "Damage": obj = CreateBaseButton<DriverProjectileDamage>(pos, "UpgradeDamage", "drivers", "drivers_2"); break;
                 case "FireRate": obj = CreateBaseButton<UpgradeBurstSize>(pos, "UpgradeFireRate", "drivers", "drivers_1"); break;
                 case "Speed": obj = CreateBaseButton<UpgradeProjectileSpeed>(pos, "UpgradeSpeed", "drivers", "drivers_3"); break;
                 case "Sensitivity": obj = CreateBaseButton<UpgradeSensitivity>(pos, "UpgradeSensitivity", "drivers", "drivers_5"); break;

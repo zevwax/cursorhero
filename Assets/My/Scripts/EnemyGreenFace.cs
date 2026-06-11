@@ -2,23 +2,21 @@ using UnityEngine;
 using System.Collections;
 using Unity.Mathematics;
 using DG.Tweening;
-using Random = UnityEngine.Random;
-
 namespace ZevWaxGames.CursorHero
 {
-    public class EnemyMinor : Enemy
+    public class EnemyGreenFace : Enemy
     {
         protected override void Start()
         {
-            HP = 3f;
-            dropRange = new int2(0, 1);
+            HP = 12f;
+            dropRange = new int2(6, 7);
             base.Start();
-
-            var averageSp = 1f;
-            var sp = Random.Range(0.75f, 1.25f)*averageSp;
-            var minSpeed = sp;
+            
+            var averageSp = 2f;
+            var sp = UnityEngine.Random.Range(0.75f, 1.25f)*averageSp;
+            var minSpeed = 0;
             var maxSpeed = sp;
-            var duration = (float)default;
+            var duration = 1.5f;
 
             speed = minSpeed;
 

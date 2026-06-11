@@ -1,37 +1,38 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using Unity.Mathematics;
 using DG.Tweening;
 namespace ZevWaxGames.CursorHero
 {
-    public class EnemyFlesh : Enemy
+    public class EnemyRedFace : Enemy
     {
+        private float frequency = 2f;
         protected override void Start()
         {
-            HP = 6f;
-            dropRange = new int2(4, 5);
+            HP = 7f;
+            dropRange = new int2(2, 4);
             base.Start();
-            
+
             var averageSp = 2f;
             var sp = UnityEngine.Random.Range(0.75f, 1.25f)*averageSp;
-            var minSpeed = 0;
+            var minSpeed = sp;
             var maxSpeed = sp;
-            var duration = 1.5f;
-
+            var duration = (float)default;
+            
             speed = minSpeed;
-
+            
             DOTween.To(() => speed, x => speed = x, maxSpeed, duration)
                 .SetEase(Ease.InOutSine)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetLink(gameObject);
         }
         protected override void Shoot() { }
-        private float frequency = 2f;
-        private float amplitude = 0f;
+        private float amplitude = 35f;
         private float timeCounter = 0f;
         private Vector2 currentVirtualTarget;
         
-        private float rotationSpread = 7f;
+        private float rotationSpread = 15f;
         protected override void FixedUpdate()
         {
             GetComponent<Canvas>().sortingOrder = Mathf.RoundToInt(transform.position.y * -100f);

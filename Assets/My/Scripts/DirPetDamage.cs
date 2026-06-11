@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = "Pet Damage";
+            tooltipText = string.Format("<b>SHARP CLAWS</b>\n-~<=#O#=>~-\nIncrease Pet Damage\n[ Price: <sprite=7> {0} ]", price);
             base.Start();
         }
         public override void ButtonAction()
