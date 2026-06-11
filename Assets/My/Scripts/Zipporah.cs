@@ -104,7 +104,7 @@ namespace ZevWaxGames.CursorHero
             uiImage.sprite = mouth1_hand1;
             yield return StartCoroutine(Say(
                 Translator.Instance.Get(Token.TheyllRetreat),
-                65f)); var ra = Spawner.NewRedArrow(new Vector2(7.3f, -4.03f), Vector2.left);
+                65f)); var ra = Spawner.NewRedArrow(new Vector2(7.15f, -3.5f), Vector2.down);
             
             yield return new WaitUntil(() => Mouse.current.leftButton.isPressed);
             SwitchActionTo(5);

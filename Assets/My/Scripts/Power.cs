@@ -43,7 +43,8 @@ namespace ZevWaxGames.CursorHero
                 currentLeftTime = 0f;
                 isRunning = false;
                 UpdateVisual(0f);
-                EventHolder.OnRunFinished?.Invoke();
+                if (GameSequncer.Instance.IsRun)
+                    EventHolder.OnRunFinished?.Invoke();
                 return;
             }
 

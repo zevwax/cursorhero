@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = string.Format("<b>POWER</b>\n-~<=#O#=>~-\nIncrease Battery Capacity\n[ Price: <sprite=7> {0} ]", price);
+            tooltipText = string.Format("<b>POWER</b>\n-=*=-\nIncrease Battery Capacity\n\nPrice: <sprite=7> {0}", price);
             base.Start();
         }
         public override void ButtonAction()
@@ -29,6 +29,7 @@ namespace ZevWaxGames.CursorHero
                 price = (int)System.Math.Round(price*1.25f);
 
                 Power.Instance.IncreaseMaxDuration(25f);
+                price += 3;
             }
             else
             {

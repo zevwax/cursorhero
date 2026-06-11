@@ -52,15 +52,18 @@ namespace ZevWaxGames.CursorHero
             layers[1] = transform.GetChild(1).GetComponent<Image>();
             // 2 - heart
             layers[2] = transform.GetChild(3).GetComponent<Image>();
-            ShowFingers(0);
+            ShowFingers(0, true);
         }
-        public void ShowFingers(int number)
+        public void ShowFingers(int number, bool silently = false)
         {
             if (currNumOfFingers == number) return;
             currNumOfFingers = number;
             if (zoom != null)
                 StopCoroutine(zoom);
-            zoom = StartCoroutine(CShowFingers(number));
+            if (silently)
+                UpdateSprites(number);
+            else
+                zoom = StartCoroutine(CShowFingers(number));
         }
         private IEnumerator CShowFingers(int numOfFingers)
         {

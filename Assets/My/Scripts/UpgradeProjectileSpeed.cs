@@ -3,7 +3,7 @@ namespace ZevWaxGames.CursorHero
     public class UpgradeProjectileSpeed : Upgrade
     {
         protected override void Start() {
-            tooltipText = string.Format("<b>ZIPPY MOUSE</b>\n-~<=#O#=>~-\nIncrease Projectile Speed");
+            tooltipText = string.Format("<b>AERODYNAMICS</b>\n-=*=-\nIncrease Projectile Speed");
             base.Start();
         }
 

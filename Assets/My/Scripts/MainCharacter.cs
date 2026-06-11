@@ -78,16 +78,26 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnRunStarted += Born;
             EventHolder.OnYouWinStarted += Disable;
             EventHolder.OnYouWinFinished += Enable;
-            EventHolder.OnBSODStarted += KillHeartKeepers;
+            EventHolder.OnBIOSStarted += HandleBIOSStarted;
+            EventHolder.OnBIOSFinished += HandleBIOSFinished;
         }
         private void OnDisable()
         {
             EventHolder.OnRunStarted -= Born;
             EventHolder.OnYouWinStarted -= Disable;
             EventHolder.OnYouWinFinished -= Enable;
-            EventHolder.OnBSODStarted -= KillHeartKeepers;
+            EventHolder.OnBIOSStarted -= HandleBIOSStarted;
+            EventHolder.OnBIOSFinished -= HandleBIOSFinished;
         }
-        private void KillHeartKeepers() => AddHeartKeepers(-heartKeepers.Count);
+        private void HandleBIOSStarted()
+        {
+            AddHeartKeepers(-heartKeepers.Count);
+            SetGlove();
+        }
+        private void HandleBIOSFinished()
+        {
+            SetGlove();
+        }
         private void Awake() => Instance = this;
         public void Init()
         {
@@ -110,6 +120,8 @@ namespace ZevWaxGames.CursorHero
             RestoreFullHP();
             
             base.Start();
+            
+            SetGlove();
         }
         protected override void Update()
         {
@@ -202,7 +214,8 @@ namespace ZevWaxGames.CursorHero
                 /*GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("My/My/Sprites/default_wait");*/
                 Disable();
                 Spawner.NewSoul(transform.position);
-                EventHolder.OnRunFinished?.Invoke();
+                if (GameSequncer.Instance.IsRun)
+                    EventHolder.OnRunFinished?.Invoke();
             }
         }
         private void Enable()

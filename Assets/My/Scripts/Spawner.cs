@@ -562,7 +562,10 @@ namespace ZevWaxGames.CursorHero
             canvas.worldCamera = Camera.main;
             canvas.sortingLayerName = "Tooltips";
             var rectTransform = obj.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(90, 90);
+            if (text.Contains('\n'))
+                rectTransform.sizeDelta = new Vector2(120, 75);
+            else
+                rectTransform.sizeDelta = new Vector2(90, 30);
             rectTransform.localScale = new Vector3(0, 0, 1);
             var canvasScaler = obj.AddComponent<CanvasScaler>();
             canvasScaler.dynamicPixelsPerUnit = 30f;
@@ -620,7 +623,7 @@ namespace ZevWaxGames.CursorHero
             textTxt.color = textColor;
             textTxt.enableAutoSizing = true;
             textTxt.fontSizeMin = ushort.MinValue;
-            textTxt.fontSizeMax = 13;//ushort.MaxValue;
+            textTxt.fontSizeMax = 15;//ushort.MaxValue; need >13
             textTxt.raycastTarget = false;
             
             return obj;

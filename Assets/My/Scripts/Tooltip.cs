@@ -77,5 +77,13 @@ namespace ZevWaxGames.CursorHero
             var y = mainCharPos.y < 0 ? tooltipMaxPosY : -tooltipMaxPosY;
             return mainCharPos + new Vector3(x, y, 0);
         }
+        private void OnEnable()
+        {
+            EventHolder.OnBIOSFinished += Die;
+        }
+        private void OnDisable()
+        {
+            EventHolder.OnBIOSFinished -= Die;
+        }
     }
 }

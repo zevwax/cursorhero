@@ -15,7 +15,7 @@ namespace ZevWaxGames.CursorHero
         }
         protected override void Start()
         {
-            tooltipText = string.Format("<b>FPS BOOSTER</b>\n-~<=#O#=>~-\nIncrease Pet Movement Speed\n[ Price: <sprite=7> {0} ]", price);
+            tooltipText = string.Format("<b>FPS BOOSTER</b>\n-=*=-\nIncrease Pet Movement Speed\n\nPrice: <sprite=7> {0}", price);
             base.Start();
         }
         public override void ButtonAction()

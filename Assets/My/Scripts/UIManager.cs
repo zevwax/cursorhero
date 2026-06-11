@@ -63,6 +63,7 @@ namespace ZevWaxGames.CursorHero
         {
             if (Power.Instance.CurrentLeftTime <= 0)
             {
+                Debug.Log("123 123");
                 yield return StartCoroutine(PowerIsOut.Instance.StartFadeOutAnimation());
                 PowerIsOut.Instance.StartInstantFadeInAnimation();
             }
@@ -72,6 +73,8 @@ namespace ZevWaxGames.CursorHero
         }
         private void HandleBIOSStarted()
         {
+            GameObject.Find("BIOS Driver Indicator").GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
+            GameObject.Find("BIOS MM Indicator").GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 0);
             BIOS.GetComponent<CanvasGroup>().alpha = 1f;
             var index = 0;
 

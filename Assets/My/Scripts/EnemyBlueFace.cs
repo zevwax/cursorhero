@@ -22,10 +22,10 @@ namespace ZevWaxGames.CursorHero
 
             speed = minSpeed;
 
-            DOTween.To(() => speed, x => speed = x, maxSpeed, duration)
+            /*DOTween.To(() => speed, x => speed = x, maxSpeed, duration)
                 .SetEase(Ease.InOutSine)
                 .SetLoops(-1, LoopType.Yoyo)
-                .SetLink(gameObject);
+                .SetLink(gameObject);*/
         }
         protected override void Shoot() { }
         private float frequency = 2f;
