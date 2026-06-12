@@ -186,8 +186,8 @@ namespace ZevWaxGames.CursorHero
             yield return new WaitForSeconds(attackInterval);
             isWaiting = false;
         }
-        private void OnEnable() => EventHolder.OnBSODStarted += Die;
-        private void OnDisable() => EventHolder.OnBSODStarted -= Die;
+        private void OnEnable() => EventHolder.OnBIOSStarted += Die;
+        private void OnDisable() => EventHolder.OnBIOSStarted -= Die;
         private void Die() => Destroy(gameObject);
     }
 }

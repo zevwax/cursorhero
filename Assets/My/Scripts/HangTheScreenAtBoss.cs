@@ -9,12 +9,12 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             EventHolder.OnFadingInToPCStarted += HangWhat;
-            EventHolder.OnBSODStarted += HangOff;
+            EventHolder.OnBIOSStarted += HangOff;
         }
         private void OnDisable()
         {
             EventHolder.OnFadingInToPCStarted -= HangWhat;
-            EventHolder.OnBSODStarted -= HangOff;
+            EventHolder.OnBIOSStarted -= HangOff;
         }
         private void Awake() => Instance = this;
         private void HangOn() => Hang(7);

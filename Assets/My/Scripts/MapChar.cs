@@ -16,13 +16,13 @@ namespace ZevWaxGames.CursorHero
         {
             base.OnEnable();
             EventHolder.OnFadingOutFromPCStarted += Move;
-            EventHolder.OnBSODStarted += Reset;
+            EventHolder.OnBIOSStarted += Reset;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
             EventHolder.OnFadingOutFromPCStarted -= Move;
-            EventHolder.OnBSODStarted -= Reset;
+            EventHolder.OnBIOSStarted -= Reset;
         }
         private void Move()
         {

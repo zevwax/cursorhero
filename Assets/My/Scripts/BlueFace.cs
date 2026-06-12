@@ -119,11 +119,11 @@ namespace ZevWaxGames.CursorHero
         }
         private void OnEnable()
         {
-            EventHolder.OnBSODStarted += InstantFadeOut;
+            EventHolder.OnBIOSStarted += InstantFadeOut;
         }
         private void OnDisable()
         {
-            EventHolder.OnBSODStarted -= InstantFadeOut;
+            EventHolder.OnBIOSStarted -= InstantFadeOut;
         }
         public void InstantFadeOut()
         {

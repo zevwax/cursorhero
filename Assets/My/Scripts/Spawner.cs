@@ -111,9 +111,9 @@ namespace ZevWaxGames.CursorHero
             pos, "Enemy", GetSprite("enemies", "enemies_4"), "Enemies", GetSprite("face_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewEnemyFist(Vector2 pos) => NewEntity<EnemyFist>(
             pos, "Enemy", GetSprite("enemies", "enemies_2"), "Enemies", GetSprite("fist_collider"), "Enemy", RigidbodyType2D.Dynamic);
-        public static GameObject NewEnemyBlueFace(Vector2 pos) => NewEntity<EnemyRedFace>(
+        public static GameObject NewEnemyBlueFace(Vector2 pos) => NewEntity<EnemyBlueFace>(
             pos, "Enemy", GetSprite("enemies", "enemies_3"), "Enemies", GetSprite("face_collider"), "Enemy", RigidbodyType2D.Kinematic);
-        public static GameObject NewEnemyGreenFace(Vector2 pos) => NewEntity<EnemyRedFace>(
+        public static GameObject NewEnemyGreenFace(Vector2 pos) => NewEntity<EnemyGreenFace>(
             pos, "Enemy", GetSprite("enemies", "enemies_5"), "Enemies", GetSprite("face_collider"), "Enemy", RigidbodyType2D.Kinematic);
         public static GameObject NewEnemyBoss(Vector2 pos) => NewEntity<EnemyBoss>(
             pos, "Enemy", GetSprite("enemies", "enemies_6"), "Enemies", GetSprite("boss_collider"), "Enemy", RigidbodyType2D.Kinematic);

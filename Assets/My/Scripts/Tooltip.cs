@@ -69,7 +69,7 @@ namespace ZevWaxGames.CursorHero
         private Vector3 GetCurrPos()
         {
             var tooltipMaxPosX = 1.5f;
-            var tooltipMaxPosY = 1f;
+            var tooltipMaxPosY = MainCharacter.Instance.GetComponent<RectTransform>().sizeDelta.y/30f/2f + (4/30f) + gameObject.GetComponent<RectTransform>().sizeDelta.y/30f/2f;
             var mainCharMaxPosX = 7.701668f;
             var mainCharMaxPosY = 4.118333f;
             var mainCharPos = MainCharacter.Instance.transform.position;

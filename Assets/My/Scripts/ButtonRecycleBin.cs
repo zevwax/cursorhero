@@ -8,12 +8,12 @@ namespace ZevWaxGames.CursorHero
         private void OnEnable()
         {
             EventHolder.OnPCFinished += EnableButton;
-            EventHolder.OnBSODStarted += DisableButton;
+            EventHolder.OnBIOSStarted += DisableButton;
         }
         private void OnDisable()
         {
             EventHolder.OnPCFinished -= EnableButton;
-            EventHolder.OnBSODStarted -= DisableButton;
+            EventHolder.OnBIOSStarted -= DisableButton;
         }
         protected override void Start()
         {

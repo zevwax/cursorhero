@@ -136,7 +136,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnYouWinFinished += HandleChoosingFinished;
             EventHolder.OnPCFinished += HandlePCFinished;
             EventHolder.OnRunFinished += HandleRunFinished;
-            EventHolder.OnBSODStarted += HandleBSOD;
+            EventHolder.OnBIOSStarted += HandleBSOD;
         }
         private void OnDisable()
         {
@@ -147,7 +147,7 @@ namespace ZevWaxGames.CursorHero
             EventHolder.OnYouWinFinished -= HandleChoosingFinished;
             EventHolder.OnPCFinished -= HandlePCFinished;
             EventHolder.OnRunFinished -= HandleRunFinished;
-            EventHolder.OnBSODStarted -= HandleBSOD;
+            EventHolder.OnBIOSStarted -= HandleBSOD;
         }
         private void HandleBSOD()
         {
