@@ -145,7 +145,7 @@ namespace ZevWaxGames.CursorHero
                 Translator.Instance.Get(Token.PushThePCShortcut),
                 65f)); var ra2 = Spawner.NewRedArrow(arrow2Pos, Vector2.down);
             yield return new WaitForSeconds(1f);
-            G.Instance.net.GetComponent<Button>().EnableButton();
+            G.Instance.BtnPC.GetComponent<Button>().EnableButton();
             
             yield return new WaitUntil(() => currActionIndex == 10);
             Destroy(ra2);

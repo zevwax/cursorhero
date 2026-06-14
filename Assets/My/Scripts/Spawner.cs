@@ -103,6 +103,23 @@ namespace ZevWaxGames.CursorHero
             sr.sprite = Resources.Load<Sprite>("My/My/Sprites/idle");
             obj.AddComponent<Soul>();
         }
+        public static GameObject NewEnemyChallengeFilter()
+        {
+            var obj =
+            NewEntity<EnemyChallengeFilter>(
+                Vector2.zero, "Enemy", GetSprite("SizeHolders/16x16"), "Enemies", null, "Enemy", RigidbodyType2D.Kinematic);
+            obj.GetComponent<EnemyChallengeFilter>().Init();
+            return obj;
+        }
+
+        public static GameObject NewChallengeIndication(Vector2 pos)
+        {
+            var obj =
+            NewEntity<ChallengeIndication>(
+                pos, "Entity", GetSprite("text_icons", "text_icons_3"), "Tooltips", null, "GUI", RigidbodyType2D.Kinematic);
+            obj.GetComponent<ChallengeIndication>().Init();
+            return obj;
+        }
         public static GameObject NewEnemyGoat(Vector2 pos) => NewEntity<EnemyGoat>(
             pos, "Enemy", GetSprite("enemies", "enemies_0"), "Enemies", GetSprite("goat_collider"), "Enemy", RigidbodyType2D.Dynamic);
         public static GameObject NewEnemyPointer(Vector2 pos) => NewEntity<EnemyPointer>(
@@ -795,7 +812,7 @@ namespace ZevWaxGames.CursorHero
             var obj = CreateBaseButton<T>(pos, name, sprite);
             return obj;
         }
-        public static GameObject NewBottle(Vector2 pos)
+        public static GameObject NewBottle(Vector2 pos, bool garatieyedPrisoner = false)
         {
             var path = "My/My/Sprites/bottle";
             var allSprites = Resources.LoadAll<Sprite>(path);
@@ -859,7 +876,12 @@ namespace ZevWaxGames.CursorHero
                 c.b *= 0.666f;
                 glassColors[i] = c;
             }
-            var fillColor = GetRandomElement(glassColors);
+
+            var fillColor = (Color)default;
+            if (garatieyedPrisoner)
+                fillColor = new Color(0.2f, 0.4f, 0.15f, 0.75f);
+            else
+                fillColor = GetRandomElement(glassColors);
             
             NewImage(obj.transform, targetSprite0);
             var fill = NewImage(obj.transform, targetSprite1);
@@ -904,7 +926,7 @@ namespace ZevWaxGames.CursorHero
             bottleWalls[3].GetComponent<PositionFollower>().offset = new Vector2(0, -(0.5f/ppu));
             
             var hkPos = new Vector2(pos.x, pos.y - (26f/ppu));
-            if (Random.Range(0, 2) == 0)
+            if (garatieyedPrisoner || Random.Range(0, 2) == 0)
             {
                 var prisoner = NewHeartKeeper(hkPos);
                 obj.GetComponent<ItemBottle>().prisoner = prisoner.GetComponent<HeartKeeper>();

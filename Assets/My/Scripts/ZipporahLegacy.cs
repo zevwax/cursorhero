@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -40,7 +40,7 @@ namespace ZevWaxGames.CursorHero
          * 4 - push the switch pc shortcut
          * on switch pc shortcut pushed
          * 5 - off screen
-         */
+         #1#
         public void SwitchActionTo(int index)
         {
             if (currActionIndex == index - 1)
@@ -87,7 +87,7 @@ namespace ZevWaxGames.CursorHero
                 "Your glyph is your projectile. Let's improve its stats!!\n\n" +
                 "Try <color=#FF00FF>holding down the Left Mouse Button " +
                 "to select the glyph drawn on the keyboard key you found in the recycle bin</color>.."),
-            195f));*/
+            195f));#1#
         public IEnumerator PlayAnimation()
         {
             yield return new WaitUntil(() => currActionIndex == 1);
@@ -242,4 +242,4 @@ namespace ZevWaxGames.CursorHero
         }
         private void Die() => Destroy(gameObject);
     }
-}
+}*/
